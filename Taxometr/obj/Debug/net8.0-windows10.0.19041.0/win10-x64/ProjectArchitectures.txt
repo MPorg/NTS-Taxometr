@@ -1,0 +1,1 @@
+D:\Visual Studio Projects\Taxometr\Taxometr\Taxometr.csproj;x64

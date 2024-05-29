@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxometr.Pages.SettingsPage"
+             Title="Настройки"
+             NavigationPage.HasNavigationBar="False">
+    <Grid
+        ColumnDefinitions="*, *"
+        RowDefinitions="*, Auto"
+        RowSpacing="10"
+        ColumnSpacing="10"
+        Padding="20"
+        VerticalOptions="Fill">
+        <ScrollView
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            VerticalOptions="Fill">
+            <Grid
+                ColumnDefinitions="*, *, *, *"
+                RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                ColumnSpacing="5"
+                RowSpacing="5"
+                VerticalOptions="Fill">
+                <Label
+                            Grid.ColumnSpan="2"
+                            Text="Тема приложения"
+                            FontSize="Large"
+                            VerticalTextAlignment="Center"/>
+                <Picker
+                    x:Name="ThemePicker"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="0"
+                    VerticalOptions="Fill"
+                    SelectedIndex="0"
+                    SelectedItem="Система"
+                    SelectedIndexChanged="ThemePicker_SelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>Система</x:String>
+                        <x:String>Светлая</x:String>
+                        <x:String>Тёмная</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+        </ScrollView>
+        <Button
+            x:Name="Cancel"
+            Grid.Row="1"
+            Grid.Column="0"
+            Clicked="Clancel_Clicked"/>
+        <Button
+            x:Name="Save"
+            Grid.Row="1"
+            Grid.Column="1"
+            Text="Сохранить"
+            Clicked="Save_Clicked"/>
+    </Grid>
+</ContentPage>

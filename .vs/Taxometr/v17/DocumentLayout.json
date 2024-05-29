@@ -1,0 +1,111 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Visual Studio Projects\\Taxometr\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|d:\\visual studio projects\\taxometr\\taxometr\\pages\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|d:\\visual studio projects\\taxometr\\taxometr\\pages\\settingspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\settingspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|d:\\visual studio projects\\taxometr\\taxometr\\resources\\styles\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\resources\\styles\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|d:\\visual studio projects\\taxometr\\taxometr\\pages\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|d:\\visual studio projects\\taxometr\\taxometr\\pages\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DB20174-5955-4D09-B971-3CB276DFA2A4}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 707,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SettingsPage.xaml",
+              "DocumentMoniker": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\SettingsPage.xaml",
+              "RelativeDocumentMoniker": "Taxometr\\Pages\\SettingsPage.xaml",
+              "ToolTip": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\SettingsPage.xaml",
+              "RelativeToolTip": "Taxometr\\Pages\\SettingsPage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-29T06:27:54.136Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Styles.xaml",
+              "DocumentMoniker": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Resources\\Styles\\Styles.xaml",
+              "RelativeDocumentMoniker": "Taxometr\\Resources\\Styles\\Styles.xaml",
+              "ToolTip": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Resources\\Styles\\Styles.xaml",
+              "RelativeToolTip": "Taxometr\\Resources\\Styles\\Styles.xaml",
+              "ViewState": "AQIAAMAAAAAAAAAAAAAAANYAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-29T06:16:27.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\MainPage.xaml",
+              "RelativeDocumentMoniker": "Taxometr\\Pages\\MainPage.xaml",
+              "ToolTip": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\MainPage.xaml",
+              "RelativeToolTip": "Taxometr\\Pages\\MainPage.xaml",
+              "ViewState": "AQIAAFYAAAAAAAAAAAAAAGIAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-27T14:22:12.485Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 35,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Pages\\MainPage.xaml.cs",
+              "ToolTip": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\MainPage.xaml.cs",
+              "RelativeToolTip": "Taxometr\\Pages\\MainPage.xaml.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAwwB8AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-27T14:22:03.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SettingsPage.xaml.cs",
+              "DocumentMoniker": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\SettingsPage.xaml.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Pages\\SettingsPage.xaml.cs",
+              "ToolTip": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Pages\\SettingsPage.xaml.cs",
+              "RelativeToolTip": "Taxometr\\Pages\\SettingsPage.xaml.cs",
+              "ViewState": "AQIAADoAAAAAAAAAAAAiwD4AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-29T06:35:55.369Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
