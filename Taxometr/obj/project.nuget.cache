@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "W+MyHOSedjE=",
+  "dgSpecHash": "FUFlweZ54rs=",
   "success": true,
-  "projectFilePath": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Taxometr.csproj",
+  "projectFilePath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Chaplin A\\.nuget\\packages\\communitytoolkit.maui\\9.0.0\\communitytoolkit.maui.9.0.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\communitytoolkit.maui.core\\9.0.0\\communitytoolkit.maui.core.9.0.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\googlegson\\2.10.1.4\\googlegson.2.10.1.4.nupkg.sha512",
+    "C:\\Users\\Chaplin A\\.nuget\\packages\\inthehand.androidactivity\\1.0.4\\inthehand.androidactivity.1.0.4.nupkg.sha512",
+    "C:\\Users\\Chaplin A\\.nuget\\packages\\inthehand.net.bluetooth\\4.1.43\\inthehand.net.bluetooth.4.1.43.nupkg.sha512",
+    "C:\\Users\\Chaplin A\\.nuget\\packages\\linux.bluetooth\\5.66.0\\linux.bluetooth.5.66.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
@@ -44,6 +47,7 @@
     "C:\\Users\\Chaplin A\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\system.runtime.interopservices.nfloat.internal\\6.0.1\\system.runtime.interopservices.nfloat.internal.6.0.1.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\system.speech\\8.0.0\\system.speech.8.0.0.nupkg.sha512",
+    "C:\\Users\\Chaplin A\\.nuget\\packages\\tmds.dbus\\0.15.0\\tmds.dbus.0.15.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\xamarin.android.glide\\4.15.1.2\\xamarin.android.glide.4.15.1.2.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\xamarin.android.glide.annotations\\4.15.1.2\\xamarin.android.glide.annotations.4.15.1.2.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\xamarin.android.glide.disklrucache\\4.15.1.2\\xamarin.android.glide.disklrucache.4.15.1.2.nupkg.sha512",
@@ -128,11 +132,7 @@
     "C:\\Users\\Chaplin A\\.nuget\\packages\\xamarin.kotlin.stdlib.jdk8\\1.9.10.1\\xamarin.kotlin.stdlib.jdk8.1.9.10.1.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\xamarin.kotlinx.coroutines.android\\1.7.3.1\\xamarin.kotlinx.coroutines.android.1.7.3.1.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.7.3.1\\xamarin.kotlinx.coroutines.core.jvm.1.7.3.1.nupkg.sha512",
-    "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.5\\microsoft.netcore.app.crossgen2.win-x64.8.0.5.nupkg.sha512",
-    "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512",
-    "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.5\\microsoft.aspnetcore.app.runtime.win-x64.8.0.5.nupkg.sha512",
-    "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.5\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.5.nupkg.sha512",
-    "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.5\\microsoft.netcore.app.runtime.win-x64.8.0.5.nupkg.sha512"
+    "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512"
   ],
   "logs": []
 }

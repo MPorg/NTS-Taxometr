@@ -105,7 +105,7 @@ namespace Taxometr
         private async void DevicesBtn_Clicked(object sender, EventArgs e)
         {
             await PopUp();
-            await Navigation.PushAsync(new DevicesPage());
+            //await Navigation.PushAsync(new DevicesPageBLE());
         }
 
         private async void SettingsBtn_Clicked(object sender, EventArgs e)

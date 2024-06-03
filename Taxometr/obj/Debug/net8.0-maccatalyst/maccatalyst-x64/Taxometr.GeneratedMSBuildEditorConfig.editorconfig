@@ -12,53 +12,65 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Taxometr
-build_property.ProjectDir = D:\Visual Studio Projects\Taxometr\Taxometr\
+build_property.ProjectDir = D:\GitHubRepos\Taxometr\Taxometr\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/App.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/AppShell.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/Pages/DevicesPage.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/Pages/DevicesPageBLE.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.DevicesPage.xaml
-build_metadata.AdditionalFiles.TargetPath = Pages\DevicesPage.xaml
-build_metadata.AdditionalFiles.RelativePath = Pages\DevicesPage.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.DevicesPageBLE.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\DevicesPageBLE.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\DevicesPageBLE.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/Pages/MainPage.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/Pages/DevicesPageITH.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.DevicesPageITH.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\DevicesPageITH.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\DevicesPageITH.xaml
+
+[D:/GitHubRepos/Taxometr/Taxometr/Pages/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\MainPage.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/Pages/SettingsPage.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/Pages/NewPage1.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.NewPage1.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\NewPage1.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\NewPage1.xaml
+
+[D:/GitHubRepos/Taxometr/Taxometr/Pages/SettingsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.SettingsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\SettingsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\SettingsPage.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/Pages/TransiverPage.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/Pages/TransiverPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Pages.TransiverPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\TransiverPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\TransiverPage.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/Resources/Styles/Colors.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[D:/Visual Studio Projects/Taxometr/Taxometr/Resources/Styles/Styles.xaml]
+[D:/GitHubRepos/Taxometr/Taxometr/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Taxometr.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
