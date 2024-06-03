@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxometr", "Taxometr\Taxometr.csproj", "{8DB20174-5955-4D09-B971-3CB276DFA2A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxometr", "Taxometr\Taxometr.csproj", "{1FC99424-976D-4E56-A000-201D3809D616}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,17 +11,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8DB20174-5955-4D09-B971-3CB276DFA2A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DB20174-5955-4D09-B971-3CB276DFA2A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DB20174-5955-4D09-B971-3CB276DFA2A4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{8DB20174-5955-4D09-B971-3CB276DFA2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DB20174-5955-4D09-B971-3CB276DFA2A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DB20174-5955-4D09-B971-3CB276DFA2A4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1FC99424-976D-4E56-A000-201D3809D616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC99424-976D-4E56-A000-201D3809D616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC99424-976D-4E56-A000-201D3809D616}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1FC99424-976D-4E56-A000-201D3809D616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC99424-976D-4E56-A000-201D3809D616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC99424-976D-4E56-A000-201D3809D616}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4A1C5BAF-B938-4AB2-B731-A8161E9A2531}
+		SolutionGuid = {53C04265-C428-408D-AD26-24CD532D846C}
 	EndGlobalSection
 EndGlobal
