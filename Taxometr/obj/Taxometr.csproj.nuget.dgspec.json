@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Taxometr.csproj": {}
+    "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.csproj": {}
   },
   "projects": {
-    "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Taxometr.csproj": {
+    "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Taxometr.csproj",
+        "projectUniqueName": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.csproj",
         "projectName": "Taxometr",
-        "projectPath": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\Taxometr.csproj",
+        "projectPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.csproj",
         "packagesPath": "C:\\Users\\Chaplin A\\.nuget\\packages\\",
-        "outputPath": "D:\\Visual Studio Projects\\Taxometr\\Taxometr\\obj\\",
+        "outputPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
@@ -69,6 +69,10 @@
             "CommunityToolkit.Maui": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "InTheHand.Net.Bluetooth": {
+              "target": "Package",
+              "version": "[4.1.43, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -133,6 +137,10 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "InTheHand.Net.Bluetooth": {
+              "target": "Package",
+              "version": "[4.1.43, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -195,6 +203,10 @@
             "CommunityToolkit.Maui": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "InTheHand.Net.Bluetooth": {
+              "target": "Package",
+              "version": "[4.1.43, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -260,6 +272,10 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "InTheHand.Net.Bluetooth": {
+              "target": "Package",
+              "version": "[4.1.43, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -302,24 +318,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
-              "version": "[8.0.5, 8.0.5]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
-            },
-            {
               "name": "Microsoft.Windows.SDK.NET.Ref",
               "version": "[10.0.19041.31, 10.0.19041.31]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
             }
           ],
           "frameworkReferences": {
@@ -347,9 +347,6 @@
           "#import": []
         },
         "ios-arm64": {
-          "#import": []
-        },
-        "maccatalyst-arm64": {
           "#import": []
         },
         "maccatalyst-x64": {

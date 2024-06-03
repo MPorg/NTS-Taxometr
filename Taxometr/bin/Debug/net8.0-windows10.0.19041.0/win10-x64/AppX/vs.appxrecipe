@@ -10,7 +10,7 @@
     <PackageArchitecture>x64</PackageArchitecture>
     <PackageIdentityName>com.companyname.taxometr</PackageIdentityName>
     <PackageIdentityPublisher>CN=User Name</PackageIdentityPublisher>
-    <IntermediateOutputPath>D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\</IntermediateOutputPath>
+    <IntermediateOutputPath>D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\</IntermediateOutputPath>
     <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
     <PackageRegistrationPath>
     </PackageRegistrationPath>
@@ -18,8 +18,8 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>
     </WindowsSdkPath>
-    <LayoutDir>D:\Visual Studio Projects\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX</LayoutDir>
-    <RegisteredManifestChecksum>75033FC88A58829DF794319B285195B50CADEFB6F443F02513B331748B65D2D9</RegisteredManifestChecksum>
+    <LayoutDir>D:\GitHubRepos\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX</LayoutDir>
+    <RegisteredManifestChecksum>BEE01F83DA8F6D95F569D1EA9D7B2AB7303AB89C0D6575971C97B08840B105A9</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>com.companyname.taxometr_1.0.0.1_x64__9zz4h110yvjzm</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>com.companyname.taxometr_9zz4h110yvjzm!App</RegisteredUserModeAppID>
     <RegisteredPackageID>com.companyname.taxometr</RegisteredPackageID>
@@ -27,268 +27,308 @@
     <RegisteredVersion>1.0.0.1</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\Visual Studio Projects\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
+    <AppXManifest Include="D:\GitHubRepos\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-05-27T07:56:15.153</Modified>
+      <Modified>2024-05-29T09:02:45.425</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2024-05-27T07:56:14.693</Modified>
+      <Modified>2024-05-29T09:02:44.919</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Taxometr.runtimeconfig.json">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Taxometr.runtimeconfig.json">
       <PackagePath>Taxometr.runtimeconfig.json</PackagePath>
-      <Modified>2024-05-27T07:56:13.917</Modified>
+      <Modified>2024-05-29T09:02:44.047</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Taxometr.dll">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Taxometr.dll">
       <PackagePath>Taxometr.dll</PackagePath>
-      <Modified>2024-05-27T07:56:10.564</Modified>
+      <Modified>2024-05-29T09:02:41.743</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Taxometr.exe</PackagePath>
-      <Modified>2024-05-27T07:56:10.766</Modified>
+      <Modified>2024-05-29T09:02:41.933</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\Resources\Raw\AboutAssets.txt">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
       <Modified>2024-05-23T13:29:20.278</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:50.760</Modified>
+      <Modified>2024-05-28T14:14:42.572</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
       <PackagePath>splashSplashScreen.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:50.783</Modified>
+      <Modified>2024-05-28T14:14:42.600</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
       <PackagePath>splashSplashScreen.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:50.813</Modified>
+      <Modified>2024-05-28T14:14:42.633</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
       <PackagePath>splashSplashScreen.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:50.863</Modified>
+      <Modified>2024-05-28T14:14:42.685</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:51.024</Modified>
+      <Modified>2024-05-28T14:14:42.846</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf">
       <PackagePath>OpenSans-Regular.ttf</PackagePath>
       <Modified>2024-05-23T13:29:20.239</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Semibold.ttf">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Semibold.ttf">
       <PackagePath>OpenSans-Semibold.ttf</PackagePath>
       <Modified>2024-05-23T13:29:20.272</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
       <PackagePath>appicon.ico</PackagePath>
-      <Modified>2024-05-27T06:07:52.586</Modified>
+      <Modified>2024-05-28T14:14:46.651</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-100.png">
       <PackagePath>appiconLargeTile.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.644</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
       <PackagePath>appiconLargeTile.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.644</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
       <PackagePath>appiconLargeTile.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.644</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
       <PackagePath>appiconLargeTile.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.644</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
       <PackagePath>appiconLargeTile.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.643</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-16.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-16.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-24.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-256.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-32.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-48.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-16.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-16.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-24.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-256.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-32.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-48.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-100.png">
       <PackagePath>appiconLogo.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.586</Modified>
+      <Modified>2024-05-28T14:14:46.651</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
       <PackagePath>appiconLogo.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.586</Modified>
+      <Modified>2024-05-28T14:14:46.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
       <PackagePath>appiconLogo.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.586</Modified>
+      <Modified>2024-05-28T14:14:46.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
       <PackagePath>appiconLogo.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.586</Modified>
+      <Modified>2024-05-28T14:14:46.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
       <PackagePath>appiconLogo.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.586</Modified>
+      <Modified>2024-05-28T14:14:46.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
       <PackagePath>appiconLogo.targetsize-16.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
       <PackagePath>appiconLogo.targetsize-24.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
       <PackagePath>appiconLogo.targetsize-256.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
       <PackagePath>appiconLogo.targetsize-32.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
       <PackagePath>appiconLogo.targetsize-48.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.585</Modified>
+      <Modified>2024-05-28T14:14:46.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
       <PackagePath>appiconMediumTile.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.646</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
       <PackagePath>appiconMediumTile.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.646</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
       <PackagePath>appiconMediumTile.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.646</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
       <PackagePath>appiconMediumTile.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.645</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
       <PackagePath>appiconMediumTile.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.645</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
       <PackagePath>appiconSmallTile.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
       <PackagePath>appiconSmallTile.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
       <PackagePath>appiconSmallTile.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.646</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
       <PackagePath>appiconSmallTile.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.646</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
       <PackagePath>appiconSmallTile.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.646</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
       <PackagePath>appiconStoreLogo.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
       <PackagePath>appiconStoreLogo.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
       <PackagePath>appiconStoreLogo.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
       <PackagePath>appiconStoreLogo.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
       <PackagePath>appiconStoreLogo.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.584</Modified>
+      <Modified>2024-05-28T14:14:46.647</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
       <PackagePath>appiconWideTile.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.583</Modified>
+      <Modified>2024-05-28T14:14:46.645</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
       <PackagePath>appiconWideTile.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.645</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
       <PackagePath>appiconWideTile.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.645</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
       <PackagePath>appiconWideTile.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.645</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
       <PackagePath>appiconWideTile.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.644</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-100.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-100.png">
       <PackagePath>menu.scale-100.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.652</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-125.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-125.png">
       <PackagePath>menu.scale-125.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.582</Modified>
+      <Modified>2024-05-28T14:14:46.652</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-150.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-150.png">
       <PackagePath>menu.scale-150.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.581</Modified>
+      <Modified>2024-05-28T14:14:46.652</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-200.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-200.png">
       <PackagePath>menu.scale-200.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.581</Modified>
+      <Modified>2024-05-28T14:14:46.652</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-400.png">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu.scale-400.png">
       <PackagePath>menu.scale-400.png</PackagePath>
-      <Modified>2024-05-27T06:07:52.581</Modified>
+      <Modified>2024-05-28T14:14:46.652</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Visual Studio Projects\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Taxometr.deps.json">
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_d.scale-100.png">
+      <PackagePath>menu_d.scale-100.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_d.scale-125.png">
+      <PackagePath>menu_d.scale-125.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_d.scale-150.png">
+      <PackagePath>menu_d.scale-150.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_d.scale-200.png">
+      <PackagePath>menu_d.scale-200.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_d.scale-400.png">
+      <PackagePath>menu_d.scale-400.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_l.scale-100.png">
+      <PackagePath>menu_l.scale-100.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.652</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_l.scale-125.png">
+      <PackagePath>menu_l.scale-125.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.651</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_l.scale-150.png">
+      <PackagePath>menu_l.scale-150.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.651</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_l.scale-200.png">
+      <PackagePath>menu_l.scale-200.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.651</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\menu_l.scale-400.png">
+      <PackagePath>menu_l.scale-400.png</PackagePath>
+      <Modified>2024-05-28T14:14:46.651</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\GitHubRepos\Taxometr\Taxometr\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Taxometr.deps.json">
       <PackagePath>Taxometr.deps.json</PackagePath>
-      <Modified>2024-05-27T07:56:13.690</Modified>
+      <Modified>2024-05-29T09:02:43.865</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Chaplin A\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.31\lib\net6.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>
@@ -433,6 +473,14 @@
     <AppxPackagedFile Include="C:\Users\Chaplin A\.nuget\packages\microsoft.windowsappsdk\1.5.240311000\lib\net6.0-windows10.0.18362.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll">
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.Net.dll</PackagePath>
       <Modified>2024-03-11T10:57:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Chaplin A\.nuget\packages\mvvmcross\9.2.0\lib\net8.0-windows10.0.19041\MvvmCross.dll">
+      <PackagePath>MvvmCross.dll</PackagePath>
+      <Modified>2024-02-22T18:13:48.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Chaplin A\.nuget\packages\plugin.ble\3.1.0\lib\net8.0-windows10.0.19041\Plugin.BLE.dll">
+      <PackagePath>Plugin.BLE.dll</PackagePath>
+      <Modified>2024-05-20T21:37:20.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Chaplin A\.nuget\packages\sqlite-net-pcl\1.9.172\lib\netstandard2.0\SQLite-net.dll">
       <PackagePath>SQLite-net.dll</PackagePath>

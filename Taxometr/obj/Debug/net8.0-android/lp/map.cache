@@ -168,3 +168,5 @@ MvvmCross.aar
 SQLitePCLRaw.lib.e_sqlite3.android.aar
 Xamarin.Google.Crypto.Tink.Android.aar
 Xamarin.Google.ErrorProne.Annotations.aar
+InTheHand.AndroidActivity.dll
+InTheHand.Net.Bluetooth.dll

@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Taxometr")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+ac922aa5247249403e431bfd71062b3eb1c35ec4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Taxometr")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Taxometr")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

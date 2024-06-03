@@ -38,14 +38,14 @@
                 Source="menu.svg"
                 Clicked="MenuBtn_Clicked"/>
         </Grid>
-
         <Label
-            x:Name="DebugLabel"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Grid.Row="1"
-            HorizontalOptions="Center"
             VerticalOptions="Center"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            x:Name="DebugLabel"
             Text=""
             FontAttributes="Bold"
             FontSize="Large"/>
@@ -60,6 +60,7 @@
             Clicked="StartStopBtn_Clicked"/>
 
         <ScrollView
+            TranslationX="-1000"
             Style="{StaticResource InverseScrollViev}"
             Opacity="0.7"
             x:Name="PopUpMenu"

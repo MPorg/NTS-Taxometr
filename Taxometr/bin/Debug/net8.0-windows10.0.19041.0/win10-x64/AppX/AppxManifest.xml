@@ -20,7 +20,7 @@
     <PackageDependency Name="Microsoft.WindowsAppRuntime.1.5" MinVersion="5001.70.1338.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
   </Dependencies>
   <Resources>
-    <Resource Language="EN-US" />
+    <Resource Language="RU" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="Taxometr.exe" EntryPoint="Windows.FullTrustApplication">
@@ -32,14 +32,18 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="splashSplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+        </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <DeviceCapability Name="bluetooth" />
   </Capabilities>
   <build:Metadata>
     <build:Item Name="Microsoft.UI.Xaml.Markup.Compiler.dll" Version="3.0.0.2403" />
-    <build:Item Name="makepri.exe" Version="10.0.22621.755 (WinBuild.160101.0800)" />
+    <build:Item Name="makepri.exe" Version="10.0.22621.2428 (WinBuild.160101.0800)" />
   </build:Metadata>
 </Package>

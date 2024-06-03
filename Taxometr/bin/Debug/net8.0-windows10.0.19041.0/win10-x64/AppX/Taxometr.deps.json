@@ -13,6 +13,8 @@
           "Microsoft.Extensions.Logging.Debug": "8.0.0",
           "Microsoft.Maui.Controls": "8.0.40",
           "Microsoft.Maui.Controls.Compatibility": "8.0.40",
+          "MvvmCross": "9.2.0",
+          "Plugin.BLE": "3.1.0",
           "SQLitePCLRaw.bundle_green": "2.1.8",
           "sqlite-net-pcl": "1.9.172",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.31"
@@ -344,7 +346,7 @@
           "Microsoft.Maui.Essentials": "8.0.40",
           "Microsoft.Maui.Graphics": "8.0.40",
           "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": "8.0.40",
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.2428",
           "Microsoft.WindowsAppSDK": "1.5.240311000"
         },
         "runtime": {
@@ -392,10 +394,10 @@
         }
       },
       "Microsoft.Maui.Resizetizer/8.0.40": {},
-      "Microsoft.Windows.SDK.BuildTools/10.0.22621.756": {},
+      "Microsoft.Windows.SDK.BuildTools/10.0.22621.2428": {},
       "Microsoft.WindowsAppSDK/1.5.240311000": {
         "dependencies": {
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.2428"
         },
         "runtime": {
           "lib/net6.0-windows10.0.18362.0/Microsoft.InteractiveExperiences.Projection.dll": {
@@ -462,6 +464,27 @@
         "native": {
           "runtimes/win10-x64/native/Microsoft.WindowsAppRuntime.Bootstrap.dll": {
             "fileVersion": "1.5.0.0"
+          }
+        }
+      },
+      "MvvmCross/9.2.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.2428",
+          "Microsoft.WindowsAppSDK": "1.5.240311000"
+        },
+        "runtime": {
+          "lib/net8.0-windows10.0.19041/MvvmCross.dll": {
+            "assemblyVersion": "9.2.0.0",
+            "fileVersion": "9.2.0.0"
+          }
+        }
+      },
+      "Plugin.BLE/3.1.0": {
+        "runtime": {
+          "lib/net8.0-windows10.0.19041/Plugin.BLE.dll": {
+            "assemblyVersion": "3.1.0.0",
+            "fileVersion": "3.1.0.0"
           }
         }
       },
@@ -693,12 +716,12 @@
       "path": "microsoft.maui.resizetizer/8.0.40",
       "hashPath": "microsoft.maui.resizetizer.8.0.40.nupkg.sha512"
     },
-    "Microsoft.Windows.SDK.BuildTools/10.0.22621.756": {
+    "Microsoft.Windows.SDK.BuildTools/10.0.22621.2428": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-7ZL2sFSioYm1Ry067Kw1hg0SCcW5kuVezC2SwjGbcPE61Nn+gTbH86T73G3LcEOVj0S3IZzNuE/29gZvOLS7VA==",
-      "path": "microsoft.windows.sdk.buildtools/10.0.22621.756",
-      "hashPath": "microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512"
+      "sha512": "sha512-qCNAxtpkIvn/mTXLoj5uW80qPyPvNcnTPTLgm2U+d53LS75DT6iQSpLnkVYCvxuRLx4FYPAcKackwpc0cDZGUg==",
+      "path": "microsoft.windows.sdk.buildtools/10.0.22621.2428",
+      "hashPath": "microsoft.windows.sdk.buildtools.10.0.22621.2428.nupkg.sha512"
     },
     "Microsoft.WindowsAppSDK/1.5.240311000": {
       "type": "package",
@@ -706,6 +729,20 @@
       "sha512": "sha512-7AYbQt/XPSbsOwLWeyP+TquJGFwfDsxRRutWZJEKhoyj9pkGDI4VgtX+Uy030PzkuuKsCm1Fz8c8H7saRyAoPg==",
       "path": "microsoft.windowsappsdk/1.5.240311000",
       "hashPath": "microsoft.windowsappsdk.1.5.240311000.nupkg.sha512"
+    },
+    "MvvmCross/9.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-g2Vy5iogvBWTfeLgx6ez589Cy6tUF9vEfRrC1KTsjHG+ACuJvXkKwUDfrNVxaVG6FSjISyYewzghUUSdswEoIA==",
+      "path": "mvvmcross/9.2.0",
+      "hashPath": "mvvmcross.9.2.0.nupkg.sha512"
+    },
+    "Plugin.BLE/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vKwCqysb0FvPsF2pmNL5Qdw2WI+GwlUyF6U56Au6F7y3f2cnhec9RWD1XZg74zRk10LcGibwiRXoJLl5ry8XHw==",
+      "path": "plugin.ble/3.1.0",
+      "hashPath": "plugin.ble.3.1.0.nupkg.sha512"
     },
     "sqlite-net-pcl/1.9.172": {
       "type": "package",
