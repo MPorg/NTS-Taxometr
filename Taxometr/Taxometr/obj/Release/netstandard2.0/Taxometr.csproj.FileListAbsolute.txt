@@ -1,0 +1,20 @@
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\bin\Release\netstandard2.0\Таксометр ГЕОМЕР-122.deps.json
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\bin\Release\netstandard2.0\Таксометр ГЕОМЕР-122.dll
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\bin\Release\netstandard2.0\ref\Таксометр ГЕОМЕР-122.dll
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\bin\Release\netstandard2.0\Таксометр ГЕОМЕР-122.pdb
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.csproj.AssemblyReference.cache
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\App.xaml.g.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\AppShell.xaml.g.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\MainPage.xaml.g.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DevicesPage.xaml.g.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DeviceViewPage.xaml.g.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\SettingsPage.xaml.g.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.AssemblyInfoInputs.cache
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.AssemblyInfo.cs
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.csproj.CoreCompileInputs.cache
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.sourcelink.json
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\XamlC.stamp
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Таксометр ГЕОМЕР-122.dll
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\refint\Таксометр ГЕОМЕР-122.dll
+D:\GitHubRepos\Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Таксометр ГЕОМЕР-122.pdb
