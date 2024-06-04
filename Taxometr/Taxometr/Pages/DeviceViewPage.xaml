@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxometr.Pages.DeviceViewPage"
+             Title="Устройство">
+    <Grid
+        RowDefinitions="Auto, *, Auto">
+        <Entry 
+            x:Name="Message"
+            Placeholder="Введите сообщение"/>
+        <Label
+            x:Name="Output"
+            Grid.Row="1"/>
+        <Button
+            x:Name="ConnectAndSendButton"
+            Grid.Row="2"
+            Text="Подключиться"
+            IsEnabled="False"
+            Clicked="ConnectAndSendButton_Clicked"/>
+    </Grid>
+    
+</ContentPage>
