@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using Plugin.BluetoothClassic.Abstractions;
+using System.Diagnostics;
 using Taxometr.DataBase;
 using Taxometr.DataBase.Options;
+using Taxometr.DataBase.Tmp;
 using Xamarin.Forms;
 
 namespace Taxometr
@@ -28,6 +30,7 @@ namespace Taxometr
 
         protected override void OnStart()
         {
+            AppData.Adapter = DependencyService.Resolve<IBluetoothAdapter>();
         }
 
         protected override void OnSleep()

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ake8ZK5bpAw=",
+  "dgSpecHash": "kSii+tZs0VU=",
   "success": true,
-  "projectFilePath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj",
+  "projectFilePath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Chaplin A\\.nuget\\packages\\plugin.bluetoothclassic\\1.1.5\\plugin.bluetoothclassic.1.1.5.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\sqlite-net-pcl\\1.9.172\\sqlite-net-pcl.1.9.172.nupkg.sha512",

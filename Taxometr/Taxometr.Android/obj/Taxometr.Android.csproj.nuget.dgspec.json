@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj": {}
+    "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj": {}
   },
   "projects": {
-    "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj": {
+    "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj",
+        "projectUniqueName": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj",
         "projectName": "Taxometr.Android",
-        "projectPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj",
+        "projectPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr.Android\\Taxometr.Android.csproj",
         "packagesPath": "C:\\Users\\Chaplin A\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr.Android\\obj\\",
+        "outputPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid13.0": {
             "projectReferences": {
-              "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj": {
-                "projectPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj"
+              "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj": {
+                "projectPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj"
               }
             }
           }
@@ -59,14 +59,14 @@
         }
       }
     },
-    "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj": {
+    "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj",
+        "projectUniqueName": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj",
         "projectName": "Таксометр ГЕОМЕР-122",
-        "projectPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj",
+        "projectPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj",
         "packagesPath": "C:\\Users\\Chaplin A\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\obj\\",
+        "outputPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

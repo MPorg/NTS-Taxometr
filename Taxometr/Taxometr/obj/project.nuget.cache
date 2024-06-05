@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/nMmPa+chQc=",
+  "dgSpecHash": "ezunELy+T6Q=",
   "success": true,
-  "projectFilePath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj",
+  "projectFilePath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Chaplin A\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Chaplin A\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

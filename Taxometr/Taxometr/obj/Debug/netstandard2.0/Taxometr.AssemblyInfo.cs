@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Таксометр ГЕОМЕР-122")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fdee81fe43b7358d201987bf92d698911b6d9a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1da1483c42ecd96fec58e1ad9966a3df8b4b5ced")]
 [assembly: System.Reflection.AssemblyProductAttribute("Таксометр ГЕОМЕР-122")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Таксометр ГЕОМЕР-122")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
