@@ -75,5 +75,31 @@ namespace Taxometr.Pages
                 ConnectBtn.IsEnabled = true;
             }
         }
+
+        private async void SendButton_Clicked(object sender, EventArgs e)
+        {
+			if (String.IsNullOrEmpty(DataEntry.Text))
+			{
+				await DisplayAlert("Ошибка", "Невозможно отправить пустую строку", "ОК");
+			}
+            else
+            {
+				if (await TestConnectionAsync())
+				{
+					byte[] data = Encoding.UTF8.GetBytes(DataEntry.Text);
+					if (!await AppData.Connection.RetryTransmitAsync(data))
+                    {
+                        await DisplayAlert("Ошибка", "Не удалось отправить пакет", "ОК");
+                    }
+				}
+				else
+				{
+					await DisplayAlert("Ошибка", "потеря соединения", "ОК");
+					ConnectBtn.IsEnabled = true;
+					ConnectBtn.Text = "Подключиться";
+                }
+
+			}
+			}
     }
 }

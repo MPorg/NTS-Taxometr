@@ -3,14 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taxometr.Pages.DeviceView">
     <Grid
-        RowDefinitions="Auto, Auto, *">
+        RowDefinitions="Auto, Auto, *, Auto, Auto">
+        <Entry
+            x:Name="DataEntry"
+            Placeholder="Введите текст"/>
+        <Button
+            x:Name="SendButton"
+            Grid.Row="1"
+            Text="Отправить"
+            Clicked="SendButton_Clicked"/>
         <Button
             x:Name="ConnectBtn"
+            Grid.Row="3"
             Text="Подключиться"
             Clicked="ConnectBtn_Clicked"/>
         <Button
             x:Name="DisconectBtn"
-            Grid.Row="1"
+            Grid.Row="4"
             Text="Отключиться"
             Clicked="DisconectBtn_Clicked"/>
     </Grid>
