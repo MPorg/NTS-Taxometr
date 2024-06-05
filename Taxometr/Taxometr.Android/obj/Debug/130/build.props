@@ -25,11 +25,11 @@ androidgeneratejnimarshalmethods=false
 os=windows_nt
 androidincludedebugsymbols=true
 androidpackagenamingpolicy=lowercasecrc64
-_nugetassetstimestamp=638531073514617099
+_nugetassetstimestamp=638531726234076205
 typemapkind=strings-asm
 androidsupportedabis=arm64-v8a
 armeabi-v7a
 x86
 x86_64
 androidmanifestplaceholders=
-projectfullpath=d:\githubrepos\taxometr\taxometr\taxometr.android\taxometr.android.csproj
+projectfullpath=d:\githubrepos\taxometr_xamarin_forms\taxometr\taxometr.android\taxometr.android.csproj

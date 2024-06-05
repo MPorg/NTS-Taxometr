@@ -958,11 +958,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj",
+      "projectUniqueName": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj",
       "projectName": "Таксометр ГЕОМЕР-122",
-      "projectPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Taxometr.csproj",
+      "projectPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Taxometr.csproj",
       "packagesPath": "C:\\Users\\Chaplin A\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\obj\\",
+      "outputPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

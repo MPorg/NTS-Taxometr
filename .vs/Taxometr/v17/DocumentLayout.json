@@ -1,29 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\GitHubRepos\\Taxometr\\",
+  "WorkspaceRootPath": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr\\taxometr\\taxometr\\pages\\deviceviewpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\deviceviewpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr_xamarin_forms\\taxometr\\taxometr\\pages\\deviceview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\deviceview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr\\taxometr\\taxometr\\pages\\deviceviewpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
-      "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\deviceviewpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
+      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr_xamarin_forms\\taxometr\\taxometr\\pages\\deviceview.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
+      "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\deviceview.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr\\taxometr\\taxometr\\pages\\devicespage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
-      "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\devicespage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr\\taxometr\\taxometr\\pages\\devicespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr_xamarin_forms\\taxometr\\taxometr\\pages\\devicespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\devicespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr\\taxometr\\taxometr\\mainpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
+      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr_xamarin_forms\\taxometr\\taxometr\\pages\\devicespage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
+      "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\pages\\devicespage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr_xamarin_forms\\taxometr\\taxometr\\mainpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
       "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\mainpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr\\taxometr\\taxometr\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|d:\\githubrepos\\taxometr_xamarin_forms\\taxometr\\taxometr\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{607F41C6-CE46-4765-8155-60E698D9D9A0}|Taxometr\\Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\taxometr\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -33,7 +33,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 356,
+          "DockedHeight": 364,
           "SelectedChildIndex": 3,
           "Children": [
             {
@@ -51,86 +51,82 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DeviceViewPage.xaml",
-              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml",
-              "ToolTip": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml",
-              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAswAgAAAAbAAAA",
+              "Title": "DeviceView.xaml",
+              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DeviceView.xaml",
+              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DeviceView.xaml",
+              "ToolTip": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DeviceView.xaml",
+              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DeviceView.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAmwAoAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-04T10:51:35.517Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DevicesPage.xaml",
-              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
-              "ToolTip": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
-              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAmwAsAAABOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-04T07:46:10.294Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\MainPage.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\MainPage.xaml",
-              "ToolTip": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\MainPage.xaml",
-              "RelativeToolTip": "Taxometr\\Taxometr\\MainPage.xaml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-04T05:35:54.778Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedHeight": 398,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DeviceViewPage.xaml.cs",
-              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml.cs",
-              "ToolTip": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml.cs",
-              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DeviceViewPage.xaml.cs",
-              "ViewState": "AQIAAFYAAAAAAAAAAAAqwHwAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T10:53:22.987Z",
+              "WhenOpened": "2024-06-05T07:01:18.751Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "DevicesPage.xaml.cs",
-              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
-              "ToolTip": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
-              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAArAAAA",
+              "Title": "DevicesPage.xaml",
+              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
+              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
+              "ToolTip": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
+              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAIwA0AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-04T07:46:10.294Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\MainPage.xaml",
+              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\MainPage.xaml",
+              "ToolTip": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\MainPage.xaml",
+              "RelativeToolTip": "Taxometr\\Taxometr\\MainPage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-04T05:35:54.778Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 390,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DeviceView.xaml.cs",
+              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DeviceView.xaml.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DeviceView.xaml.cs",
+              "ToolTip": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DeviceView.xaml.cs",
+              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DeviceView.xaml.cs",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAqwFAAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T08:02:41.932Z",
+              "WhenOpened": "2024-06-05T07:02:00.721Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DevicesPage.xaml.cs",
+              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
+              "ToolTip": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
+              "RelativeToolTip": "Taxometr\\Taxometr\\Pages\\DevicesPage.xaml.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAswCsAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T08:02:41.932Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "MainPage.xaml.cs",
-              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\MainPage.xaml.cs",
+              "DocumentMoniker": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "Taxometr\\Taxometr\\MainPage.xaml.cs",
-              "ToolTip": "D:\\GitHubRepos\\Taxometr\\Taxometr\\Taxometr\\MainPage.xaml.cs",
+              "ToolTip": "D:\\GitHubRepos\\Taxometr_Xamarin_Forms\\Taxometr\\Taxometr\\MainPage.xaml.cs",
               "RelativeToolTip": "Taxometr\\Taxometr\\MainPage.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T05:47:26.404Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-04T05:47:26.404Z"
             }
           ]
         }
