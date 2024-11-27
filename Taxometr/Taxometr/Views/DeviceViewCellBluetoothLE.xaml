@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Taxometr.Views.DeviceViewCellBluetoothLE"
+    Height="80">
+    <ViewCell.View>
+        <StackLayout
+            HeightRequest="80"
+            Padding="5"
+            VerticalOptions="FillAndExpand">
+            <Frame
+                HeightRequest="70"
+                Padding="0"
+                CornerRadius="15"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent">
+                <StackLayout
+                    Orientation="Horizontal"
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                    VerticalOptions="FillAndExpand">
+                    
+                    <StackLayout
+                        Orientation="Vertical">
+                        
+                    <Label
+                        Text="{Binding Name}"
+                        FontSize="Large"
+                        VerticalOptions="FillAndExpand"
+                        VerticalTextAlignment="Center"/>
+
+                        <Label
+                        FontSize="Micro"
+                        Text="{Binding ConnectionState}"
+                        VerticalOptions="FillAndExpand"
+                        VerticalTextAlignment="Center"/>
+
+                    </StackLayout>
+                    
+                    <StackLayout 
+                        x:Name="Buttons"
+                        IsVisible="False"
+                        Orientation="Horizontal"
+                        HorizontalOptions="EndAndExpand"
+                        Padding="15">
+                        <ImageButton
+                            x:Name="ConnectBtn"
+                            BackgroundColor="Transparent">
+                            <ImageButton.Source>
+                                <FontImageSource
+                                    Size="60"
+                                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                                    FontFamily="IconsRegular"
+                                    Glyph="{StaticResource IconHands}"/>
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ViewCell.View>
+</ViewCell>

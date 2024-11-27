@@ -20,3 +20,5 @@ C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Debug\netstandard2.0\Views\Devi
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Debug\netstandard2.0\Pages\MainPage.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Debug\netstandard2.0\Pages\SettingsPage.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Debug\netstandard2.0\Views\AutoConnectBanner.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Debug\netstandard2.0\Pages\DevicesPageBluetoothLE.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Debug\netstandard2.0\Views\DeviceViewCellBluetoothLE.xaml.g.cs

@@ -3,7 +3,6 @@ using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BluetoothClassic.Abstractions;
 using Plugin.Geolocator;
-using SQLitePCL;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ using Taxometr.Interfaces;
 using Taxometr.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace Taxometr.Data
 {

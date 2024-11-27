@@ -1,17 +1,12 @@
 ﻿using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
-using Plugin.BluetoothClassic.Abstractions;
-using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Taxometr.Data;
 using Taxometr.Data.DataBase.Objects;
-using Taxometr.Interfaces;
 using Taxometr.Views;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

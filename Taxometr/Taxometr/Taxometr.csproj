@@ -62,6 +62,7 @@
   <ItemGroup>
     <PackageReference Include="Plugin.BLE" Version="3.1.0" />
     <PackageReference Include="Plugin.BluetoothClassic" Version="1.1.5" />
+    <PackageReference Include="Plugin.BluetoothLE" Version="6.3.0.19" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
@@ -75,6 +76,9 @@
     <Compile Update="Pages\DeviceView.xaml.cs">
       <DependentUpon>DeviceView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\DeviceViewCellBluetoothLE.xaml.cs">
+      <DependentUpon>DeviceViewCellBluetoothLE.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DeviceViewCell.xaml.cs">
       <DependentUpon>DeviceViewCell.xaml</DependentUpon>
     </Compile>
@@ -85,6 +89,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\DevicesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\DevicesPageBluetoothLE.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\DeviceView.xaml">

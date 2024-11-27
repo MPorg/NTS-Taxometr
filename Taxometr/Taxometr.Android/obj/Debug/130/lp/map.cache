@@ -1,6 +1,7 @@
 FormsViewGroup.dll
 Plugin.BLE.dll
 Plugin.BluetoothClassic.Android.dll
+Plugin.BluetoothLE.dll
 Plugin.CurrentActivity.dll
 Plugin.Geolocator.dll
 Plugin.Permissions.dll

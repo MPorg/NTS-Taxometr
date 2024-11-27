@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Plugin.BLE.Abstractions.Contracts;
+using Plugin.BluetoothLE;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reactive.Linq;
 using Taxometr.Data;
 using Xamarin.Forms;
-using Xamarin.Forms.Shapes;
-using Xamarin.Forms.Xaml;
 
 namespace Taxometr.Services
 {
@@ -100,41 +102,39 @@ namespace Taxometr.Services
 
         private static async void SentToBLE(byte[] data)
         {
-            var adapter = AppData.BLEAdapter;
+            //var adapter = AppData.BLEAdapter;
+            var adapter = Plugin.BluetoothLE.CrossBleAdapter.Current;
             try
             {
-                var services = await AppData.AutoConnectDevice.GetServicesAsync();
-                foreach (var s in services)
+                var device = (await adapter.GetConnectedDevices()).ToList()[0];
+                Debug.WriteLine($"device == null ? {device == null} connected ? {device.IsConnected()}");
+                List<IGattService> gattServices = new List<IGattService>();
+                device.DiscoverServices().Subscribe((s) => 
                 {
-                    if (s.Id == BLUETOOTH_LE_INCOTEX_SERVICE)
+                    Debug.WriteLine($"Find {s.Uuid}");
+                    gattServices.Add(s);
+                });
+
+                if (gattServices.Count > 0)
+                {
+                    foreach (var s  in gattServices)
                     {
-                        Debug.WriteLine($"search {s.Id}, reference {BLUETOOTH_LE_INCOTEX_SERVICE}");
-                        var chars = await s.GetCharacteristicsAsync();
-                        foreach (var character in chars)
-                        {
-                            Debug.WriteLine($"search {character.Id}, reference {BLUETOOTH_LE_INCOTEX_CHAR_W}");
-                            if (character.Id == BLUETOOTH_LE_INCOTEX_CHAR_W)
-                            {
-                                DebugByteStr(data);
-                                await character.WriteAsync(data);
-                            }
-                        }
-                        foreach (var character in chars)
-                        {
-                            Debug.WriteLine($"search {character.Id}, reference {BLUETOOTH_LE_INCOTEX_CHAR_R}");
-                            if (character.Id == BLUETOOTH_LE_INCOTEX_CHAR_R)
-                            {
-                                Debug.WriteLine($"Can read {character.CanRead}");
-                                var answer = await character.ReadAsync();
-                                Debug.WriteLine($"Answer: {answer.ToString()}");
-                            }
-                        }
+                        Debug.WriteLine($"service == null ? {s == null} UUID = {s.Uuid}");
+                        /*var characterW = s.GetKnownCharacteristics(BLUETOOTH_LE_INCOTEX_CHAR_W);
+                        Debug.WriteLine($"char_W == null ? {characterW == null}");
+                        DebugByteStr(data);
+                        await characterW.Wait().Write(data);
+
+                        var characterR = await s.GetKnownCharacteristics(BLUETOOTH_LE_INCOTEX_CHAR_R);
+                        Debug.WriteLine($"char_R == null ? {characterR == null}");
+                        var answer = (await characterR.Read()).Data;
+                        Debug.WriteLine($"Answer: {answer.ToString()}");*/
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("Не удалось прочитать сообщение");
+                Debug.WriteLine($"Не удалось прочитать сообщение {ex.Message} {ex.Source}");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Taxometr.Services
             }
             data.Add(addr);
             data.Add(flc);
-            Debug.WriteLine($"{crc}");
+            //Debug.WriteLine($"{crc}");
             //data.Add(0x6d);
             data.Add(0x49);
             byte[] bufer = data.ToArray();
