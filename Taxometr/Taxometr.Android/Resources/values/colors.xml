@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="ColorActionBar">#001525</color>
+  <color name="launcher_background">#2A6F97</color>
+  <color name="colorPrimary">#5AAED2</color>
+  <color name="colorPrimaryDark">#002C4C</color>
+  <color name="colorAccent">#83EBB4</color>
+</resources>

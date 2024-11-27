@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Taxometr.Pages"
+             x:Class="Taxometr.MainMenu"
+             Style="{StaticResource BaseShell}">
+    <TabBar x:Name="_tabBar" Route="root">
+        <Tab Title="Меню таксометра" Route="Castings">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconNews}"/>
+            </Tab.Icon>
+            <ShellContent>
+                <pages:MainPage/>
+            </ShellContent>
+        </Tab>
+        <Tab Title="Смена" Route="Feedbacks">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid" 
+                Glyph="{StaticResource IconTaxi}"/>
+            </Tab.Icon>
+            <ShellContent>
+                <ContentPage
+                Shell.FlyoutBehavior="Flyout">
+                    <Shell.TitleView>
+                        <StackLayout>
+                            <Label
+                            Style="{StaticResource TitleText}"
+                            Text="Смена"/>
+                        </StackLayout>
+                    </Shell.TitleView>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+        <Tab Title="Отчёты" Route="Favorites">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid" 
+                Glyph="{StaticResource IconReceipt}"/>
+            </Tab.Icon>
+            <ShellContent>
+                <ContentPage
+                Shell.FlyoutBehavior="Flyout">
+                    <Shell.TitleView>
+                        <StackLayout>
+                            <Label
+                            Style="{StaticResource TitleText}"
+                            Text="Отчёты"/>
+                        </StackLayout>
+                    </Shell.TitleView>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </TabBar>
+
+
+    <MenuItem
+        Text="Устройства"
+        x:Name="DevicesMI"
+        Clicked="OnDevicesMIClicked">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                Size="70"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsBrands"
+                Glyph="{StaticResource IconBLE}"/>
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+    <MenuItem
+        Text="Настройки"
+        x:Name="SettingsMI"
+        Clicked="OnSettingsMIClicked">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                Size="70"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconGear}"/>
+        </MenuItem.IconImageSource>
+
+    </MenuItem>
+
+</Shell>

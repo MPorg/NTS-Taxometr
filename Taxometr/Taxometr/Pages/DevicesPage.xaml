@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Taxometr.Views"
+             x:Class="Taxometr.Pages.DevicesPage"
+             Shell.TabBarIsVisible="False"
+             Style="{StaticResource BasePage}">
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+                Text="Устройства"
+                Style="{StaticResource TitleText}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <RefreshView
+        x:Name="Refresh"
+        Refreshing="RefreshPage"
+        VerticalOptions="FillAndExpand">
+        <ScrollView>
+            <StackLayout
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                Orientation="Vertical">
+                <StackLayout
+                    Orientation="Horizontal"
+                    HeightRequest="40"
+                    HorizontalOptions="Fill"
+                    Padding="30, 10">
+                    <Label
+                        Text="Поиск устройств"
+                        FontSize="Large"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"/>
+
+                    <ImageButton
+                        HeightRequest="20"
+                        VerticalOptions="Center"
+                        x:Name="RefreshBtn"
+                        Clicked="OnRefreshBtnClicked"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource
+                                    Size="100"
+                                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                                    FontFamily="IconsSolid"
+                                    Glyph="{StaticResource IconRefresh}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+
+                </StackLayout>
+                <Frame
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    CornerRadius="20">
+                    <StackLayout
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                            <ListView 
+                                x:Name="ListOfDevices"
+                                ItemTapped="OnListOfDevicesItemTapped"
+                                SeparatorColor="Transparent"
+                                HasUnevenRows="True"
+                                BackgroundColor="Transparent"
+                                SelectionMode="None"
+                                MinimumHeightRequest="80">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <views:DeviceViewCell/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>
