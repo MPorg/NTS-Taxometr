@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxometr.Pages.SettingsPage"
+             Shell.TabBarIsVisible="False"
+             Style="{StaticResource BasePage}">
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+                Style="{StaticResource TitleText}"
+                Text="Настройки"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout
+            Padding="10">
+
+            <Frame
+                Padding="-5"
+                CornerRadius="20"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                Margin="0, 0, 0, 10">
+                <StackLayout 
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
+                    
+                    <Label
+                        Text="Подключение"
+                        FontFamily="Geologica-Bold"
+                        HorizontalTextAlignment="Center"
+                        FontSize="Large"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame
+                Padding="-5"
+                CornerRadius="20"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent">
+                <RelativeLayout
+                    HeightRequest="120"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+                    <StackLayout 
+                        x:Name="AutoConnectDeviceParameter"
+                        Padding="25"
+                        Orientation="Horizontal"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill">
+
+                        <StackLayout>
+                            <Label 
+                                Text="Сохранённое устройство"
+                                VerticalTextAlignment="Center"
+                                FontSize="Large"/>
+                            <Label 
+                                Text="Устройство для подключения при запуске приложения"
+                                FontSize="Small"
+                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"/>
+                        </StackLayout>
+
+                        <Label
+                            x:Name="AutoConnectDeviceName"
+                            Text="НЕ ВЫБРАНО"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center"
+                            MinimumWidthRequest="120"
+                            WidthRequest="120"
+                            FontFamily="Geologica-Italic"/>
+
+                    </StackLayout>
+                </RelativeLayout>
+            </Frame>
+
+            <Frame
+                Padding="-5"
+                CornerRadius="20"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent">
+                <RelativeLayout
+                    HeightRequest="120"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+                    <StackLayout 
+                        x:Name="AutoConnectParameter"
+                        Padding="25"
+                        Orientation="Horizontal"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill">
+
+                        <StackLayout>
+                            <Label 
+                                Text="Автоподключение"
+                                VerticalTextAlignment="Center"
+                                FontSize="Large"/>
+                            <Label 
+                                Text="Подключаться к выбранному устройству при запуске приложения"
+                                FontSize="Small"
+                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"/>
+                        </StackLayout>
+
+                        <Switch
+                            x:Name="AutoconnectSwitch"
+                            Toggled="OnAutoconnectSwitchToggled"
+                            HorizontalOptions="EndAndExpand"/>
+
+                    </StackLayout>
+                    <StackLayout
+                        x:Name="DisableAutoConnectPanel"
+                        BackgroundColor="{StaticResource TextMiddle}"
+                        Opacity="0.3"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill"/>  
+                </RelativeLayout>
+            </Frame>
+
+            <Frame
+                Padding="-5"
+                CornerRadius="20"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent">
+                <RelativeLayout
+                    HeightRequest="120"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+                    <StackLayout 
+                        x:Name="SerialNumberParameter"
+                        Padding="25"
+                        Orientation="Horizontal"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill">
+
+                        <StackLayout>
+                            <Label 
+                                Text="Заводской номер"
+                                VerticalTextAlignment="Center"
+                                FontSize="Large"/>
+                            <Label 
+                                Text="Можно узнать в паспорте на стр. 9 (вводить в формате 00001234)"
+                                FontSize="Small"
+                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"/>
+                        </StackLayout>
+
+                        <Entry
+                            x:Name="SerialNumberEntry"
+                            Text="00000616"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center"
+                            MinimumWidthRequest="120"
+                            WidthRequest="120"
+                            TextChanged="OnSerialNumberEntryTextChanged"/>
+
+                    </StackLayout>
+                    <StackLayout
+                        x:Name="DisableSerialPanel"
+                        BackgroundColor="{StaticResource TextMiddle}"
+                        Opacity="0.3"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill"/>
+                </RelativeLayout>
+            </Frame>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,106 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Fonts\Basic\Geologica-Black.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-Bold.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-ExtraBold.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-ExtraBoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-ExtraLight.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-ExtraLightItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-Italic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-Light.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-Medium.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-Regular.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-SemiBold.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-Thin.ttf" />
+    <None Remove="Resources\Fonts\Basic\Geologica-ThinItalic.ttf" />
+    <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf" />
+    <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf" />
+    <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Black.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-BoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-ExtraBold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-ExtraBoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-ExtraLight.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-ExtraLightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Light.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-LightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Medium.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-MediumItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-SemiBold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-Thin.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Basic\Geologica-ThinItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Plugin.BLE" Version="3.1.0" />
+    <PackageReference Include="Plugin.BluetoothClassic" Version="1.1.5" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\DevicesPage.xaml.cs">
+      <DependentUpon>DevicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\DeviceView.xaml.cs">
+      <DependentUpon>DeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DeviceViewCell.xaml.cs">
+      <DependentUpon>DeviceViewCell.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MainMenu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\DevicesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\DeviceView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AutoConnectBanner.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DeviceViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
