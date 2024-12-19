@@ -8,27 +8,53 @@ namespace Taxometr.Data.DataBase
 {
     public class TaxometrDB
     {
-        private readonly SQLiteAsyncConnection _connection;
+        private Properties _properties;
+        private BLEDevices _devices;
+        private Prefabs _prefabs;
 
-        public Properties Property { get; private set; } 
-        public BLEDevices Devices { get; private set; }
+        public Properties Property
+        { 
+            get
+            {
+                return _properties;
+            }
+        }
+        public BLEDevices Devices
+        {
+            get
+            {
+                return _devices;
+            }
+        }
+        public Prefabs DevicePrefabs
+        {
+            get
+            {
+                return _prefabs;
+            }
+        }
 
         public TaxometrDB(string connectionString)
         {
-            _connection = new SQLiteAsyncConnection(connectionString);
-            Property = new Properties(_connection);
-            Devices = new BLEDevices(_connection);
+            _properties = new Properties(connectionString);
+            _devices = new BLEDevices(connectionString);
+            _prefabs = new Prefabs(connectionString);
         }
 
         public class Properties
         {
-            public Properties(SQLiteAsyncConnection connection)
+            public Properties(string connectionStr)
             {
-                _connection = connection;
-                _connection.CreateTableAsync<PropertyModel>();
+                _connection = new SQLiteAsyncConnection(connectionStr);
+                Initialize();
             }
 
-            private SQLiteAsyncConnection _connection;
+            private async void Initialize()
+            {
+                await _connection.CreateTableAsync<PropertyModel>();
+            }
+
+            private readonly SQLiteAsyncConnection _connection;
 
             public async Task<List<PropertyModel>> GetPropertiesAsync()
             {
@@ -58,13 +84,18 @@ namespace Taxometr.Data.DataBase
 
         public class BLEDevices
         {
-            public BLEDevices(SQLiteAsyncConnection connection)
+            public BLEDevices(string connectionStr)
             {
-                _connection = connection;
-                _connection.CreateTableAsync<DeviceModel>();
+                _connection = new SQLiteAsyncConnection(connectionStr);
+                Initialize();
             }
 
-            private SQLiteAsyncConnection _connection;
+            private async void Initialize()
+            {
+                await _connection.CreateTableAsync<DeviceModel>();
+            }
+
+            private readonly SQLiteAsyncConnection _connection;
 
             public async Task<List<DeviceModel>> GetDevicesAsync()
             {
@@ -88,6 +119,48 @@ namespace Taxometr.Data.DataBase
             }
 
             public async Task<int> DeleteAsync(DeviceModel device)
+            {
+                return await _connection.DeleteAsync(device);
+            }
+        }
+
+        public class Prefabs
+        {
+            public Prefabs(string connectionStr)
+            {
+                _connection = new SQLiteAsyncConnection(connectionStr);
+                Initialize();
+            }
+
+            private async void Initialize()
+            {
+                await _connection.CreateTableAsync<DevicePrefab>();
+            }
+
+            private readonly SQLiteAsyncConnection _connection;
+
+            public async Task<List<DevicePrefab>> GetPrefabsAsync()
+            {
+                return await _connection.Table<DevicePrefab>().ToListAsync();
+            }
+
+            public async Task<DevicePrefab> GetByIdAsync(Guid id)
+            {
+                return await _connection.Table<DevicePrefab>().Where(x => x.DeviceId == id).FirstOrDefaultAsync();
+            }
+            public async Task<int> CreateAsync(DevicePrefab device)
+            {
+                return await _connection.InsertAsync(device);
+            }
+
+            public async Task<int> UpdateAsync(DevicePrefab device)
+            {
+                if (await GetByIdAsync(device.DeviceId) == null)
+                    return await _connection.InsertAsync(device);
+                return await _connection.UpdateAsync(device);
+            }
+
+            public async Task<int> DeleteAsync(DevicePrefab device)
             {
                 return await _connection.DeleteAsync(device);
             }

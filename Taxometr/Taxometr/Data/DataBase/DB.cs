@@ -8,8 +8,8 @@ namespace Taxometr.Data.DataBase
         public const string DBFileName = "NTS_Taxometr_DB.db3";
 
         public const SQLite.SQLiteOpenFlags Flags =
-            SQLite.SQLiteOpenFlags.ReadWrite |
             SQLite.SQLiteOpenFlags.Create |
+            SQLite.SQLiteOpenFlags.ReadWrite |
             SQLite.SQLiteOpenFlags.SharedCache;
 
         public static string DBFullPath
@@ -18,6 +18,19 @@ namespace Taxometr.Data.DataBase
             {
                 var fullPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 return Path.Combine(fullPath, DBFileName);
+            }
+        }
+
+        public static string DebugFullPath
+        {
+            get
+            {
+                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr";
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+                return Path.Combine(fullPath, "app.log");
             }
         }
     }

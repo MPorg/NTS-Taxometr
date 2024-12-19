@@ -11,8 +11,24 @@
                 Text="Меню таксометра"/>
         </StackLayout>
     </Shell.TitleView>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="InfoBtn"
+            Clicked="OnInfoBtnClicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    Size="60"
+                    Color="{StaticResource TextLink}"
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconInfo}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout
+            Style="{StaticResource PageLayout}">
             
             <RelativeLayout
                 VerticalOptions="FillAndExpand"
@@ -25,22 +41,86 @@
                     VerticalOptions="Fill"
                     HorizontalOptions="Fill">
 
+                    <!--
+                    <StackLayout
+                        Orientation="Horizontal"
+                        HorizontalOptions="CenterAndExpand"
+                        HeightRequest="60">
+
+                        <Label
+                            Text="Подключено: "
+                            FontSize="Large"
+                            VerticalTextAlignment="Center"/>
+
+                        <Button
+                            x:Name="DeviceName"
+                            FontSize="Large"
+                            Clicked="OnInfoBtnClicked"
+                            Style="{StaticResource LinkButton}"
+                            TextTransform="None"/>
+                    </StackLayout>
+                    
+                    
                     <Button
                         x:Name="StatusSCNOBtn"
                         Text="Статус СКНО"
                         Clicked="OnStatusSCNOBtnClicked"/>
+                    -->
+
+                    <StackLayout
+                        Orientation="Horizontal"
+                        HorizontalOptions="Center"
+                        Padding="5">
+
+                        <Button
+                            Text="C"
+                            CommandParameter="C"
+                            WidthRequest="60"
+                            Clicked="OnEmitBtnClicked"/>
+
+                        <Button
+                            Text="▲"
+                            CommandParameter="Up"
+                            WidthRequest="60"
+                            Clicked="OnEmitBtnClicked"/>
+
+                        <Button
+                            Text="▼"
+                            CommandParameter="Down"
+                            WidthRequest="60"
+                            Clicked="OnEmitBtnClicked"/>
+
+                        <Button
+                            Text="OK"
+                            CommandParameter="OK"
+                            WidthRequest="60"
+                            Clicked="OnEmitBtnClicked"/>
+
+                        <Button
+                            Text="1"
+                            CommandParameter="Num_1"
+                            WidthRequest="60"
+                            Clicked="OnEmitBtnClicked"/>
+
+                        <Button
+                            Text="2"
+                            CommandParameter="Num_2"
+                            WidthRequest="60"
+                            Clicked="OnEmitBtnClicked"/>
+
+                    </StackLayout>
 
                 </StackLayout>
 
 
                 <StackLayout
+                    Style="{StaticResource PageLayout}"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
                     RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand"
                     Padding="20"
-                    x:Name="BanLayout"
-                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                    x:Name="BanLayout">
                     <StackLayout
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="Center">

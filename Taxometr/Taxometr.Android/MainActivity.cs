@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Taxometr.Droid
 {
-    [Activity(Label = "Taxometr", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "НТС-Таксометр", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override async void OnCreate(Bundle savedInstanceState)
@@ -31,7 +31,10 @@ namespace Taxometr.Droid
         {
             public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)>{
                 (Android.Manifest.Permission.BluetoothScan, true),
-                (Android.Manifest.Permission.BluetoothConnect, true)
+                (Android.Manifest.Permission.BluetoothConnect, true),
+                (Android.Manifest.Permission.ManageExternalStorage, true),
+                (Android.Manifest.Permission.ReadExternalStorage, true),
+                (Android.Manifest.Permission.WriteExternalStorage, true),
             }.ToArray();
         }
     }

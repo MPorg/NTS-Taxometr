@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxometr.Pages.PrintPage"
+             Shell.FlyoutBehavior="Flyout"
+             Style="{StaticResource BasePage}">
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+            Style="{StaticResource TitleText}"
+            Text="Отчёты"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout
+            Style="{StaticResource PageLayout}">
+            <RelativeLayout
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+
+                <StackLayout
+                    Padding="10"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+
+                    <Button
+                        x:Name="ZReceipt"
+                        Clicked="OnZReceiptClicked"/>
+                    <Button
+                        x:Name="XReceipt"
+                        Clicked="OnXReceiptClicked"/>
+
+                </StackLayout>
+
+
+                <StackLayout
+                    Style="{StaticResource PageLayout}"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    Padding="20"
+                    x:Name="BanLayout">
+                    
+                    <StackLayout
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="Center">
+
+                        <Label
+                            Text="Нет подключенных устройств"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center"/>
+                        <Button
+                            x:Name="DevicesBtn"
+                            Text="Устройства"
+                            Clicked="OnDevicesBtnClicked"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

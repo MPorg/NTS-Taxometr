@@ -6,7 +6,7 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              Style="{StaticResource BasePage}"
-             BackgroundColor="Transparent">
+             BackgroundColor="{StaticResource Background}">
     <ContentPage.Content>
             <StackLayout
                 BackgroundColor="Transparent"
@@ -15,7 +15,7 @@
                 <Frame
                     Padding="50"
                     CornerRadius="30"
-                    BackgroundColor="#60000000"
+                    BackgroundColor="#A0000000"
                     BorderColor="Transparent">
                     <StackLayout>
                         <Label

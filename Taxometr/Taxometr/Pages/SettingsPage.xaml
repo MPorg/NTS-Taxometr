@@ -13,6 +13,7 @@
     </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout
+            Style="{StaticResource PageLayout}"
             Padding="10">
 
             <Frame
@@ -23,9 +24,10 @@
                 Margin="0, 0, 0, 10">
                 <StackLayout 
                     Padding="10"
-                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
+                    BackgroundColor="{StaticResource BackgroundDarked}">
                     
                     <Label
+                        TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                         Text="Подключение"
                         FontFamily="Geologica-Bold"
                         HorizontalTextAlignment="Center"
@@ -46,7 +48,7 @@
                         x:Name="AutoConnectDeviceParameter"
                         Padding="25"
                         Orientation="Horizontal"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                        BackgroundColor="{StaticResource BackgroundDarked}"
                         RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
                         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
                         VerticalOptions="Fill"
@@ -54,16 +56,18 @@
 
                         <StackLayout>
                             <Label 
+                                TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                                 Text="Сохранённое устройство"
                                 VerticalTextAlignment="Center"
                                 FontSize="Large"/>
                             <Label 
                                 Text="Устройство для подключения при запуске приложения"
                                 FontSize="Small"
-                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"/>
+                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredDark}}"/>
                         </StackLayout>
 
                         <Label
+                            TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                             x:Name="AutoConnectDeviceName"
                             Text="НЕ ВЫБРАНО"
                             VerticalTextAlignment="Center"
@@ -89,7 +93,7 @@
                         x:Name="AutoConnectParameter"
                         Padding="25"
                         Orientation="Horizontal"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                        BackgroundColor="{StaticResource BackgroundDarked}"
                         RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
                         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
                         VerticalOptions="Fill"
@@ -97,13 +101,14 @@
 
                         <StackLayout>
                             <Label 
+                                TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                                 Text="Автоподключение"
                                 VerticalTextAlignment="Center"
                                 FontSize="Large"/>
                             <Label 
                                 Text="Подключаться к выбранному устройству при запуске приложения"
                                 FontSize="Small"
-                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"/>
+                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredDark}}"/>
                         </StackLayout>
 
                         <Switch
@@ -120,57 +125,6 @@
                         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
                         VerticalOptions="Fill"
                         HorizontalOptions="Fill"/>  
-                </RelativeLayout>
-            </Frame>
-
-            <Frame
-                Padding="-5"
-                CornerRadius="20"
-                BackgroundColor="Transparent"
-                BorderColor="Transparent">
-                <RelativeLayout
-                    HeightRequest="120"
-                    VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand">
-                    <StackLayout 
-                        x:Name="SerialNumberParameter"
-                        Padding="25"
-                        Orientation="Horizontal"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill">
-
-                        <StackLayout>
-                            <Label 
-                                Text="Заводской номер"
-                                VerticalTextAlignment="Center"
-                                FontSize="Large"/>
-                            <Label 
-                                Text="Можно узнать в паспорте на стр. 9 (вводить в формате 00001234)"
-                                FontSize="Small"
-                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"/>
-                        </StackLayout>
-
-                        <Entry
-                            x:Name="SerialNumberEntry"
-                            Text="00000616"
-                            VerticalTextAlignment="Center"
-                            HorizontalTextAlignment="Center"
-                            MinimumWidthRequest="120"
-                            WidthRequest="120"
-                            TextChanged="OnSerialNumberEntryTextChanged"/>
-
-                    </StackLayout>
-                    <StackLayout
-                        x:Name="DisableSerialPanel"
-                        BackgroundColor="{StaticResource TextMiddle}"
-                        Opacity="0.3"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill"/>
                 </RelativeLayout>
             </Frame>
 
