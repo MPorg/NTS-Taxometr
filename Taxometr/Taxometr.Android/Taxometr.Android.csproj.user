@@ -6,5 +6,6 @@
     <ActiveDebugProfile>Pixel 7 Pro - API 34 %28Android 14.0 — API 34%29</ActiveDebugProfile>
     <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
     <DefaultDevice>pixel_7_pro_-_api_34</DefaultDevice>
+    <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
 </Project>

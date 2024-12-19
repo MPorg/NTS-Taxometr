@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxometr.Views.DeposWithdrawCashBanner"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             Style="{StaticResource BasePage}"
+             BackgroundColor="Transparent">
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="Transparent"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+            <Frame
+                Padding="50"
+                CornerRadius="30"
+                BackgroundColor="#A0000000"
+                BorderColor="Transparent">
+                <StackLayout>
+                    
+                    <Label
+                        x:Name="Header"
+                        FontSize="Large"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="FillAndExpand"/>
+                    <Entry
+                        x:Name="CashEntry"
+                        Placeholder="0.00"
+                        HorizontalOptions="Fill"
+                        FontSize="Large"/>
+                    
+                    <Button
+                        x:Name="EnterBtn"
+                        Text="ОК"
+                        Clicked="OnEnterBtnClicked"/>
+
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

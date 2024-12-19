@@ -2,20 +2,27 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taxometr.App">
+    
     <Application.Resources>
 
-        <Color x:Key="BackgroundDarked">#001525</Color>
-        <Color x:Key="BackgroundDark">#002C4C</Color>
-        <Color x:Key="Background">#2A6F97</Color>
-        <Color x:Key="BackgroundLight">#5AAED2</Color>
-        <Color x:Key="BackgroundLighted">#BEECFD</Color>
+        <Color x:Key="BackgroundDarked">#142F5F</Color>
+        <Color x:Key="BackgroundDark">#264F7C</Color>
+        <Color x:Key="Background">#376F99</Color>
+        <Color x:Key="BackgroundLight">#498EB5</Color>
+        <Color x:Key="BackgroundLighted">#5AAED2</Color>
+
+        <Color x:Key="BackgroundLightGray">#CDCDCD</Color>
+        <Color x:Key="BackgroundDarkGray">#212121</Color>
+
         <Color x:Key="TextLight">#202020</Color>
         <Color x:Key="TextMiddle">#969696</Color>
-        <Color x:Key="TextDark">#F7F7F7</Color>
-        <Color x:Key="TextColoredLight">#002C4C</Color>
-        <Color x:Key="TextColoredMiddle">#2A6F97</Color>
+        <Color x:Key="TextDark">#CDCDCD</Color>
+
+        <Color x:Key="TextColoredLight">#142F5F</Color>
+        <Color x:Key="TextColoredMiddle">#376F99</Color>
         <Color x:Key="TextColoredDark">#5AAED2</Color>
-        <Color x:Key="TextLink">#83EBB4</Color>
+        
+        <Color x:Key="TextLink">#DB7C26</Color>
 
         <x:String x:Key="IconPhone">&#xf095;</x:String>
         <x:String x:Key="IconKey">&#xf084;</x:String>
@@ -41,18 +48,22 @@
         <x:String x:Key="IconBLE">&#xf294;</x:String>
         <x:String x:Key="IconHands">&#xf2b5;</x:String>
         <x:String x:Key="IconRefresh">&#xf021;</x:String>
+        <x:String x:Key="IconArrowUp">&#xf106;</x:String>
+        <x:String x:Key="IconArrowDown">&#xf107;</x:String>
+        <x:String x:Key="IconStar">&#xf005;</x:String>
+        <x:String x:Key="IconFolder">&#xf07b;</x:String>
 
         <Style x:Key="BaseShell" TargetType="Element">
-            <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"/>
-            <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"/>
-            <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDarked}}"/>
-            <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"/>
+            <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLighted}}"/>
+            <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"/>
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundDarked}, Dark={StaticResource BackgroundDarked}}"/>
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"/>
             <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource TextLink}"/>
-            <Setter Property="Shell.FlyoutBackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"/>
+            <Setter Property="Shell.FlyoutBackgroundColor" Value="{StaticResource BackgroundDarked}"/>
         </Style>
 
         <Style Class="FlyoutItemLabelStyle" TargetType="Label">
-            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"/>
             <Setter Property="FontFamily" Value="Geologica-Medium"/>
         </Style>
 
@@ -62,27 +73,28 @@
         </Style>
 
         <Style x:Key="BasePage" TargetType="Element">
-            <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDarked}}"/>
-            <Setter Property="NavigationPage.BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
-            <Setter Property="NavigationPage.BarTextColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"/>
-            <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"/>
-            <Setter Property="ContentPage.BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource BackgroundDarked}"/>
+            <Setter Property="NavigationPage.BarBackgroundColor" Value="{StaticResource BackgroundDarked}"/>
+            <Setter Property="NavigationPage.BarTextColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"/>
+            <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"/>
+            <Setter Property="ContentPage.BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLighted}, Dark={StaticResource BackgroundDarked}}"/>
         </Style>
 
         <Style TargetType="NavigationPage" BasedOn="{StaticResource BasePage}"/>
         <Style TargetType="ContentPage" BasedOn="{StaticResource BasePage}"/>
 
-        <Style x:Key="BaseTabbed" TargetType="TabbedPage">
-            <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
-            <Setter Property="NavigationPage.BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
-            <Setter Property="NavigationPage.BarTextColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"/>
-            <Setter Property="SelectedTabColor" Value="{StaticResource TextLink}"/>
+        <Style x:Key="BaseTabbed" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource BackgroundDarked}"/>
+            <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"/>
+            <Setter Property="TabbedPage.SelectedTabColor" Value="{StaticResource TextLink}"/>
+            <Setter Property="TabbedPage.UnselectedTabColor" Value="{StaticResource TextDark}"/>
+            <Setter Property="ContentPage.BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundDarked}, Dark={StaticResource BackgroundDarked}}"/>
         </Style>
 
         <Style TargetType="TabbedPage" BasedOn="{StaticResource BaseTabbed}"/>
 
         <Style x:Key="BaseGrid" TargetType="Element">
-            <Setter Property="Grid.BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
+            <Setter Property="Grid.BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLighted}, Dark={StaticResource BackgroundDarked}}"/>
         </Style>
 
         <Style x:Key="TransparentGrid" TargetType="Element">
@@ -90,6 +102,10 @@
         </Style>
         <Style TargetType="Grid" BasedOn="{StaticResource TransparentGrid}"/>
 
+        <Style x:Key="PageLayout" TargetType="StackLayout">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"/>
+        </Style>
+        
         <Style x:Key="BaseFrame" TargetType="Element">
             <Setter Property="Frame.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundLight}}"/>
             <Setter Property="Frame.BorderColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundLight}}"/>
@@ -112,6 +128,7 @@
         </Style>
 
         <Style x:Key="TitleText" TargetType="Label" BasedOn="{StaticResource BaseLightText}">
+            <Setter Property="TextColor" Value="{StaticResource TextDark}"/>
             <Setter Property="VerticalTextAlignment" Value="Center"/>
             <Setter Property="HorizontalTextAlignment" Value="Start"/>
             <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
@@ -122,10 +139,9 @@
 
         <Style x:Key="BaseButton" TargetType="Button">
             <Setter Property="Button.BackgroundColor" Value="{StaticResource TextLink}"/>
-            <Setter Property="Button.TextColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDarked}}"/>
+            <Setter Property="Button.TextColor" Value="{AppThemeBinding Light={StaticResource BackgroundLightGray}, Dark={StaticResource BackgroundDarkGray}}"/>
             <Setter Property="Button.FontSize" Value="Large"/>
-            <Setter Property="Button.FontFamily" Value="
-                    -Black"/>
+            <Setter Property="Button.FontFamily" Value="Geologica-Bold"/>
         </Style>
 
         <Style TargetType="Button" BasedOn="{StaticResource BaseButton}"/>

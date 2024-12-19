@@ -8,8 +8,9 @@ namespace Taxometr
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainMenu();
+            MainMenu mm = new MainMenu();
+            MainPage = mm;
+            AppData.MainMenu = mm;
             AppData.Initialize();
         }
 
@@ -20,10 +21,13 @@ namespace Taxometr
 
         protected override void OnSleep()
         {
+            AppData.Dispose();
         }
 
         protected override void OnResume()
         {
         }
+
+        
     }
 }

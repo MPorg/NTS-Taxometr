@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
+      "Honoo.IO.Hashing.Crc/1.1.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Honoo.IO.Hashing.Crc.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Honoo.IO.Hashing.Crc.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
@@ -313,6 +326,24 @@
     }
   },
   "libraries": {
+    "Honoo.IO.Hashing.Crc/1.1.3": {
+      "sha512": "MtA01RcYy2RGOSvLWn+WwMz3met3XDtABPuNljTI8QfuPJtbgHcaidWZTz7LMPIMOe7zjpELhgkI+r6A+griOg==",
+      "type": "package",
+      "path": "honoo.io.hashing.crc/1.1.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Honoo.IO.Hashing.Crc.md",
+        "honoo.io.hashing.crc.1.1.3.nupkg.sha512",
+        "honoo.io.hashing.crc.nuspec",
+        "lib/net40/Honoo.IO.Hashing.Crc.dll",
+        "lib/net40/Honoo.IO.Hashing.Crc.xml",
+        "lib/net462/Honoo.IO.Hashing.Crc.dll",
+        "lib/net462/Honoo.IO.Hashing.Crc.xml",
+        "lib/netstandard2.0/Honoo.IO.Hashing.Crc.dll",
+        "lib/netstandard2.0/Honoo.IO.Hashing.Crc.xml"
+      ]
+    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
@@ -1053,6 +1084,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "Honoo.IO.Hashing.Crc >= 1.1.3",
       "NETStandard.Library >= 2.0.3",
       "Plugin.BLE >= 3.1.0",
       "Plugin.BluetoothClassic >= 1.1.5",
@@ -1112,6 +1144,10 @@
       "netstandard2.0": {
         "targetAlias": "netstandard2.0",
         "dependencies": {
+          "Honoo.IO.Hashing.Crc": {
+            "target": "Package",
+            "version": "[1.1.3, )"
+          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",

@@ -15,6 +15,8 @@ namespace Taxometr.Views
         public AutoConnectBanner()
         {
             InitializeComponent();
+            Color bg = BackgroundColor;
+            BackgroundColor = new Color(bg.R, bg.G, bg.B, 0);
         }
     }
 }

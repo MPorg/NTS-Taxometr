@@ -26,5 +26,10 @@
         public static string IconBLE = "\uf294";
         public static string IconHands = "\uf2b5";
         public static string IconRefresh = "\uf021";
+        public static string IconArrowUp = "\uf106";
+        public static string IconArrowDown = "\uf107";
+        public static string IconStar = "\uf005";
+        public static string IconFolder = "\uf07b";
+
     }
 }
