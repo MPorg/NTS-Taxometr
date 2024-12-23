@@ -4,6 +4,7 @@
 	<application android:label="Таксометр ГЕОМЕР-122 by NTS" android:theme="@style/MainTheme" android:requestLegacyExternalStorage="true">
   </application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
 	<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

@@ -4,6 +4,7 @@ using Android.Runtime;
 using Android.OS;
 using Xamarin.Essentials;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Taxometr.Droid
 {
@@ -16,9 +17,11 @@ namespace Taxometr.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
-
             await Permissions.RequestAsync<BLEPermission>();
+            await Permissions.RequestAsync<LockationPermission>();
+            await Permissions.RequestAsync<StoragePermission>();
+            await Task.Delay(500);
+            LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -32,9 +35,24 @@ namespace Taxometr.Droid
             public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)>{
                 (Android.Manifest.Permission.BluetoothScan, true),
                 (Android.Manifest.Permission.BluetoothConnect, true),
+                (Android.Manifest.Permission.Internet, true)
+            }.ToArray();
+        }
+        private class LockationPermission : Xamarin.Essentials.Permissions.BasePlatformPermission
+        {
+            public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)>{
+                (Android.Manifest.Permission.LocationHardware, true),
+                (Android.Manifest.Permission.AccessBackgroundLocation, true),
+                (Android.Manifest.Permission.AccessCoarseLocation, true),
+                (Android.Manifest.Permission.AccessFineLocation, true)
+            }.ToArray();
+        }
+        private class StoragePermission : Xamarin.Essentials.Permissions.BasePlatformPermission
+        {
+            public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)>{
                 (Android.Manifest.Permission.ManageExternalStorage, true),
                 (Android.Manifest.Permission.ReadExternalStorage, true),
-                (Android.Manifest.Permission.WriteExternalStorage, true),
+                (Android.Manifest.Permission.WriteExternalStorage, true)
             }.ToArray();
         }
     }

@@ -6,30 +6,42 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              Style="{StaticResource BasePage}"
-             BackgroundColor="{StaticResource Background}">
+             BackgroundColor="Transparent">
     <ContentPage.Content>
-            <StackLayout
-                BackgroundColor="Transparent"
-                VerticalOptions="Center"
-                HorizontalOptions="Center">
+
+        <StackLayout
+            BackgroundColor="Transparent"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+            <Frame
+                HorizontalOptions="FillAndExpand"
+                Padding="5"    
+                CornerRadius="35"
+                BackgroundColor="{StaticResource BackgroundDarked}"
+                BorderColor="Transparent">
                 <Frame
-                    Padding="50"
+                    Padding="10"
                     CornerRadius="30"
-                    BackgroundColor="#A0000000"
-                    BorderColor="Transparent">
-                    <StackLayout>
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}"
+                    BorderColor="Transparent"
+                    HorizontalOptions="FillAndExpand">
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand">
                         <Label
                             BackgroundColor="Transparent"
+                            TextColor="{StaticResource TextDark}"
                             Text="Автоподключение"
                             FontSize="Large"
                             HorizontalTextAlignment="Center"
                             VerticalOptions="Center"/>
                         <ActivityIndicator
                             BackgroundColor="Transparent"
+                            Color="{StaticResource TextDark}"
                             x:Name="Connecting"
                             IsRunning="True"/>
                     </StackLayout>
                 </Frame>
-            </StackLayout>
+            </Frame>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
