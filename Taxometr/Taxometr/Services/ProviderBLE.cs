@@ -77,6 +77,7 @@ namespace Taxometr.Services
             {
                 var service = await AppData.AutoConnectDevice.GetServiceAsync(BLUETOOTH_LE_INCOTEX_SERVICE);
                 _charactR = await service.GetCharacteristicAsync(BLUETOOTH_LE_INCOTEX_CHAR_R);
+                _charactR.ValueUpdated -= OnCharacterValueUpdated;
                 _charactR.ValueUpdated += OnCharacterValueUpdated;
                 await _charactR.StartUpdatesAsync();
             }

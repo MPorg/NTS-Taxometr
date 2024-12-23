@@ -142,20 +142,23 @@ namespace Taxometr.Pages
             }
         }
 
-        private void OnListOfDevicesItemTapped(object sender, ItemTappedEventArgs e)
+        private async void OnListOfDevicesItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item is DeviceViewCell.DeviceViewCellBinding selection)
             {
                 if (selection.Device.State == DeviceState.Connected)
                 {
-                    _adapter.DisconnectDeviceAsync(_connectedDevice);
+                    await _adapter.DisconnectDeviceAsync(_connectedDevice);
+                    Refresh.IsRefreshing = false;
+                    await Task.Delay(2);
+                    Refresh.IsRefreshing = true;
                 }
                 else if (selection.Device.State == DeviceState.Disconnected)
                 {
                     try
                     {
                         var connectParameters = new ConnectParameters(false, true);
-                        _adapter.ConnectToDeviceAsync(selection.Device, connectParameters);
+                        await _adapter.ConnectToDeviceAsync(selection.Device, connectParameters);
                     }
                     catch (Exception ex)
                     {

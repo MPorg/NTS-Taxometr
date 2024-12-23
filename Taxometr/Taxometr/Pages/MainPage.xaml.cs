@@ -15,6 +15,7 @@ namespace Taxometr.Pages
 		{
 			InitializeComponent();
             AppData.AutoconnectionCompleated += OnAutoconnectionCompleated;
+            AppData.ConnectionLost += OnConnectionLost;
 		}
 
         protected override async void OnAppearing()
@@ -34,6 +35,11 @@ namespace Taxometr.Pages
         private void OnAutoconnectionCompleated()
         {
             SwitchBan();
+        }
+
+        private void OnConnectionLost()
+        {
+            SwitchBan(true);
         }
 
         private void SwitchBan(bool enable = false)

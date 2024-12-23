@@ -19,10 +19,9 @@ namespace Taxometr
         public MainMenu()
         {
             InitializeComponent();
-            Start();
         }
 
-        private async void Start()
+        internal async void Start()
         {
             await AppData.CheckLocation();
             await AppData.CheckBLE();

@@ -8,13 +8,12 @@ namespace Taxometr.Data.DataBase.Objects
     public class Logger
     {
         private string _path;
-        private FileStream _stream;
         private List<string> _buffer = new List<string>();
 
         public Logger(string filePath)
         {
             _path = filePath;
-            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
                 SaveLog();
                 return true;
@@ -23,17 +22,37 @@ namespace Taxometr.Data.DataBase.Objects
 
         public void SaveLog()
         {
-            if (_buffer.Count > 0)
+            List<string> buffer = new List<string>(_buffer);
+
+            try
             {
-                System.Diagnostics.Debug.WriteLine($"Log write {_buffer.Count} lines");
+                if (buffer.Count > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Log write {buffer.Count} lines");
+                    using (StreamWriter sw = new StreamWriter(new FileStream(_path, FileMode.Append, FileAccess.Write, FileShare.Write)))
+                    {
+                        foreach (var b in buffer)
+                        {
+                            sw.WriteLine(b);
+                        }
+                        sw.Close();
+                        _buffer.RemoveRange(0, buffer.Count);
+                        buffer.Clear();
+                        if (_buffer.Count > 0)
+                        {
+                            SaveLog();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = $"Не удалось сохранить лог. Системная ошибка: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine(msg);
                 using (StreamWriter sw = new StreamWriter(new FileStream(_path, FileMode.Append, FileAccess.Write, FileShare.Write)))
                 {
-                    foreach (var b in _buffer)
-                    {
-                        sw.WriteLine(b);
-                    }
+                    sw.WriteLine(msg);
                     sw.Close();
-                    _buffer.Clear();
                 }
             }
         }

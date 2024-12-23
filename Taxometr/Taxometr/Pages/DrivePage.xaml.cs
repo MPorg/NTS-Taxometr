@@ -12,6 +12,8 @@ namespace Taxometr.Pages
         public DrivePage()
         {
             InitializeComponent();
+            AppData.AutoconnectionCompleated += OnAutoconnectionCompleated;
+            AppData.ConnectionLost += OnConnectionLost;
         }
 
         protected override async void OnAppearing()
@@ -23,6 +25,16 @@ namespace Taxometr.Pages
                 AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Drive, await AppData.Properties.GetAdminPassword());
             }
             catch { }
+        }
+
+        private void OnAutoconnectionCompleated()
+        {
+            SwitchBan();
+        }
+
+        private void OnConnectionLost()
+        {
+            SwitchBan(true);
         }
 
         private void SwitchBan(bool enable = false)

@@ -4882,6 +4882,7 @@
       "outputPath": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
+      "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],

@@ -19,6 +19,7 @@ namespace Taxometr.Data
     public static class AppData
     {
         public static event Action AutoconnectionCompleated;
+        public static event Action ConnectionLost;
         public static async void Initialize()
         {
             if (_taxometrDB == null) _taxometrDB = new TaxometrDB(DB.DBFullPath);
@@ -26,16 +27,67 @@ namespace Taxometr.Data
             await Task.Delay(100);
 
             Debug.WriteLine("Initialization");
-            BLEAdapter.DeviceConnected -= ReloadProvider;
+            await CheckLocation();
+            await CheckBLE();
+
+            BLEAdapter.DeviceConnected -= OnDeviceConnected;
+            BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
             BLEAdapter.DeviceDisconnected -= ReloadProvider;
 
-            BLEAdapter.DeviceConnected += ReloadProvider;
+            BLEAdapter.DeviceConnected += OnDeviceConnected;
+            BLEAdapter.DeviceDisconnected += OnDeviceDisconnected;
             BLEAdapter.DeviceDisconnected += ReloadProvider;
+
             LoadSettings();
             LoadAutoconnectDevice();
             DotsTimer();
+            MainMenu.Start();
         }
 
+        private static void OnDeviceDisconnected(object sender, DeviceEventArgs e)
+        {
+            _specialDisconnect = true;
+            Debug.WriteLine("_________________Special Disk________________");
+        }
+
+        private static async void OnDeviceConnected(object sender, DeviceEventArgs e)
+        {
+            while (true)
+            {
+                var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
+                if (devicePref != null)
+                {
+                    AutoConnectDevice = e.Device;
+                    AutoconnectDeviceID = AutoConnectDevice.Id;
+                    ConnectedDP = devicePref;
+                    ReloadProvider(sender, e);
+                    Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
+                    break;
+                }
+                await Task.Delay(100);
+            }
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    if (BLEAdapter.ConnectedDevices.Count == 0)
+                    {
+                        break;
+                    }
+                    await Task.Delay(1000);
+                }
+                await Task.Delay(10);
+                Debug.WriteLine($"________________Connection lost {_connectedDP.CustomName ?? "N/A"}________________");
+                await Device.InvokeOnMainThreadAsync(() =>
+                {
+                    ConnectionLost?.Invoke();
+                    if (!_specialDisconnect) LoadAutoconnectDevice();
+                    _specialDisconnect = false;
+                });
+            });
+        }
+
+        private static bool _specialDisconnect = false;
 
         private static ProviderBLE _provider;
         public static ProviderBLE Provider
@@ -56,8 +108,12 @@ namespace Taxometr.Data
         }
 
         private static bool cont = false;
+
+        private static bool _isFirstConnection = true;
+
         private static async void LoadAutoconnectDevice()
         {
+            Debug.WriteLine("_____________________Autoconnection_____________________");
             bool hasAutoConnect = await Properties.GetAutoconnect();
             var prefs = await TaxometrDB.DevicePrefabs.GetPrefabsAsync();
             foreach (var pref in prefs)
@@ -82,26 +138,33 @@ namespace Taxometr.Data
             if (await Properties.GetAutoconnect()) await Properties.SaveAutoconnect(hasAutoConnect);
 
             cont = true;
-            BLEAdapter.DeviceDiscovered += async (_, e) =>
+            if (_isFirstConnection)
             {
-                if (e.Device.Id == AutoconnectDeviceID)
+                BLEAdapter.DeviceDiscovered += async (_, e) =>
                 {
-                    _device = e.Device;
-                    if (cont)
+                    if (e.Device.Id == AutoconnectDeviceID)
                     {
-                        if (await Properties.GetAutoconnect())
+                        _device = e.Device;
+                        if (cont)
                         {
-                            await AutoConnect();
-                            cont = false;
+                            if (await Properties.GetAutoconnect())
+                            {
+                                await AutoConnect();
+                                cont = false;
+                                return;
+                            }
                         }
                     }
-                }
-            };
+                };
+                BLEAdapter.ScanTimeoutElapsed += async (_, e) => { await BLEAdapter.StartScanningForDevicesAsync(); };
+            }
             await BLEAdapter.StartScanningForDevicesAsync();
+            _isFirstConnection = false;
         }
 
         private static async Task AutoConnect()
         {
+            Debug.WriteLine("_____________________Auto connect_____________________");
             AutoConnectBanner banner = new AutoConnectBanner();
             try
             {
@@ -120,7 +183,12 @@ namespace Taxometr.Data
             }
             finally
             {
-                await banner.Navigation.PopModalAsync();
+                try
+                {
+                    await banner.Navigation.PopModalAsync();
+                }
+                catch { }
+
                 if (BLEAdapter.ConnectedDevices.Count > 0)
                 {
                     ShowToast($"Подключено: {_device.Name ?? "N/A"}");
@@ -138,8 +206,6 @@ namespace Taxometr.Data
 
         private static async void LoadSettings()
         {
-            /*await CheckLocation();
-            await CheckBLE();*/
             bool autoconnect = await Properties.GetAutoconnect();
             #if DEBUG
             await Properties.SaveDebugMode(true);
@@ -204,6 +270,13 @@ namespace Taxometr.Data
         {
             get => _deviceGuid;
             set => _deviceGuid = value;
+        }
+
+        private static DevicePrefab _connectedDP;
+        public static DevicePrefab ConnectedDP
+        {
+            get => _connectedDP;
+            private set => _connectedDP = value;
         }
 
         public static void ShowToast(string message)

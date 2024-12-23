@@ -14,6 +14,8 @@ namespace Taxometr.Pages
             InitializeComponent();
             ZReceipt.Text = "Сменный \"Z\" отчёт";
             XReceipt.Text = "\"X\" отчёт";
+            AppData.AutoconnectionCompleated += OnAutoconnectionCompleated;
+            AppData.ConnectionLost += OnConnectionLost;
         }
         protected override async void OnAppearing()
         {
@@ -23,7 +25,17 @@ namespace Taxometr.Pages
             {
                 AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Main, await AppData.Properties.GetAdminPassword());
             }
-            catch { }   
+            catch { }
+        }
+
+        private void OnAutoconnectionCompleated()
+        {
+            SwitchBan();
+        }
+
+        private void OnConnectionLost()
+        {
+            SwitchBan(true);
         }
 
         private void SwitchBan(bool enable = false)
