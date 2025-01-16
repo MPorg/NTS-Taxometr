@@ -33,5 +33,17 @@ namespace Taxometr.Data.DataBase
                 return Path.Combine(fullPath, "app.log");
             }
         }
+        public static string SpecialDebugFullPath
+        {
+            get
+            {
+                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr";
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+                return Path.Combine(fullPath, "special.log");
+            }
+        }
     }
 }

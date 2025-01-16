@@ -4,7 +4,10 @@ using Android.Runtime;
 using Android.OS;
 using Xamarin.Essentials;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Taxometr.Data;
+using Taxometr.Interfaces;
+using Xamarin.Forms;
+using Plugin.CurrentActivity;
 
 namespace Taxometr.Droid
 {
@@ -14,13 +17,14 @@ namespace Taxometr.Droid
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             await Permissions.RequestAsync<BLEPermission>();
             await Permissions.RequestAsync<LockationPermission>();
             await Permissions.RequestAsync<StoragePermission>();
-            await Task.Delay(500);
+            await Permissions.RequestAsync<NotifPermission>();
+            
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -56,6 +60,14 @@ namespace Taxometr.Droid
                 (Android.Manifest.Permission.ManageExternalStorage, true),
                 (Android.Manifest.Permission.ReadExternalStorage, true),
                 (Android.Manifest.Permission.WriteExternalStorage, true)
+            }.ToArray();
+        }
+        private class NotifPermission : Xamarin.Essentials.Permissions.BasePlatformPermission
+        {
+            public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)>{
+                (Android.Manifest.Permission.AccessNotificationPolicy, true),
+                (Android.Manifest.Permission.PostNotifications, true),
+                (Android.Manifest.Permission.ForegroundService, true)
             }.ToArray();
         }
     }

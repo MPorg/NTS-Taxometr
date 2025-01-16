@@ -12,20 +12,6 @@
         </StackLayout>
     </Shell.TitleView>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            x:Name="InfoBtn"
-            Clicked="OnInfoBtnClicked">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    Size="60"
-                    Color="{StaticResource TextLink}"
-                    FontFamily="IconsSolid"
-                    Glyph="{StaticResource IconInfo}"/>
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-    
     <ContentPage.Content>
         <StackLayout
             Style="{StaticResource PageLayout}">

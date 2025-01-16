@@ -1,11 +1,13 @@
 ﻿using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Taxometr.Data;
 using Taxometr.Data.DataBase;
+using Taxometr.Data.DataBase.Objects;
 using Taxometr.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -75,7 +77,16 @@ namespace Taxometr.Pages
         {
             if (!await CheckContainsInSaves())
             {
-                await AppData.TaxometrDB.DevicePrefabs.CreateAsync(new Data.DataBase.Objects.DevicePrefab(_connectedDevice.Id, serNum, blePass, adminPass, customName, autoConnect));
+                List<DevicePrefab> prefabs = await AppData.TaxometrDB.DevicePrefabs.GetPrefabsAsync();
+                if (prefabs.Count > 1 && autoConnect)
+                {
+                    foreach ( var prefab in prefabs )
+                    {
+                        prefab.AutoConnect = false;
+                        await AppData.TaxometrDB.DevicePrefabs.UpdateAsync(prefab);
+                    }
+                }
+                await AppData.TaxometrDB.DevicePrefabs.CreateAsync(new DevicePrefab(_connectedDevice.Id, serNum, blePass, adminPass, customName, autoConnect));
             }
         }
 

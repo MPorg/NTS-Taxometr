@@ -1,4 +1,5 @@
-﻿using Taxometr.Fonts.IconFont;
+﻿using System.Threading.Tasks;
+using Taxometr.Fonts.IconFont;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +21,7 @@ namespace Taxometr.Pages
             base.OnAppearing();
             if (_devicePage == null) _devicePage = new DevicesPage();
 
-            if (_savedPage == null) _savedPage = new SavedDevicesPage();
+            if (_savedPage == null) _savedPage = new SavedDevicesPage(this);
 
 
             FontImageSource sourceDevices = new FontImageSource();
@@ -39,6 +40,19 @@ namespace Taxometr.Pages
 
             Children.Add(_devicePage);
             Children.Add(_savedPage);
+
+            if (await _savedPage.Initialize() > 0) CurrentPage = _savedPage;
+        }
+
+        public async Task LoadSearchAsync()
+        {
+            _savedPage = new SavedDevicesPage(this);
+
+            FontImageSource sourceSaved = new FontImageSource();
+            sourceSaved.FontFamily = "IconsSolid";
+            sourceSaved.Glyph = Icons.IconStar;
+            _savedPage.IconImageSource = sourceSaved;
+            _savedPage.Title = "Сохранённые";
 
             if (await _savedPage.Initialize() > 0) CurrentPage = _savedPage;
         }

@@ -162,7 +162,10 @@ namespace Taxometr.Data.DataBase
 
             public async Task<int> DeleteAsync(DevicePrefab device)
             {
-                return await _connection.DeleteAsync(device);
+                int totalCount = (await _connection.Table<DevicePrefab>().ToListAsync()).Count;
+                int result = await _connection.DeleteAsync(device);
+                if (totalCount - result == 0) Initialize();
+                return result;
             }
         }
     }

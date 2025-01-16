@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Taxometr.Data;
@@ -13,7 +14,9 @@ namespace Taxometr.Services
     public class ProviderBLE
     {
         #region Init
-        
+
+        public event Action<byte, Dictionary<string, string>> AnswerCompleate;
+
         public ProviderBLE()
         {
             Initialize();
@@ -38,19 +41,20 @@ namespace Taxometr.Services
         #endregion
 
         #region Params
+        private static int _logWidth = 60;
+
 
         private ICharacteristic _charactR = null;
 
         private List<byte> _answerBufer = new List<byte>();
 
         private FlcType _lastAnswerFlc = FlcType.NAK;
+        private byte _lastCmd = 0x00;
         private byte _lastFrCmd = 0x00;
         private bool _readFR = false;
 
         private string _serialNumber;
         private string _key;
-
-        private int _logWidth = 60;
 
         #endregion
 
@@ -110,17 +114,17 @@ namespace Taxometr.Services
 
         #region Debug extentions
 
-        private void DebugLine()
+        internal static void DebugLine(bool specialDbg = false)
         {
             string line = "";
             for (int i = 0; i < _logWidth; i++)
             {
                 line += "-";
             }
-            AppData.Debug.WriteLine(line);
+            AppData.Debug.WriteLine(line, specialDbg);
         }
 
-        private void DebugByteStr(byte[] data, string placeholder = "")
+        internal static void DebugByteStr(byte[] data, string placeholder = "", bool specialDbg = false)
         {
             string dbg = placeholder;
             for (int i = 0; i < data.Length - 1; i++)
@@ -128,7 +132,7 @@ namespace Taxometr.Services
                 dbg += data[i].ToString("x2") + "|";
             }
             dbg += data[data.Length - 1].ToString("x2");
-            AppData.Debug.WriteLine(dbg);
+            AppData.Debug.WriteLine(dbg, specialDbg);
         }
 
         #endregion
@@ -163,7 +167,7 @@ namespace Taxometr.Services
             SentToBLE(data);
         }
 
-        private void ReadFlc(byte[] data)
+        private async void ReadFlc(byte[] data)
         {
             DebugByteStr(data, "Recived data: ");
 
@@ -196,12 +200,17 @@ namespace Taxometr.Services
                                 if (_readFR)
                                 {
                                     _readFR = false;
+                                    await Task.Delay(100);
                                     ReadFR();
                                 }
                             }
                             else if (flcCleare == (byte)FlcType.DATA)
                             {
                                 ReadData(data);
+                            }
+                            if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY)
+                            {
+                                RetryCMD(); 
                             }
                         }
                     }
@@ -210,7 +219,44 @@ namespace Taxometr.Services
             DebugLine();
         }
 
-        private void ReadData(byte[] bufer)
+        private async void RetryCMD()
+        {
+            await Task.Delay(100);
+            switch (_lastCmd)
+            {
+                case ScnoState:
+                    SentScnoState(sentScnoStateReadFR);
+                    break;
+                case TaxInfo:
+                    SentTaxInfo(sentTaxInfoReadFR);
+                    break;
+                case ShiftState:
+                    SentShiftInfo(sentShiftInfoReadFR);
+                    break;
+                case SwitchMode:
+                    OpenMenuOrPrintReceipt(openMenuModeMenuMode, openMenuModeOperatorPass, openMenuModeReadFR);
+                    break;
+                case BtnEmit:
+                    EmitButton(emitButtonKey);
+                    break;
+                case ShiftOpen:
+                    OpenShift();
+                    break;
+                case CashDeposWithdraw:
+                    DeposWithdrawCash(deposWithdrawCashMethod, deposWithdrawSum);
+                    break;
+                case CheckOpen:
+                    OpenCheck(openCheckStartSum, openCheckEnterSum);
+                    break;
+                case TaxState:
+                    SentTaxState(sentTaxStateReadFR);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private async void ReadData(byte[] bufer)
         {
             if (bufer.Length >= 5)
             {
@@ -221,6 +267,7 @@ namespace Taxometr.Services
                 List<byte> encodedData = new List<byte>(data);
                 encodedData.RemoveRange(0, 3);
                 DebugByteStr(encodedData.ToArray(), "Зашифровано: ");
+                encodedData = encodedData.RemoveDLEFlags();
                 encodedData = encodedData.ToArray().RC4(_key, rnd).ToList();
                 DebugByteStr(encodedData.ToArray(), "Расшифровано: ");
 
@@ -233,7 +280,18 @@ namespace Taxometr.Services
                     case ScnoState:
                         answer = SCNOAnsw(encodedData.ToArray());
                         break;
+                    case ShiftState:
+                        answer = ShiftStateAnsw(encodedData.ToArray(), out bool retry);
+                        await Task.Delay(1000);
+                        Debug.WriteLine($"retry = {retry}");
+                        if (retry) SentShiftInfo(sentShiftInfoReadFR);
+                        break;
+                    case TaxState:
+                        answer = TaxStateAnsw(encodedData.ToArray());
+                        break;
                 }
+
+                _lastFrCmd = 0;
 
                 foreach (string a in answer)
                 {
@@ -280,19 +338,24 @@ namespace Taxometr.Services
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
+                //dataForEncode = dataForEncode.AddDLEFlags();
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
                 result.AddRange(dataForEncode);
-
+                
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
 
+        private bool sentScnoStateReadFR = false;
         public void SentScnoState(bool readFR = false)
         {
+            sentScnoStateReadFR = readFR;
             SentFlc(FlcType.DATA);
 
             AppData.Debug.WriteLine($"Отправка команды \"Статус СКНО\"");
@@ -326,6 +389,7 @@ namespace Taxometr.Services
                 dataForEncode.AddRange(crc);
 
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
@@ -334,12 +398,16 @@ namespace Taxometr.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _readFR = readFR;
                 _lastFrCmd = cmd;
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
 
+        private bool sentTaxInfoReadFR = false;
         public void SentTaxInfo(bool readFR = false)
         {
+            sentTaxInfoReadFR = readFR;
             SentFlc(FlcType.DATA);
 
             AppData.Debug.WriteLine($"Отправка команды \"Информация о таксометре\"");
@@ -371,6 +439,7 @@ namespace Taxometr.Services
                 dataForEncode.AddRange(crc);
 
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
@@ -379,6 +448,116 @@ namespace Taxometr.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _readFR = readFR;
                 _lastFrCmd = cmd;
+                _lastCmd = cmd;
+
+                SentToBLE(CMD);
+            }
+        }
+
+        bool sentTaxStateReadFR;
+        public void SentTaxState(bool readFR = false)
+        {
+            sentTaxStateReadFR = readFR;
+            SentFlc(FlcType.DATA);
+
+            AppData.Debug.WriteLine($"Отправка команды \"Состояние таксометра\"");
+
+            if (_lastAnswerFlc == FlcType.BUSY)
+            {
+
+            }
+            else if (_lastAnswerFlc == FlcType.REJ)
+            {
+
+            }
+            else
+            {
+                _answerBufer.Clear();
+                List<byte> data = new List<byte>();
+                List<byte> dataForEncode = new List<byte>();
+                byte id = (byte)new Random().Next(0, 256);
+                byte flag = 1;
+                byte rnd = (byte)new Random().Next(0, 256);
+                byte cmd = TaxState;
+                byte[] crc = CRC16(_serialNumber, cmd);
+
+                data.Add(id);
+                data.Add(flag);
+                data.Add(rnd);
+
+                dataForEncode.Add(cmd);
+                dataForEncode.AddRange(crc);
+
+                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
+
+                List<byte> result = new List<byte>();
+                result.AddRange(data);
+                result.AddRange(dataForEncode);
+
+                byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _readFR = readFR;
+                _lastFrCmd = cmd;
+                _lastCmd = cmd;
+
+                SentToBLE(CMD);
+            }
+        }
+
+        public enum ShiftInfo
+        {
+            Closed = 0,
+            Opened = 1
+        }
+
+        public ShiftInfo LastShiftState = ShiftInfo.Closed;
+
+        private bool sentShiftInfoReadFR = false;
+        public void SentShiftInfo(bool readFR = false)
+        {
+            sentShiftInfoReadFR = readFR;
+            SentFlc(FlcType.DATA);
+
+            AppData.Debug.WriteLine($"Отправка команды \"Статус смены\"");
+
+            if (_lastAnswerFlc == FlcType.BUSY)
+            {
+
+            }
+            else if (_lastAnswerFlc == FlcType.REJ)
+            {
+
+            }
+            else
+            {
+                _answerBufer.Clear();
+                List<byte> data = new List<byte>();
+                List<byte> dataForEncode = new List<byte>();
+                byte id = (byte)new Random().Next(0, 256);
+                byte flag = 1;
+                byte rnd = (byte)new Random().Next(0, 256);
+                byte cmd = ShiftState;
+                byte[] crc = CRC16(_serialNumber, cmd);
+
+                data.Add(id);
+                data.Add(flag);
+                data.Add(rnd);
+
+                dataForEncode.Add(cmd);
+                dataForEncode.AddRange(crc);
+
+                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
+
+                List<byte> result = new List<byte>();
+                result.AddRange(data);
+                result.AddRange(dataForEncode);
+
+                byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _readFR = readFR;
+                _lastFrCmd = cmd;
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
@@ -391,8 +570,15 @@ namespace Taxometr.Services
             X = 3
         }
 
+        private MenuMode openMenuModeMenuMode;
+        private string openMenuModeOperatorPass;
+        private bool openMenuModeReadFR;
         public void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = false)
         {
+            openMenuModeMenuMode = menuMode;
+            openMenuModeOperatorPass = operatorPass;
+            openMenuModeReadFR = readFR;
+
             _readFR = readFR;
             SentFlc(FlcType.DATA);
 
@@ -435,12 +621,15 @@ namespace Taxometr.Services
                 dataForEncode.AddRange(crc);
 
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
                 result.AddRange(dataForEncode);
 
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
@@ -455,8 +644,10 @@ namespace Taxometr.Services
             Num_2 = 0xA0
         }
 
-        public void EmmitButton(ButtonKey key)
+        private ButtonKey emitButtonKey;
+        public void EmitButton(ButtonKey key)
         {
+            emitButtonKey = key;
             SentFlc(FlcType.DATA);
 
             AppData.Debug.WriteLine($"Отправка команды \"Нажатие клавиши {key}\"");
@@ -492,12 +683,15 @@ namespace Taxometr.Services
                 dataForEncode.AddRange(crc);
 
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
                 result.AddRange(dataForEncode);
 
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
@@ -537,12 +731,15 @@ namespace Taxometr.Services
                 dataForEncode.AddRange(crc);
 
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
                 result.AddRange(dataForEncode);
 
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
@@ -553,8 +750,13 @@ namespace Taxometr.Services
             Withdrawal = 1
         }
 
+        private CashMethod deposWithdrawCashMethod;
+        private ulong deposWithdrawSum;
+
         public void DeposWithdrawCash(CashMethod method, ulong sum)
         {
+            deposWithdrawCashMethod = method;
+            deposWithdrawSum = sum;
             SentFlc(FlcType.DATA);
 
             string mt = "";
@@ -605,12 +807,75 @@ namespace Taxometr.Services
                 dataForEncode.AddRange(crc);
 
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
                 result.AddRange(dataForEncode);
 
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+
+                SentToBLE(CMD);
+            }
+        }
+
+        int openCheckStartSum;
+        int openCheckEnterSum;
+        public void OpenCheck(int startSum, int enterSum)
+        {
+            openCheckStartSum = startSum;
+            openCheckEnterSum = enterSum;
+
+            SentFlc(FlcType.DATA);
+
+            AppData.Debug.WriteLine($"Отправка команды \"Открыть чек\"");
+
+            if (_lastAnswerFlc == FlcType.BUSY)
+            {
+
+            }
+            else if (_lastAnswerFlc == FlcType.REJ)
+            {
+
+            }
+            else
+            {
+                _answerBufer.Clear();
+
+                List<byte> data = new List<byte>();
+                List<byte> dataForEncode = new List<byte>();
+                byte id = (byte)new Random().Next(0, 256);
+                byte flag = 1;
+                byte rnd = (byte)new Random().Next(0, 256);
+                byte cmd = CheckOpen;
+
+                byte[] startSumByte = BitConverter.GetBytes(startSum);
+                byte[] enterSumByte = BitConverter.GetBytes(enterSum);
+
+                byte[] crc = CRC16(_serialNumber, cmd,
+                    startSumByte[0], startSumByte[1], startSumByte[2], startSumByte[3],
+                    enterSumByte[0], enterSumByte[1], enterSumByte[2], enterSumByte[3]);
+
+                data.Add(id);
+                data.Add(flag);
+                data.Add(rnd);
+
+                dataForEncode.Add(cmd);
+                dataForEncode.AddRange(startSumByte);
+                dataForEncode.AddRange(enterSumByte);
+                dataForEncode.AddRange(crc);
+
+                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
+
+                List<byte> result = new List<byte>();
+                result.AddRange(data);
+                result.AddRange(dataForEncode);
+
+                byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+
                 SentToBLE(CMD);
             }
         }
@@ -621,38 +886,159 @@ namespace Taxometr.Services
 
         private List<string> SCNOAnsw(byte[] data)
         {
-            List<string> result = new List<string>();
+            try
+            {
+                List<string> result = new List<string>();
 
-            byte connected = data[1];
+                int connected = data[1];
 
-            string connectedStr = connected == 0 ? "Не подключено" : "Подключено";
+                string connectedStr = connected == 0 ? "Не подключено" : "Подключено";
 
-            result.Add("СКНО " + connected.ToString() + " " + connectedStr);
+                result.Add("СКНО " + connected.ToString() + " " + connectedStr);
 
-            return result;
+                AnswerCompleate?.Invoke(ScnoState, new Dictionary<string, string> { { nameof(connected), connected.ToString() }, { "Состояние скно: ", connectedStr } });
+                return result;
+            }
+            catch (Exception e)
+            {
+                return new List<string> { "Ошибка: ", e.Message };
+            }
         }
 
         private List<string> TaxsInfoAnsw(byte[] data)
         {
-            List<string> result = new List<string>();
+            try
+            {
+                List<string> result = new List<string>();
 
-            short protVer = BitConverter.ToInt16(data, 2);
-            string modelName = Encoding.GetEncoding(1251).GetString(data, 4, 25);
-            string apiVer = Encoding.GetEncoding(1251).GetString(data, 29, 17);
-            short buildNum = BitConverter.ToInt16(data, 46);
-            string buildDate = Encoding.GetEncoding(1251).GetString(data, 48, 11);
-            string serialNum = Encoding.GetEncoding(1251).GetString(data, 59, 14);
+                short protVer = BitConverter.ToInt16(data, 2);
+                string modelName = Encoding.GetEncoding(1251).GetString(data, 4, 25);
+                string apiVer = Encoding.GetEncoding(1251).GetString(data, 29, 17);
+                short buildNum = BitConverter.ToInt16(data, 46);
+                string buildDate = Encoding.GetEncoding(1251).GetString(data, 48, 11);
+                string serialNum = Encoding.GetEncoding(1251).GetString(data, 59, 14);
 
-            result.Add($"Версия протокола обмена: {protVer}");
-            result.Add($"Имя модели: " + modelName);
-            result.Add($"Версия ПО: " + apiVer);
-            result.Add($"Номер сборки: {buildNum}");
-            result.Add($"Дата сборки: " + buildDate);
-            result.Add($"Заводской номер: " + serialNum);
+                result.Add($"Версия протокола обмена: {protVer}");
+                result.Add($"Имя модели: " + modelName);
+                result.Add($"Версия ПО: " + apiVer);
+                result.Add($"Номер сборки: {buildNum}");
+                result.Add($"Дата сборки: " + buildDate);
+                result.Add($"Заводской номер: " + serialNum);
 
-            return result;  
+                Dictionary<string, string> retValues = new Dictionary<string, string>
+                {
+                    { nameof(protVer), protVer.ToString() },
+                    { nameof(modelName), modelName },
+                    { nameof(apiVer), apiVer },
+                    { nameof(buildNum), buildNum.ToString() },
+                    { nameof(buildDate), buildDate },
+                    { nameof(serialNum), serialNum }
+                };
+
+                AnswerCompleate?.Invoke(TaxInfo, retValues);
+                return result;
+            }
+            catch (Exception e)
+            {
+                return new List<string> { "Ошибка: ", e.Message};
+            }
         }
 
+        private List<string> ShiftStateAnsw(byte[] data, out bool retry)
+        {
+            Debug.WriteLine("_____________________Статус смены_____________________");
+            try
+            {
+                List<string> result = new List<string>();
+
+                byte errCode = data[1];
+                if (errCode != ENET_OK)
+                {
+                    AnswerCompleate?.Invoke(ShiftState, new Dictionary<string, string> { {"Ошибка: ", ErrCodes[errCode] } });
+
+                    result.Add($"Код ошибки: {errCode}");
+                    result.Add(ErrCodes[errCode]);
+                    retry = true;
+                    return result;
+                }
+                int shiftState = data[2];
+                Debug.WriteLine($"Состояние смены {shiftState}");
+                LastShiftState = (ShiftInfo)shiftState;
+                string res = "";
+
+                switch (LastShiftState)
+                {
+                    case ShiftInfo.Opened:
+                        res = "Открыта";
+                        break;
+                    case ShiftInfo.Closed:
+                        res = "Не открыта";
+                        break;
+                    default:
+                        res = "Не открыта";
+                        break;
+                }
+
+                result.Add($"Код ошибки: {errCode}");
+                result.Add($"Состояние смены: {res}");
+
+
+                AnswerCompleate?.Invoke(ShiftState, new Dictionary<string, string> { {nameof(shiftState), shiftState.ToString()}, { "Состояние смены: ", res} });
+                retry = false;
+                return result;
+            }
+            catch (Exception e)
+            {
+                retry = true;
+                return new List<string> { "Ошибка: ", e.Message };
+            }
+        }
+
+        private List<string> TaxStateAnsw(byte[] data)
+        {
+            Debug.WriteLine("_____________________Статус ТАКСА_____________________");
+            try
+            {
+                List<string> result = new List<string>();
+
+                ushort errCode = BitConverter.ToUInt16(data, 2);
+                int FRState = data[4];
+                int menuState = data[5];
+                int checkState = data[6];
+                int blockState = data[7];
+
+                string blockMessage = " ";
+
+                if (blockState == 1)
+                {
+                    blockMessage = Encoding.GetEncoding(1251).GetString(data, 8, 65);
+                }
+
+                result.Add($"Код ошибки: {errCode}");
+                result.Add($"Режим ФР: {FRState}");
+                result.Add($"Меню: {menuState}");
+                result.Add($"Чек: {checkState}");
+                result.Add($"Блокировка: {blockState}");
+                if (!String.IsNullOrEmpty(blockMessage)) result.Add($"Сообщение блокировки: {blockMessage}");
+
+
+                AnswerCompleate?.Invoke(TaxState, new Dictionary<string, string>
+                {
+                    { nameof(errCode), errCode.ToString() },
+                    { nameof(FRState), FRState.ToString() },
+                    { nameof(menuState), menuState.ToString() },
+                    { nameof(checkState), checkState.ToString() },
+                    { nameof(blockState), blockState.ToString() },
+                    { nameof(blockMessage), blockMessage },
+                });
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return new List<string> { "Ошибка: ", e.Message };
+            }
+        }
         #endregion
     }
 }

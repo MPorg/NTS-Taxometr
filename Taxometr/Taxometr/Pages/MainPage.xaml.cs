@@ -45,7 +45,6 @@ namespace Taxometr.Pages
         private void SwitchBan(bool enable = false)
         {
             BanLayout.IsVisible = enable;
-            InfoBtn.IsEnabled = !enable;
             if (!enable)
             {
                 //DeviceName.Text = AppData.AutoConnectDevice.Name;
@@ -63,11 +62,6 @@ namespace Taxometr.Pages
             AppData.Provider.SentScnoState(true);
         }
 
-        private void OnInfoBtnClicked(object sender, EventArgs e)
-        {
-            AppData.Provider.SentTaxInfo(true);
-        }
-
         private void OnEmitBtnClicked(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -77,22 +71,22 @@ namespace Taxometr.Pages
                 switch (button.CommandParameter)
                 {
                     case "C":
-                        AppData.Provider.EmmitButton(ProviderBLE.ButtonKey.C);
+                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.C);
                         break;
                     case "OK":
-                        AppData.Provider.EmmitButton(ProviderBLE.ButtonKey.OK);
+                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
                         break;
                     case "Up":
-                        AppData.Provider.EmmitButton(ProviderBLE.ButtonKey.Up);
+                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Up);
                         break;
                     case "Down":
-                        AppData.Provider.EmmitButton(ProviderBLE.ButtonKey.Down);
+                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Down);
                         break;
                     case "Num_1":
-                        AppData.Provider.EmmitButton(ProviderBLE.ButtonKey.Num_1);
+                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Num_1);
                         break;
                     case "Num_2":
-                        AppData.Provider.EmmitButton(ProviderBLE.ButtonKey.Num_2);
+                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Num_2);
                         break;
                 }
             }

@@ -1,10 +1,10 @@
 ﻿using Android.Content;
-using Taxometr.Droid.Services;
+using Taxometr.Droid.Services.Dependency;
 using Taxometr.Interfaces;
 using Xamarin.Essentials;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LockationSettings))]
-namespace Taxometr.Droid.Services
+namespace Taxometr.Droid.Services.Dependency
 {
     internal class LockationSettings : ILockationSettings
     {

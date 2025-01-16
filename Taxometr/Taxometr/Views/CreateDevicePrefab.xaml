@@ -67,7 +67,7 @@
                             <Entry
                                 x:Name="NameEntry"
                                 Keyboard="Text"
-                                TextChanged="OnNameEntryTextChanged"/>
+                                Completed="NameEntry_Completed"/>
 
                         </StackLayout>
 
@@ -83,7 +83,9 @@
                             <Entry
                                 x:Name="SerNumEntry"
                                 Placeholder="12345678"
-                                TextChanged="OnSerNumEntryTextChanged"/>
+                                TextChanged="OnSerNumEntryTextChanged"
+                                Completed="SerNumEntry_Completed"
+                                Unfocused="SerNumEntry_Unfocused"/>
 
                         </StackLayout>
 
@@ -100,7 +102,9 @@
                                 x:Name="BLEPassEntry"
                                 Placeholder="123456"
                                 IsPassword="True"
-                                TextChanged="OnBLEPassEntryTextChanged"/>
+                                TextChanged="OnBLEPassEntryTextChanged"
+                                Completed="BLEPassEntry_Completed"
+                                Unfocused="BLEPassEntry_Unfocused"/>
 
                         </StackLayout>
 
@@ -117,7 +121,9 @@
                                 x:Name="AdminPassEntry"
                                 Placeholder="123456"
                                 IsPassword="True"
-                                TextChanged="OnAdminPassEntryTextChanged"/>
+                                TextChanged="OnAdminPassEntryTextChanged"
+                                Completed="AdminPassEntry_Completed"
+                                Unfocused="AdminPassEntry_Unfocused"/>
 
                         </StackLayout>
 
@@ -131,11 +137,25 @@
                                 Text="Автоподключение"/>
 
                             <Switch
-                                x:Name="AutoConnectTogle"
-                                Toggled="OnAutoConnectTogle_Toggled"/>
+                                x:Name="AutoConnectTogle"/>
+                            
+                            <ImageButton
+                                x:Name="ShowHidePassBtn"
+                                BackgroundColor="Transparent"
+                                HeightRequest="20"
+                                WidthRequest="20"
+                                HorizontalOptions="EndAndExpand"
+                                Clicked="ShowHidePassBtn_Clicked">
+                                <ImageButton.Source>
+                                    <FontImageSource
+                                        Size="100"
+                                        Color="{StaticResource TextDark}"
+                                        FontFamily="IconsSolid"/>
+                                </ImageButton.Source>
+                            </ImageButton>
 
                         </StackLayout>
-                        
+
                         <StackLayout
                             Padding="10"
                             Spacing="40"
@@ -156,7 +176,7 @@
                                 HorizontalOptions="EndAndExpand"/>
 
                         </StackLayout>
-
+                        
                     </StackLayout>
                 </Frame>
             </Frame>

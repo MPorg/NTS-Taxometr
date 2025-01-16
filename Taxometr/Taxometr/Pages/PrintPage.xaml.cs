@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Taxometr.Data;
 using Taxometr.Services;
 using Xamarin.Forms;
@@ -19,6 +20,8 @@ namespace Taxometr.Pages
         }
         protected override async void OnAppearing()
         {
+            LoadingLayout.IsVisible = false;
+
             if (AppData.BLEAdapter.ConnectedDevices.Count > 0) SwitchBan();
             else SwitchBan(true);
             try
@@ -52,6 +55,10 @@ namespace Taxometr.Pages
             try
             {
                 AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Z, await AppData.Properties.GetAdminPassword());
+
+                LoadingLayout.IsVisible = true;
+                await Task.Delay(5000);
+                LoadingLayout.IsVisible = false;
             }
             catch { }
         }
@@ -60,6 +67,9 @@ namespace Taxometr.Pages
             try
             {
                 AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.X, await AppData.Properties.GetAdminPassword());
+                LoadingLayout.IsVisible = true;
+                await Task.Delay(2000);
+                LoadingLayout.IsVisible = false;
             }
             catch { }
         }
