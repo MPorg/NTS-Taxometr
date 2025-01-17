@@ -22,6 +22,7 @@ public class MonoPackageManager_Resources {
 		"Xamarin.AndroidX.Loader.dll",
 		"Xamarin.AndroidX.RecyclerView.dll",
 		"Xamarin.AndroidX.SwipeRefreshLayout.dll",
+		"Xamarin.AndroidX.VersionedParcelable.dll",
 		"Xamarin.AndroidX.ViewPager.dll",
 		"Xamarin.Google.Android.Material.dll",
 		"Xamarin.Jetbrains.Annotations.dll",
@@ -39,7 +40,6 @@ public class MonoPackageManager_Resources {
 		"SQLitePCLRaw.core.dll",
 		"SQLitePCLRaw.lib.e_sqlite3.android.dll",
 		"SQLitePCLRaw.provider.e_sqlite3.dll",
-		"Taxometr.dll",
 		"Xamarin.AndroidX.Activity.dll",
 		"Xamarin.AndroidX.SavedState.dll",
 		"Xamarin.Essentials.dll",
@@ -53,6 +53,7 @@ public class MonoPackageManager_Resources {
 		"Xamarin.Kotlin.StdLib.Jdk8.dll",
 		"Xamarin.KotlinX.Coroutines.Android.dll",
 		"Xamarin.KotlinX.Coroutines.Core.Jvm.dll",
+		"Taxometr.dll",
 	};
 	public static String[] Dependencies = new String[]{
 	};

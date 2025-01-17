@@ -15,7 +15,7 @@
         <StackLayout
             Style="{StaticResource PageLayout}"
             Padding="10">
-
+<!--
             <Frame
                 Padding="-5"
                 CornerRadius="20"
@@ -28,7 +28,7 @@
                     
                     <Label
                         TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
-                        Text="Подключение"
+                        Text="Параметры ввода"
                         FontFamily="Geologica-Bold"
                         HorizontalTextAlignment="Center"
                         FontSize="Large"/>
@@ -41,11 +41,11 @@
                 BackgroundColor="Transparent"
                 BorderColor="Transparent">
                 <RelativeLayout
-                    HeightRequest="120"
+                    HeightRequest="180"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand">
                     <StackLayout 
-                        x:Name="AutoConnectDeviceParameter"
+                        x:Name="MinimumPriceNumberParameter"
                         Padding="25"
                         Orientation="Horizontal"
                         BackgroundColor="{StaticResource BackgroundDarked}"
@@ -57,19 +57,19 @@
                         <StackLayout>
                             <Label 
                                 TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
-                                Text="Сохранённое устройство"
+                                Text="Минимальная денежная еденица"
                                 VerticalTextAlignment="Center"
                                 FontSize="Large"/>
                             <Label 
-                                Text="Устройство для подключения при запуске приложения"
+                                Text="Эта настройка не влияет на таксометр, она устанавливает единицу только на вашем устройстве. Если вы хотите поменять МДЕ в таксометре используйте конфигуратор"
                                 FontSize="Small"
                                 TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredDark}}"/>
                         </StackLayout>
 
-                        <Label
+                        <Picker
                             TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
-                            x:Name="AutoConnectDeviceName"
-                            Text="НЕ ВЫБРАНО"
+                            x:Name="MinimumPriceNumber"
+                            
                             VerticalTextAlignment="Center"
                             HorizontalTextAlignment="Center"
                             MinimumWidthRequest="120"
@@ -79,55 +79,7 @@
                     </StackLayout>
                 </RelativeLayout>
             </Frame>
-
-            <Frame
-                Padding="-5"
-                CornerRadius="20"
-                BackgroundColor="Transparent"
-                BorderColor="Transparent">
-                <RelativeLayout
-                    HeightRequest="120"
-                    VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand">
-                    <StackLayout 
-                        x:Name="AutoConnectParameter"
-                        Padding="25"
-                        Orientation="Horizontal"
-                        BackgroundColor="{StaticResource BackgroundDarked}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill">
-
-                        <StackLayout>
-                            <Label 
-                                TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
-                                Text="Автоподключение"
-                                VerticalTextAlignment="Center"
-                                FontSize="Large"/>
-                            <Label 
-                                Text="Подключаться к выбранному устройству при запуске приложения"
-                                FontSize="Small"
-                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredDark}}"/>
-                        </StackLayout>
-
-                        <Switch
-                            x:Name="AutoconnectSwitch"
-                            Toggled="OnAutoconnectSwitchToggled"
-                            HorizontalOptions="EndAndExpand"/>
-
-                    </StackLayout>
-                    <StackLayout
-                        x:Name="DisableAutoConnectPanel"
-                        BackgroundColor="{StaticResource TextMiddle}"
-                        Opacity="0.3"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill"/>  
-                </RelativeLayout>
-            </Frame>
-
+-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

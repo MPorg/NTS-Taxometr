@@ -112,6 +112,9 @@ androidx.core.app.ActivityCompat$PermissionCompatDelegate;androidx.core.app.Acti
 AndroidX.Core.App.ActivityCompat+IRequestPermissionsRequestCodeValidator, Xamarin.AndroidX.Core;androidx.core.app.ActivityCompat$RequestPermissionsRequestCodeValidator
 AndroidX.Core.App.ActivityCompat.IRequestPermissionsRequestCodeValidator;androidx.core.app.ActivityCompat$RequestPermissionsRequestCodeValidator
 androidx.core.app.ActivityCompat$RequestPermissionsRequestCodeValidator;androidx.core.app.ActivityCompat$RequestPermissionsRequestCodeValidator
+AndroidX.Core.App.INotificationBuilderWithBuilderAccessor, Xamarin.AndroidX.Core;androidx.core.app.NotificationBuilderWithBuilderAccessor
+AndroidX.Core.App.INotificationBuilderWithBuilderAccessor;androidx.core.app.NotificationBuilderWithBuilderAccessor
+androidx.core.app.NotificationBuilderWithBuilderAccessor;androidx.core.app.NotificationBuilderWithBuilderAccessor
 AndroidX.Core.App.IOnMultiWindowModeChangedProvider, Xamarin.AndroidX.Core;androidx.core.app.OnMultiWindowModeChangedProvider
 AndroidX.Core.App.IOnMultiWindowModeChangedProvider;androidx.core.app.OnMultiWindowModeChangedProvider
 androidx.core.app.OnMultiWindowModeChangedProvider;androidx.core.app.OnMultiWindowModeChangedProvider
@@ -121,6 +124,9 @@ androidx.core.app.OnNewIntentProvider;androidx.core.app.OnNewIntentProvider
 AndroidX.Core.App.IOnPictureInPictureModeChangedProvider, Xamarin.AndroidX.Core;androidx.core.app.OnPictureInPictureModeChangedProvider
 AndroidX.Core.App.IOnPictureInPictureModeChangedProvider;androidx.core.app.OnPictureInPictureModeChangedProvider
 androidx.core.app.OnPictureInPictureModeChangedProvider;androidx.core.app.OnPictureInPictureModeChangedProvider
+AndroidX.Core.App.NotificationCompat+IExtender, Xamarin.AndroidX.Core;androidx.core.app.NotificationCompat$Extender
+AndroidX.Core.App.NotificationCompat.IExtender;androidx.core.app.NotificationCompat$Extender
+androidx.core.app.NotificationCompat$Extender;androidx.core.app.NotificationCompat$Extender
 AndroidX.Core.App.SharedElementCallback+IOnSharedElementsReadyListener, Xamarin.AndroidX.Core;androidx.core.app.SharedElementCallback$OnSharedElementsReadyListener
 AndroidX.Core.App.SharedElementCallback.IOnSharedElementsReadyListener;androidx.core.app.SharedElementCallback$OnSharedElementsReadyListener
 androidx.core.app.SharedElementCallback$OnSharedElementsReadyListener;androidx.core.app.SharedElementCallback$OnSharedElementsReadyListener
@@ -328,6 +334,9 @@ androidx.swiperefreshlayout.widget.SwipeRefreshLayout$OnRefreshListener;androidx
 AndroidX.SwipeRefreshLayout.Widget.SwipeRefreshLayout+IOnRefreshListenerImplementor, Xamarin.AndroidX.SwipeRefreshLayout;mono.androidx.swiperefreshlayout.widget.SwipeRefreshLayout_OnRefreshListenerImplementor
 AndroidX.SwipeRefreshLayout.Widget.SwipeRefreshLayout.IOnRefreshListenerImplementor;mono.androidx.swiperefreshlayout.widget.SwipeRefreshLayout_OnRefreshListenerImplementor
 mono.androidx.swiperefreshlayout.widget.SwipeRefreshLayout_OnRefreshListenerImplementor;mono.androidx.swiperefreshlayout.widget.SwipeRefreshLayout_OnRefreshListenerImplementor
+AndroidX.VersionedParcelable.IVersionedParcelable, Xamarin.AndroidX.VersionedParcelable;androidx.versionedparcelable.VersionedParcelable
+AndroidX.VersionedParcelable.IVersionedParcelable;androidx.versionedparcelable.VersionedParcelable
+androidx.versionedparcelable.VersionedParcelable;androidx.versionedparcelable.VersionedParcelable
 AndroidX.ViewPager.Widget.ViewPager+IOnAdapterChangeListener, Xamarin.AndroidX.ViewPager;androidx.viewpager.widget.ViewPager$OnAdapterChangeListener
 AndroidX.ViewPager.Widget.ViewPager.IOnAdapterChangeListener;androidx.viewpager.widget.ViewPager$OnAdapterChangeListener
 androidx.viewpager.widget.ViewPager$OnAdapterChangeListener;androidx.viewpager.widget.ViewPager$OnAdapterChangeListener
@@ -1000,12 +1009,6 @@ kotlin.ranges.OpenEndRange;kotlin.ranges.OpenEndRange
 Kotlin.Collections.IGrouping, Xamarin.Kotlin.StdLib;kotlin.collections.Grouping
 Kotlin.Collections.IGrouping;kotlin.collections.Grouping
 kotlin.collections.Grouping;kotlin.collections.Grouping
-Taxometr.Droid.MainActivity, Taxometr.Android;crc6463ebefe7dca09435.MainActivity
-Taxometr.Droid.MainActivity;crc6463ebefe7dca09435.MainActivity
-taxometr.droid.MainActivity;crc6463ebefe7dca09435.MainActivity
-Taxometr.Droid.SplashActivity, Taxometr.Android;crc6463ebefe7dca09435.SplashActivity
-Taxometr.Droid.SplashActivity;crc6463ebefe7dca09435.SplashActivity
-taxometr.droid.SplashActivity;crc6463ebefe7dca09435.SplashActivity
 Plugin.BLE.BroadcastReceivers.BluetoothStatusBroadcastReceiver, Plugin.BLE;crc64087678da79fdfe22.BluetoothStatusBroadcastReceiver
 Plugin.BLE.BroadcastReceivers.BluetoothStatusBroadcastReceiver;crc64087678da79fdfe22.BluetoothStatusBroadcastReceiver
 plugin.ble.broadcastreceivers.BluetoothStatusBroadcastReceiver;crc64087678da79fdfe22.BluetoothStatusBroadcastReceiver
@@ -1825,3 +1828,15 @@ kotlinx.coroutines.flow.StateFlow;kotlinx.coroutines.flow.StateFlow
 Xamarin.KotlinX.Coroutines.Channels.IChannelIterator, Xamarin.KotlinX.Coroutines.Core.Jvm;kotlinx.coroutines.channels.ChannelIterator
 Xamarin.KotlinX.Coroutines.Channels.IChannelIterator;kotlinx.coroutines.channels.ChannelIterator
 kotlinx.coroutines.channels.ChannelIterator;kotlinx.coroutines.channels.ChannelIterator
+Taxometr.Droid.MainActivity, Taxometr.Android;crc6463ebefe7dca09435.MainActivity
+Taxometr.Droid.MainActivity;crc6463ebefe7dca09435.MainActivity
+taxometr.droid.MainActivity;crc6463ebefe7dca09435.MainActivity
+Taxometr.Droid.SplashActivity, Taxometr.Android;crc6463ebefe7dca09435.SplashActivity
+Taxometr.Droid.SplashActivity;crc6463ebefe7dca09435.SplashActivity
+taxometr.droid.SplashActivity;crc6463ebefe7dca09435.SplashActivity
+Taxometr.Droid.Services.NotificationButtonReciver, Taxometr.Android;com.nts.taxometr.notif_btn_res
+Taxometr.Droid.Services.NotificationButtonReciver;com.nts.taxometr.notif_btn_res
+com.nts.taxometr.notif_btn_res;com.nts.taxometr.notif_btn_res
+Taxometr.Droid.Services.ConnectionWorker, Taxometr.Android;com.nts.taxometr.connection_worker
+Taxometr.Droid.Services.ConnectionWorker;com.nts.taxometr.connection_worker
+com.nts.taxometr.connection_worker;com.nts.taxometr.connection_worker

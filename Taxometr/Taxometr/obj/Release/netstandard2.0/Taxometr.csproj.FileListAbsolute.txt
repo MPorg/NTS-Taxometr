@@ -9,7 +9,6 @@ C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\MainMenu
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DevicesPage.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DeviceView.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DrivePage.xaml.g.cs
-C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\MainPage.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\PrintPage.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\SettingsPage.xaml.g.cs
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Views\AutoConnectBanner.xaml.g.cs
@@ -23,3 +22,9 @@ C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\XamlC.st
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.dll
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\refint\Taxometr.dll
 C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Taxometr.pdb
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DevicesPage_Trash.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\DevicesTabbedPage.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\RemotePage.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Pages\SavedDevicesPage.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Views\CreateDevicePrefab.xaml.g.cs
+C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\obj\Release\netstandard2.0\Views\OpenCheckBanner.xaml.g.cs

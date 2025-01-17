@@ -59,7 +59,7 @@ namespace Taxometr.Services
 
         internal static Dictionary<byte, string> ErrCodes = new Dictionary<byte, string>()
         {
-            {ENET_OK, "" },
+            {ENET_OK, "Команда выполнилась успешно" },
             {ENET_NO_RESOURCE, "В данный момент не хватает ресурсов процессора, чтобы\r\nобработать команду. Команда проигнорирована. Необходимо\r\nповторить попытку через какое-то время." },
             {ENET_JENERAL, "Общая ошибка протокола." },
             {ENET_BAD_DATA_SIZE, "Ошибка размера пакета данных." },

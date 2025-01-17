@@ -45,12 +45,12 @@ namespace Taxometr.Data
             if (_firstInit)
             {
                 BLEAdapter.DeviceConnected -= OnDeviceConnected;
+                //BLEAdapter.DeviceConnected -= ReloadProvider;
                 BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
-                BLEAdapter.DeviceDisconnected -= ReloadProvider;
 
                 BLEAdapter.DeviceConnected += OnDeviceConnected;
+                //BLEAdapter.DeviceConnected += ReloadProvider;
                 BLEAdapter.DeviceDisconnected += OnDeviceDisconnected;
-                BLEAdapter.DeviceDisconnected += ReloadProvider;
 
                 LoadSettings();
                 DotsTimer();
@@ -72,62 +72,68 @@ namespace Taxometr.Data
 
         private static async void OnDeviceConnected(object sender, DeviceEventArgs e)
         {
-            while (true)
-            {
-                var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
-                if (devicePref != null)
-                {
-                    ConnectedDP = devicePref;
-                    LastDevicePrefab = devicePref;
-                    ReloadProvider(sender, e);
-                    Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
-
-                    switch (State)
-                    {
-                        case AppState.NormalDisconnected:
-                            State = AppState.NormalConnected;
-                            break;
-                        case AppState.BackgroundDisconnected:
-                            DependencyService.Resolve<INotificationService>().CloseNotifications();
-                            DependencyService.Resolve<IBLEConnectionController>().Start();
-                            State = AppState.BackgroundConnected;
-                            break;
-                    }
-                    _specialDisconnect = false;
-                    break;
-                }
-                await Task.Delay(100);
-            }
-            await Task.Run(async () =>
+            await Device.InvokeOnMainThreadAsync(async () =>
             {
                 while (true)
                 {
-                    if (BLEAdapter.ConnectedDevices.Count == 0)
+
+                    var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
+
+
+                    if (devicePref != null)
                     {
+                        ConnectedDP = devicePref;
+                        LastDevicePrefab = devicePref;
+                        Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
+
+                        switch (State)
+                        {
+                            case AppState.NormalDisconnected:
+                                State = AppState.NormalConnected;
+                                break;
+                            case AppState.BackgroundDisconnected:
+                                DependencyService.Resolve<INotificationService>().CloseNotifications();
+                                DependencyService.Resolve<IBLEConnectionController>().Start();
+                                State = AppState.BackgroundConnected;
+                                break;
+                        }
+                        _specialDisconnect = false;
                         break;
                     }
-                    await Task.Delay(1000);
+                    await Task.Delay(100);
                 }
-                await Task.Delay(100);
-                Debug.WriteLine($"________________Connection lost {_connectedDP?.CustomName ?? "N/A"}________________");
+            
+                await Task.Run(async () =>
+                {
+                    while (true)
+                    {
+                        if (BLEAdapter.ConnectedDevices.Count == 0)
+                        {
+                            break;
+                        }
+                        await Task.Delay(1000);
+                    }
+                    await Task.Delay(100);
+                    Debug.WriteLine($"________________Connection lost {_connectedDP?.CustomName ?? "N/A"}________________");
 
-                switch (State)
-                {
-                    case AppState.NormalConnected:
-                        State = AppState.NormalDisconnected;
-                        break;
-                    case AppState.BackgroundConnected:
-                        State = AppState.BackgroundDisconnected;
-                        Debug.WriteLine("____________________BackgraundDisconnected__________________");
-                        DependencyService.Resolve<IBLEConnectionController>().Stop();
-                        if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
-                        break;
-                }
-                await Device.InvokeOnMainThreadAsync(() =>
-                {
-                    ConnectedDP = null;
-                    ConnectionLost?.Invoke();
-                    if (!_specialDisconnect && AutoConnectDevice != null && AutoconnectDeviceID != Guid.Empty) LoadAutoconnectDevice();
+                    switch (State)
+                    {
+                        case AppState.NormalConnected:
+                            State = AppState.NormalDisconnected;
+                            break;
+                        case AppState.BackgroundConnected:
+                            State = AppState.BackgroundDisconnected;
+                            Debug.WriteLine("____________________BackgraundDisconnected__________________");
+                            DependencyService.Resolve<IBLEConnectionController>().Stop();
+                            if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
+                            break;
+                    }
+                    await Device.InvokeOnMainThreadAsync(() =>
+                    {
+                        ConnectedDP = null;
+                        ConnectionLost?.Invoke();
+                        if (!_specialDisconnect && AutoConnectDevice != null && AutoconnectDeviceID != Guid.Empty) LoadAutoconnectDevice();
+                    });
                 });
             });
         }
@@ -147,8 +153,10 @@ namespace Taxometr.Data
             }
         }
 
-        public static void ReloadProvider()
+        public static async void ReloadProvider()
         {
+            await Task.Delay(1000);
+            Provider.Dispose();
             _provider = new ProviderBLE();
         }
 
@@ -171,7 +179,6 @@ namespace Taxometr.Data
                 if (pref.AutoConnect)
                 {
                     SetAutoconnectDevice(pref);
-                    _provider = new ProviderBLE();
                     hasAutoConnect = true;
                 }
             }
@@ -226,7 +233,7 @@ namespace Taxometr.Data
             {
                 await MainMenu.Navigation.PushModalAsync(banner);
                 
-                var connectParameters = new ConnectParameters(false, true);
+                var connectParameters = new ConnectParameters(true, true);
                 await _adapter.ConnectToDeviceAsync(_device, connectParameters);
             }
             catch (Exception ex)
@@ -236,6 +243,7 @@ namespace Taxometr.Data
                         $"Не удалось подключиться к устройству: {_device.Name ?? "N/A"} \r\n" +
                         $"{ex.Message}"
                     );
+                //ReloadProvider();
             }
             finally
             {
@@ -362,7 +370,10 @@ namespace Taxometr.Data
             {
                 if (await MainMenu.DisplayAlert("Блютуз", "Для работы приложения, необходимо включить блютуз", "ОК", "Отмена"))
                 {
-                    adapter.Enable();
+                    await Task.Run(() =>
+                    {
+                        adapter.Enable();
+                    });
                 }
             }
         }

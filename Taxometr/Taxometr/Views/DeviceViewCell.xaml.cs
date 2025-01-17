@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Taxometr.Data;
@@ -175,24 +176,50 @@ namespace Taxometr.Views
 				FindDevice();
             }
 
-            private async void FindDevice()
+
+            IDevice _findedDevice = null;   
+            internal async void FindDevice()
             {
-				Guid id = DeviceId;
-				AppData.Debug.WriteLine($"Find device by id {id}");
-                while (true)
+                Device = null;
+                AppData.Debug.WriteLine($"Find device by id {DeviceId}");
+
+                AppData.BLEAdapter.DeviceDiscovered += OnBLEAdapter_DeviceDiscovered;
+                await AppData.BLEAdapter.StartScanningForDevicesAsync();
+
+                while(Device == null)
                 {
-                    IDevice device = AppData.BLEAdapter.BondedDevices.Where(x => x.Id == id).FirstOrDefault();
-					if (AppData.BLEAdapter.ConnectedDevices.Count > 0 && AppData.BLEAdapter.ConnectedDevices[0].Id == device.Id) device = AppData.BLEAdapter.ConnectedDevices[0];
-                    if (device != null)
-                    {
-						Device = device;
-						break;
-                    }
                     await Task.Delay(5000);
                 }
             }
-			
-			public void UpdateDevice()
+
+            private void OnBLEAdapter_DeviceDiscovered(object sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
+            {
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (AppData.BLEAdapter.ConnectedDevices.Count > 0 && AppData.BLEAdapter.ConnectedDevices[0].Id == DeviceId)
+                    {
+                        _findedDevice = AppData.BLEAdapter.ConnectedDevices[0];
+                    }
+
+                    if (e.Device != null)
+                    {
+                        if (e.Device.Id == DeviceId)
+                        {
+                            _findedDevice = e.Device;
+                        }
+                    }
+
+                    if (_findedDevice != null)
+                    {
+                        Device = _findedDevice;
+                        AppData.BLEAdapter.DeviceDiscovered -= OnBLEAdapter_DeviceDiscovered;
+                    }
+
+                    AppData.BLEAdapter.StartScanningForDevicesAsync();
+                });
+            }
+
+            public void UpdateDevice()
 			{
 				if (Device != null && AppData.BLEAdapter.ConnectedDevices.Count > 0)
 				{
@@ -364,26 +391,33 @@ namespace Taxometr.Views
 					case "Подключиться":
 						try
                         {
-                            var connectParameters = new ConnectParameters(false, true);
-                            await AppData.BLEAdapter.ConnectToDeviceAsync(_binding.Device, connectParameters);
-						}
+                            if (_binding.Device.Id != Guid.Empty)
+                            {
+                                var connectParameters = new ConnectParameters(true, true);
+                                await AppData.BLEAdapter.ConnectToDeviceAsync(_binding.Device, connectParameters);
+                                if (AppData.BLEAdapter.ConnectedDevices.Count > 0)
+                                {
+                                    AppData.ShowToast($"Подключено: {_binding.CustomName ?? "N/A"}");
+                                    _binding.FindDevice();
+                                }
+                            }
+                            else
+                            {
+                                _binding.FindDevice();
+                            }
+                        }
 						catch
 						{
                             AppData.ShowToast
                                 (
                                     $"Не удалось подключиться к устройству: {_binding.CustomName ?? "N/A"} \r\n"
                                 );
-                        }
-						finally
-						{
-                            if (AppData.BLEAdapter.ConnectedDevices.Count > 0)
-                            {
-                                AppData.ShowToast($"Подключено: {_binding.CustomName ?? "N/A"}");
-                            }
+                            _binding.FindDevice();
                         }
 						break;
 					case "Отключиться":
-                        await AppData.BLEAdapter.DisconnectDeviceAsync(_binding.Device);
+                        await AppData.SpecialDisconnect();
+                        _binding.FindDevice();
                         break;
 				}
 			}

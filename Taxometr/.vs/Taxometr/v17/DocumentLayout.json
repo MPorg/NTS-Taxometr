@@ -3,56 +3,20 @@
   "WorkspaceRootPath": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\drivepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\drivepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\drivepage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\drivepage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
+      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\views\\deviceviewcell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\views\\deviceviewcell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\saveddevicespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\saveddevicespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\services\\providerble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\services\\providerble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\services\\providerextentions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\services\\providerextentions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F2A5D15D-404D-4FE4-BA7C-38FB50B213A5}|Taxometr.Android\\Taxometr.Android.csproj|C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\taxometr.android\\services\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2A5D15D-404D-4FE4-BA7C-38FB50B213A5}|Taxometr.Android\\Taxometr.Android.csproj|solutionrelative:taxometr.android\\services\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F2A5D15D-404D-4FE4-BA7C-38FB50B213A5}|Taxometr.Android\\Taxometr.Android.csproj|C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\taxometr.android\\resources\\buttonextras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2A5D15D-404D-4FE4-BA7C-38FB50B213A5}|Taxometr.Android\\Taxometr.Android.csproj|solutionrelative:taxometr.android\\resources\\buttonextras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F2A5D15D-404D-4FE4-BA7C-38FB50B213A5}|Taxometr.Android\\Taxometr.Android.csproj|C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\taxometr.android\\notificationbuttonreciver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2A5D15D-404D-4FE4-BA7C-38FB50B213A5}|Taxometr.Android\\Taxometr.Android.csproj|solutionrelative:taxometr.android\\notificationbuttonreciver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\mainpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\mainpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\printpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\printpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\pages\\printpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\pages\\printpage.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\app.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\app.xaml||{2974C621-7033-421A-B08A-11D27B021D1B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|c:\\vs\\git\\new\\nts-taxometr\\taxometr\\taxometr\\resources\\fonts\\iconfont\\icons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{35F5DBAA-8D71-4D8D-AF02-B9B81FE14133}|Taxometr\\Taxometr.csproj|solutionrelative:taxometr\\resources\\fonts\\iconfont\\icons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 395,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,160 +50,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MainPage.xaml.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\MainPage.xaml.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Pages\\MainPage.xaml.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\MainPage.xaml.cs",
-              "RelativeToolTip": "Taxometr\\Pages\\MainPage.xaml.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAcwD4AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "SavedDevicesPage.xaml.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\SavedDevicesPage.xaml.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Pages\\SavedDevicesPage.xaml.cs",
+              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\SavedDevicesPage.xaml.cs",
+              "RelativeToolTip": "Taxometr\\Pages\\SavedDevicesPage.xaml.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAmwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-14T12:05:05.182Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\MainPage.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\Pages\\MainPage.xaml",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\MainPage.xaml",
-              "RelativeToolTip": "Taxometr\\Pages\\MainPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-14T12:01:02.253Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PrintPage.xaml",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\PrintPage.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\Pages\\PrintPage.xaml",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\PrintPage.xaml",
-              "RelativeToolTip": "Taxometr\\Pages\\PrintPage.xaml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAEwAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-08T09:43:47.738Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PrintPage.xaml.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\PrintPage.xaml.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Pages\\PrintPage.xaml.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\PrintPage.xaml.cs",
-              "RelativeToolTip": "Taxometr\\Pages\\PrintPage.xaml.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAQwC0AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-08T08:13:54.668Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DrivePage.xaml",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\DrivePage.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\Pages\\DrivePage.xaml",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\DrivePage.xaml",
-              "RelativeToolTip": "Taxometr\\Pages\\DrivePage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-08T06:44:01.598Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DrivePage.xaml.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\DrivePage.xaml.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Pages\\DrivePage.xaml.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Pages\\DrivePage.xaml.cs",
-              "RelativeToolTip": "Taxometr\\Pages\\DrivePage.xaml.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAawDwAAAB3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T10:07:50.802Z",
+              "WhenOpened": "2025-01-17T12:58:28.188Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ProviderExtentions.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Services\\ProviderExtentions.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Services\\ProviderExtentions.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Services\\ProviderExtentions.cs",
-              "RelativeToolTip": "Taxometr\\Services\\ProviderExtentions.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAQwDgAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T07:07:45.534Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "ProviderBLE.cs",
               "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Services\\ProviderBLE.cs",
               "RelativeDocumentMoniker": "Taxometr\\Services\\ProviderBLE.cs",
               "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Services\\ProviderBLE.cs",
               "RelativeToolTip": "Taxometr\\Services\\ProviderBLE.cs",
-              "ViewState": "AgIAAAIBAAAAAAAAAAA5wB0BAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBYAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T07:04:19.392Z"
+              "WhenOpened": "2025-01-17T12:19:08.011Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ButtonExtras.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\Resources\\ButtonExtras.cs",
-              "RelativeDocumentMoniker": "Taxometr.Android\\Resources\\ButtonExtras.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\Resources\\ButtonExtras.cs",
-              "RelativeToolTip": "Taxometr.Android\\Resources\\ButtonExtras.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAxAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "DeviceViewCell.xaml.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Views\\DeviceViewCell.xaml.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Views\\DeviceViewCell.xaml.cs",
+              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Views\\DeviceViewCell.xaml.cs",
+              "RelativeToolTip": "Taxometr\\Views\\DeviceViewCell.xaml.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAkwI8BAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T12:08:51.808Z"
+              "WhenOpened": "2025-01-17T11:57:26.023Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NotificationButtonReciver.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\NotificationButtonReciver.cs",
-              "RelativeDocumentMoniker": "Taxometr.Android\\NotificationButtonReciver.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\NotificationButtonReciver.cs",
-              "RelativeToolTip": "Taxometr.Android\\NotificationButtonReciver.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAABEAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "AppData.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Data\\AppData.cs",
+              "RelativeDocumentMoniker": "Taxometr\\Data\\AppData.cs",
+              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Data\\AppData.cs",
+              "RelativeToolTip": "Taxometr\\Data\\AppData.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAwGsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T12:06:40.796Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Notification.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\Services\\Notification.cs",
-              "RelativeDocumentMoniker": "Taxometr.Android\\Services\\Notification.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr.Android\\Services\\Notification.cs",
-              "RelativeToolTip": "Taxometr.Android\\Services\\Notification.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwCYAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T12:06:24.077Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "App.xaml",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\App.xaml",
-              "RelativeDocumentMoniker": "Taxometr\\App.xaml",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\App.xaml",
-              "RelativeToolTip": "Taxometr\\App.xaml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAADgAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2021-12-28T03:44:13.306Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Icons.cs",
-              "DocumentMoniker": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Resources\\Fonts\\IconFont\\Icons.cs",
-              "RelativeDocumentMoniker": "Taxometr\\Resources\\Fonts\\IconFont\\Icons.cs",
-              "ToolTip": "C:\\VS\\Git\\New\\NTS-Taxometr\\Taxometr\\Taxometr\\Resources\\Fonts\\IconFont\\Icons.cs",
-              "RelativeToolTip": "Taxometr\\Resources\\Fonts\\IconFont\\Icons.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2020-06-30T01:52:06.653Z"
+              "WhenOpened": "2025-01-17T11:55:21.893Z",
+              "EditorCaption": ""
             }
           ]
         }

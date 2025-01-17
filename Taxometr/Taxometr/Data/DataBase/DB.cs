@@ -25,7 +25,7 @@ namespace Taxometr.Data.DataBase
         {
             get
             {
-                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr";
+                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr/cache";
                 if (!Directory.Exists(fullPath))
                 {
                     Directory.CreateDirectory(fullPath);
@@ -37,7 +37,7 @@ namespace Taxometr.Data.DataBase
         {
             get
             {
-                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr";
+                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr/cache";
                 if (!Directory.Exists(fullPath))
                 {
                     Directory.CreateDirectory(fullPath);
