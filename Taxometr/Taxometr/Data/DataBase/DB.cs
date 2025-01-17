@@ -25,12 +25,24 @@ namespace Taxometr.Data.DataBase
         {
             get
             {
-                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr";
+                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr/cache";
                 if (!Directory.Exists(fullPath))
                 {
                     Directory.CreateDirectory(fullPath);
                 }
                 return Path.Combine(fullPath, "app.log");
+            }
+        }
+        public static string SpecialDebugFullPath
+        {
+            get
+            {
+                string fullPath = $"/storage/emulated/0/Android/data/com.nts.taxometr/cache";
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+                return Path.Combine(fullPath, "special.log");
             }
         }
     }

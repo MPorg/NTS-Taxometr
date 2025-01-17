@@ -6,20 +6,24 @@
              Style="{StaticResource BaseShell}">
     <TabBar
         x:Name="_tabBar"
-        Route="root">
+        Route="Root">
         <Tab
-            Title="Меню"
-            Route="Castings">
+            x:Name="RemoteTab"
+            Title="Пульт"
+            Route="Remote">
             <Tab.Icon>
                 <FontImageSource
                 FontFamily="IconsSolid"
                 Glyph="{StaticResource IconNews}"/>
             </Tab.Icon>
             <ShellContent>
-                <pages:MainPage/>
+                <pages:RemotePage/>
             </ShellContent>
         </Tab>
-        <Tab Title="Смена" Route="Feedbacks">
+        <Tab 
+            x:Name="DriveTab"
+            Title="Смена"
+            Route="Drive">
             <Tab.Icon>
                 <FontImageSource
                 FontFamily="IconsSolid" 
@@ -29,7 +33,10 @@
                 <pages:DrivePage/>
             </ShellContent>
         </Tab>
-        <Tab Title="Отчёты" Route="Favorites">
+        <Tab 
+            x:Name="PrintTab"
+            Title="Отчёты"
+            Route="Print">
             <Tab.Icon>
                 <FontImageSource
                 FontFamily="IconsSolid" 

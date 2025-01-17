@@ -63,6 +63,24 @@
                             HorizontalOptions="Center"/>
                     </StackLayout>
                 </StackLayout>
+
+                <StackLayout
+                    Padding="10"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
+                    BackgroundColor="#80000000"
+                    x:Name="LoadingLayout">
+
+                    <ActivityIndicator
+                        IsRunning="True"
+                        BackgroundColor="Transparent"
+                        Color="{StaticResource TextDark}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand"/>
+
+                </StackLayout>
             </RelativeLayout>
         </StackLayout>
     </ContentPage.Content>

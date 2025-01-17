@@ -1,11 +1,7 @@
 ﻿using Honoo.IO.Hashing;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using Xamarin.Forms.Xaml;
 
 namespace Taxometr.Services
 {
@@ -41,6 +37,44 @@ namespace Taxometr.Services
         internal const byte ShiftOpen = 0x30;
         internal const byte ScnoState = 0x35;
         internal const byte VmuState = 0x36;
+        #endregion
+
+        #region ERR
+
+        internal static byte ENET_OK = 0;
+        internal static byte ENET_NO_RESOURCE = 1;
+        internal static byte ENET_JENERAL = 2;
+        internal static byte ENET_BAD_DATA_SIZE = 3;
+        internal static byte ENET_BAD_CMD = 4;
+        internal static byte ENET_BAD_PARAM = 5;
+        internal static byte ENET_PIN_CODE = 6;
+        internal static byte ENET_BAD_CRC = 7;
+        internal static byte ENET_BAD_MODE = 8;
+        internal static byte ENET_MAIN_MENU = 9;
+        internal static byte ENET_SYS_ERROR = 10;
+        internal static byte ENET_FR_IN_PROGRESS = 11;
+        internal static byte ENET_WAIT_OPERATOR = 12;
+        internal static byte ENET_NO_DATA = 13;
+
+
+        internal static Dictionary<byte, string> ErrCodes = new Dictionary<byte, string>()
+        {
+            {ENET_OK, "Команда выполнилась успешно" },
+            {ENET_NO_RESOURCE, "В данный момент не хватает ресурсов процессора, чтобы\r\nобработать команду. Команда проигнорирована. Необходимо\r\nповторить попытку через какое-то время." },
+            {ENET_JENERAL, "Общая ошибка протокола." },
+            {ENET_BAD_DATA_SIZE, "Ошибка размера пакета данных." },
+            {ENET_BAD_CMD, "Неизвестный код команды." },
+            {ENET_BAD_PARAM, "Ошибка параметров команды. Например, задано недопустимое\r\nзначение какого-то из параметров." },
+            {ENET_PIN_CODE, "Неверный пароль связи" },
+            {ENET_BAD_CRC, "Ошибка CRC." },
+            {ENET_BAD_MODE, "Команда не может быть выполнена в текущем режиме" },
+            {ENET_MAIN_MENU, "Команда может быть выполнена только в режиме меню таксометра." },
+            {ENET_SYS_ERROR, "Cистемная ошибка." },
+            {ENET_FR_IN_PROGRESS, "Выполняется команда ФР, переданная ранее. Подождите и повторите попытку." },
+            {ENET_WAIT_OPERATOR, "Ожидается действие оператора." },
+            {ENET_NO_DATA, "Нет данных ответа на команду ФР." }
+        };
+
         #endregion
 
         internal static byte CRC7(string serialNumber, params byte[] data)
@@ -190,6 +224,63 @@ namespace Taxometr.Services
             context.j = j;
 
             return output;
+        }
+
+        internal static List<byte> AddDLEFlags(this List<byte> bytes)
+        {
+            bool changed = false;
+            List<byte> result = new List<byte>();
+
+            foreach (byte b in bytes)
+            {
+                result.Add(b);
+                if (b == PREFIX)
+                {
+                    result.Add(DLE);
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                ProviderBLE.DebugLine(true);
+                ProviderBLE.DebugByteStr(bytes.ToArray(), "Запись до изменений:    ", true);
+                ProviderBLE.DebugByteStr(result.ToArray(), "Запись после изменений: ", true);
+                ProviderBLE.DebugLine(true);
+            }
+            return result;
+        }
+
+        internal static List<byte> RemoveDLEFlags(this List<byte> bytes)
+        {
+            bool changed = false;
+
+            List<byte> result = new List<byte>();
+            List<byte> tmp = new List<byte>(bytes);
+            tmp.Reverse();
+            for (int i = tmp.Count - 1; i >= 0; i--)
+            {
+                if (i > 0)
+                {
+                    if (tmp[i] == DLE && tmp[i + 1] == PREFIX)
+                    {
+                        changed = true;
+                        continue;
+                    }
+                }
+                result.Add(tmp[i]);
+            }
+            //result.Reverse();
+
+            if (changed)
+            {
+                ProviderBLE.DebugLine(true);
+                ProviderBLE.DebugByteStr(bytes.ToArray(), "Чтение до изменений:    ", true);
+                ProviderBLE.DebugByteStr(result.ToArray(), "Чтение после изменений: ", true);
+                ProviderBLE.DebugLine(true);
+            }
+
+            return result;
         }
 
         internal static string FormatRight(this string str, int width)

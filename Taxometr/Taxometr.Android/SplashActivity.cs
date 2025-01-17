@@ -1,10 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Gestures;
 using Android.OS;
-using System;
 using System.Threading.Tasks;
+using Taxometr.Data;
+using Taxometr.Interfaces;
+using Xamarin.Forms;
 
 namespace Taxometr.Droid
 {
@@ -15,8 +16,18 @@ namespace Taxometr.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            
             base.OnCreate(savedInstanceState);
+
+            if (Intent.Extras != null && Intent.Extras.ContainsKey("buttonClicked"))
+            {
+                AppData.Debug.WriteLine("______________Button clicked______________");
+
+                DependencyService.Resolve<IBLEConnectionController>().Stop();
+                FinishAndRemoveTask();
+
+                return;
+            }
+
             // Create your application here
         }
 
@@ -32,7 +43,7 @@ namespace Taxometr.Droid
         {
             await Task.Delay(500);
 
-            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+            StartActivity(new Intent(Android.App.Application.Context, typeof(MainActivity)));
         }
     }
 }

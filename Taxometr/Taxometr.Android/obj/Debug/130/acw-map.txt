@@ -4,6 +4,12 @@ taxometr.droid.MainActivity;crc6463ebefe7dca09435.MainActivity
 Taxometr.Droid.SplashActivity, Taxometr.Android;crc6463ebefe7dca09435.SplashActivity
 Taxometr.Droid.SplashActivity;crc6463ebefe7dca09435.SplashActivity
 taxometr.droid.SplashActivity;crc6463ebefe7dca09435.SplashActivity
+Taxometr.Droid.Services.NotificationButtonReciver, Taxometr.Android;com.nts.taxometr.notif_btn_res
+Taxometr.Droid.Services.NotificationButtonReciver;com.nts.taxometr.notif_btn_res
+com.nts.taxometr.notif_btn_res;com.nts.taxometr.notif_btn_res
+Taxometr.Droid.Services.ConnectionWorker, Taxometr.Android;com.nts.taxometr.connection_worker
+Taxometr.Droid.Services.ConnectionWorker;com.nts.taxometr.connection_worker
+com.nts.taxometr.connection_worker;com.nts.taxometr.connection_worker
 Plugin.BLE.BroadcastReceivers.BluetoothStatusBroadcastReceiver, Plugin.BLE;crc64087678da79fdfe22.BluetoothStatusBroadcastReceiver
 Plugin.BLE.BroadcastReceivers.BluetoothStatusBroadcastReceiver;crc64087678da79fdfe22.BluetoothStatusBroadcastReceiver
 plugin.ble.broadcastreceivers.BluetoothStatusBroadcastReceiver;crc64087678da79fdfe22.BluetoothStatusBroadcastReceiver

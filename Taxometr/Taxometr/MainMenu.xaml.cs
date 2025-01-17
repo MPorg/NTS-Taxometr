@@ -1,7 +1,10 @@
 ﻿using Plugin.BLE.Abstractions.Contracts;
 using System;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 using Taxometr.Data;
+using Taxometr.Interfaces;
 using Taxometr.Pages;
 using Taxometr.Views;
 using Xamarin.Forms;
@@ -12,6 +15,18 @@ namespace Taxometr
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainMenu : Shell
     {
+        public enum MenuMode
+        {
+            Remote,
+            Drive,
+            Print
+        }
+
+        private MenuMode _mode = MenuMode.Remote;
+        public MenuMode Mode { get => _mode; set { _mode = value; Debug.WriteLine($"Menu mode: {value}"); } }
+        private bool _switchingIsBusy = false;
+        public bool SwitchingIsBusy { get => _switchingIsBusy; private set { _switchingIsBusy = value; Debug.WriteLine($"is busy: {value}"); } }
+
         private DevicesTabbedPage _devicesPage;
         private SettingsPage _settingsPage;
         Action<bool, string, string, string, string, bool> _result;
@@ -19,10 +34,58 @@ namespace Taxometr
         public MainMenu()
         {
             InitializeComponent();
-            Start();
         }
 
-        private async void Start()
+        public void OnCheck_TryTransit(Type type)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Debug.WriteLine("_________________ Try Transmit _________________");
+
+                if (!SwitchingIsBusy) return;
+
+                if ((type == typeof(RemotePage) && Mode == MenuMode.Remote) ||
+                    (type == typeof(DrivePage) && Mode == MenuMode.Drive) ||
+                    (type == typeof(PrintPage) && Mode == MenuMode.Print)) return;
+
+                switch (Mode)
+                {
+                    case MenuMode.Remote:
+                        GoToAsync("///Remote", false);
+                        break;
+                    case MenuMode.Drive:
+                        GoToAsync("///Drive", false);
+                        break;
+                    case MenuMode.Print:
+                        GoToAsync("//Print", false);
+                        break;
+                }
+            });
+        }
+
+        public void SetBusy(bool busy, Type type)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                if (busy == false)
+                {
+                    DriveTab.IsEnabled = true;
+                    PrintTab.IsEnabled = true;
+                    return;
+                }
+
+                if (type == typeof(DrivePage))
+                {
+                    PrintTab.IsEnabled = false;
+                }
+                else if (type == typeof(PrintPage))
+                {
+                    DriveTab.IsEnabled = false;
+                }
+            });
+        }
+
+        internal async void Start()
         {
             await AppData.CheckLocation();
             await AppData.CheckBLE();

@@ -21,8 +21,9 @@
         <Color x:Key="TextColoredLight">#142F5F</Color>
         <Color x:Key="TextColoredMiddle">#376F99</Color>
         <Color x:Key="TextColoredDark">#5AAED2</Color>
-        
+
         <Color x:Key="TextLink">#DB7C26</Color>
+        <Color x:Key="TextRedLink">#A72525</Color>
 
         <x:String x:Key="IconPhone">&#xf095;</x:String>
         <x:String x:Key="IconKey">&#xf084;</x:String>
@@ -52,6 +53,8 @@
         <x:String x:Key="IconArrowDown">&#xf107;</x:String>
         <x:String x:Key="IconStar">&#xf005;</x:String>
         <x:String x:Key="IconFolder">&#xf07b;</x:String>
+        <x:String x:Key="IconTrash">&#xf1f8;</x:String>
+        <x:String x:Key="IconCheck">&#xf00c;</x:String>
 
         <Style x:Key="BaseShell" TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLighted}}"/>

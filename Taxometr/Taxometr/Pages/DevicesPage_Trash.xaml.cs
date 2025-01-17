@@ -170,7 +170,7 @@ namespace Taxometr.Pages
                         AppData.Debug.WriteLine("Connecting");
                         try
                         {
-                            var connectParameters = new ConnectParameters(false, true);
+                            var connectParameters = new ConnectParameters(true, true);  
                             await _adapter.ConnectToDeviceAsync(selection.Device, connectParameters);
                         }
                         catch

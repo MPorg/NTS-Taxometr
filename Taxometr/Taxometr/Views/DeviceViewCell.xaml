@@ -83,11 +83,11 @@
                         <StackLayout>
 
                             <StackLayout
+                                x:Name="SerNum"
                                 Orientation="Horizontal"
                                 HorizontalOptions="FillAndExpand">
 
                                 <Label
-                                    x:Name="SerNum"
                                     Text="Заводской номер"
                                     FontSize="Subtitle"
                                     VerticalOptions="FillAndExpand"
@@ -100,14 +100,27 @@
                                     HorizontalTextAlignment="End"
                                     HorizontalOptions="EndAndExpand"
                                     VerticalTextAlignment="End"/>
+
+                                <Entry
+                                    x:Name="SerNumEntry"
+                                    HorizontalTextAlignment="End"
+                                    Keyboard="Numeric"
+                                    Margin="0, -15, 0, -15"
+                                    FontSize="Subtitle"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextChanged="SerNumEntry_TextChanged"
+                                    Completed="SerNumEntry_Completed"
+                                    Unfocused="SerNumEntry_Unfocused"
+                                    Focused="SerNumEntry_Focused"/>
+
                             </StackLayout>
 
                             <StackLayout
+                                x:Name="BLEPass"
                                 Orientation="Horizontal"
                                 HorizontalOptions="FillAndExpand">
 
                                 <Label
-                                    x:Name="BLEPass"
                                     Text="Пароль связи"
                                     FontSize="Subtitle"
                                     HorizontalTextAlignment="End"
@@ -120,14 +133,27 @@
                                     FontSize="Subtitle"
                                     HorizontalOptions="EndAndExpand"
                                     VerticalTextAlignment="End"/>
+
+                                <Entry
+                                    x:Name="BLEPassEntry"
+                                    HorizontalTextAlignment="End"
+                                    Keyboard="Numeric"
+                                    Margin="0, -15, 0, -15"
+                                    FontSize="Subtitle"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextChanged="BLEPassEntry_TextChanged"
+                                    Completed="BLEPassEntry_Completed"
+                                    Unfocused="BLEPassEntry_Unfocused"
+                                    Focused="BLEPassEntry_Focused"/>
+                                
                             </StackLayout>
 
                             <StackLayout
+                                x:Name="AdminPass"
                                 Orientation="Horizontal"
                                 HorizontalOptions="FillAndExpand">
 
                                 <Label
-                                    x:Name="AdminPass"
                                     Text="Пароль оператора"
                                     FontSize="Subtitle"
                                     HorizontalTextAlignment="End"
@@ -140,27 +166,88 @@
                                     FontSize="Subtitle"
                                     HorizontalOptions="EndAndExpand"
                                     VerticalTextAlignment="End"/>
+
+                                <Entry
+                                    x:Name="AdminPassEntry"
+                                    HorizontalTextAlignment="End"
+                                    Keyboard="Numeric"
+                                    Margin="0, -15, 0, -15"
+                                    FontSize="Subtitle"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextChanged="AdminPassEntry_TextChanged"
+                                    Completed="AdminPassEntry_Completed"
+                                    Unfocused="AdminPassEntry_Unfocused"
+                                    Focused="AdminPassEntry_Focused"/>
+                                
                             </StackLayout>
-                            
+
                             <StackLayout
+                                x:Name="AutoConnect"
                                 Orientation="Horizontal"
                                 HorizontalOptions="FillAndExpand">
 
                                 <Label
-                                    x:Name="AutoConnect"
                                     Text="Автоподключение"
                                     FontSize="Subtitle"
                                     HorizontalTextAlignment="End"
                                     VerticalOptions="FillAndExpand"
                                     VerticalTextAlignment="Start"/>
 
-                                <Switch
+                                <Label
                                     x:Name="AutoConnectValue"
-                                    Toggled="OnAutoConnectValue_Toggled"
-                                    IsToggled="{Binding AutoConnect}"
+                                    Text="{Binding AutoConnectStr}"
+                                    FontSize="Subtitle"
+                                    HorizontalOptions="EndAndExpand"
+                                    VerticalTextAlignment="End"/>
+                                
+                                <Switch
+                                    x:Name="AutoConnectSwitch"
+                                    Toggled="OnAutoConnectSwitch_Toggled"
+                                    Margin="0, 0, 0, -15"
                                     HorizontalOptions="EndAndExpand"/>
                             </StackLayout>
 
+
+                            <Grid
+                                ColumnDefinitions="*, 3*, *"
+                                Margin="0, 20, 0, 0"
+                                HorizontalOptions="FillAndExpand">
+
+                                <ImageButton
+                                    x:Name="DeleteBtn"
+                                    BackgroundColor="Transparent"
+                                    Padding="15"
+                                    Clicked="OnDeleteBtnClicked">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                            Color="{StaticResource TextRedLink}"
+                                            Size="100"
+                                            FontFamily="IconsSolid"
+                                            Glyph="{StaticResource IconTrash}"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+
+                                <Button
+                                    Grid.Column="1"
+                                    x:Name="ConnectBtn"
+                                    Clicked="OnConnectBtnClicked"/>
+
+                                <ImageButton
+                                    Grid.Column="2"
+                                    x:Name="EditSaveBtn"
+                                    BackgroundColor="Transparent"
+                                    Padding="15"
+                                    Clicked="OnEditSaveBtnClicked">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                            Color="{StaticResource TextLink}"
+                                            Size="100"
+                                            FontFamily="IconsSolid"
+                                            Glyph="{StaticResource IconPen}"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+
+                            </Grid>
                         </StackLayout>
                     </Frame>
                 </StackLayout>

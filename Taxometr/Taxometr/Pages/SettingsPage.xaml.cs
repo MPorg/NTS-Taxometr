@@ -15,25 +15,6 @@ namespace Taxometr.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            LoadSettings();
-        }
-
-        private async void LoadSettings()
-        {
-            AutoconnectSwitch.IsToggled = await AppData.Properties.GetAutoconnect();
-        }
-
-        private void SwitchAutoConnectParameters(bool enable = true)
-        {
-            AutoConnectParameter.IsEnabled = enable;
-            DisableAutoConnectPanel.IsVisible = !enable;
-        }
-
-        private async void OnAutoconnectSwitchToggled(object sender, ToggledEventArgs e)
-        {
-            bool toggled = e.Value;
-
-            await AppData.Properties.SaveAutoconnect(toggled);
         }
     }
 }

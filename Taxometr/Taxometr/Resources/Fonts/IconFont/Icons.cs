@@ -30,6 +30,8 @@
         public static string IconArrowDown = "\uf107";
         public static string IconStar = "\uf005";
         public static string IconFolder = "\uf07b";
+        public static string IconTrash = "\uf1f8";
+        public static string IconCheck = "\uf00c";
 
     }
 }

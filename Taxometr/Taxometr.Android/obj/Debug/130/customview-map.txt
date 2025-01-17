@@ -23,6 +23,8 @@ com.google.android.material.bottomnavigation.BottomNavigationView;C:\VS\Git\New\
 com.google.android.material.tabs.TabLayout;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\68\jl\res\layout\fallbacktabbardonotuse.xml
 com.google.android.material.tabs.TabLayout;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\68\jl\res\layout\rootlayout.xml
 com.google.android.material.tabs.TabLayout;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\68\jl\res\layout\tabbar.xml
+crc643f46942d9dd1fff9.ShellFlyoutLayout;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\68\jl\res\layout\flyoutcontent.xml
+crc64720bb2db43a66fe9.FormsViewPager;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\68\jl\res\layout\rootlayout.xml
 declare-styleable;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\68\jl\res\values\attrs.xml
 external-cache-path;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\67\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 external-path;C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr.Android\obj\Debug\130\lp\67\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml

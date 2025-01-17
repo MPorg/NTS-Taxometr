@@ -76,11 +76,17 @@
     <Compile Update="Pages\DeviceView.xaml.cs">
       <DependentUpon>DeviceView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Pages\RemotePage.xaml.cs">
+      <DependentUpon>RemotePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DeposWithdrawCashBanner.xaml.cs">
       <DependentUpon>DeposWithdrawCashBanner.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\DeviceViewCell.xaml.cs">
       <DependentUpon>DeviceViewCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PrintCheckBanner.xaml.cs">
+      <DependentUpon>PrintCheckBanner.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -103,7 +109,7 @@
     <EmbeddedResource Update="Pages\DrivePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\MainPage.xaml">
+    <EmbeddedResource Update="Pages\RemotePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\PrintPage.xaml">
@@ -125,6 +131,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DeviceViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PrintCheckBanner.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

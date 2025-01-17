@@ -3,3 +3,6 @@ build_property.RootNamespace = Taxometr
 build_property.ProjectDir = C:\VS\Git\New\NTS-Taxometr\Taxometr\Taxometr\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 
