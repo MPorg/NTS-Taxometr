@@ -393,12 +393,14 @@ namespace Taxometr.Views
                         {
                             if (_binding.Device.Id != Guid.Empty)
                             {
-                                var connectParameters = new ConnectParameters(true, true);
-                                await AppData.BLEAdapter.ConnectToDeviceAsync(_binding.Device, connectParameters);
-                                if (AppData.BLEAdapter.ConnectedDevices.Count > 0)
+
+                                if (await AppData.ConnectToDevice(_binding.DeviceId))
                                 {
-                                    AppData.ShowToast($"Подключено: {_binding.CustomName ?? "N/A"}");
-                                    _binding.FindDevice();
+                                    if (AppData.BLEAdapter.ConnectedDevices.Count > 0)
+                                    {
+                                        AppData.ShowToast($"Подключено: {_binding.CustomName ?? "N/A"}");
+                                        _binding.FindDevice();
+                                    }
                                 }
                             }
                             else
@@ -471,7 +473,7 @@ namespace Taxometr.Views
 
                 await AppData.TaxometrDB.DevicePrefabs.UpdateAsync(dp);
                 _binding.Update();
-                AppData.SetAutoconnectDevice(dp);
+                AppData.SetConnectedDevice(dp);
             }
         }
 
@@ -643,7 +645,6 @@ namespace Taxometr.Views
 
         private void BLEPassEntry_Completed(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("BLEPass Complete");
             AdminPassEntry.Focus();
         }
 
@@ -722,21 +723,18 @@ namespace Taxometr.Views
 
         private async void SerNumEntry_Focused(object sender, FocusEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("SerNum Focus");
             await Task.Delay(10);
             SerNumEntry.CursorPosition = SerNumEntry.Text.Length;
         }
 
         private async void BLEPassEntry_Focused(object sender, FocusEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("BlePass Focus");
             await Task.Delay(10);
             BLEPassEntry.CursorPosition = BLEPassEntry.Text.Length;
         }
 
         private async void AdminPassEntry_Focused(object sender, FocusEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("AdminPass Focus");
             await Task.Delay(10);
             AdminPassEntry.CursorPosition = AdminPassEntry.Text.Length;
         }

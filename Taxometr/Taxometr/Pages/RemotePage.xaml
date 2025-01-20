@@ -143,14 +143,15 @@
 -->    
                     <StackLayout
                         Orientation="Horizontal"
-                        HeightRequest="70"
-                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="80"
+                        HorizontalOptions="Center"
                         VerticalOptions="EndAndExpand"
                         Padding="0">
 
                         <Button
                             Text="C"
                             CommandParameter="C"
+                            VerticalOptions="FillAndExpand"
                             FontSize="40"
                             CornerRadius="5"
                             Clicked="OnEmitBtnClicked"/>
@@ -158,6 +159,7 @@
                         <Button
                             Text="▲"
                             CommandParameter="Up"
+                            VerticalOptions="FillAndExpand"
                             FontSize="40"
                             CornerRadius="5"
                             Clicked="OnEmitBtnClicked"/>
@@ -165,6 +167,7 @@
                         <Button
                             Text="▼"
                             CommandParameter="Down"
+                            VerticalOptions="FillAndExpand"
                             FontSize="40"
                             CornerRadius="5"
                             Clicked="OnEmitBtnClicked"/>
@@ -172,6 +175,7 @@
                         <Button
                             Text="OK"
                             CommandParameter="OK"
+                            VerticalOptions="FillAndExpand"
                             FontSize="40"
                             CornerRadius="5"
                             Clicked="OnEmitBtnClicked"/>
@@ -180,6 +184,7 @@
 
                     <StackLayout
                         Orientation="Horizontal"
+                        HeightRequest="80"
                         HorizontalOptions="Center"
                         Padding="5">
 

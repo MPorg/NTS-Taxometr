@@ -55,6 +55,7 @@
         <x:String x:Key="IconFolder">&#xf07b;</x:String>
         <x:String x:Key="IconTrash">&#xf1f8;</x:String>
         <x:String x:Key="IconCheck">&#xf00c;</x:String>
+        <x:String x:Key="IconRemote">&#xf11b;</x:String>
 
         <Style x:Key="BaseShell" TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLighted}}"/>

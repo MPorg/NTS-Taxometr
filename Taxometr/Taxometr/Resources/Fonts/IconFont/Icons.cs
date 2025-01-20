@@ -32,6 +32,7 @@
         public static string IconFolder = "\uf07b";
         public static string IconTrash = "\uf1f8";
         public static string IconCheck = "\uf00c";
+        public static string IconRemote = "\uf11b";
 
     }
 }

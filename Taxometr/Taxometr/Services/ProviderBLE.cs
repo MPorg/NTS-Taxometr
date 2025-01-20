@@ -28,13 +28,10 @@ namespace Taxometr.Services
             if (_charactR != null)
             {
                 _charactR.ValueUpdated -= OnCharacterValueUpdated;
-                Debug.WriteLine("Provider dispose");
-            }
-            else
-            {
-                Debug.WriteLine("Provider dispose, but character been null");
+                //await _charactR.StopUpdatesAsync();
             }
         }
+
         public async void Initialize()
         {
             _serialNumber = await AppData.Properties.GetSerialNumber();
@@ -112,10 +109,13 @@ namespace Taxometr.Services
         {
             try
             {
+                if (_charactR != null) _charactR.ValueUpdated -= OnCharacterValueUpdated;
+
                 var service = await AppData.BLEAdapter.ConnectedDevices[0].GetServiceAsync(BLUETOOTH_LE_INCOTEX_SERVICE);
                 _charactR = await service.GetCharacteristicAsync(BLUETOOTH_LE_INCOTEX_CHAR_R);
-                _charactR.ValueUpdated -= OnCharacterValueUpdated;
+
                 _charactR.ValueUpdated += OnCharacterValueUpdated;
+
                 await _charactR.StartUpdatesAsync();
             }
             catch
@@ -391,7 +391,6 @@ namespace Taxometr.Services
             }
             else
             {
-                Debug.WriteLine($"__________________________________Retry {_retrysCount}______________________________________");
                 await Task.Delay(1000);
                 _retrysCount++;
                 //_readFR = true;
@@ -696,11 +695,11 @@ namespace Taxometr.Services
         private MenuMode openMenuModeMenuMode;
         private string openMenuModeOperatorPass;
         private bool openMenuModeReadFR;
-        public void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = false, int retrysCount = 5)
+        public void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = true, int retrysCount = 5)
         {
             OpenMenuOrPrintReceipt(menuMode, operatorPass, readFR, retrysCount, true);
         }
-        private void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = false, int retrysCount = 5, bool firstTry = false)
+        private void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = true, int retrysCount = 5, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             openMenuModeMenuMode = menuMode;
@@ -731,7 +730,7 @@ namespace Taxometr.Services
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = SwitchMode;
                 byte mode = (byte)menuMode;
-                byte func = 0x0;
+                byte func = 0x00;
                 byte[] pass = Encoding.GetEncoding(1251).GetBytes(operatorPass);
 
                 byte[] crc = CRC16(_serialNumber, cmd, mode, func, pass[0], pass[1], pass[2], pass[3], pass[4], pass[5], 0x00, 0x00, 0x00);
@@ -1172,7 +1171,6 @@ namespace Taxometr.Services
 
         private Dictionary<string, string> ShiftStateAnsw(byte[] data, out bool retry)
         {
-            Debug.WriteLine("_____________________Статус смены_____________________");
             try
             {
                 byte errCode = data[1];
@@ -1226,7 +1224,6 @@ namespace Taxometr.Services
 
         private Dictionary<string,string> TaxStateAnsw(byte[] data)
         {
-            Debug.WriteLine("_____________________Статус ТАКСА_____________________");
             try
             {
                 ushort errCode = BitConverter.ToUInt16(data, 2);
@@ -1262,7 +1259,6 @@ namespace Taxometr.Services
         }
         private Dictionary<string, string> CloseCheckAnsw(byte[] data)
         {
-            Debug.WriteLine("_____________________ Закрыть чек _____________________");
             try
             {
                 byte errCode = data[1];
@@ -1303,7 +1299,6 @@ namespace Taxometr.Services
 
         private Dictionary<string, string> BaseAnsw(byte[] data)
         {
-            Debug.WriteLine("_____________________ Общий ответ _____________________");
             try
             {
                 byte cmd = data[0];

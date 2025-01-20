@@ -13,29 +13,54 @@
             VerticalOptions="Center"
             HorizontalOptions="Center">
             <Frame
-                Padding="50"
-                CornerRadius="30"
-                BackgroundColor="#A0000000"
+                HorizontalOptions="FillAndExpand"
+                Padding="5"    
+                CornerRadius="35"
+                BackgroundColor="{StaticResource BackgroundDarked}"
                 BorderColor="Transparent">
-                <StackLayout>
-                    
-                    <Label
-                        x:Name="Header"
-                        FontSize="Large"
-                        HorizontalTextAlignment="Center"
-                        HorizontalOptions="FillAndExpand"/>
-                    <Entry
-                        x:Name="CashEntry"
-                        Placeholder="0.00"
-                        HorizontalOptions="Fill"
-                        FontSize="Large"/>
-                    
-                    <Button
-                        x:Name="EnterBtn"
-                        Text="ОК"
-                        Clicked="OnEnterBtnClicked"/>
+                <Frame
+                    Padding="20"
+                    CornerRadius="30"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}"
+                    BorderColor="Transparent"
+                    HorizontalOptions="FillAndExpand">
+                    <StackLayout>
 
-                </StackLayout>
+                        <Label
+                            x:Name="Header"
+                            TextColor="{StaticResource TextDark}"
+                            FontSize="Large"
+                            HorizontalTextAlignment="Center"
+                            HorizontalOptions="FillAndExpand"/>
+                        <Entry
+                            x:Name="CashEntry"
+                            Keyboard="Numeric"
+                            TextColor="{StaticResource TextDark}"
+                            PlaceholderColor="{StaticResource TextColoredDark}"
+                            Placeholder="0,00"
+                            HorizontalOptions="Fill"
+                            TextChanged="CashEntry_TextChanged"
+                            Completed="CashEntry_Completed"
+                            Unfocused="CashEntry_Unfocused"
+                            FontSize="Large"/>
+                        
+                        <StackLayout
+                            Orientation="Horizontal">
+                            
+                            <Button
+                                x:Name="CancelBtn"
+                                Text="Отмена"
+                                Clicked="OnCancelBtn_Clicked"/>
+                            
+                            <Button
+                                x:Name="EnterBtn"
+                                Text="ОК"
+                                Clicked="OnEnterBtnClicked"/>
+                            
+                        </StackLayout>
+
+                    </StackLayout>
+                </Frame>
             </Frame>
         </StackLayout>
     </ContentPage.Content>

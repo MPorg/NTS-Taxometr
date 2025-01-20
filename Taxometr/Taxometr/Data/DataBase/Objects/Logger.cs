@@ -31,7 +31,6 @@ namespace Taxometr.Data.DataBase.Objects
             {
                 if (buffer.Count > 0)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Log write {buffer.Count} lines");
                     using (StreamWriter sw = new StreamWriter(new FileStream(_path, FileMode.Append, FileAccess.Write, FileShare.Write)))
                     {
                         foreach (var b in buffer)
@@ -51,7 +50,6 @@ namespace Taxometr.Data.DataBase.Objects
             catch (Exception ex)
             {
                 string msg = $"Не удалось сохранить лог. Системная ошибка: {ex.Message}";
-                System.Diagnostics.Debug.WriteLine(msg);
                 using (StreamWriter sw = new StreamWriter(new FileStream(_path, FileMode.Append, FileAccess.Write, FileShare.Write)))
                 {
                     sw.WriteLine(msg);
@@ -65,7 +63,6 @@ namespace Taxometr.Data.DataBase.Objects
             {
                 if (specialBuffer.Count > 0)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Log write {specialBuffer.Count} lines");
                     using (StreamWriter sw = new StreamWriter(new FileStream(_specialPath, FileMode.Append, FileAccess.Write, FileShare.Write)))
                     {
                         foreach (var b in specialBuffer)
@@ -85,7 +82,7 @@ namespace Taxometr.Data.DataBase.Objects
             catch (Exception ex)
             {
                 string msg = $"Не удалось сохранить лог. Системная ошибка: {ex.Message}";
-                System.Diagnostics.Debug.WriteLine(msg);
+                //System.Diagnostics.Debug.WriteLine(msg);
                 using (StreamWriter sw = new StreamWriter(new FileStream(_specialPath, FileMode.Append, FileAccess.Write, FileShare.Write)))
                 {
                     sw.WriteLine(msg);

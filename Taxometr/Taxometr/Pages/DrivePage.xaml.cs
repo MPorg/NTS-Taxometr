@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 using Taxometr.Data;
 using Taxometr.Interfaces;
@@ -15,6 +13,15 @@ namespace Taxometr.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DrivePage : ContentPage, ICheckedTransition
     {
+        private enum ShiftStateInfo
+        {
+            None,
+            Opened,
+            Closed
+        }
+
+        private ShiftStateInfo _shiftStateInfo = ShiftStateInfo.None;
+
         bool _checkTaxState = true;
         public DrivePage()
         {
@@ -42,7 +49,7 @@ namespace Taxometr.Pages
 
         public event Action<Type> TryTransit;
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             if (AppData.BLEAdapter.ConnectedDevices.Count <= 0)
             {
@@ -65,8 +72,47 @@ namespace Taxometr.Pages
                     AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
                     AppData.Provider.SentTaxState(true);
                 }
-                _checkTaxState = true; 
+                _checkTaxState = true;
+
+                if (_shiftStateInfo == ShiftStateInfo.None)
+                {
+                    OpenShiftBtn.IsEnabled = false;
+                    WithdrawCash.IsEnabled = false;
+                    DeposCash.IsEnabled = false;
+                    OpenCash.IsEnabled = false;
+
+                    await Task.Delay(1000);
+                    AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer; ;
+                    AppData.Provider.SentShiftInfo(true);
+                }
             }
+        }
+
+        private void CheckShiftLocalAnswer(byte cmd, Dictionary<string, string> keyValues)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                if (cmd == ProviderExtentions.ShiftState)
+                {
+                    if (keyValues.TryGetValue("shiftState", out string shiftState))
+                    {
+                        if (int.TryParse(shiftState, out int shiftStateCode))
+                        {
+                            AppData.Provider.AnswerCompleate -= CheckShiftLocalAnswer;
+                            ProviderBLE.ShiftInfo shiftInfo = (ProviderBLE.ShiftInfo)shiftStateCode;
+
+                            if (shiftInfo == ProviderBLE.ShiftInfo.Closed)
+                            {
+                                SetShift(false);
+                            }
+                            else
+                            {
+                                SetShift(true);
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         private void CheckShift()
@@ -99,7 +145,6 @@ namespace Taxometr.Pages
                         AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
                         if (int.TryParse(menuStateStr, out int menuState))
                         {
-                            Debug.WriteLine($"______________________ Menu state {menuState} _________________________");
                             if (menuState == 1)
                             {
                                 return;
@@ -135,6 +180,7 @@ namespace Taxometr.Pages
                                     if (AppData.MainMenu != null && AppData.MainMenu.Mode == MainMenu.MenuMode.Drive)
                                     {
                                         result += "Смена не открыта";
+                                        SetShift(false);
                                     }
                                     else
                                     {
@@ -157,11 +203,13 @@ namespace Taxometr.Pages
                                             await Task.Delay(2000);
                                             LoadingLayout.IsVisible = false;
                                             result += "Смена была не открыта\r\nВы открыли смену";
+                                            SetShift(true);
                                         }
                                         else
                                         {
                                             AppData.Provider.EmitButton(ProviderBLE.ButtonKey.C);
                                             result += "Смена не открыта";
+                                            SetShift(false);
                                         }
 
 
@@ -177,7 +225,6 @@ namespace Taxometr.Pages
                                     else
                                     {
                                         result += "Смена была открыта";
-
                                         LoadingLayout.IsVisible = true;
                                         AppData.MainMenu.SetBusy(true, typeof(DrivePage));
                                         await Task.Delay(2000);
@@ -186,6 +233,7 @@ namespace Taxometr.Pages
                                         AppData.MainMenu.SetBusy(false, typeof(DrivePage));
                                         LoadingLayout.IsVisible = false;
                                     }
+                                    SetShift(true);
                                 }
                             }
                             AppData.ShowToast(result);
@@ -199,8 +247,7 @@ namespace Taxometr.Pages
                     {
                         if (errCode == "0")
                         {
-                            await Task.Delay(100);
-                            Debug.WriteLine($"{_cashedCheckValues != null}");
+                            await Task.Delay(1000);
 
                             if (_cashedCheckValues != null)
                             {
@@ -244,29 +291,38 @@ namespace Taxometr.Pages
 
                         if (int.TryParse(surrender, out int sur))
                         {
-                            if (sur > 0)
+                            float s = sur;
+                            s /= 100;
+                            result = sur == 0 ? "Готово": $"Сдача: {s}р.";
+
+
+                            if (await AppData.MainMenu.DisplayAlert(result, "", "", "Ок"))
                             {
-                                Debug.WriteLine($"sur = {sur}");
-                                float s = sur;
-                                s /= 100;
-                                result += $"Сдача: {s}";
-
-
-                                if (await AppData.MainMenu.DisplayAlert(result, "", "", "Ок"))
-                                {
-                                    await Task.Delay(10);
-                                    AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
-                                }
-                                else
-                                {
-                                    await Task.Delay(10);
-                                    AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
-                                }
+                                await Task.Delay(10);
+                                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
+                            }
+                            else
+                            {
+                                await Task.Delay(10);
+                                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
                             }
                         }
                     }
                 }
             });
+        }
+
+        private void SetShift(bool shiftIsOpen)
+        {
+            OpenShiftBtn.IsEnabled = !shiftIsOpen;
+            WithdrawCash.IsEnabled = shiftIsOpen;
+            DeposCash.IsEnabled = shiftIsOpen;
+            OpenCash.IsEnabled = shiftIsOpen;
+
+            if (shiftIsOpen)
+                _shiftStateInfo = ShiftStateInfo.Opened;
+            else
+                _shiftStateInfo = ShiftStateInfo.Closed;
         }
 
         private void OnAutoconnectionCompleated()
@@ -282,26 +338,32 @@ namespace Taxometr.Pages
         private void SwitchBan(bool enable = false)
         {
             BanLayout.IsVisible = enable;
-            InfoBtn.IsEnabled = !enable;
+            //InfoBtn.IsEnabled = !enable;
         }
+
         private void OnDevicesBtnClicked(object sender, EventArgs e)
         {
             AppData.MainMenu.OpenDevicesPage();
         }
 
-        private void OnOpenShiftBtnClicked(object sender, EventArgs e)
+        private async void OnOpenShiftBtnClicked(object sender, EventArgs e)
         {
             AppData.Provider.OpenShift();
+            await Task.Delay(1000);
+            AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer; ;
+            AppData.Provider.SentShiftInfo(true);
         }
 
         private async void OnDeposCashClicked(object sender, EventArgs e)
         {
             await AppData.GetDeposWithdrawBanner(ProviderBLE.CashMethod.Deposit);
         }
+
         private async void OnWithdrawCashClicked(object sender, EventArgs e)
         {
             await AppData.GetDeposWithdrawBanner(ProviderBLE.CashMethod.Withdrawal);
         }
+
         PrintCheckBanner.CheckInfoEventArgs _cashedCheckValues = null;
         private void OnOpenCashClicked(object sender, EventArgs e)
         {
