@@ -14,7 +14,7 @@
             <Tab.Icon>
                 <FontImageSource
                 FontFamily="IconsSolid"
-                Glyph="{StaticResource IconNews}"/>
+                Glyph="{StaticResource IconRemote}"/>
             </Tab.Icon>
             <ShellContent>
                 <pages:RemotePage/>
@@ -61,19 +61,4 @@
                 Glyph="{StaticResource IconBLE}"/>
         </MenuItem.IconImageSource>
     </MenuItem>
-
-    <MenuItem
-        Text="Настройки"
-        x:Name="SettingsMI"
-        Clicked="OnSettingsMIClicked">
-        <MenuItem.IconImageSource>
-            <FontImageSource
-                Size="70"
-                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
-                FontFamily="IconsSolid"
-                Glyph="{StaticResource IconGear}"/>
-        </MenuItem.IconImageSource>
-
-    </MenuItem>
-
 </Shell>

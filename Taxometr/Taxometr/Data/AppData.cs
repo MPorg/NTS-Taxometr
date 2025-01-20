@@ -31,113 +31,6 @@ namespace Taxometr.Data
         public static event Action AutoconnectionCompleated;
         public static event Action ConnectionLost;
 
-        private static bool _firstInit = true;
-        public static async void Initialize()
-        {
-            if (_taxometrDB == null) _taxometrDB = new TaxometrDB(DB.DBFullPath);
-
-            await Task.Delay(100);
-
-            Debug.WriteLine("Initialization");
-            await CheckLocation();
-            await CheckBLE();
-
-            if (_firstInit)
-            {
-                BLEAdapter.DeviceConnected -= OnDeviceConnected;
-                //BLEAdapter.DeviceConnected -= ReloadProvider;
-                BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
-
-                BLEAdapter.DeviceConnected += OnDeviceConnected;
-                //BLEAdapter.DeviceConnected += ReloadProvider;
-                BLEAdapter.DeviceDisconnected += OnDeviceDisconnected;
-
-                LoadSettings();
-                DotsTimer();
-                LoadAutoconnectDevice();
-                MainMenu.Start();
-                _firstInit = false;
-            }
-            else
-            {
-                LoadAutoconnectDevice();
-            }
-        }
-
-        private static void OnDeviceDisconnected(object sender, DeviceEventArgs e)
-        {
-            _specialDisconnect = true;
-            Debug.WriteLine("_________________Special Disk________________");
-        }
-
-        private static async void OnDeviceConnected(object sender, DeviceEventArgs e)
-        {
-            await Device.InvokeOnMainThreadAsync(async () =>
-            {
-                while (true)
-                {
-
-                    var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
-
-
-                    if (devicePref != null)
-                    {
-                        ConnectedDP = devicePref;
-                        LastDevicePrefab = devicePref;
-                        Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
-
-                        switch (State)
-                        {
-                            case AppState.NormalDisconnected:
-                                State = AppState.NormalConnected;
-                                break;
-                            case AppState.BackgroundDisconnected:
-                                DependencyService.Resolve<INotificationService>().CloseNotifications();
-                                DependencyService.Resolve<IBLEConnectionController>().Start();
-                                State = AppState.BackgroundConnected;
-                                break;
-                        }
-                        _specialDisconnect = false;
-                        break;
-                    }
-                    await Task.Delay(100);
-                }
-            
-                await Task.Run(async () =>
-                {
-                    while (true)
-                    {
-                        if (BLEAdapter.ConnectedDevices.Count == 0)
-                        {
-                            break;
-                        }
-                        await Task.Delay(1000);
-                    }
-                    await Task.Delay(100);
-                    Debug.WriteLine($"________________Connection lost {_connectedDP?.CustomName ?? "N/A"}________________");
-
-                    switch (State)
-                    {
-                        case AppState.NormalConnected:
-                            State = AppState.NormalDisconnected;
-                            break;
-                        case AppState.BackgroundConnected:
-                            State = AppState.BackgroundDisconnected;
-                            Debug.WriteLine("____________________BackgraundDisconnected__________________");
-                            DependencyService.Resolve<IBLEConnectionController>().Stop();
-                            if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
-                            break;
-                    }
-                    await Device.InvokeOnMainThreadAsync(() =>
-                    {
-                        ConnectedDP = null;
-                        ConnectionLost?.Invoke();
-                        if (!_specialDisconnect && AutoConnectDevice != null && AutoconnectDeviceID != Guid.Empty) LoadAutoconnectDevice();
-                    });
-                });
-            });
-        }
-
         private static bool _specialDisconnect = false;
 
         private static ProviderBLE _provider;
@@ -153,130 +46,9 @@ namespace Taxometr.Data
             }
         }
 
-        public static async void ReloadProvider()
-        {
-            await Task.Delay(1000);
-            Provider.Dispose();
-            _provider = new ProviderBLE();
-        }
-
-        private static void ReloadProvider(object sender, DeviceEventArgs e)
-        {
-            ReloadProvider();
-        }
-
         private static bool cont = false;
 
         private static bool _isFirstConnection = true;
-
-        public static async void LoadAutoconnectDevice()
-        {
-            Debug.WriteLine("_____________________Autoconnection_____________________");
-            bool hasAutoConnect = await Properties.GetAutoconnect();
-            var prefs = await TaxometrDB.DevicePrefabs.GetPrefabsAsync();
-            foreach (var pref in prefs)
-            {
-                if (pref.AutoConnect)
-                {
-                    SetAutoconnectDevice(pref);
-                    hasAutoConnect = true;
-                }
-            }
-            if (await Properties.GetAutoconnect()) await Properties.SaveAutoconnect(hasAutoConnect);
-
-            if (prefs == null) cont = false;
-            else cont = true;
-            if (_isFirstConnection)
-            {
-                BLEAdapter.DeviceDiscovered += async (_, e) =>
-                {
-                    if (e.Device.Id == AutoconnectDeviceID && e.Device.Id != Guid.Empty)
-                    {
-                        _device = e.Device;
-                        if (cont)
-                        {
-                            if (await Properties.GetAutoconnect() && !_specialDisconnect)
-                            {
-                                await AutoConnect();
-                                cont = false;
-                                return;
-                            }
-                        }
-                    }
-                };
-                BLEAdapter.ScanTimeoutElapsed += async (_, e) => { await BLEAdapter.StartScanningForDevicesAsync(); };
-            }
-            await BLEAdapter.StartScanningForDevicesAsync();
-            _isFirstConnection = false;
-        }
-
-        public static async void SetAutoconnectDevice(DevicePrefab pref)
-        {
-            AutoconnectDeviceID = pref.DeviceId;
-            await Properties.SaveSerialNumber(pref.SerialNumber);
-            await Properties.SaveBLEPassword(pref.BLEPassword);
-            await Properties.SaveAdminPassword(pref.UserPassword);
-            await Task.Delay(100);
-            Debug.WriteLine($"{await Properties.GetSerialNumber()}, {await Properties.GetBLEPassword()}, {await Properties.GetAdminPassword()}");
-            if (_adapter.ConnectedDevices.Count > 0)
-            {
-                var d = _adapter.ConnectedDevices[0];
-                if (d.Id == AutoconnectDeviceID) _device = d;
-            }
-        }
-
-        private static async Task AutoConnect()
-        {
-            Debug.WriteLine("_____________________Auto connect_____________________");
-            AutoConnectBanner banner = new AutoConnectBanner();
-            try
-            {
-                await MainMenu.Navigation.PushModalAsync(banner);
-                
-                var connectParameters = new ConnectParameters(true, true);
-                await _adapter.ConnectToDeviceAsync(_device, connectParameters);
-            }
-            catch (Exception ex)
-            {
-                ShowToast
-                    (
-                        $"Не удалось подключиться к устройству: {_device.Name ?? "N/A"} \r\n" +
-                        $"{ex.Message}"
-                    );
-                //ReloadProvider();
-            }
-            finally
-            {
-                try
-                {
-                    await banner.Navigation.PopModalAsync();
-                }
-                catch { }
-
-                if (BLEAdapter.ConnectedDevices.Count > 0)
-                {
-                    ShowToast($"Подключено: {_device.Name ?? "N/A"}");
-                    AutoconnectionCompleated.Invoke();
-                }
-            }
-        }
-
-        public static async Task GetDeposWithdrawBanner(ProviderBLE.CashMethod method, string placeholder = "0")
-        {
-            DeposWithdrawCashBanner banner = new DeposWithdrawCashBanner(method, placeholder);
-
-            await MainMenu.Navigation.PushModalAsync(banner);
-        }
-
-        private static async void LoadSettings()
-        {
-            bool autoconnect = await Properties.GetAutoconnect();
-            #if DEBUG
-            await Properties.SaveDebugMode(true);
-            #else
-            await Properties.SaveDebugMode(false);
-            #endif
-        }
 
         public static MainMenu MainMenu { get; set; }
 
@@ -344,15 +116,272 @@ namespace Taxometr.Data
         }
 
         public static DevicePrefab LastDevicePrefab;
+        public static string Dots { get => _dots; }
+
+        private static string _dots;
+
+        private static bool _firstInit = true;
+        public static async void Initialize()
+        {
+            if (_taxometrDB == null) _taxometrDB = new TaxometrDB(DB.DBFullPath);
+
+            await Task.Delay(100);
+
+            Debug.WriteLine("Initialization");
+            await CheckLocation();
+            await CheckBLE();
+
+            if (_firstInit)
+            {
+                BLEAdapter.DeviceConnected -= OnDeviceConnected;
+                BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
+
+                BLEAdapter.DeviceConnected += OnDeviceConnected;
+                BLEAdapter.DeviceDisconnected += OnDeviceDisconnected;
+
+                LoadSettings();
+                DotsTimer();
+                LoadAutoconnectDevice();
+                MainMenu.Start();
+                _firstInit = false;
+            }
+            else
+            {
+                LoadAutoconnectDevice();
+            }
+        }
+
+        public static async Task<bool> ConnectToDevice(Guid id)
+        {
+            DevicePrefab device = await _taxometrDB.DevicePrefabs.GetByIdAsync(id);
+            if (device == null)
+            {
+                try
+                {
+                    await _adapter.ConnectToKnownDeviceAsync(id);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return await ConnectToDevice(device);
+        }
+
+        public static async Task<bool> ConnectToDevice(DevicePrefab prefab)
+        {
+            try
+            {
+                ConnectParameters parameters = new ConnectParameters(true, true);
+                var d = await _adapter.ConnectToKnownDeviceAsync(prefab.DeviceId, parameters);
+                SetConnectedDevice(prefab);
+                ShowToast($"Подключено {prefab.CustomName}");
+                return true;
+            }
+            catch
+            {
+                ShowToast($"Не удалось подключиться");
+                return false;
+            }
+        }
+
+        private static void OnDeviceDisconnected(object sender, DeviceEventArgs e)
+        {
+            _specialDisconnect = true;
+            Debug.WriteLine("_________________Special Disk________________");
+        }
+
+        private static async void OnDeviceConnected(object sender, DeviceEventArgs e)
+        {
+            await Device.InvokeOnMainThreadAsync(async () =>
+            {
+                while (true)
+                {
+
+                    var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
+
+
+                    if (devicePref != null)
+                    {
+                        ConnectedDP = devicePref;
+                        LastDevicePrefab = devicePref;
+                        Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
+
+                        switch (State)
+                        {
+                            case AppState.NormalDisconnected:
+                                State = AppState.NormalConnected;
+                                break;
+                            case AppState.BackgroundDisconnected:
+                                DependencyService.Resolve<INotificationService>().CloseNotifications();
+                                DependencyService.Resolve<IBLEConnectionController>().Start();
+                                State = AppState.BackgroundConnected;
+                                break;
+                        }
+                        _specialDisconnect = false;
+                        break;
+                    }
+                    await Task.Delay(100);
+                }
+
+                await Task.Run(async () =>
+                {
+                    while (true)
+                    {
+                        if (BLEAdapter.ConnectedDevices.Count == 0)
+                        {
+                            break;
+                        }
+                        await Task.Delay(1000);
+                    }
+                    await Task.Delay(100);
+                    Debug.WriteLine($"________________Connection lost {_connectedDP?.CustomName ?? "N/A"}________________");
+
+                    switch (State)
+                    {
+                        case AppState.NormalConnected:
+                            State = AppState.NormalDisconnected;
+                            break;
+                        case AppState.BackgroundConnected:
+                            State = AppState.BackgroundDisconnected;
+                            Debug.WriteLine("____________________BackgraundDisconnected__________________");
+                            DependencyService.Resolve<IBLEConnectionController>().Stop();
+                            if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
+                            break;
+                    }
+                    await Device.InvokeOnMainThreadAsync(() =>
+                    {
+                        ConnectedDP = null;
+                        ConnectionLost?.Invoke();
+                        if (!_specialDisconnect && AutoConnectDevice != null && AutoconnectDeviceID != Guid.Empty) Debug.WriteLine(""); //LoadAutoconnectDevice();
+                    });
+                });
+            });
+        }
+
+        private static void ReloadProvider()
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await Task.Delay(100);
+                if (_provider != null) _provider.Dispose();
+                _provider = new ProviderBLE();
+            });
+        }
+
+        public static async void LoadAutoconnectDevice()
+        {
+            Debug.WriteLine("_____________________Autoconnection_____________________");
+            //bool hasAutoConnect = await Properties.GetAutoconnect();
+            var prefs = await TaxometrDB.DevicePrefabs.GetPrefabsAsync();
+            DevicePrefab deviceToConnect = null;
+
+            if (prefs != null)
+            {
+                cont = true;
+                foreach (var pref in prefs)
+                {
+                    if (pref.AutoConnect)
+                    {
+                        deviceToConnect = pref;
+                        //hasAutoConnect = true;
+                    }
+                }
+                if (_isFirstConnection)
+                {
+                    BLEAdapter.DeviceDiscovered += async (_, e) =>
+                    {
+                        if (deviceToConnect != null && e.Device.Id == deviceToConnect.DeviceId && e.Device.Id != Guid.Empty)
+                        {
+                            _device = e.Device;
+                            if (cont)
+                            {
+                                if (await Properties.GetAutoconnect() && !_specialDisconnect)
+                                {
+                                    if (deviceToConnect != null)
+                                    {
+                                        await AutoConnect(deviceToConnect);
+                                        cont = false;
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    BLEAdapter.ScanTimeoutElapsed += async (_, e) => { await BLEAdapter.StartScanningForDevicesAsync(); };
+                }
+            }
+            else
+            {
+                cont = false;
+            }
+            await BLEAdapter.StartScanningForDevicesAsync();
+            _isFirstConnection = false;
+        }
+
+        private static async Task AutoConnect(DevicePrefab prefab)
+        {
+            Debug.WriteLine("_____________________Auto connect_____________________");
+            AutoConnectBanner banner = new AutoConnectBanner();
+
+            await MainMenu.Navigation.PushModalAsync(banner);
+
+            if (await ConnectToDevice(prefab))
+            {
+                await banner.Navigation.PopModalAsync();
+
+                ShowToast($"Подключено: {prefab.CustomName ?? "N/A"}");
+                AutoconnectionCompleated.Invoke();
+            }
+            else
+            {
+                ShowToast($"Не удалось подключиться к устройству: {prefab.CustomName ?? "N/A"}");
+            }
+                
+        }
+
+        public static async void SetConnectedDevice(DevicePrefab pref)
+        {
+            if (pref.AutoConnect) AutoconnectDeviceID = pref.DeviceId;
+
+            ConnectedDP = pref;
+            await Properties.SaveSerialNumber(pref.SerialNumber);
+            await Properties.SaveBLEPassword(pref.BLEPassword);
+            await Properties.SaveAdminPassword(pref.UserPassword);
+            await Task.Delay(100);
+            Debug.WriteLine($"{await Properties.GetSerialNumber()}, {await Properties.GetBLEPassword()}, {await Properties.GetAdminPassword()}");
+
+            if (_adapter.ConnectedDevices.Count > 0)
+            {
+                var d = _adapter.ConnectedDevices[0];
+                if (d.Id == AutoconnectDeviceID) _device = d;
+            }
+
+            ReloadProvider();
+        }
+        public static async Task GetDeposWithdrawBanner(ProviderBLE.CashMethod method, string placeholder = "0")
+        {
+            DeposWithdrawCashBanner banner = new DeposWithdrawCashBanner(method, placeholder);
+
+            await MainMenu.Navigation.PushModalAsync(banner);
+        }
+
+        private static async void LoadSettings()
+        {
+            bool autoconnect = await Properties.GetAutoconnect();
+#if DEBUG
+            await Properties.SaveDebugMode(true);
+#else
+            await Properties.SaveDebugMode(false);
+#endif
+        }
 
         public static void ShowToast(string message)
         {
             DependencyService.Get<IToastMaker>().Show(message);
         }
 
-        public static string Dots { get => _dots; }
-
-        private static string _dots;
         public static void DotsTimer()
         {
             Device.StartTimer(TimeSpan.FromSeconds(0.5d), (Func<bool>)(() =>
@@ -413,20 +442,6 @@ namespace Taxometr.Data
             }
 
             return status == PermissionStatus.Granted;
-        }
-        private static async Task<bool> PermissionStorageGrantedAsync()
-        {
-            var statusW = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-            var statusR = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-
-
-            if (statusW != PermissionStatus.Granted || statusR != PermissionStatus.Granted)
-            {
-                statusW = await Permissions.RequestAsync<Permissions.StorageWrite>();
-                statusR = await Permissions.RequestAsync<Permissions.StorageRead>();
-            }
-
-            return (statusW == PermissionStatus.Granted && statusR == PermissionStatus.Granted);
         }
 
         public static void ClearAutoconnectDevice()
@@ -577,6 +592,7 @@ namespace Taxometr.Data
                     if (specialDbg) Logger.LogSpecial($"[{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}] {v}");
                     else Logger.Log($"[{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}] {v}");
                 }
+
             }
 
             public static void SaveLog()

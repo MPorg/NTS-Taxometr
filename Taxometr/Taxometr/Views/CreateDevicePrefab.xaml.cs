@@ -1,8 +1,5 @@
 ﻿using Plugin.BLE.Abstractions.Contracts;
 using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Taxometr.Data;
 using Taxometr.Fonts.IconFont;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

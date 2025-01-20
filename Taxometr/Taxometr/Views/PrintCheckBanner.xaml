@@ -49,11 +49,13 @@
                                 x:Name="StartSumEntry"
                                 Keyboard="Numeric"
                                 TextColor="{StaticResource TextDark}"
-                                Text="2.00"
+                                Placeholder="2,00"
                                 FontSize="Large"
                                 HorizontalTextAlignment="End"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                TextChanged="OnEntry_TextChanged"
+                                Completed="OnEntry_Completed"/>
                         </StackLayout>
                         
                         <Label
@@ -78,11 +80,13 @@
                                 x:Name="PayCashEntry"
                                 Keyboard="Numeric"
                                 TextColor="{StaticResource TextDark}"
-                                Text="2.00"
+                                Placeholder="2,00"
                                 FontSize="Large"
                                 HorizontalTextAlignment="End"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                TextChanged="OnEntry_TextChanged"
+                                Completed="OnEntry_Completed"/>
                         </StackLayout>
 
 
@@ -100,11 +104,13 @@
                                 x:Name="PayCardEntry"
                                 Keyboard="Numeric"
                                 TextColor="{StaticResource TextDark}"
-                                Text="0.00"
+                                Placeholder="2,00"
                                 FontSize="Large"
                                 HorizontalTextAlignment="End"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                TextChanged="OnEntry_TextChanged"
+                                Completed="OnEntry_Completed"/>
                         </StackLayout>
 
                         <StackLayout
@@ -121,11 +127,13 @@
                                 x:Name="PayNoMoneyEntry"
                                 Keyboard="Numeric"
                                 TextColor="{StaticResource TextDark}"
-                                Text="0"
+                                Placeholder="2,00"
                                 FontSize="Large"
                                 HorizontalTextAlignment="End"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                TextChanged="OnEntry_TextChanged"
+                                Completed="OnEntry_Completed"/>
                         </StackLayout>
                         
                         <StackLayout

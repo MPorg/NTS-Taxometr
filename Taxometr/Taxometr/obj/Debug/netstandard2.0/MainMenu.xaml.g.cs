@@ -32,9 +32,6 @@ namespace Taxometr {
         private global::Xamarin.Forms.MenuItem DevicesMI;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::Xamarin.Forms.MenuItem SettingsMI;
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(MainMenu));
             _tabBar = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.TabBar>(this, "_tabBar");
@@ -42,7 +39,6 @@ namespace Taxometr {
             DriveTab = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Tab>(this, "DriveTab");
             PrintTab = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Tab>(this, "PrintTab");
             DevicesMI = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.MenuItem>(this, "DevicesMI");
-            SettingsMI = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.MenuItem>(this, "SettingsMI");
         }
     }
 }

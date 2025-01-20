@@ -29,37 +29,10 @@ namespace Taxometr.Pages
             _adapter = AppData.BLEAdapter;
             _adapter.DeviceDiscovered += OnAdapterDeviceDiscovered;
             _adapter.DeviceDisconnected += OnAdapterDeviceDisconnected;
-            _adapter.DeviceConnected += OnAdapterDeviceConnected;
             _adapter.ScanTimeoutElapsed += OnScanTimeoutElapsed;
             ListOfDevices.ItemsSource = _bindings;
             Start();
 
-        }
-
-        private async void OnAdapterDeviceConnected(object sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
-        {
-            _connectedDevice = e.Device;
-            if (!await CheckContainsInSaves())
-            {
-                await Device.InvokeOnMainThreadAsync(() =>
-                {
-                    AppData.MainMenu.CreateDevicePrefabMenuAsync(_connectedDevice, (res, serNum, blePass, adminPass, customName, autoconnect) => 
-                    {
-                        if (res)
-                        {
-                            SaveDevice(serNum, blePass, adminPass, customName, autoconnect);
-                            AppData.Initialize();
-                            AppData.ShowToast($"Устройство {_connectedDevice.Name} сохранено");
-                        }
-                        else
-                        {
-                            _adapter.DisconnectDeviceAsync(_connectedDevice);
-                        }
-                    });
-                });
-            }
-            AppData.Debug.WriteLine($"{_connectedDevice.Name} Connected");
-            FillDevicesList();
         }
 
         private async Task<bool> CheckContainsInSaves()
@@ -86,7 +59,9 @@ namespace Taxometr.Pages
                         await AppData.TaxometrDB.DevicePrefabs.UpdateAsync(prefab);
                     }
                 }
-                await AppData.TaxometrDB.DevicePrefabs.CreateAsync(new DevicePrefab(_connectedDevice.Id, serNum, blePass, adminPass, customName, autoConnect));
+                var dp = new DevicePrefab(_connectedDevice.Id, serNum, blePass, adminPass, customName, autoConnect);
+                await AppData.TaxometrDB.DevicePrefabs.CreateAsync(dp);
+                AppData.SetConnectedDevice(dp);
             }
         }
 
@@ -94,7 +69,7 @@ namespace Taxometr.Pages
         {
             if (e.Device == _connectedDevice)
             {
-                AppData.Debug.WriteLine($"{_connectedDevice.Name} Disconnected");
+                //AppData.WriteLine($"{_connectedDevice.Name} Disconnected");
                 _connectedDevice = null;
                 FillDevicesList();
             }
@@ -159,24 +134,37 @@ namespace Taxometr.Pages
             {
                 if (selection.Device.State == DeviceState.Connected)
                 {
-                    await _adapter.DisconnectDeviceAsync(_connectedDevice);
+                    await AppData.SpecialDisconnect();
                     Refresh.IsRefreshing = false;
                     await Task.Delay(2);
                     Refresh.IsRefreshing = true;
                 }
                 else if (selection.Device.State == DeviceState.Disconnected)
                 {
-                    try
+                    if (await AppData.ConnectToDevice(selection.Device.Id))
                     {
-                        var connectParameters = new ConnectParameters(true, true);
-                        await _adapter.ConnectToDeviceAsync(selection.Device, connectParameters);
-                    }
-                    catch (Exception ex)
-                    {
-                        AppData.ShowToast
-                            (
-                                $"Не удалось подключиться к устройству: {selection.Name ?? "N/A"}"
-                            );
+                        _connectedDevice = selection.Device;
+                        if (!await CheckContainsInSaves())
+                        {
+                            await Device.InvokeOnMainThreadAsync(() =>
+                            {
+                                AppData.MainMenu.CreateDevicePrefabMenuAsync(_connectedDevice, (res, serNum, blePass, adminPass, customName, autoconnect) =>
+                                {
+                                    if (res)
+                                    {
+                                        SaveDevice(serNum, blePass, adminPass, customName, autoconnect);
+                                        //AppData.Initialize();
+                                        AppData.ShowToast($"Устройство {customName} сохранено");
+                                    }
+                                    else
+                                    {
+                                        _adapter.DisconnectDeviceAsync(_connectedDevice);
+                                    }
+                                });
+                            });
+                        }
+                        AppData.Debug.WriteLine($"{_connectedDevice.Name} Connected");
+                        FillDevicesList();
                     }
                 }
             }
@@ -205,7 +193,6 @@ namespace Taxometr.Pages
         {
             _adapter.DeviceDiscovered -= OnAdapterDeviceDiscovered;
             _adapter.DeviceDisconnected -= OnAdapterDeviceDisconnected;
-            _adapter.DeviceConnected -= OnAdapterDeviceConnected;
             _adapter.ScanTimeoutElapsed -= OnScanTimeoutElapsed;
         }
     }

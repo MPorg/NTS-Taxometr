@@ -49,6 +49,11 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
+    <MandroidI18n>Other</MandroidI18n>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -121,7 +126,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionTaxometrAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionTaxometrAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptionTaxometrAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionTaxometrAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

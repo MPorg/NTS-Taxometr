@@ -23,12 +23,12 @@ namespace Taxometr
         }
 
         private MenuMode _mode = MenuMode.Remote;
-        public MenuMode Mode { get => _mode; set { _mode = value; Debug.WriteLine($"Menu mode: {value}"); } }
+        public MenuMode Mode { get => _mode; set { _mode = value; } }
         private bool _switchingIsBusy = false;
-        public bool SwitchingIsBusy { get => _switchingIsBusy; private set { _switchingIsBusy = value; Debug.WriteLine($"is busy: {value}"); } }
+        public bool SwitchingIsBusy { get => _switchingIsBusy; private set { _switchingIsBusy = value; } }
 
         private DevicesTabbedPage _devicesPage;
-        private SettingsPage _settingsPage;
+        //private SettingsPage _settingsPage;
         Action<bool, string, string, string, string, bool> _result;
 
         public MainMenu()
@@ -40,8 +40,6 @@ namespace Taxometr
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                Debug.WriteLine("_________________ Try Transmit _________________");
-
                 if (!SwitchingIsBusy) return;
 
                 if ((type == typeof(RemotePage) && Mode == MenuMode.Remote) ||
@@ -121,23 +119,23 @@ namespace Taxometr
             }
             await Navigation.PushAsync(_devicesPage);
         }
-        public async void OpenSettingsPage()
+        /*public async void OpenSettingsPage()
         {
             if (_settingsPage == null)
             {
                 _settingsPage = new SettingsPage();
             }
             await Navigation.PushAsync(_settingsPage);
-        }
+        }*/
 
         private void OnDevicesMIClicked(object sender, EventArgs e)
         {
             OpenDevicesPage();
         }
 
-        private void OnSettingsMIClicked(object sender, EventArgs e)
+        /*private void OnSettingsMIClicked(object sender, EventArgs e)
         {
             OpenSettingsPage();
-        }
+        }*/
     }
 }

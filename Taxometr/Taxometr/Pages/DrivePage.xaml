@@ -11,7 +11,7 @@
             Text="Режим смены"/>
         </StackLayout>
     </Shell.TitleView>
-
+<!--
     <ContentPage.ToolbarItems>
         <ToolbarItem
             x:Name="InfoBtn"
@@ -25,7 +25,7 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-
+-->
     <ContentPage.Content>
         <StackLayout
             Style="{StaticResource PageLayout}">
