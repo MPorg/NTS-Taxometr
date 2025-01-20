@@ -62,7 +62,6 @@ namespace Taxometr.Pages
             }
             catch
             {
-                System.Diagnostics.Debug.WriteLine("Exception");
                 return 0;
             }
             return 0;

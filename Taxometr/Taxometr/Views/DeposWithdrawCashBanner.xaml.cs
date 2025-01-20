@@ -33,17 +33,67 @@ namespace Taxometr.Views
             _cashMethod = method;
         }
 
-        private void OnEnterBtnClicked(object sender, EventArgs e)
+        protected override async void OnAppearing()
         {
+            await Task.Delay(500);
+            CashEntry.Focus();
+        }
+
+        private async void OnEnterBtnClicked(object sender, EventArgs e)
+        {
+            await Task.Delay(10);
             try
             {
-                AppData.Provider.DeposWithdrawCash(_cashMethod, ulong.Parse(CashEntry.Text));
-                Navigation.PopModalAsync();
+                ulong sum = (ulong)(double.Parse(CashEntry.Text) * 100);
+                AppData.Provider.DeposWithdrawCash(_cashMethod, sum);
+                await Navigation.PopModalAsync();
             }
             catch
             {
                 AppData.Debug.WriteLine("Не корректное значение");
             }
+        }
+
+        private void OnCancelBtn_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopModalAsync();
+        }
+
+        private void CashEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string txt = e.NewTextValue;
+            List<char> chars = txt.ToCharArray().ToList();
+            int i = 0;
+            string result = "";
+            for (int j = 0; j < chars.Count; j++)
+            {
+                if (j > 2 && chars[j - 3] == ',')
+                {
+                    continue;
+                }
+                if (chars[j] == ',')
+                {
+                    if (j == 0) result += "0";
+
+                    i++;
+                    if (i > 1)
+                    {
+                        continue;
+                    }
+                }
+                result += chars[j];
+            }
+            CashEntry.Text = result;
+        }
+
+        private void CashEntry_Unfocused(object sender, FocusEventArgs e)
+        {
+            //CashEntry.Text = CashEntry.Text.Replace(',', '.');
+        }
+
+        private void CashEntry_Completed(object sender, EventArgs e)
+        {
+            CashEntry.Unfocus();
         }
     }
 }
