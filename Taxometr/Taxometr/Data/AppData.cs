@@ -133,6 +133,7 @@ namespace Taxometr.Data
 
             if (_firstInit)
             {
+                _firstInit = false;
                 BLEAdapter.DeviceConnected -= OnDeviceConnected;
                 BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
 
@@ -143,7 +144,6 @@ namespace Taxometr.Data
                 DotsTimer();
                 LoadAutoconnectDevice();
                 MainMenu.Start();
-                _firstInit = false;
             }
             else
             {
@@ -173,7 +173,7 @@ namespace Taxometr.Data
         {
             try
             {
-                ConnectParameters parameters = new ConnectParameters(true, true);
+                ConnectParameters parameters = new ConnectParameters(false, true);
                 var d = await _adapter.ConnectToKnownDeviceAsync(prefab.DeviceId, parameters);
                 SetConnectedDevice(prefab);
                 ShowToast($"Подключено {prefab.CustomName}");
@@ -194,68 +194,66 @@ namespace Taxometr.Data
 
         private static async void OnDeviceConnected(object sender, DeviceEventArgs e)
         {
-            await Device.InvokeOnMainThreadAsync(async () =>
+            while (true)
             {
-                while (true)
+                var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
+
+                if (devicePref != null)
                 {
-
-                    var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
-
-
-                    if (devicePref != null)
-                    {
-                        ConnectedDP = devicePref;
-                        LastDevicePrefab = devicePref;
-                        Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
-
-                        switch (State)
-                        {
-                            case AppState.NormalDisconnected:
-                                State = AppState.NormalConnected;
-                                break;
-                            case AppState.BackgroundDisconnected:
-                                DependencyService.Resolve<INotificationService>().CloseNotifications();
-                                DependencyService.Resolve<IBLEConnectionController>().Start();
-                                State = AppState.BackgroundConnected;
-                                break;
-                        }
-                        _specialDisconnect = false;
-                        break;
-                    }
-                    await Task.Delay(100);
-                }
-
-                await Task.Run(async () =>
-                {
-                    while (true)
-                    {
-                        if (BLEAdapter.ConnectedDevices.Count == 0)
-                        {
-                            break;
-                        }
-                        await Task.Delay(1000);
-                    }
-                    await Task.Delay(100);
-                    Debug.WriteLine($"________________Connection lost {_connectedDP?.CustomName ?? "N/A"}________________");
+                    ConnectedDP = devicePref;
+                    LastDevicePrefab = devicePref;
+                    Debug.WriteLine($"________________Connected {devicePref.CustomName}________________");
 
                     switch (State)
                     {
-                        case AppState.NormalConnected:
-                            State = AppState.NormalDisconnected;
+                        case AppState.NormalDisconnected:
+                            State = AppState.NormalConnected;
                             break;
-                        case AppState.BackgroundConnected:
-                            State = AppState.BackgroundDisconnected;
-                            Debug.WriteLine("____________________BackgraundDisconnected__________________");
-                            DependencyService.Resolve<IBLEConnectionController>().Stop();
-                            if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
+                        case AppState.BackgroundDisconnected:
+                            DependencyService.Resolve<INotificationService>().CloseNotifications();
+                            DependencyService.Resolve<IBLEConnectionController>().Start();
+                            State = AppState.BackgroundConnected;
                             break;
                     }
-                    await Device.InvokeOnMainThreadAsync(() =>
+                    _specialDisconnect = false;
+                    break;
+                }
+                await Task.Delay(100);
+            }
+
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    if (BLEAdapter.ConnectedDevices.Count == 0)
                     {
-                        ConnectedDP = null;
-                        ConnectionLost?.Invoke();
-                        if (!_specialDisconnect && AutoConnectDevice != null && AutoconnectDeviceID != Guid.Empty) Debug.WriteLine(""); //LoadAutoconnectDevice();
-                    });
+                        break;
+                    }
+                    await Task.Delay(1000);
+                }
+                await Task.Delay(100);
+                Debug.WriteLine($"________________Connection lost {_connectedDP?.CustomName ?? "N/A"}________________");
+
+
+
+                switch (State)
+                {
+                    case AppState.NormalConnected:
+                        State = AppState.NormalDisconnected;
+                        break;
+                    case AppState.BackgroundConnected:
+                        State = AppState.BackgroundDisconnected;
+                        Debug.WriteLine("____________________BackgraundDisconnected__________________");
+                        DependencyService.Resolve<IBLEConnectionController>().Stop();
+                        if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
+                        break;
+                }
+
+                await Device.InvokeOnMainThreadAsync(() =>
+                {
+                    ConnectedDP = null;
+                    ConnectionLost?.Invoke();
+                    if (!_specialDisconnect) LoadAutoconnectDevice();
                 });
             });
         }
@@ -290,6 +288,7 @@ namespace Taxometr.Data
                 }
                 if (_isFirstConnection)
                 {
+                    _isFirstConnection = false;
                     BLEAdapter.DeviceDiscovered += async (_, e) =>
                     {
                         if (deviceToConnect != null && e.Device.Id == deviceToConnect.DeviceId && e.Device.Id != Guid.Empty)
@@ -317,7 +316,6 @@ namespace Taxometr.Data
                 cont = false;
             }
             await BLEAdapter.StartScanningForDevicesAsync();
-            _isFirstConnection = false;
         }
 
         private static async Task AutoConnect(DevicePrefab prefab)
@@ -472,6 +470,7 @@ namespace Taxometr.Data
             private static string BLEPasswordName = "BLE Password";
             private static string AdminPasswordName = "Admin Password";
             private static string DebugModeName = "Debug Mode";
+            private static string LastCashSum = "Last cash sum";
 
             public static async Task<bool> SaveAutoconnect(bool value)
             {
@@ -538,6 +537,7 @@ namespace Taxometr.Data
                 if (p == null) return "100000";
                 return p.Value;
             }
+
             public static async Task<bool> SaveAdminPassword(string value)
             {
                 var p = await AppData.TaxometrDB.Property.GetByNameAsync(AdminPasswordName);
@@ -559,6 +559,33 @@ namespace Taxometr.Data
                 if (p == null) return "000001";
                 return p.Value;
             }
+
+            public static async Task<bool> SaveLastCashSum(int value)
+            {
+                var p = await AppData.TaxometrDB.Property.GetByNameAsync(LastCashSum);
+                if (p == null)
+                {
+                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(LastCashSum, value.ToString())) > 0) return true;
+                    else return false;
+                }
+                else
+                {
+                    p.Value = value.ToString();
+                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    else return false;
+                }
+            }
+            public static async Task<int> GetLastCashSum()
+            {
+                var p = await AppData.TaxometrDB.Property.GetByNameAsync(LastCashSum);
+                if (p == null) return 0;
+                if (int.TryParse(p.Value, out var value))
+                {
+                    return value;
+                }
+                return 0;
+            }
+
             public static async Task<bool> SaveDebugMode(bool value)
             {
                 var p = await AppData.TaxometrDB.Property.GetByNameAsync(DebugModeName);

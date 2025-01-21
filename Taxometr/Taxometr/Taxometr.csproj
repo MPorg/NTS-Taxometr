@@ -85,8 +85,11 @@
     <Compile Update="Views\DeviceViewCell.xaml.cs">
       <DependentUpon>DeviceViewCell.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\PrintCheckBanner.xaml.cs">
-      <DependentUpon>PrintCheckBanner.xaml</DependentUpon>
+    <Compile Update="Views\OpenCheckBanner.xaml.cs">
+      <DependentUpon>OpenCheckBanner.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CloseCheckBanner.xaml.cs">
+      <DependentUpon>CloseCheckBanner.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -133,7 +136,7 @@
     <EmbeddedResource Update="Views\DeviceViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\PrintCheckBanner.xaml">
+    <EmbeddedResource Update="Views\CloseCheckBanner.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
