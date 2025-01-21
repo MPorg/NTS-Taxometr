@@ -126,20 +126,30 @@ namespace Taxometr.Services
 
         private async void OnCharacterValueUpdated(object sender, Plugin.BLE.Abstractions.EventArgs.CharacteristicUpdatedEventArgs e)
         {
-            if (e.Characteristic.Value != null)
+            try
             {
-                //DebugByteStr(e.Characteristic.Value, $"{DateTime.Now}::{DateTime.Now.Millisecond} Reading...");
-                byte[] data = e.Characteristic.Value;
-                _answerBufer.AddRange(data);
-                List<byte> lastBuf = new List<byte>(_answerBufer);    
-
-                await Task.Delay(100);
-
-                if (lastBuf.Count == _answerBufer.Count)
+                if (e.Characteristic.Value != null)
                 {
-                    //AppData.Debug.WriteLine("Reading compleate");
-                    ReadFlc(_answerBufer.ToArray());
+                    //DebugByteStr(e.Characteristic.Value, $"{DateTime.Now}::{DateTime.Now.Millisecond} Reading...");
+                    byte[] data = e.Characteristic.Value;
+                    if (data != null && data.Length > 0)
+                    {
+                        _answerBufer.AddRange(data);
+                        List<byte> lastBuf = new List<byte>(_answerBufer);    
+
+                        await Task.Delay(100);
+
+                        if (lastBuf.Count == _answerBufer.Count)
+                        {
+                            //AppData.Debug.WriteLine("Reading compleate");
+                            ReadFlc(_answerBufer.ToArray());
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                AppData.ShowToast($"Ошибка в ProviderBLE: {ex.Message}");
             }
         }
 
@@ -1115,7 +1125,61 @@ namespace Taxometr.Services
                 SentToBLE(CMD);
             }
         }
+        public void BreakCheck(int retrysCount = 10)
+        {
+            BreakCheck(retrysCount, true);
+        }
+        private void BreakCheck(int retrysCount = 3, bool firstTry = false)
+        {
+            if (firstTry) _retrysCount = 0;
 
+            _readFR = true;
+            SentFlc(FlcType.DATA);
+
+            AppData.Debug.WriteLine($"Отправка команды \"Отменить чек\"");
+
+            if (_lastAnswerFlc == FlcType.BUSY)
+            {
+
+            }
+            else if (_lastAnswerFlc == FlcType.REJ)
+            {
+
+            }
+            else
+            {
+                _answerBufer.Clear();
+
+                List<byte> data = new List<byte>();
+                List<byte> dataForEncode = new List<byte>();
+                byte id = (byte)new Random().Next(0, 256);
+                byte flag = 1;
+                byte rnd = (byte)new Random().Next(0, 256);
+                byte cmd = CheckBreak;
+
+                byte[] crc = CRC16(_serialNumber, cmd);
+
+                data.Add(id);
+                data.Add(flag);
+                data.Add(rnd);
+
+                dataForEncode.Add(cmd);
+                dataForEncode.AddRange(crc);
+
+                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
+
+                List<byte> result = new List<byte>();
+                result.AddRange(data);
+                result.AddRange(dataForEncode);
+
+                byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+                _lastFrCmd = cmd;
+                _maxRetrysCount = retrysCount;
+                SentToBLE(CMD);
+            }
+        }
 
         #endregion
 

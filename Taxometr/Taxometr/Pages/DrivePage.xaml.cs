@@ -29,7 +29,6 @@ namespace Taxometr.Pages
             LoadingLayout.IsVisible = false;
             AppData.AutoconnectionCompleated += OnAutoconnectionCompleated;
             AppData.ConnectionLost += OnConnectionLost;
-            OpenCash.Text = "Печатать чек";
 
             Device.BeginInvokeOnMainThread(async () =>
             {
@@ -69,22 +68,23 @@ namespace Taxometr.Pages
 
                 if (_checkTaxState)
                 {
+                    AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer;
                     AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
                     AppData.Provider.SentTaxState(true);
+
+                    if (_shiftStateInfo == ShiftStateInfo.None)
+                    {
+                        OpenShiftBtn.IsEnabled = false;
+                        WithdrawCash.IsEnabled = false;
+                        DeposCash.IsEnabled = false;
+                        OpenCash.IsEnabled = false;
+
+                        await Task.Delay(1000);
+                        AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer;
+                        AppData.Provider.SentShiftInfo(true);
+                    }
                 }
                 _checkTaxState = true;
-
-                if (_shiftStateInfo == ShiftStateInfo.None)
-                {
-                    OpenShiftBtn.IsEnabled = false;
-                    WithdrawCash.IsEnabled = false;
-                    DeposCash.IsEnabled = false;
-                    OpenCash.IsEnabled = false;
-
-                    await Task.Delay(1000);
-                    AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer; ;
-                    AppData.Provider.SentShiftInfo(true);
-                }
             }
         }
 
@@ -110,6 +110,14 @@ namespace Taxometr.Pages
                                 SetShift(true);
                             }
                         }
+                    }
+                }
+                if (cmd == ProviderExtentions.TaxState)
+                {
+                    if (keyValues.TryGetValue("checkState", out string checkState))
+                    {
+                        AppData.Provider.AnswerCompleate -= CheckShiftLocalAnswer;
+                        SetCheck(checkState == "1");
                     }
                 }
             });
@@ -140,6 +148,18 @@ namespace Taxometr.Pages
             {
                 if (cmd == ProviderExtentions.TaxState)
                 {
+                    if (keyValues.TryGetValue("errCode", out string errCode))
+                    {
+                        if (errCode == "8")
+                        {
+                            if (await AppData.MainMenu.DisplayAlert("Ошибка", "Таксометр заблокирован", "<ОК>", "Понятно"))
+                            {
+                                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
+                                await Task.Delay(1000);
+                                AppData.Provider.SentTaxInfo(true);
+                            }
+                        }
+                    }
                     if (keyValues.TryGetValue("menuState", out string menuStateStr))
                     {
                         AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
@@ -157,87 +177,96 @@ namespace Taxometr.Pages
                             }
                         }
                     }
+                    if (keyValues.TryGetValue("checkState", out string checkState))
+                    {
+                        SetCheck(checkState == "1");
+                    }
                 }
 
                 if (cmd == ProviderExtentions.ShiftState)
                 {
                     string result = "";
-                    if (keyValues.TryGetValue("Ошибка: ", out string errCode))
+                    if (keyValues.TryGetValue("errCode", out string errCode))
                     {
-
-                    }
-                    else
-                    {
-                        if (keyValues.TryGetValue("shiftState", out string shiftState))
+                        if (errCode == "8")
                         {
-                            if (int.TryParse(shiftState, out int shiftStateCode))
+                            if (await AppData.MainMenu.DisplayAlert("Ошибка", "Таксометр заблокирован", "<ОК>", "Понятно"))
                             {
-                                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
-                                ProviderBLE.ShiftInfo shiftInfo = (ProviderBLE.ShiftInfo)shiftStateCode;
+                                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
+                                await Task.Delay(1000);
+                                AppData.Provider.SentShiftInfo(true);
+                            }
+                        }
+                    }
+                    if (keyValues.TryGetValue("shiftState", out string shiftState))
+                    {
+                        if (int.TryParse(shiftState, out int shiftStateCode))
+                        {
+                            AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                            ProviderBLE.ShiftInfo shiftInfo = (ProviderBLE.ShiftInfo)shiftStateCode;
 
-                                if (shiftInfo == ProviderBLE.ShiftInfo.Closed)
+                            if (shiftInfo == ProviderBLE.ShiftInfo.Closed)
+                            {
+                                if (AppData.MainMenu != null && AppData.MainMenu.Mode == MainMenu.MenuMode.Drive)
                                 {
-                                    if (AppData.MainMenu != null && AppData.MainMenu.Mode == MainMenu.MenuMode.Drive)
-                                    {
-                                        result += "Смена не открыта";
-                                        SetShift(false);
-                                    }
-                                    else
-                                    {
-                                        LoadingLayout.IsVisible = true;
-                                        AppData.MainMenu.SetBusy(true, typeof(DrivePage));
-                                        await Task.Delay(2000);
-                                        AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Drive, await AppData.Properties.GetAdminPassword(), true, 2);
-                                        await Task.Delay(3000);
-
-                                        if (AppData.MainMenu != null)
-                                            AppData.MainMenu.Mode = MainMenu.MenuMode.Drive;
-
-                                        LoadingLayout.IsVisible = false;
-
-                                        if (await AppData.MainMenu.DisplayAlert("Смена не открыта", "Открыть смену?", "Да", "Нет"))
-                                        {
-                                            AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
-
-                                            LoadingLayout.IsVisible = true;
-                                            await Task.Delay(2000);
-                                            LoadingLayout.IsVisible = false;
-                                            result += "Смена была не открыта\r\nВы открыли смену";
-                                            SetShift(true);
-                                        }
-                                        else
-                                        {
-                                            AppData.Provider.EmitButton(ProviderBLE.ButtonKey.C);
-                                            result += "Смена не открыта";
-                                            SetShift(false);
-                                        }
-
-
-                                        AppData.MainMenu.SetBusy(false, typeof(DrivePage));
-                                    }
+                                    result += "Смена не открыта";
+                                    SetShift(false);
                                 }
                                 else
                                 {
-                                    if (AppData.MainMenu != null && AppData.MainMenu.Mode == MainMenu.MenuMode.Drive)
+                                    LoadingLayout.IsVisible = true;
+                                    AppData.MainMenu.SetBusy(true, typeof(DrivePage));
+                                    await Task.Delay(2000);
+                                    AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Drive, await AppData.Properties.GetAdminPassword(), true, 2);
+                                    await Task.Delay(3000);
+
+                                    if (AppData.MainMenu != null)
+                                        AppData.MainMenu.Mode = MainMenu.MenuMode.Drive;
+
+                                    LoadingLayout.IsVisible = false;
+
+                                    if (await AppData.MainMenu.DisplayAlert("Смена не открыта", "Открыть смену?", "Да", "Нет"))
                                     {
-                                        result += "Смена открыта";
+                                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
+
+                                        LoadingLayout.IsVisible = true;
+                                        await Task.Delay(2000);
+                                        LoadingLayout.IsVisible = false;
+                                        result += "Смена была не открыта\r\nВы открыли смену";
+                                        SetShift(true);
                                     }
                                     else
                                     {
-                                        result += "Смена была открыта";
-                                        LoadingLayout.IsVisible = true;
-                                        AppData.MainMenu.SetBusy(true, typeof(DrivePage));
-                                        await Task.Delay(2000);
-                                        AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Drive, await AppData.Properties.GetAdminPassword(), true, 2);
-                                        await Task.Delay(3000);
-                                        AppData.MainMenu.SetBusy(false, typeof(DrivePage));
-                                        LoadingLayout.IsVisible = false;
+                                        AppData.Provider.EmitButton(ProviderBLE.ButtonKey.C);
+                                        result += "Смена не открыта";
+                                        SetShift(false);
                                     }
-                                    SetShift(true);
+
+
+                                    AppData.MainMenu.SetBusy(false, typeof(DrivePage));
                                 }
                             }
-                            AppData.ShowToast(result);
+                            else
+                            {
+                                if (AppData.MainMenu != null && AppData.MainMenu.Mode == MainMenu.MenuMode.Drive)
+                                {
+                                    result += "Смена открыта";
+                                }
+                                else
+                                {
+                                    result += "Смена была открыта";
+                                    LoadingLayout.IsVisible = true;
+                                    AppData.MainMenu.SetBusy(true, typeof(DrivePage));
+                                    await Task.Delay(2000);
+                                    AppData.Provider.OpenMenuOrPrintReceipt(ProviderBLE.MenuMode.Drive, await AppData.Properties.GetAdminPassword(), true, 2);
+                                    await Task.Delay(3000);
+                                    AppData.MainMenu.SetBusy(false, typeof(DrivePage));
+                                    LoadingLayout.IsVisible = false;
+                                }
+                                SetShift(true);
+                            }
                         }
+                        AppData.ShowToast(result);
                     }
                 }
 
@@ -247,9 +276,14 @@ namespace Taxometr.Pages
                     {
                         if (errCode == "0")
                         {
+                            AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                            
                             await Task.Delay(1000);
 
-                            if (_cashedCheckValues != null)
+                            AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer; ;
+                            AppData.Provider.SentTaxState(true);
+
+                            /*if (_cashedCheckValues != null)
                             {
                                 int initVal = _cashedCheckValues.initialValue;
                                 int sum = _cashedCheckValues.initialValue;
@@ -274,10 +308,8 @@ namespace Taxometr.Pages
                                     initVal = cashVal;
                                 }
 
-
-
-                                AppData.Provider.CloseCheck(initVal, cardVal, nomoneyVal, cashVal);
-                            }
+                                //AppData.Provider.CloseCheck(initVal, cardVal, nomoneyVal, cashVal);
+                            }*/
                         }
                     }
                 }
@@ -293,7 +325,7 @@ namespace Taxometr.Pages
                         {
                             float s = sur;
                             s /= 100;
-                            result = sur == 0 ? "Готово": $"Сдача: {s}р.";
+                            result = sur == 0 ? "Готово" : $"Сдача: {s}р.";
 
 
                             if (await AppData.MainMenu.DisplayAlert(result, "", "", "Ок"))
@@ -306,6 +338,25 @@ namespace Taxometr.Pages
                                 await Task.Delay(10);
                                 AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
                             }
+                            await Task.Delay(100);
+                            AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer;
+                            AppData.Provider.SentTaxState(true);
+                        }
+                    }
+                }
+
+                if (cmd == ProviderExtentions.CheckBreak)
+                {
+                    if (keyValues.TryGetValue("errCode", out string errCode))
+                    {
+                        if (errCode == "0")
+                        {
+                            AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+
+                            await Task.Delay(1000);
+
+                            AppData.Provider.AnswerCompleate += CheckShiftLocalAnswer; ;
+                            AppData.Provider.SentTaxState(true);
                         }
                     }
                 }
@@ -323,6 +374,17 @@ namespace Taxometr.Pages
                 _shiftStateInfo = ShiftStateInfo.Opened;
             else
                 _shiftStateInfo = ShiftStateInfo.Closed;
+        }
+
+        private void SetCheck(bool checkIsOpened)
+        {
+            if(checkIsOpened) SetShift(true);
+
+            OpenCash.IsEnabled = !checkIsOpened;
+            OpenCash.IsVisible = !checkIsOpened;
+            
+            CloseCashLayout.IsEnabled = checkIsOpened;
+            CloseCashLayout.IsVisible = checkIsOpened;
         }
 
         private void OnAutoconnectionCompleated()
@@ -364,22 +426,44 @@ namespace Taxometr.Pages
             await AppData.GetDeposWithdrawBanner(ProviderBLE.CashMethod.Withdrawal);
         }
 
-        PrintCheckBanner.CheckInfoEventArgs _cashedCheckValues = null;
-        private void OnOpenCashClicked(object sender, EventArgs e)
+        private async void OnOpenCashClicked(object sender, EventArgs e)
         {
             _checkTaxState = false;
-            PrintCheckBanner banner = new PrintCheckBanner(async (bool flag, PrintCheckBanner.CheckInfoEventArgs ea) =>
+            OpenCheckBanner banner = new OpenCheckBanner(async (bool flag, OpenCheckBanner.CheckInfoEventArgs ea) =>
             {
                 if (flag)
                 {
-                    _cashedCheckValues = ea;
+                    await AppData.Properties.SaveLastCashSum(ea.initialValue);
                     await Task.Delay(100);
                     AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
-                    AppData.Provider.OpenCheck(ea.initialValue, 0);
+                    AppData.Provider.OpenCheck(ea.initialValue, ea.prePayValue);
                 }
             });
+            await Navigation.PushModalAsync(banner);
+        }
 
-            Navigation.PushModalAsync(banner);
+        private async void OnCloseCashClicked(object sender, EventArgs e)
+        {
+            _checkTaxState = false;
+            CloseCheckBanner banner = new CloseCheckBanner(async (bool flag, CloseCheckBanner.CheckInfoEventArgs ea) =>
+            {
+                await Task.Delay(100);
+                AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+
+                if (ea.cardValue > 0)
+                {
+                    ea.initialValue -= ea.cardValue;
+                }
+
+
+                AppData.Provider.CloseCheck(ea.initialValue, ea.cardValue, ea.noMoneyValue, ea.cashValue);
+            }, await AppData.Properties.GetLastCashSum());
+            await Navigation.PushModalAsync(banner);
+        }
+        private void OnBreakCashClicked(object sender, EventArgs e)
+        {
+            AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+            AppData.Provider.BreakCheck();
         }
 
         private void OnInfoBtnClicked(object sender, EventArgs e)
@@ -387,5 +471,6 @@ namespace Taxometr.Pages
             AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
             AppData.Provider.SentShiftInfo(true);
         }
+
     }
 }

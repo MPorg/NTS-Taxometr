@@ -11,21 +11,7 @@
             Text="Режим смены"/>
         </StackLayout>
     </Shell.TitleView>
-<!--
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            x:Name="InfoBtn"
-            Clicked="OnInfoBtnClicked">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    Size="60"
-                    Color="{StaticResource TextLink}"
-                    FontFamily="IconsSolid"
-                    Glyph="{StaticResource IconInfo}"/>
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
--->
+    
     <ContentPage.Content>
         <StackLayout
             Style="{StaticResource PageLayout}">
@@ -57,13 +43,44 @@
                         HorizontalOptions="FillAndExpand"
                         Clicked="OnWithdrawCashClicked"/>
 
-                    <Button
-                        x:Name="OpenCash"
-                        Text="Открыть чек"
+                    <StackLayout
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="EndAndExpand"
-                        Clicked="OnOpenCashClicked"/>
+                        VerticalOptions="EndAndExpand">
+                        
+                        <Button
+                            x:Name="OpenCash"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="Fill"
+                            Text="Открыть чек"
+                            Clicked="OnOpenCashClicked"/>
 
+                        <StackLayout
+                            x:Name="CloseCashLayout"
+                            IsEnabled="False"
+                            IsVisible="False"
+                            Orientation="Horizontal"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand">
+                            
+                            <Button
+                                x:Name="BreakCash"
+                                Text="Отменить чек"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="OnBreakCashClicked"/>
+
+                            <Button
+                                x:Name="CloseCash"
+                                Text="Закрыть чек"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="OnCloseCashClicked"/>
+
+                        </StackLayout>
+                        
+                    </StackLayout>
                 </StackLayout>
                 
                 <StackLayout

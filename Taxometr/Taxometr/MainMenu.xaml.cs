@@ -1,10 +1,6 @@
 ﻿using Plugin.BLE.Abstractions.Contracts;
 using System;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Threading.Tasks;
 using Taxometr.Data;
-using Taxometr.Interfaces;
 using Taxometr.Pages;
 using Taxometr.Views;
 using Xamarin.Forms;
