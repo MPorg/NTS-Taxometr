@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Taxometr.Data;
@@ -63,45 +62,80 @@ namespace Taxometr.Services
         #region BLE controll
 
         private int _sentToBleRetry = 0;
-        private async void SentToBLE(byte[] data)
+
+        Dictionary <byte, bool> _waitAnswer = new Dictionary<byte, bool>();
+        
+        private async void SentToBLE(byte[] data, bool isFLC = false)
         {
             bool c = false;
             try
             {
+                _waitAnswer = new Dictionary<byte, bool> { {data[0], true } };
+
                 var s = await AppData.AutoConnectDevice.GetServiceAsync(BLUETOOTH_LE_INCOTEX_SERVICE);
                 var character = await s.GetCharacteristicAsync(BLUETOOTH_LE_INCOTEX_CHAR_W);
                 DebugByteStr(data, "Sent data: ");
                 await character.WriteAsync(data);
+/*
+                if (!isFLC && _lastCmd != CheckClose)
+                {
+                    Device.StartTimer(TimeSpan.FromSeconds(3), new Func<bool>(() =>
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            if (_waitAnswer.TryGetValue(data[0], out bool value) && value)
+                            {
+                                c = await SentToBLERetry(data);
+                                if (c)
+                                    _sentToBleRetry = 0;
+                            }
+                        });
+
+                        return false;
+                    }));
+                }*/
             }
             catch
             {
-                AppData.Debug.WriteLine("Не удалось отправить сообщение");
-                await Task.Delay(100);
-                _sentToBleRetry++;
-
-                if (_sentToBleRetry <= 10)
-                {
-                    SentToBLE(data);
-                }
-                else
-                {
-                    c = true;
-                    if (await AppData.MainMenu.DisplayAlert("Не удалось отправить сообщение", "Возможно, потеряно подключение", "", "Ок"))
-                    {
-                        await AppData.SpecialDisconnect();
-                    }
-                    else
-                    {
-                        await AppData.SpecialDisconnect();
-                    }
-                    _sentToBleRetry = 0;
-                    return;
-                }
+                c = await SentToBLERetry(data);
             }
             finally
             {
                 if (c)
                     _sentToBleRetry = 0;
+            }
+        }
+
+        private async Task<bool> SentToBLERetry(byte[] data)
+        {
+            AppData.Debug.WriteLine("Не удалось отправить сообщение");
+            await Task.Delay(100);
+            _sentToBleRetry++;
+
+            if (_sentToBleRetry <= 10)
+            {
+                SentToBLE(data);
+                return false;
+            }
+            else
+            {
+                bool c = true;
+                if (await AppData.MainMenu.DisplayAlert("Не удалось отправить сообщение", "Возможно, потеряно подключение", "", "Ок"))
+                {
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        await AppData.SpecialDisconnect();
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        await AppData.SpecialDisconnect();
+                    });
+                }
+                _sentToBleRetry = 0;
+                return c;
             }
         }
 
@@ -143,13 +177,17 @@ namespace Taxometr.Services
                         {
                             //AppData.Debug.WriteLine("Reading compleate");
                             ReadFlc(_answerBufer.ToArray());
+                            if (_waitAnswer.ContainsKey(_answerBufer[0]))
+                            {
+                                _waitAnswer.Remove(_answerBufer[0]);
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                AppData.ShowToast($"Ошибка в ProviderBLE: {ex.Message}");
+                //AppData.ShowToast($"Ошибка в ProviderBLE: {ex.Message}");
             }
         }
 
@@ -169,13 +207,20 @@ namespace Taxometr.Services
 
         internal static void DebugByteStr(byte[] data, string placeholder = "", bool specialDbg = false)
         {
-            string dbg = placeholder;
-            for (int i = 0; i < data.Length - 1; i++)
+            try
             {
-                dbg += data[i].ToString("x2") + "|";
+                string dbg = placeholder;
+                for (int i = 0; i < data.Length - 1; i++)
+                {
+                    dbg += data[i].ToString("x2") + "|";
+                }
+                dbg += data[data.Length - 1].ToString("x2");
+                AppData.Debug.WriteLine(dbg, specialDbg);
             }
-            dbg += data[data.Length - 1].ToString("x2");
-            AppData.Debug.WriteLine(dbg, specialDbg);
+            catch (Exception e)
+            {
+                AppData.Debug.WriteLine(e.Message.ToString());
+            }
         }
 
         #endregion
@@ -207,60 +252,66 @@ namespace Taxometr.Services
 
             data[3] = CombineFlc((byte)type);
             data[4] = CRC7(_serialNumber, data[2], data[3]);
-            SentToBLE(data);
+            SentToBLE(data, true);
         }
 
         private async void ReadFlc(byte[] data)
         {
-            DebugByteStr(data, "Recived data: ");
-
-            if (data.Length >= 5)
+            try
             {
-                byte reciveCrc = data[4];
-                byte crc = CRC7(_serialNumber, data[2], data[3]);
 
-                if (reciveCrc == crc)
+                DebugByteStr(data, "Recived data: ");
+
+                if (data.Length >= 5)
                 {
-                    byte flc = data[3];
-                    foreach (FlcType flcType in Enum.GetValues(typeof(FlcType)))
-                    {
-                        byte flcCleare = (byte)((flc >> 5) << 5);
-                        if (flcCleare == (byte)flcType)
-                        {
-                            AppData.Debug.WriteLine($"Получена квитанция: {flcType}".FormatRight(_logWidth));
-                            _lastAnswerFlc = flcType;
-                            if (flcCleare == (byte)FlcType.ACK)
-                            {
-                                if (data.Length >= 10)
-                                {
-                                    List<byte> dataCut = new List<byte>(data);
-                                    dataCut.RemoveRange(0, 5);
-                                    DebugLine();
-                                    ReadFlc(dataCut.ToArray());
-                                    return;
-                                }
+                    byte reciveCrc = data[4];
+                    byte crc = CRC7(_serialNumber, data[2], data[3]);
 
-                                if (_readFR)
+                    if (reciveCrc == crc)
+                    {
+                        byte flc = data[3];
+                        foreach (FlcType flcType in Enum.GetValues(typeof(FlcType)))
+                        {
+                            byte flcCleare = (byte)((flc >> 5) << 5);
+                            if (flcCleare == (byte)flcType)
+                            {
+                                AppData.Debug.WriteLine($"Получена квитанция: {flcType}".FormatRight(_logWidth));
+                                _lastAnswerFlc = flcType;
+                                if (flcCleare == (byte)FlcType.ACK)
                                 {
-                                    _readFR = false;
-                                    await Task.Delay(500);
-                                    ReadFR();
+                                    if (data.Length >= 10)
+                                    {
+                                        List<byte> dataCut = new List<byte>(data);
+                                        dataCut.RemoveRange(0, 5);
+                                        DebugLine();
+                                        ReadFlc(dataCut.ToArray());
+                                        return;
+                                    }
+
+                                    if (_readFR)
+                                    {
+                                        _readFR = false;
+                                        await Task.Delay(500);
+                                        ReadFR();
+                                    }
                                 }
-                            }
-                            else if (flcCleare == (byte)FlcType.DATA)
-                            {
-                                ReadData(data);
-                            }
-                            if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
-                            {
-                                await Task.Delay(500);
-                                Retry(true); 
+                                else if (flcCleare == (byte)FlcType.DATA)
+                                {
+                                    ReadData(data);
+                                }
+                                if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
+                                {
+                                    await Task.Delay(500);
+                                    Retry(true);
+                                }
                             }
                         }
                     }
                 }
+                DebugLine();
             }
-            DebugLine();
+            catch (Exception ex)
+            { Debug.WriteLine($"______________{ex.Message.ToString()}________________"); }
         }
 
         private void RetryCMD()
@@ -300,6 +351,12 @@ namespace Taxometr.Services
                 case CheckClose:
                     CloseCheck(closeCheckCashSum, closeCheckCardSum, closeCheckNomoneySum, closeCheckTrueCashSum, _maxRetrysCount, false);
                     break;
+                case CheckBreak:
+                    BreakCheck(_maxRetrysCount, false);
+                    break;
+                case CheckDuplicate:
+                    CopyCheck(_maxRetrysCount, false);
+                    break;
                 case TaxState:
                     SentTaxState(sentTaxStateReadFR, _maxRetrysCount, false);
                     break;
@@ -312,72 +369,76 @@ namespace Taxometr.Services
         private int _maxRetrysCount = 15;
         private void ReadData(byte[] bufer)
         {
-            Dictionary<string, string> answer = new Dictionary<string, string>();
-
-            if (bufer.Length >= 5)
+            try
             {
-                List<byte> data = new List<byte>(bufer);
-                data.RemoveRange(0, 6);
-                byte rnd = data[2];
-                
-                List<byte> encodedData = new List<byte>(data);
-                encodedData.RemoveRange(0, 3);
-                DebugByteStr(encodedData.ToArray(), "Зашифровано: ");
-                encodedData = encodedData.RemoveDLEFlags();
-                encodedData = encodedData.ToArray().RC4(_key, rnd).ToList();
-                DebugByteStr(encodedData.ToArray(), "Расшифровано: ");
-                
-                byte cmd = encodedData[0];
 
-                switch(cmd)
+                Dictionary<string, string> answer = new Dictionary<string, string>();
+
+                if (bufer.Length >= 5)
                 {
-                    case TaxInfo:
-                        answer = TaxsInfoAnsw(encodedData.ToArray());
-                        break;
-                    case ScnoState:
-                        answer = SCNOAnsw(encodedData.ToArray());
-                        break;
-                    case ShiftState:
-                        answer = ShiftStateAnsw(encodedData.ToArray(), out bool retry);
-                        break;
-                    case TaxState:
-                        answer = TaxStateAnsw(encodedData.ToArray());
-                        break;
-                    case CheckClose:
-                        answer = CloseCheckAnsw(encodedData.ToArray());
-                        break;
-                    default:
-                        answer = BaseAnsw(encodedData.ToArray());
-                        break;
+                    List<byte> data = new List<byte>(bufer);
+                    data.RemoveRange(0, 6);
+                    byte rnd = data[2];
+
+                    List<byte> encodedData = new List<byte>(data);
+                    encodedData.RemoveRange(0, 3);
+                    DebugByteStr(encodedData.ToArray(), "Зашифровано: ");
+                    encodedData = encodedData.RemoveDLEFlags();
+                    encodedData = encodedData.ToArray().RC4(_key, rnd).ToList();
+                    DebugByteStr(encodedData.ToArray(), "Расшифровано: ");
+
+                    byte cmd = encodedData[0];
+
+                    switch (_lastCmd)
+                    {
+                        case TaxInfo:
+                            answer = TaxsInfoAnsw(encodedData.ToArray());
+                            break;
+                        case ScnoState:
+                            answer = SCNOAnsw(encodedData.ToArray());
+                            break;
+                        case ShiftState:
+                            answer = ShiftStateAnsw(encodedData.ToArray());
+                            break;
+                        case TaxState:
+                            answer = TaxStateAnsw(encodedData.ToArray());
+                            break;
+                        case CheckClose:
+                            answer = CloseCheckAnsw(encodedData.ToArray());
+                            break;
+                        default:
+                            answer = BaseAnsw(encodedData.ToArray());
+                            break;
+                    }
+
+                    foreach (var a in answer)
+                    {
+                        string answ = a.Key + (a.Key.Contains(':') ? "" : ": ") + a.Value;
+                        AppData.Debug.WriteLine(answ.FormatRight(_logWidth));
+                    }
                 }
 
-                _lastFrCmd = 0;
+                SentFlc(FlcType.ACK);
 
-                foreach (var a in answer)
+                if (answer.TryGetValue("errCode", out string value))
                 {
-                    string answ = a.Key + a.Value;
-                    AppData.Debug.WriteLine(answ.FormatRight(_logWidth));
+                    if (value == ENET_FR_IN_PROGRESS.ToString("x2"))
+                    {
+                        Retry();
+                    }
+                    else if (value == ENET_WAIT_OPERATOR.ToString("x2"))
+                    {
+                        _maxRetrysCount = -1;
+                        Retry();
+                    }
+                    else
+                    {
+                        _retrysCount = 0;
+                    }
                 }
             }
-
-            SentFlc(FlcType.ACK);
-
-            if (answer.TryGetValue("errCode", out string value))
-            {
-                if (value == ENET_FR_IN_PROGRESS.ToString())
-                {
-                    Retry();
-                }
-                else if (value == ENET_WAIT_OPERATOR.ToString())
-                {
-                    _maxRetrysCount = -1;
-                    Retry();
-                }
-                else
-                {
-                    _retrysCount = 0;
-                }
-            }
+            catch (Exception ex)
+            { Debug.WriteLine($"______________{ex.Message.ToString()}________________"); }  
         }
 
         public async void Retry(bool retCmd = false)
@@ -393,7 +454,7 @@ namespace Taxometr.Services
                         byte cmd = _lastCmd;
                         int max = _maxRetrysCount;
                         EmitButton(ButtonKey.C, 1, true);
-                        await Task.Delay(1000);
+                        await Task.Delay(1500);
                         if (max >=0 ) RetryCMD(cmd);
                     }
                 });
@@ -457,7 +518,7 @@ namespace Taxometr.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 //_lastCmd = cmd;
 
-                SentToBLE(CMD);
+                SentToBLE(CMD, true);
             }
         }
 
@@ -773,12 +834,16 @@ namespace Taxometr.Services
 
         public enum ButtonKey
         {
+            None = 0x00,
+
             C = 0x81,
             Up = 0x82,
             Down = 0x84,
             OK = 0x88,
-            Num_1 = 0x90,
-            Num_2 = 0xA0
+            Num_1 = 0xA0,
+            Num_2 = 0x90,
+
+            Any = C | Up | Down | OK | Num_1 | Num_2 
         }
 
         private ButtonKey emitButtonKey;
@@ -794,7 +859,7 @@ namespace Taxometr.Services
             _readFR = true;
             SentFlc(FlcType.DATA);
 
-            AppData.Debug.WriteLine($"Отправка команды \"Нажатие клавиши {key}\"");
+            AppData.Debug.WriteLine($"Отправка команды \"Нажатие клавиши {key} (0x{((byte)key).ToString("x2")})\"");
 
             if (_lastAnswerFlc == FlcType.BUSY)
             {
@@ -1181,187 +1246,279 @@ namespace Taxometr.Services
             }
         }
 
+        public void CopyCheck(int retrysCount = 10)
+        {
+            CopyCheck(retrysCount, true);
+        }
+        private void CopyCheck(int retrysCount = 3, bool firstTry = false)
+        {
+            if (firstTry) _retrysCount = 0;
+
+            _readFR = true;
+            SentFlc(FlcType.DATA);
+
+            AppData.Debug.WriteLine($"Отправка команды \"Отменить чек\"");
+
+            if (_lastAnswerFlc == FlcType.BUSY)
+            {
+
+            }
+            else if (_lastAnswerFlc == FlcType.REJ)
+            {
+
+            }
+            else
+            {
+                _answerBufer.Clear();
+
+                List<byte> data = new List<byte>();
+                List<byte> dataForEncode = new List<byte>();
+                byte id = (byte)new Random().Next(0, 256);
+                byte flag = 1;
+                byte rnd = (byte)new Random().Next(0, 256);
+                byte cmd = CheckDuplicate;
+
+                byte[] crc = CRC16(_serialNumber, cmd);
+
+                data.Add(id);
+                data.Add(flag);
+                data.Add(rnd);
+
+                dataForEncode.Add(cmd);
+                dataForEncode.AddRange(crc);
+
+                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
+
+                List<byte> result = new List<byte>();
+                result.AddRange(data);
+                result.AddRange(dataForEncode);
+
+                byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _lastCmd = cmd;
+                _lastFrCmd = cmd;
+                _maxRetrysCount = retrysCount;
+                SentToBLE(CMD);
+            }
+        }
+
         #endregion
 
         #region ANSW_Read
 
         private Dictionary<string,string> SCNOAnsw(byte[] data)
         {
+            var result = BaseAnsw(data, false);
+
             try
             {
-                int connected = data[1];
+                if (result.TryGetValue("errCode", out string errCode))
+                {
+                    if (errCode != "00")
+                    {
+                        AnswerCompleate?.Invoke(CheckClose, result);
 
-                string connectedStr = connected == 0 ? "Не подключено" : "Подключено";
+                        return result;
+                    }
+                    else
+                    {
+                        int connected = data[1];
 
-                var result = new Dictionary<string, string> { { nameof(connected), connected.ToString() }, { "Состояние скно: ", connectedStr } };
-                AnswerCompleate?.Invoke(ScnoState, result);
-                return result;
+                        string connectedStr = connected == 0 ? "Не подключено" : "Подключено";
+
+                        result.Add(nameof(connected), connected.ToString());
+                        result.Add("Состояние скно: ", connectedStr);
+
+                        AnswerCompleate?.Invoke(ScnoState, result);
+                        return result;
+                    }
+                }
             }
             catch (Exception e)
             {
                 return new Dictionary<string, string> { { "Ошибка: ", e.Message } };
             }
+
+            return result;
         }
 
         private Dictionary<string, string> TaxsInfoAnsw(byte[] data)
         {
+            var result = BaseAnsw(data, false);
+
             try
             {
-                short protVer = BitConverter.ToInt16(data, 2);
-                string modelName = Encoding.GetEncoding(1251).GetString(data, 4, 25);
-                string apiVer = Encoding.GetEncoding(1251).GetString(data, 29, 17);
-                short buildNum = BitConverter.ToInt16(data, 46);
-                string buildDate = Encoding.GetEncoding(1251).GetString(data, 48, 11);
-                string serialNum = Encoding.GetEncoding(1251).GetString(data, 59, 14);
-
-                Dictionary<string, string> retValues = new Dictionary<string, string>
+                if (result.TryGetValue("errCode", out string errCode))
                 {
-                    { nameof(protVer), protVer.ToString() },
-                    { nameof(modelName), modelName },
-                    { nameof(apiVer), apiVer },
-                    { nameof(buildNum), buildNum.ToString() },
-                    { nameof(buildDate), buildDate },
-                    { nameof(serialNum), serialNum }
-                };
+                    if (errCode != "00")
+                    {
+                        AnswerCompleate?.Invoke(CheckClose, result);
 
-                AnswerCompleate?.Invoke(TaxInfo, retValues);
-                return retValues;
+                        return result;
+                    }
+                    else
+                    {
+                        short protVer = BitConverter.ToInt16(data, 2);
+                        string modelName = Encoding.GetEncoding(1251).GetString(data, 4, 25);
+                        string apiVer = Encoding.GetEncoding(1251).GetString(data, 29, 17);
+                        short buildNum = BitConverter.ToInt16(data, 46);
+                        string buildDate = Encoding.GetEncoding(1251).GetString(data, 48, 11);
+                        string serialNum = Encoding.GetEncoding(1251).GetString(data, 59, 14);
+
+                        result.Add( nameof(protVer), protVer.ToString() );
+                        result.Add( nameof(modelName), modelName );
+                        result.Add( nameof(apiVer), apiVer );
+                        result.Add( nameof(buildNum), buildNum.ToString() );
+                        result.Add( nameof(buildDate), buildDate );
+                        result.Add( nameof(serialNum), serialNum );
+
+                        AnswerCompleate?.Invoke(TaxInfo, result);
+                        return result;
+                    }
+                }
             }
             catch (Exception e)
             {
-                return new Dictionary<string, string>{ { "Ошибка: ", e.Message } };
+                return new Dictionary<string, string> { { "Ошибка: ", e.Message } };
             }
+
+            return result;
         }
 
-        private Dictionary<string, string> ShiftStateAnsw(byte[] data, out bool retry)
+        private Dictionary<string, string> ShiftStateAnsw(byte[] data)
         {
+            var result = BaseAnsw(data, false);
+
             try
             {
-                byte errCode = data[1];
-                if (errCode != ENET_OK)
+                if (result.TryGetValue("errCode", out string errCode))
                 {
-                    var res1 = new Dictionary<string, string>
-                    { 
-                        { "Ошибка: ", ErrCodes[errCode] },
-                        { "Код ошибки: ", errCode.ToString()},
-                        { nameof(errCode), errCode.ToString() } 
-                    };
-                    AnswerCompleate?.Invoke(ShiftState, res1);
+                    if (errCode != "00")
+                    {
+                        AnswerCompleate?.Invoke(CheckClose, result);
 
-                    retry = true;
-                    return res1;
+                        return result;
+                    }
+                    else
+                    {
+
+                        int shiftState = data[2];
+                        LastShiftState = (ShiftInfo)shiftState;
+                        string res = "";
+
+                        switch (LastShiftState)
+                        {
+                            case ShiftInfo.Opened:
+                                res = "Открыта";
+                                break;
+                            case ShiftInfo.Closed:
+                                res = "Не открыта";
+                                break;
+                            default:
+                                res = "Не открыта";
+                                break;
+                        }
+
+                        result.Add(nameof(shiftState), shiftState.ToString());
+                        result.Add("Состояние смены: ", res);
+
+                        AnswerCompleate?.Invoke(ShiftState, result);
+                        return result;
+                    }
                 }
-                int shiftState = data[2];
-                LastShiftState = (ShiftInfo)shiftState;
-                string res = "";
-
-                switch (LastShiftState)
-                {
-                    case ShiftInfo.Opened:
-                        res = "Открыта";
-                        break;
-                    case ShiftInfo.Closed:
-                        res = "Не открыта";
-                        break;
-                    default:
-                        res = "Не открыта";
-                        break;
-                }
-
-                var result = new Dictionary<string, string>
-                {
-                    { nameof(errCode), errCode.ToString() },
-                    { "", ErrCodes[errCode] },
-                    { nameof(shiftState), shiftState.ToString() },
-                    { "Состояние смены: ", res }
-                };
-                AnswerCompleate?.Invoke(ShiftState, result);
-                retry = false;
-                return result;
             }
             catch (Exception e)
             {
-                retry = true;
                 return new Dictionary<string, string>{ { "Ошибка: ", e.Message } };
             }
+
+            return result;
         }
 
         private Dictionary<string,string> TaxStateAnsw(byte[] data)
         {
+            var result = BaseAnsw(data, false);
+
             try
             {
-                ushort errCode = BitConverter.ToUInt16(data, 2);
-                int FRState = data[4];
-                int menuState = data[5];
-                int checkState = data[6];
-                int blockState = data[7];
-
-                string blockMessage = " ";
-
-                if (blockState == 1)
+                if (result.TryGetValue("errCode", out string errCode))
                 {
-                    blockMessage = Encoding.GetEncoding(1251).GetString(data, 8, 65);
+                    if (errCode != "00")
+                    {
+                        AnswerCompleate?.Invoke(CheckClose, result);
+
+                        return result;
+                    }
+                    else
+                    {
+                        int FRState = data[4];
+                        int menuState = data[5];
+                        int checkState = data[6];
+                        int blockState = data[7];
+
+                        string blockMessage = "";
+
+                        if (blockState != 0)
+                        {
+                            blockMessage = Encoding.GetEncoding(1251).GetString(data, 8, 65);
+                        }
+
+                        result.Add(nameof(FRState), FRState.ToString());
+                        result.Add(nameof(menuState), menuState.ToString());
+                        result.Add(nameof(checkState), checkState.ToString());
+                        result.Add(nameof(blockState), blockState.ToString());
+                        if (!string.IsNullOrEmpty(blockMessage)) result.Add(nameof(blockMessage), blockMessage);
+
+                        AnswerCompleate?.Invoke(TaxState, result);
+
+                        return result;
+                    }
                 }
-                var result = new Dictionary<string, string>
-                {
-                    { nameof(errCode), errCode.ToString() },
-                    { nameof(FRState), FRState.ToString() },
-                    { nameof(menuState), menuState.ToString() },
-                    { nameof(checkState), checkState.ToString() },
-                    { nameof(blockState), blockState.ToString() },
-                    { nameof(blockMessage), blockMessage }
-                };
-
-                AnswerCompleate?.Invoke(TaxState, result);
-
-                return result;
+                
             }
             catch (Exception e)
             {
                 return new Dictionary<string, string> { { "Ошибка: ", e.Message } };
             }
+
+            return result;
         }
         private Dictionary<string, string> CloseCheckAnsw(byte[] data)
         {
+            var result = BaseAnsw(data, false);
+
             try
             {
-                byte errCode = data[1];
-
-                if (errCode != ENET_OK)
+                if (result.TryGetValue("errCode", out string errCode))
                 {
-                    var result = new Dictionary<string, string>
+                    if (errCode != "00")
                     {
-                        { nameof(errCode), errCode.ToString() },
-                        { "Ошибка: ", ErrCodes[errCode] }
-                    };
-                    AnswerCompleate?.Invoke(CheckClose, result);
+                        AnswerCompleate?.Invoke(CheckClose, result);
 
-                    return result;
-                }
-                else
-                {
-                    int surrender = BitConverter.ToInt32(data, 2);
-
-                    var result = new Dictionary<string, string>
+                        return result;
+                    }
+                    else
                     {
-                        { nameof(errCode), errCode.ToString() },
-                        { " ", ErrCodes[errCode] },
-                        { nameof(surrender), surrender.ToString()},
-                        { "Сдача: ", surrender.ToString() }
-                    };
+                        int surrender = BitConverter.ToInt32(data, 2);
 
-                    AnswerCompleate?.Invoke(CheckClose, result);
+                        result.Add(nameof(surrender), surrender.ToString());
+                        result.Add("Сдача: ", surrender.ToString());
 
-                    return result;
+                        AnswerCompleate?.Invoke(CheckClose, result);
+
+                        return result;
+                    }
                 }
             }
             catch (Exception e)
             {
                 return new Dictionary<string, string> { { "Ошибка: ", e.Message } };
             }
+
+            return result;
         }
 
-        private Dictionary<string, string> BaseAnsw(byte[] data)
+        private Dictionary<string, string> BaseAnsw(byte[] data, bool invoke = true)
         {
             try
             {
@@ -1371,10 +1528,26 @@ namespace Taxometr.Services
                 {
                     var result = new Dictionary<string, string>
                     {
-                        { nameof(errCode), errCode.ToString() },
-                        { "Ошибка: ", ErrCodes[errCode] }
+                        { nameof(errCode), errCode.ToString("x2") },
+                        { "Ошибка: ", ErrCodes[errCode] },
+                        { "cmd", cmd.ToString("x2")}
                     };
-                    AnswerCompleate?.Invoke(cmd, result);
+
+                    if (errCode == ENET_SYS_ERROR)
+                    {
+                        ushort wideErrCode = BitConverter.ToUInt16(data, 2);
+                        byte msgFlag = data[4];
+                        result.Add(nameof(wideErrCode), wideErrCode.ToString("x2"));
+                        if(msgFlag == 1)
+                        {
+                            string answ = Encoding.GetEncoding(1251).GetString(data, 5, 65);
+                            result.Add(nameof(answ), answ);
+                        }
+
+                    }
+
+
+                    if (invoke) AnswerCompleate?.Invoke(cmd, result);
 
                     return result;
                 }
@@ -1382,11 +1555,11 @@ namespace Taxometr.Services
                 {
                     var result = new Dictionary<string, string>
                     {
-                        { nameof(errCode), errCode.ToString() },
+                        { nameof(errCode), errCode.ToString("x2") },
                         { "Ответ: ", ErrCodes[errCode] },
-                        { "cmd", cmd.ToString()}
+                        { "cmd", cmd.ToString("x2")}
                     };
-                    AnswerCompleate?.Invoke(cmd, result);
+                    if (invoke) AnswerCompleate?.Invoke(cmd, result);
 
                     return result;
                 }

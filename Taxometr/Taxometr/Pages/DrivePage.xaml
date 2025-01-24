@@ -42,6 +42,12 @@
                         Text="Служебное изъятие"
                         HorizontalOptions="FillAndExpand"
                         Clicked="OnWithdrawCashClicked"/>
+                    
+                    <Button
+                        x:Name="CopyCheck"
+                        Text="Копия чека"
+                        HorizontalOptions="FillAndExpand"
+                        Clicked="OnCopyCheckClicked"/>
 
                     <StackLayout
                         HorizontalOptions="FillAndExpand"

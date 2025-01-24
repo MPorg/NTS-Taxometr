@@ -8,7 +8,7 @@
         <StackLayout>
             <Label
                 Style="{StaticResource TitleText}"
-                Text="Меню таксометра"/>
+                Text="Пульт"/>
         </StackLayout>
     </Shell.TitleView>
 
@@ -140,7 +140,21 @@
                         Text="Статус СКНО"
                         Clicked="OnStatusSCNOBtnClicked"/>
 
--->    
+-->
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        VerticalOptions="FillAndExpand"
+                        Padding="0">
+
+                        <Label
+                            x:Name="Message"
+                            VerticalOptions="EndAndExpand"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center"
+                            FontSize="30"/>
+
+                    </StackLayout>
+
                     <StackLayout
                         Orientation="Horizontal"
                         HeightRequest="80"
@@ -149,6 +163,7 @@
                         Padding="0">
 
                         <Button
+                            x:Name="ButC"
                             Text="C"
                             CommandParameter="C"
                             VerticalOptions="FillAndExpand"
@@ -157,6 +172,7 @@
                             Clicked="OnEmitBtnClicked"/>
 
                         <Button
+                            x:Name="ButUp"
                             Text="▲"
                             CommandParameter="Up"
                             VerticalOptions="FillAndExpand"
@@ -165,6 +181,7 @@
                             Clicked="OnEmitBtnClicked"/>
 
                         <Button
+                            x:Name="ButDown"
                             Text="▼"
                             CommandParameter="Down"
                             VerticalOptions="FillAndExpand"
@@ -173,6 +190,7 @@
                             Clicked="OnEmitBtnClicked"/>
 
                         <Button
+                            x:Name="ButOk"
                             Text="OK"
                             CommandParameter="OK"
                             VerticalOptions="FillAndExpand"
@@ -189,6 +207,7 @@
                         Padding="5">
 
                         <Button
+                            x:Name="ButNum_1"
                             Text="1"
                             CommandParameter="Num_1"
                             VerticalOptions="FillAndExpand"
@@ -197,6 +216,7 @@
                             Clicked="OnEmitBtnClicked"/>
 
                         <Button
+                            x:Name="ButNum_2"
                             Grid.Column="1"
                             Text="2"
                             CommandParameter="Num_2"

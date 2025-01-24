@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Taxometr.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Taxometr.Views
 {
+    internal class OnCompleateEventArgs : EventArgs
+    {
+        public bool focusNext;
+
+        public OnCompleateEventArgs(bool focusNext)
+        {
+            this.focusNext = focusNext;
+        }
+    }
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OpenCheckBanner : ContentPage
     {
@@ -56,8 +67,8 @@ namespace Taxometr.Views
 
         private void OnOkBtn_Clicked(object sender, EventArgs e)
         {
-            OnEntry_Completed(StartSumEntry, e);
-            OnEntry_Completed(PreSumEntry, e);
+            OnEntry_Completed(StartSumEntry, new OnCompleateEventArgs(false));
+            OnEntry_Completed(PreSumEntry, new OnCompleateEventArgs(false));
         }
 
         private void OnEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -93,9 +104,14 @@ namespace Taxometr.Views
         {
             Entry entry = sender as Entry;
 
-            if (string.IsNullOrEmpty(entry.Text)) entry.Text += "0";
+            bool focus = true;
+            if (e is OnCompleateEventArgs)
+            {
+                var ea = e as OnCompleateEventArgs;
+                focus = ea.focusNext;
+            }
 
-            Debug.WriteLine($"___________________________ {entry.Text} ________________________________");
+            if (string.IsNullOrEmpty(entry.Text)) entry.Text += "0";
 
             string txt = "";
             char[] chars = entry.Text.ToCharArray();
@@ -127,19 +143,19 @@ namespace Taxometr.Views
                 entry.Text = txt;
             }
 
-            Debug.WriteLine(entry.Text);
-
             if (entry == StartSumEntry)
             {
-                PreSumEntry.Focus();
+                if (focus) PreSumEntry.Focus();
             }
             else
             {
+                PreSumEntry.Unfocus();
+                DependencyService.Get<IKeyboard>().Hide();
                 Compleate();
             }
         }
 
-        private void Compleate()
+        private async void Compleate()
         {
             string initValueStr = StartSumEntry.Text;
             string prePayValueStr = PreSumEntry.Text;
@@ -165,7 +181,7 @@ namespace Taxometr.Views
             }
             finally
             {
-                Navigation.PopModalAsync();
+                await Navigation.PopModalAsync();
             }
         }
     }

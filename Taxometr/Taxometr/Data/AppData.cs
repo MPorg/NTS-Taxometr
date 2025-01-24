@@ -334,6 +334,7 @@ namespace Taxometr.Data
             }
             else
             {
+                await banner.Navigation.PopModalAsync();
                 ShowToast($"Не удалось подключиться к устройству: {prefab.CustomName ?? "N/A"}");
             }
                 
@@ -358,6 +359,7 @@ namespace Taxometr.Data
 
             ReloadProvider();
         }
+        
         public static async Task GetDeposWithdrawBanner(ProviderBLE.CashMethod method, string placeholder = "0")
         {
             DeposWithdrawCashBanner banner = new DeposWithdrawCashBanner(method, placeholder);
@@ -427,6 +429,12 @@ namespace Taxometr.Data
                     ShowToast("Необходимо разрешение на использование геолокации!");
                 }
             }
+        }
+
+        public static void TryOpenCash()
+        {
+            Debug.WriteLine("______________Try open cash___________");
+            MainMenu.GoToAsync("//Drive", true);
         }
 
         private static async Task<bool> PermissionLockationGrantedAsync()

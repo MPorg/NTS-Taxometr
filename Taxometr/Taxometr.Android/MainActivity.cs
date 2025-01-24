@@ -4,10 +4,6 @@ using Android.Runtime;
 using Android.OS;
 using Xamarin.Essentials;
 using System.Collections.Generic;
-using Taxometr.Data;
-using Taxometr.Interfaces;
-using Xamarin.Forms;
-using Plugin.CurrentActivity;
 
 namespace Taxometr.Droid
 {

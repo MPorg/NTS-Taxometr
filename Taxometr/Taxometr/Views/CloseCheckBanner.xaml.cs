@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Taxometr.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -78,9 +80,9 @@ namespace Taxometr.Views
 
         private void OnOkBtn_Clicked(object sender, EventArgs e)
         {
-            OnEntry_Completed(StartSumEntry, e);
-            OnEntry_Completed(PayCashEntry, e);
-            OnEntry_Completed(PayCardEntry, e);
+            OnEntry_Completed(StartSumEntry, new OnCompleateEventArgs(false));
+            OnEntry_Completed(PayCashEntry, new OnCompleateEventArgs(false));
+            OnEntry_Completed(PayCardEntry, new OnCompleateEventArgs(false));
         }
 
         private void OnEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -116,6 +118,13 @@ namespace Taxometr.Views
         {
             Entry entry = sender as Entry;
 
+            bool focus = true;
+            if (e is OnCompleateEventArgs)
+            {
+                var ea = e as OnCompleateEventArgs;
+                focus = ea.focusNext;
+            }
+
             if (string.IsNullOrEmpty(entry.Text)) entry.Text += "0";
 
             string txt = "";
@@ -150,19 +159,21 @@ namespace Taxometr.Views
 
             if (entry == StartSumEntry)
             {
-                PayCashEntry.Focus();
+                if (focus) PayCashEntry.Focus();
             }
             else if (entry == PayCashEntry)
             {
-                PayCardEntry.Focus();
+                if (focus) PayCardEntry.Focus();
             }
             else if (entry == PayCardEntry)
             {
+                PayCardEntry.Unfocus();
+                DependencyService.Get<IKeyboard>().Hide();
                 Compleate();
             }
         }
 
-        private void Compleate()
+        private async void Compleate()
         {
             string initValueStr = StartSumEntry.Text;
             string payCashValueStr = PayCashEntry.Text;
@@ -195,7 +206,7 @@ namespace Taxometr.Views
             }
             finally
             {
-                Navigation.PopModalAsync();
+                await Navigation.PopModalAsync();
             }
         }
     }

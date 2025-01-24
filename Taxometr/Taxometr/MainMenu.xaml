@@ -17,7 +17,8 @@
                 Glyph="{StaticResource IconRemote}"/>
             </Tab.Icon>
             <ShellContent>
-                <pages:RemotePage/>
+                <pages:RemotePage
+                    x:Name="_remotePage"/>
             </ShellContent>
         </Tab>
         <Tab 
@@ -30,7 +31,8 @@
                 Glyph="{StaticResource IconTaxi}"/>
             </Tab.Icon>
             <ShellContent>
-                <pages:DrivePage/>
+                <pages:DrivePage
+                    x:Name="_drivePage"/>
             </ShellContent>
         </Tab>
         <Tab 
@@ -43,7 +45,8 @@
                 Glyph="{StaticResource IconReceipt}"/>
             </Tab.Icon>
             <ShellContent>
-                <pages:PrintPage/>
+                <pages:PrintPage
+                    x:Name="_printPage"/>
             </ShellContent>
         </Tab>
     </TabBar>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Taxometr.Data;
+using Taxometr.Interfaces;
 using Taxometr.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -37,19 +38,9 @@ namespace Taxometr.Views
             CashEntry.Focus();
         }
 
-        private async void OnEnterBtnClicked(object sender, EventArgs e)
+        private void OnEnterBtnClicked(object sender, EventArgs e)
         {
-            await Task.Delay(10);
-            try
-            {
-                ulong sum = (ulong)(double.Parse(CashEntry.Text) * 100);
-                AppData.Provider.DeposWithdrawCash(_cashMethod, sum);
-                await Navigation.PopModalAsync();
-            }
-            catch
-            {
-                AppData.Debug.WriteLine("Не корректное значение");
-            }
+            CashEntry_Completed(CashEntry, null);
         }
 
         private void OnCancelBtn_Clicked(object sender, EventArgs e)
@@ -86,12 +77,77 @@ namespace Taxometr.Views
 
         private void CashEntry_Unfocused(object sender, FocusEventArgs e)
         {
-            //CashEntry.Text = CashEntry.Text.Replace(',', '.');
         }
 
         private void CashEntry_Completed(object sender, EventArgs e)
         {
+            Entry entry = sender as Entry;
+
+            bool focus = true;
+            if (e is OnCompleateEventArgs)
+            {
+                var ea = e as OnCompleateEventArgs;
+                focus = ea.focusNext;
+            }
+
+            if (string.IsNullOrEmpty(entry.Text)) entry.Text += "0";
+
+            string txt = "";
+            char[] chars = entry.Text.ToCharArray();
+
+            if (!entry.Text.Contains(','))
+            {
+                entry.Text += ",";
+                entry.Text += "00";
+            }
+            else
+            {
+                for (int i = 0; i < entry.Text.Length; i++)
+                {
+                    if (i == entry.Text.Length - 1)
+                    {
+                        if (chars[i] == ',')
+                        {
+                            txt += "00";
+                        }
+                        else if (chars[i - 1] == ',')
+                        {
+                            txt += chars[i];
+                            txt += "0";
+                            continue;
+                        }
+                    }
+                    txt += chars[i];
+                }
+                entry.Text = txt;
+            }
+
             CashEntry.Unfocus();
+            DependencyService.Get<IKeyboard>().Hide();
+            Compleate();
         }
+
+
+        private async void Compleate()
+        {
+            string initValueStr = CashEntry.Text;
+
+            while (initValueStr.Contains(","))
+            {
+                initValueStr = initValueStr.Remove(initValueStr.IndexOf(','), 1);
+            }
+            int initValue = int.Parse(initValueStr);
+
+            try
+            {
+                AppData.Provider.DeposWithdrawCash(_cashMethod, (ulong)initValue);
+                await Navigation.PopModalAsync();
+            }
+            catch
+            {
+                AppData.Debug.WriteLine("Не корректное значение");
+            }
+        }
+
     }
 }

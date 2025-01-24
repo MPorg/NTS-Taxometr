@@ -20,7 +20,7 @@ namespace Taxometr.Droid.Services
 
         private async void OnCancelBtnClicked()
         {
-            AppData.Debug.WriteLine("_____________________CANCEL BUTTON CLICK_____________________");
+            //AppData.Debug.WriteLine("_____________________CANCEL BUTTON CLICK_____________________");
             try
             {
                 await AppData.SpecialDisconnect();
