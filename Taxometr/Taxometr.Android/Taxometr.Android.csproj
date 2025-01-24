@@ -76,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConnectionWorker.cs" />
     <Compile Include="Services\Dependency\BLEConnectionController.cs" />
+    <Compile Include="Services\Dependency\Keyboard.cs" />
     <Compile Include="Services\Dependency\LockationSettings.cs" />
     <Compile Include="Services\Dependency\NotificationService.cs" />
     <Compile Include="Services\Dependency\ToastMaker.cs" />
@@ -126,7 +127,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionTaxometrAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionTaxometrAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptionTaxometrAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionTaxometrAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

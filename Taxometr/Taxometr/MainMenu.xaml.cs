@@ -1,7 +1,10 @@
 ﻿using Plugin.BLE.Abstractions.Contracts;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Taxometr.Data;
 using Taxometr.Pages;
+using Taxometr.Services;
 using Taxometr.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -45,10 +48,10 @@ namespace Taxometr
                 switch (Mode)
                 {
                     case MenuMode.Remote:
-                        GoToAsync("///Remote", false);
+                        GoToAsync("//Remote", false);
                         break;
                     case MenuMode.Drive:
-                        GoToAsync("///Drive", false);
+                        GoToAsync("//Drive", false);
                         break;
                     case MenuMode.Print:
                         GoToAsync("//Print", false);
@@ -76,6 +79,11 @@ namespace Taxometr
                 {
                     DriveTab.IsEnabled = false;
                 }
+                else if (type == typeof(RemotePage))
+                {
+                    PrintTab.IsEnabled = false;
+                    DriveTab.IsEnabled = false;
+                }
             });
         }
 
@@ -94,6 +102,17 @@ namespace Taxometr
             Navigation.PushModalAsync(page);
         }
 
+        public void CleareRemote()
+        {
+            _remotePage.Clear();
+        }
+
+        public async Task GoToRemote(bool animate, string message, Dictionary<ProviderBLE.ButtonKey, Action> onKeysPressed, ProviderBLE.ButtonKey enableButtons)
+        {
+            _remotePage.SetMessage(message, onKeysPressed, enableButtons);
+            await GoToAsync("//Remote", animate);
+        }
+
         Page _creationPage;
         private void OnCreationPageCompleated(bool res, string serNum, string blePass, string adminPass, string customName, bool autoConnect)
         {
@@ -107,6 +126,7 @@ namespace Taxometr
             _result(false, "", "", "", "", false);
         }
 
+
         public async void OpenDevicesPage()
         {
             if (_devicesPage == null)
@@ -115,6 +135,7 @@ namespace Taxometr
             }
             await Navigation.PushAsync(_devicesPage);
         }
+
         /*public async void OpenSettingsPage()
         {
             if (_settingsPage == null)

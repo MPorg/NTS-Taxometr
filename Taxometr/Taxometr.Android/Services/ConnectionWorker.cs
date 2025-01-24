@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Taxometr.Data;
+using Taxometr.Droid.Resources;
 
 namespace Taxometr.Droid.Services
 {
