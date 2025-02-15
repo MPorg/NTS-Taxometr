@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Pages.PrintPage"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
+             x:DataType="{x:Type models:PrintViewModel}">
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+                x:Name="TitleTxt"
+                Style="{StaticResource TitleText}"
+                Text="Отчёты"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <StackLayout 
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="10"
+            IsVisible="{Binding BlockBannerIsVisible}"
+            IsEnabled="{Binding BlockBannerIsVisible}">
+            <StackLayout
+                Spacing="10"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center">
+
+                <Label
+                    Text="Нет подключенного устройства"
+                    FontSize="Title"
+                    Style="{StaticResource TitleText}"/>
+                <Button
+                    HorizontalOptions="Center"
+                    Text="{Binding DevicesBtnText}"
+                    Command="{Binding DevicesBtnCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            ZIndex="1"
+            Padding="10"
+            Spacing="10"
+            VerticalOptions="EndAndExpand">
+            <Button
+                HeightRequest="60"
+                Text="Сменный &quot;Z&quot; отчёт"
+                Command="{Binding PrintReceiptOrSwitchModeCommand}"
+                CommandParameter="Z"/>
+            <Button
+                HeightRequest="60"
+                Text="Сменный &quot;X&quot; отчёт"
+                Command="{Binding PrintReceiptOrSwitchModeCommand}"
+                CommandParameter="X"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

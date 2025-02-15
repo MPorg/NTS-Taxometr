@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Pages.DrivePage"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
+             x:DataType="{x:Type models:DriveViewModel}">
+    
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+                x:Name="TitleTxt"
+                Style="{StaticResource TitleText}"
+                Text="Смена"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <StackLayout 
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="10"
+            IsVisible="{Binding BlockBannerIsVisible}"
+            IsEnabled="{Binding BlockBannerIsVisible}">
+            <StackLayout
+                Spacing="10"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center">
+
+                <Label
+                    Text="Нет подключенного устройства"
+                    FontSize="Title"
+                    Style="{StaticResource TitleText}"/>
+                <Button
+                    HorizontalOptions="Center"
+                    Text="{Binding DevicesBtnText}"
+                    Command="{Binding DevicesBtnCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            ZIndex="1">
+            <StackLayout
+                Padding="10"
+                Spacing="10"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand">
+                <Button
+                    Text="Служебное внесение"
+                    Command="{Binding DeposWithdrawCashCommand}"
+                    CommandParameter="D"/>
+                <Button
+                    Text="Служебное изъятие"
+                    Command="{Binding DeposWithdrawCashCommand}"
+                    CommandParameter="W"/>
+                <Button
+                    Text="Копия чека"
+                    Command="{Binding CopyCheckCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            ZIndex="3"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding CheckIsOpened, Converter={serv:InverseBoolConverter}}">
+            <StackLayout
+                Padding="10"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <Button
+                    Text="Открыть чек"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            IsVisible="{Binding CheckIsOpened}"
+            ZIndex="4"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <StackLayout
+                Padding="10"
+                Spacing="10"
+                Orientation="Horizontal"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <Button
+                    HorizontalOptions="FillAndExpand"
+                    Text="Отменить чек"/>
+                <Button
+                    HorizontalOptions="FillAndExpand"
+                    Text="Закрыть чек"/>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

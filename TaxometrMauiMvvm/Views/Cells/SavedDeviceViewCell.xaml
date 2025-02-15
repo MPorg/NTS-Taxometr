@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:ce="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
+            xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Cells"
+            xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
+            x:Class="TaxometrMauiMvvm.Views.Cells.SavedDeviceViewCell"
+            x:DataType="models:SavedDeviceViewModel"
+            RowSpacing="10"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+            HeightRequest="{Binding CellHeight}"
+            Padding="10">
+    
+    <Grid.RowDefinitions>
+        <RowDefinition Height="{Binding FirstRowHeight}"/>
+        <RowDefinition Height="{Binding SeckondRowHeight}"/>
+        <RowDefinition Height="60"/>
+    </Grid.RowDefinitions>
+    <Border
+        Grid.RowSpan="3"
+        Margin="-5, 3.5, 5, 6.5"
+        VerticalOptions="FillAndExpand"
+        ZIndex="-2"
+        BackgroundColor="{Binding BgShadowColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20"/>
+        </Border.StrokeShape>
+    </Border>
+    <Border
+        Grid.Row="1"
+        Margin="0, -50, 0, -60"
+        Padding="10, 50, 10, 80"
+        VerticalOptions="FillAndExpand"
+        ZIndex="-1"
+        BackgroundColor="{Binding BgLightColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20"/>
+        </Border.StrokeShape>
+        <Grid
+            RowDefinitions="*, *, *, *">
+            <Grid
+                ColumnDefinitions="Auto , *">
+                <Label
+                    VerticalTextAlignment="Start"
+                    Padding="0, 10"
+                    FontSize="Large"
+                    Text="Зав. номер"/>
+                <Entry
+                    Grid.Column="1"
+                    FontSize="Large"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding SerialNumber}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="Auto , *">
+                <Label
+                    VerticalTextAlignment="Start"
+                    Padding="0, 10"
+                    FontSize="Large"
+                    Text="Пароль связи"/>
+                <Entry
+                    Grid.Column="1"
+                    FontSize="Large"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding BlePass}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="2"
+                ColumnDefinitions="Auto , *">
+                <Label
+                    VerticalTextAlignment="Start"
+                    Padding="0, 10"
+                    FontSize="Large"
+                    Text="Пароль оператора"/>
+                <Entry
+                    Grid.Column="1"
+                    FontSize="Large"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding AdminPass}"/>
+            </Grid>
+
+            <Grid
+            Grid.Row="3"
+            ColumnDefinitions="Auto , *">
+                <Label
+                    VerticalTextAlignment="Start"
+                    Padding="0, 10"
+                    FontSize="Large"
+                    Text="Автоподключение"/>
+                        
+                <ce:CustomSwitch
+                    Grid.Column="1"
+                    IsToggled="{Binding Autoconnect}"
+                    VerticalOptions="EndAndExpand"/>
+            </Grid>
+        </Grid>
+    </Border>
+
+    <Border
+        VerticalOptions="FillAndExpand"
+        ZIndex="1"
+        BackgroundColor="{Binding BgColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20"/>
+        </Border.StrokeShape>
+        <Grid
+            Padding="5"
+            RowDefinitions=".5*, .5*"
+            ColumnDefinitions=".2*, .6*, .2*"
+            RowSpacing="5">
+
+            <StackLayout
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="2"
+                IsEnabled="{Binding LongSelectionIsVisible}"
+                IsVisible="{Binding LongSelectionIsVisible}">
+                <StackLayout.Behaviors>
+                    <mct:TouchBehavior LongPressCompleted="TouchBehavior_LongPressCompleted" LongPressDuration="1000"/>
+                </StackLayout.Behaviors>
+            </StackLayout>
+                    
+            <ImageButton
+                Padding="10"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                Command="{Binding BreakEditCommand}"
+                IsVisible="{Binding IsOpen}"
+                IsEnabled="{Binding IsOpen}">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="IconsSolid"
+                        Size="80"
+                        Color="{StaticResource TextRedLink}"
+                        Glyph="{StaticResource IconXCross}"/>
+                </ImageButton.Source>
+            </ImageButton>
+
+            <Label
+                Grid.ColumnSpan="3"
+                FontSize="Large"
+                VerticalTextAlignment="End"
+                Text="{Binding CustomName}"
+                ZIndex="{Binding FgIndex}"
+                IsVisible="{Binding IsOpen, Converter={serv:InverseBoolConverter}}">
+            </Label>
+            <Entry
+                Grid.Column="1"
+                FontSize="Large"
+                VerticalTextAlignment="End"
+                HorizontalTextAlignment="Center"
+                Text="{Binding CustomName}"
+                ZIndex="{Binding BgIndex}"
+                IsVisible="{Binding IsOpen}"
+                IsEnabled="{Binding IsOpen}"/>
+            <Label
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                FontSize="Micro"
+                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"
+                Text="{Binding ConnectionStateRU}"
+                IsVisible="{Binding IsOpen, Converter={serv:InverseBoolConverter}}">
+            </Label>
+            <Label
+                Grid.Column="1"
+                Grid.Row="1"
+                FontSize="Micro"
+                HorizontalTextAlignment="Center"
+                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"
+                Text="{Binding ConnectionStateRU}"
+                IsVisible="{Binding IsOpen}"/>
+
+            <ImageButton
+                Padding="15, 30"
+                Grid.Column="2"
+                Grid.RowSpan="2"
+                Command="{Binding TryOpenCloseCommand}"
+                CommandParameter="{Binding IsOpen}">
+                <ImageButton.Source>
+                    <FontImageSource
+                        FontFamily="IconsSolid"
+                        Size="80"
+                        Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                        Glyph="{Binding SwitchButtonGlyph}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+    </Border>
+    <Grid
+        Padding="10, -15, 10, 20"
+        Grid.Row="2"
+        Grid.ColumnSpan="2"
+        ZIndex="1">
+        <Button
+            TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+            Text="{Binding ConnectBtnText}"
+            IsEnabled="{Binding ConnectBtnEnabled}"
+            Command="{Binding ConnectDisconnectCommand}"/>
+    </Grid>
+</Grid>

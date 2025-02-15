@@ -1,0 +1,158 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>;net9.0-android35.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>TaxometrMauiMvvm</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>TaxometrMauiMvvm</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.nts.taxometr</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
+		<WindowsPackageType>None</WindowsPackageType>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#142F5F" TintColor="#DB7C26" />
+		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
+    
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#142F5F" BaseSize="512,512" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Black.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Bold.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-BoldItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-ExtraBold.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-ExtraBoldItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-ExtraLight.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-ExtraLightItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Italic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Light.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-LightItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Medium.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-MediumItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Regular.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-SemiBold.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-Thin.ttf" />
+    <MauiFont Include="Resources\Fonts\Basic\Geologica-ThinItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf" />
+    <MauiFont Include="Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf" />
+    <MauiFont Include="Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf" />
+
+
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appiconfg.svg" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Black.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-BoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-ExtraBold.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-ExtraBoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-ExtraLight.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-ExtraLightItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Italic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Light.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-LightItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-MediumItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Regular.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-SemiBold.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-Thin.ttf" />
+	  <None Remove="Resources\Fonts\Basic\Geologica-ThinItalic.ttf" />
+	  <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf" />
+	  <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf" />
+	  <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="11.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Honoo.IO.Hashing.Crc" Version="1.1.3" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
+		<PackageReference Include="Plugin.BLE" Version="3.1.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="MainMenu.xaml.cs">
+	    <DependentUpon>MainMenu.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Pages\RemotePage.xaml.cs">
+	    <DependentUpon>RemotePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Pages\SavedPage.xaml.cs">
+	    <DependentUpon>SavedPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\Banners\AutoconnectBanner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Banners\CreateDeviceBanner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Banners\DeposWithdrawCashBanner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Cells\SavedDeviceViewCell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\DrivePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\PrintPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\SavedPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\SearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>

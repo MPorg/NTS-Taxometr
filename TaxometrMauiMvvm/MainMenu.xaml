@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TaxometrMauiMvvm.MainMenu"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TaxometrMauiMvvm.Views.Pages"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    Shell.FlyoutBehavior="Flyout">
+    <Shell.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark=#142F5F, Light=#5AAED2}" StatusBarStyle="{AppThemeBinding Dark=LightContent, Light=DarkContent}"/>
+    </Shell.Behaviors>
+    <TabBar>
+        <Tab
+            x:Name="RemoteTab"
+            Title="Пульт"
+            Route="Remote">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconRemote}"/>
+            </Tab.Icon>
+            <ShellContent
+                Title="Home"
+                ContentTemplate="{DataTemplate views:RemotePage}"/>
+        </Tab>
+        <Tab
+            x:Name="Drive"
+            Title="Смена"
+            Route="Drive">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid" 
+                Glyph="{StaticResource IconTaxi}"/>
+            </Tab.Icon>
+            <ShellContent
+                Title="Home1"
+                ContentTemplate="{DataTemplate views:DrivePage}"/>
+        </Tab>
+        <Tab 
+            x:Name="PrintTab"
+            Title="Отчёты"
+            Route="Print">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid" 
+                Glyph="{StaticResource IconReceipt}"/>
+            </Tab.Icon>
+            <ShellContent
+                ContentTemplate="{DataTemplate views:PrintPage}"/>
+        </Tab>
+    </TabBar>
+
+    <FlyoutItem
+        Route="Search"
+        Title="Поиск">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource
+                Size="500"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconSearch}"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent
+            ContentTemplate="{DataTemplate views:SearchPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem
+        Route="Favorites"
+        Title="Сохранённые">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource
+                Size="500"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconStar}"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent
+            ContentTemplate="{DataTemplate views:SavedPage}"/>
+    </FlyoutItem>
+
+    <MenuItem
+        Text="Главная"
+        x:Name="_homeMenuItem"
+        Clicked="HomeMIClicked">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                Size="500"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconHome}"/>
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+</Shell>

@@ -1,0 +1,91 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\VS\\Git\\TaxometrMauiMvvm\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\taxometrmauimvvm\\models\\pages\\driveviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:models\\pages\\driveviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\taxometrmauimvvm\\data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\taxometrmauimvvm\\views\\pages\\drivepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\drivepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 258,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{7d1a5679-04f2-3f4a-851f-855baa54731c}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppData.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TaxometrMauiMvvm\\Data\\AppData.cs",
+              "RelativeDocumentMoniker": "Data\\AppData.cs",
+              "ToolTip": "C:\\VS\\Git\\TaxometrMauiMvvm\\Data\\AppData.cs",
+              "RelativeToolTip": "Data\\AppData.cs",
+              "ViewState": "AgIAAJsBAAAAAAAAAAAAAKsBAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T09:27:55.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DriveViewModel.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TaxometrMauiMvvm\\Models\\Pages\\DriveViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\Pages\\DriveViewModel.cs",
+              "ToolTip": "C:\\VS\\Git\\TaxometrMauiMvvm\\Models\\Pages\\DriveViewModel.cs",
+              "RelativeToolTip": "Models\\Pages\\DriveViewModel.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAADsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T09:10:43.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DrivePage.xaml",
+              "DocumentMoniker": "C:\\VS\\Git\\TaxometrMauiMvvm\\Views\\Pages\\DrivePage.xaml",
+              "RelativeDocumentMoniker": "Views\\Pages\\DrivePage.xaml",
+              "ToolTip": "C:\\VS\\Git\\TaxometrMauiMvvm\\Views\\Pages\\DrivePage.xaml",
+              "RelativeToolTip": "Views\\Pages\\DrivePage.xaml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAADcAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-15T08:57:54.57Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
