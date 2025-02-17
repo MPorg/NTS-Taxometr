@@ -74,6 +74,14 @@ public partial class DriveViewModel : ObservableObject
         AppData.Provider.CopyCheck();
     }
 
+    [RelayCommand]
+    private async void OpenCheck()
+    {
+        AppData.Provider.OpenCheck(200, 0);
+        await Task.Delay(5000);
+        OnAppearing();
+    }
+
     public void OnAppearing()
     {
         AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
@@ -82,13 +90,11 @@ public partial class DriveViewModel : ObservableObject
 
     private void OnProvider_AnswerCompleate(byte cmd, Dictionary<string, string> answer)
     {
-        if (cmd == ProviderExtentions.TaxState)
+        switch (cmd)
         {
-            ReadTaxState(answer);
-        }
-        if (cmd == ProviderExtentions.ShiftState)
-        {
-            ReadShiftInfo(answer);
+            case ProviderExtentions.TaxState: ReadTaxState(answer); break;
+            case ProviderExtentions.ShiftState: ReadShiftInfo(answer); break;
+            case ProviderExtentions.CheckState: ReadCheckState(answer); break;
         }
     }
 
@@ -118,17 +124,33 @@ public partial class DriveViewModel : ObservableObject
         {
             if (!string.IsNullOrEmpty(checkState))
             {
-                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
                 if (checkState == "1")
                 {
-                    CheckIsOpened = true;
-                    return;
+                    AppData.Provider.SentCheckState(true);
                 }
                 else
                 {
                     CheckIsOpened = false;
-                    AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
                     AppData.Provider.SentShiftInfo(true);
+                }
+            }
+        }
+    }
+
+    private void ReadCheckState(Dictionary<string, string> answer)
+    {
+        if (answer.TryGetValue("isOpen", out string? isOpen))
+        {
+            if (!string.IsNullOrEmpty(isOpen))
+            {
+                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                if (isOpen == "1")
+                {
+                    CheckIsOpened = true;
+                }
+                else
+                {
+                    CheckIsOpened = false;
                 }
             }
         }

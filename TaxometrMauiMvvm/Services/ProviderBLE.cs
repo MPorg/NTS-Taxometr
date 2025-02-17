@@ -1,4 +1,5 @@
-﻿using Plugin.BLE.Abstractions.Contracts;
+﻿using Android.Hardware.Camera2;
+using Plugin.BLE.Abstractions.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -46,7 +47,7 @@ namespace TaxometrMauiMvvm.Services
                     if (_cmdQueue.TryDequeue(out Action result))
                     {
                         _next = false;
-                        Application.Current?.Dispatcher.StartTimer(TimeSpan.FromSeconds(15), new Func<bool>(() =>
+                        Application.Current?.Dispatcher.StartTimer(TimeSpan.FromSeconds(5), new Func<bool>(() =>
                         {
                             _cmdQueue.Clear();
                             _next = true;
@@ -235,7 +236,7 @@ namespace TaxometrMauiMvvm.Services
 
         private byte[] FlcFooter
         {
-            get => new byte[5] { PREFIX, STX, ADDR, 0, 0 };
+            get => [PREFIX, STX, ADDR, 0, 0];
         }
 
         public void SentFlc(FlcType type)
@@ -292,7 +293,7 @@ namespace TaxometrMauiMvvm.Services
                                 }
                                 else if (flcCleare == (byte)FlcType.DATA)
                                 {
-                                    ReadData(data);
+                                    ReadDataAsync(data);
                                 }
                                 if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
                                 {
@@ -306,7 +307,7 @@ namespace TaxometrMauiMvvm.Services
                 DebugLine();
             }
             catch (Exception ex)
-            { Debug.WriteLine($"______________{ex.Message.ToString()}________________"); }
+            { Debug.WriteLine($"______________{ex.Message}________________"); }
         }
 
         private void RetryCMD()
@@ -340,6 +341,9 @@ namespace TaxometrMauiMvvm.Services
                 case CashDeposWithdraw:
                     DeposWithdrawCash(deposWithdrawCashMethod, deposWithdrawSum, _maxRetrysCount, false);
                     break;
+                case CheckState:
+                    SentCheckState(sentCheckStateReadFR, _maxRetrysCount, false);
+                    break;
                 case CheckOpen:
                     OpenCheck(openCheckStartSum, openCheckEnterSum, _maxRetrysCount, false);
                     break;
@@ -362,7 +366,7 @@ namespace TaxometrMauiMvvm.Services
 
         private int _retrysCount = 0;
         private int _maxRetrysCount = 15;
-        private void ReadData(byte[] bufer)
+        private async Task ReadDataAsync(byte[] bufer)
         {
             try
             {
@@ -397,6 +401,16 @@ namespace TaxometrMauiMvvm.Services
                             break;
                         case TaxState:
                             answer = TaxStateAnsw(encodedData.ToArray());
+                            break;
+                        case CheckState:
+                            if (_readFR)
+                            {
+                                _readFR = false;
+                                await Task.Delay(500);
+                                ReadFR();
+                                return;
+                            }
+                            answer = CheckStateAnsw(encodedData.ToArray().RC4(_key, rnd));
                             break;
                         case CheckClose:
                             answer = CloseCheckAnsw(encodedData.ToArray());
@@ -742,9 +756,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
-                List<byte> result = new List<byte>();
-                result.AddRange(data);
-                result.AddRange(dataForEncode);
+                List<byte> result = [.. data, .. dataForEncode];
 
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _readFR = readFR;
@@ -1045,6 +1057,58 @@ namespace TaxometrMauiMvvm.Services
             }
         }
 
+        private bool sentCheckStateReadFR = false;
+        public void SentCheckState(bool readFR = false, int retrysCount = 3)
+        {
+            _cmdQueue.TryEnqueue(new Action(() => { SentCheckState(readFR, retrysCount, true); }));
+
+        }
+        private void SentCheckState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
+        {
+            if (firstTry) _retrysCount = 0;
+            sentCheckStateReadFR = readFR;
+            SentFlc(FlcType.DATA);
+
+            AppData.Debug.WriteLine($"Отправка команды \"Статус чека\"");
+
+            if (_lastAnswerFlc == FlcType.BUSY)
+            {
+
+            }
+            else if (_lastAnswerFlc == FlcType.REJ)
+            {
+
+            }
+            else
+            {
+                _answerBufer.Clear();
+                List<byte> data = new List<byte>();
+                List<byte> dataForEncode = new List<byte>();
+                byte id = (byte)new Random().Next(0, 256);
+                byte rnd = (byte)new Random().Next(0, 256);
+                byte cmd = CheckState;
+                byte[] crc = CRC16(_serialNumber, cmd);
+
+                data.Add(id);
+                data.Add(rnd);
+
+                dataForEncode.Add(cmd);
+                dataForEncode.AddRange(crc);
+
+                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                //dataForEncode = dataForEncode.AddDLEFlags();
+
+                List<byte> result = [.. data, .. dataForEncode];
+
+                byte[] CMD = CombineData(result.ToArray(), _serialNumber);
+                _readFR = readFR;
+                _lastFrCmd = cmd;
+                _lastCmd = cmd;
+                _maxRetrysCount = retrysCount;
+                SentToBLE(CMD);
+            }
+        }
+
         int openCheckStartSum;
         int openCheckEnterSum;
         public void OpenCheck(int startSum, int enterSum, int retrysCount = 3)
@@ -1318,7 +1382,7 @@ namespace TaxometrMauiMvvm.Services
                 {
                     if (errCode != "00")
                     {
-                        AnswerCompleate?.Invoke(CheckClose, result);
+                        AnswerCompleate?.Invoke(ScnoState, result);
 
                         return result;
                     }
@@ -1354,7 +1418,7 @@ namespace TaxometrMauiMvvm.Services
                 {
                     if (errCode != "00")
                     {
-                        AnswerCompleate?.Invoke(CheckClose, result);
+                        AnswerCompleate?.Invoke(TaxState, result);
 
                         return result;
                     }
@@ -1437,7 +1501,7 @@ namespace TaxometrMauiMvvm.Services
             return result;
         }
 
-        private Dictionary<string,string> TaxStateAnsw(byte[] data)
+        private Dictionary<string, string> TaxStateAnsw(byte[] data)
         {
             var result = BaseAnsw(data, false);
 
@@ -1447,7 +1511,7 @@ namespace TaxometrMauiMvvm.Services
                 {
                     if (errCode != "00")
                     {
-                        AnswerCompleate?.Invoke(CheckClose, result);
+                        AnswerCompleate?.Invoke(TaxState, result);
 
                         return result;
                     }
@@ -1476,7 +1540,7 @@ namespace TaxometrMauiMvvm.Services
                         return result;
                     }
                 }
-                
+
             }
             catch (Exception e)
             {
@@ -1485,6 +1549,34 @@ namespace TaxometrMauiMvvm.Services
 
             return result;
         }
+
+        private Dictionary<string, string> CheckStateAnsw(byte[] data)
+        {
+            var result = new Dictionary<string, string>();
+            try
+            {
+                byte isOpen = data[0];
+                DebugByteStr(new byte[] { isOpen });
+                result.Add(nameof(isOpen), isOpen.ToString());
+                if (isOpen == 1)
+                {
+                    int initValue = BitConverter.ToInt32(data, 2);
+                    int preValue = BitConverter.ToInt32(data, 6);
+                    result.Add(nameof(initValue), initValue.ToString());
+                    result.Add(nameof(preValue), preValue.ToString());
+                }
+
+                AnswerCompleate?.Invoke(CheckState, result);
+
+                return result;
+
+            }
+            catch (Exception e)
+            {
+                return new Dictionary<string, string> { { "Ошибка: ", e.Message } };
+            }
+        }
+
         private Dictionary<string, string> CloseCheckAnsw(byte[] data)
         {
             var result = BaseAnsw(data, false);

@@ -69,7 +69,8 @@
                 VerticalOptions="EndAndExpand"
                 HorizontalOptions="FillAndExpand">
                 <Button
-                    Text="Открыть чек"/>
+                    Text="Открыть чек"
+                    Command="{Binding OpenCheckCommand}"/>
             </StackLayout>
         </StackLayout>
         <StackLayout
