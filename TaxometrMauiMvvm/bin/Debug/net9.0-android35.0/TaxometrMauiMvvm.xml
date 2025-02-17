@@ -176,6 +176,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.Title">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel._title"/>
@@ -212,6 +213,12 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.CopyCheckCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Pages.DriveViewModel.CopyCheck"/>.</summary>
+        </member>
+        <member name="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel.openCheckCommand">
+            <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.OpenCheckCommand"/>.</summary>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.OpenCheckCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Pages.DriveViewModel.OpenCheck"/>.</summary>
         </member>
         <member name="T:TaxometrMauiMvvm.Models.Pages.PrintViewModel">
             <inheritdoc/>

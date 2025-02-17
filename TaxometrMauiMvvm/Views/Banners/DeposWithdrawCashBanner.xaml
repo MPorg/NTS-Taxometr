@@ -6,11 +6,15 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              BackgroundColor="Transparent">
-    <StackLayout
+    <Grid
+        ColumnDefinitions="*, 3*, *"
+        RowDefinitions="*, 0.5*, *"
         BackgroundColor="Transparent"
-        VerticalOptions="Center"
-        HorizontalOptions="Center">
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
         <Border
+            Grid.Column="1"
+            Grid.Row="1"
             HorizontalOptions="FillAndExpand"
             Padding="5"    
             BackgroundColor="{StaticResource BackgroundDarked}"
@@ -20,7 +24,7 @@
                     CornerRadius="35"/>
             </Border.StrokeShape>
             <Border
-                Padding="20"
+                Padding="10"
                 BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}"
                 Stroke="Transparent"
                 HorizontalOptions="FillAndExpand">
@@ -48,8 +52,10 @@
                         Unfocused="CashEntry_Unfocused"
                         FontSize="Large"/>
 
-                    <StackLayout
-                        Orientation="Horizontal">
+                    <Grid
+                        VerticalOptions="EndAndExpand"
+                        ColumnDefinitions=".5*, .5*"
+                        ColumnSpacing="10">
 
                         <Button
                             x:Name="CancelBtn"
@@ -57,12 +63,13 @@
                             Clicked="OnCancelBtn_Clicked"/>
 
                         <Button
+                            Grid.Column="1"
                             x:Name="EnterBtn"
                             Text="ОК"
                             Clicked="OnEnterBtnClicked"/>
-                    </StackLayout>
+                    </Grid>
                 </StackLayout>
             </Border>
         </Border>
-    </StackLayout>
+    </Grid>
 </ContentPage>

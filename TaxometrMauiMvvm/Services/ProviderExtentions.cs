@@ -33,6 +33,7 @@ namespace TaxometrMauiMvvm.Services
         internal const byte CheckClose = 0x23;
         internal const byte CheckBreak = 0x24;
         internal const byte CheckDuplicate = 0x25;
+        internal const byte CheckState = 0x26;
         internal const byte ShiftState = 0x29;
         internal const byte ShiftOpen = 0x30;
         internal const byte ScnoState = 0x35;
