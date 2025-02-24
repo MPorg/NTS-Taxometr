@@ -4,7 +4,10 @@
              x:Class="TaxometrMauiMvvm.Views.Pages.DrivePage"
              xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
              xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
-             x:DataType="{x:Type models:DriveViewModel}">
+             xmlns:custom="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
+             x:DataType="{x:Type models:DriveViewModel}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
     
     <Shell.TitleView>
         <StackLayout>
@@ -17,6 +20,35 @@
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
+        <StackLayout
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="25"
+            WidthRequest="45"
+            HeightRequest="45"
+            ZIndex="50">
+            <Border
+                WidthRequest="50"
+                HeightRequest="50"
+                Padding="10"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                Stroke="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="50"/>
+                </Border.StrokeShape>
+
+                <ImageButton
+                    x:Name="FlayoutBtn"
+                    Clicked="FlayoutBtn_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="IconsSolid"
+                            Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                            Glyph="{StaticResource IconMenuBars}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Border>
+        </StackLayout>
         <StackLayout 
             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
             VerticalOptions="FillAndExpand"
@@ -40,12 +72,16 @@
             </StackLayout>
         </StackLayout>
         <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            Margin="0, 80, 0, 100"
             ZIndex="1">
             <StackLayout
                 Padding="10"
                 Spacing="10"
                 VerticalOptions="Start"
                 HorizontalOptions="FillAndExpand">
+                <Button
+                    Text="Открыть смену"/>
                 <Button
                     Text="Служебное внесение"
                     Command="{Binding DeposWithdrawCashCommand}"
@@ -60,6 +96,8 @@
             </StackLayout>
         </StackLayout>
         <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            Margin="0, 0, 0, 120"
             ZIndex="3"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"
@@ -74,6 +112,8 @@
             </StackLayout>
         </StackLayout>
         <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            Margin="0, 0, 0, 120"
             IsVisible="{Binding CheckIsOpened}"
             ZIndex="4"
             VerticalOptions="FillAndExpand"
@@ -86,11 +126,28 @@
                 HorizontalOptions="FillAndExpand">
                 <Button
                     HorizontalOptions="FillAndExpand"
-                    Text="Отменить чек"/>
+                    Text="Отменить чек"
+                    Command="{Binding CancelCheckCommand}"/>
                 <Button
                     HorizontalOptions="FillAndExpand"
-                    Text="Закрыть чек"/>
+                    Text="Закрыть чек"
+                    Command="{Binding CloseCheckCommand}"/>
             </StackLayout>
+        </StackLayout>
+        <custom:TabBar
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            x:Name="TabBar"
+            ZIndex="15"/>
+        <StackLayout
+            IsVisible="{Binding IsLoaded}"
+            BackgroundColor="#60000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="20">
+            <ActivityIndicator
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                IsRunning="True"/>
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Data.DataBase.Objects;
+using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Services;
 
 namespace TaxometrMauiMvvm.Models.Pages;
@@ -15,6 +16,10 @@ public partial class PrintViewModel : ObservableObject
     [ObservableProperty]
     private string _devicesBtnText;
 
+    private bool _isAppearing = false;
+    private bool _isWaitApearing = false;
+
+    public event Action<TabBarViewModel> TabBarInjection;
     public PrintViewModel()
     {
         GetBtnText();
@@ -24,7 +29,7 @@ public partial class PrintViewModel : ObservableObject
     }
     private async void GetBtnText()
     {
-        List<DevicePrefab> devices = await AppData.TaxometrDB.DevicePrefabs.GetPrefabsAsync();
+        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
         if (devices.Count > 0) DevicesBtnText = "Устройства";
         else DevicesBtnText = "Поиск";
     }
@@ -42,6 +47,10 @@ public partial class PrintViewModel : ObservableObject
         if (AppData.BLEAdapter != null && AppData.BLEAdapter.ConnectedDevices.Count > 0)
         {
             BlockBannerIsVisible = false;
+            if (_isWaitApearing && _isAppearing)
+            {
+                OnAppearing();
+            }
         }
         else
         {
@@ -55,10 +64,34 @@ public partial class PrintViewModel : ObservableObject
         await AppData.PrintReceiptOrSwitchMode(key);
     }
 
+    private bool _isFirstInit = true;
     public void OnAppearing()
     {
+        _isAppearing = true;
+        if (_isFirstInit)
+        {
+            _isFirstInit = false;
+            TabBarInjection?.Invoke(AppData.TabBarViewModel);
+            //AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Remote | TabBarViewModel.Transition.Drive);
+            //AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Print);
+        }
+        AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Print);
+        
+        if (BlockBannerIsVisible)
+        {
+            _isWaitApearing = true;
+            return;
+        }
+
+        _isWaitApearing = false;
         AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
         AppData.Provider.SentTaxState(true);
+    }
+
+    public void OnDisappearing()
+    {
+        _isAppearing = false;
+        AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Print);
     }
 
     private async void OnProvider_AnswerCompleate(byte cmd, Dictionary<string, string> answer)

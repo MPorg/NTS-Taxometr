@@ -8,10 +8,7 @@
              x:DataType="models:CreateDeviceViewModel"
              BackgroundColor="Transparent">
 
-    <Page.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{AppThemeBinding Dark=#142F5F, Light=#5AAED2}" StatusBarStyle="{AppThemeBinding Dark=LightContent, Light=DarkContent}"/>
-    </Page.Behaviors>
-    
+    <!--
     <ContentPage.Resources>
         
         <Style TargetType="Label" BasedOn="{StaticResource BaseLightText}">
@@ -33,6 +30,8 @@
         </Style>
 
     </ContentPage.Resources>
+    -->
+    
     <ContentPage.Content>
         <StackLayout
             Grid.Column="1"
@@ -62,6 +61,7 @@
                         <Label
                             x:Name="Header"
                             Text="Подключение"
+                            TextColor="{StaticResource TextDark}"
                             FontSize="Large"
                             HorizontalTextAlignment="Center"
                             HorizontalOptions="FillAndExpand"/>
@@ -71,12 +71,21 @@
                             Orientation="Horizontal">
 
                             <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
                                 HorizontalOptions="Start"
+                                VerticalOptions="Center"
                                 Text="Имя устройства"/>
 
                             <Entry
                                 x:Name="NameEntry"
                                 Keyboard="Text"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
                                 Text="{Binding DeviceName}"
                                 Completed="NameEntry_Completed"/>
 
@@ -87,12 +96,22 @@
                             Orientation="Horizontal">
 
                             <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
                                 HorizontalOptions="Start"
+                                VerticalOptions="Center"
                                 Text="Заводской номер"/>
 
                             <Entry
                                 x:Name="SerNumEntry"
                                 Placeholder="12345678"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
                                 Text="{Binding SerialNumber}"
                                 TextChanged="OnSerNumEntryTextChanged"
                                 Completed="SerNumEntry_Completed"
@@ -105,7 +124,10 @@
                             Orientation="Horizontal">
 
                             <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
                                 HorizontalOptions="Start"
+                                VerticalOptions="Center"
                                 Text="Пароль связи"/>
 
                             <Entry
@@ -113,6 +135,13 @@
                                 Placeholder="123456"
                                 IsPassword="{Binding IsPassword}"
                                 Text="{Binding BlePassword}"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
                                 TextChanged="OnBLEPassEntryTextChanged"
                                 Completed="BLEPassEntry_Completed"
                                 Unfocused="BLEPassEntry_Unfocused"/>
@@ -124,7 +153,10 @@
                             Orientation="Horizontal">
 
                             <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
                                 HorizontalOptions="Start"
+                                VerticalOptions="Center"
                                 Text="Пароль оператора"/>
 
                             <Entry
@@ -132,6 +164,13 @@
                                 Placeholder="123456"
                                 IsPassword="{Binding IsPassword}"
                                 Text="{Binding AdminPassword}"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
                                 TextChanged="OnAdminPassEntryTextChanged"
                                 Completed="AdminPassEntry_Completed"
                                 Unfocused="AdminPassEntry_Unfocused"/>
@@ -143,7 +182,10 @@
                             Orientation="Horizontal">
 
                             <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
                                 HorizontalOptions="Start"
+                                VerticalOptions="Center"
                                 Text="Автоподключение"/>
 
                             <Switch

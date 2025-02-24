@@ -8,6 +8,7 @@ using Plugin.BLE.Abstractions;
 using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Views.Banners;
 using static TaxometrMauiMvvm.Services.ProviderBLE;
+using TaxometrMauiMvvm.Models.Cells;
 
 namespace TaxometrMauiMvvm.Data
 {
@@ -44,6 +45,8 @@ namespace TaxometrMauiMvvm.Data
             }
         }
 
+        public static TabBarViewModel TabBarViewModel { get; set; }
+
         private static bool cont = false;
 
         private static bool _isFirstConnection = true;
@@ -51,13 +54,20 @@ namespace TaxometrMauiMvvm.Data
         public static MainMenu? MainMenu { get; set; } = null;
 
         private static TaxometrDB _taxometrDB;
-        public static TaxometrDB TaxometrDB
+
+        public static async Task<TaxometrDB> TaxometrDB()
         {
-            get
+            if (!await PermssionChecker.StoragePermissionRequest())
+            {
+                //ShowToast("Необходимо разрешение на обработку данных");
+                return null;
+            }
+            else
             {
                 if (_taxometrDB == null)
                 {
                     _taxometrDB = new TaxometrDB(DB.DBFullPath);
+                    await Task.Delay(3000);
                 }
                 return _taxometrDB;
             }
@@ -117,10 +127,9 @@ namespace TaxometrMauiMvvm.Data
         {
             if (prefab.DeviceId == ConnectedDP.DeviceId)
             {
-                var pref = await TaxometrDB.DevicePrefabs.GetByIdAsync(ConnectedDP.DeviceId);
+                var pref = (await TaxometrDB()).DevicePrefabs.GetByIdAsync(ConnectedDP.DeviceId);
                 _specialDisconnect = false;
                 await BLEAdapter.DisconnectDeviceAsync(BLEAdapter.ConnectedDevices[0]);
-
             }
         }
 
@@ -139,26 +148,19 @@ namespace TaxometrMauiMvvm.Data
         private static ISettingsManager _settingsManager;
         private static IKeyboard _keyboard;
 
-        private static bool _initializationCompleate;
+        private static bool _initializationCompleate = false;
         public static bool InitializationCompleate => _initializationCompleate;
 
         public static void SetDependencyServices(IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard)
         {
-            if (_taxometrDB == null) _taxometrDB = new TaxometrDB(DB.DBFullPath);
-
-            _toastMaker = toastMaker;
-            _settingsManager = settingsManager;
-            _keyboard = keyboard;
+                _toastMaker = toastMaker;
+                _settingsManager = settingsManager;
+                _keyboard = keyboard;
         }
 
         public static async Task Initialize()
         {
-            if (!await PermssionChecker.StoragePermissionRequest())
-            {
-                ShowToast("Необходимо разрешение на обработку данных");
-                return;
-            }
-
+            await Task.Delay(1000);
             LoadSettings();
 
             if (_firstInit)
@@ -166,11 +168,11 @@ namespace TaxometrMauiMvvm.Data
                 _firstInit = false;
                 BLEAdapter.DeviceConnected -= OnDeviceConnected;
                 BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
-                TaxometrDB.DevicePrefabs.DeviceChanged -= DevicePrefabs_DeviceChanged;
+                (await TaxometrDB()).DevicePrefabs.DeviceChanged -= DevicePrefabs_DeviceChanged;
 
                 BLEAdapter.DeviceConnected += OnDeviceConnected;
                 BLEAdapter.DeviceDisconnected += OnDeviceDisconnected;
-                TaxometrDB.DevicePrefabs.DeviceChanged += DevicePrefabs_DeviceChanged;
+                (await TaxometrDB()).DevicePrefabs.DeviceChanged += DevicePrefabs_DeviceChanged;
 
                 DotsTimer();
                 LoadAutoconnectDevice();
@@ -235,7 +237,7 @@ namespace TaxometrMauiMvvm.Data
         {
             while (true)
             {
-                var devicePref = await TaxometrDB.DevicePrefabs.GetByIdAsync(e.Device.Id);
+                var devicePref = await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(e.Device.Id);
 
                 if (devicePref != null)
                 {
@@ -301,6 +303,7 @@ namespace TaxometrMauiMvvm.Data
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
+                Debug.WriteLine($"{await Properties.GetSerialNumber()}, {await Properties.GetBLEPassword()}, {await Properties.GetAdminPassword()}");
                 await Task.Delay(100);
                 if (_provider != null)
                 {
@@ -328,7 +331,7 @@ namespace TaxometrMauiMvvm.Data
         {
             //Debug.WriteLine("_____________________Autoconnection_____________________");
             //bool hasAutoConnect = await Properties.GetAutoconnect();
-            var prefs = await TaxometrDB.DevicePrefabs.GetPrefabsAsync();
+            var prefs = await (await TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
             DevicePrefab deviceToConnect = null;
 
             if (prefs != null)
@@ -391,14 +394,14 @@ namespace TaxometrMauiMvvm.Data
             {
                 await banner.Navigation.PopModalAsync();
                 banner = null;
-                ShowToast($"Подключено: {prefab.CustomName ?? "N/A"}");
+                //ShowToast($"Подключено: {prefab.CustomName ?? "N/A"}");
                 AutoconnectionCompleated?.Invoke();
             }
             else
             {
                 await banner.Navigation.PopModalAsync();
                 banner = null;
-                ShowToast($"Не удалось подключиться к устройству: {prefab.CustomName ?? "N/A"}");
+                //ShowToast($"Не удалось подключиться к устройству: {prefab.CustomName ?? "N/A"}");
             }
 
         }
@@ -411,8 +414,7 @@ namespace TaxometrMauiMvvm.Data
             await Properties.SaveSerialNumber(pref.SerialNumber);
             await Properties.SaveBLEPassword(pref.BLEPassword);
             await Properties.SaveAdminPassword(pref.UserPassword);
-            await Task.Delay(100);
-            Debug.WriteLine($"{await Properties.GetSerialNumber()}, {await Properties.GetBLEPassword()}, {await Properties.GetAdminPassword()}");
+            await Task.Delay(1000);
 
             if (_adapter.ConnectedDevices.Count > 0)
             {
@@ -427,7 +429,30 @@ namespace TaxometrMauiMvvm.Data
         {
             DeposWithdrawCashBanner banner = new DeposWithdrawCashBanner(method, placeholder);
 
-            await MainMenu.Navigation.PushModalAsync(banner);
+            await MainMenu.Navigation.PushModalAsync(banner, true);
+        }
+
+        public static async Task GetOpenCheckBanner()
+        {
+            OpenCheckBanner banner = new OpenCheckBanner();
+            banner.Canceled += ((result) =>
+            {
+                MainMenu.Navigation.PopModalAsync(true);
+            });
+            await MainMenu.Navigation.PushModalAsync(banner, true);
+        }
+
+        public static event Action<bool> CloseCheckBannerAnswer;
+
+        public static async Task GetCloseCheckBanner(string startVal, string preVal)
+        {
+            CloseCheckBanner banner = new CloseCheckBanner(startVal, preVal);
+            banner.Canceled += ((result) =>
+            {
+                CloseCheckBannerAnswer?.Invoke(result);
+                MainMenu.Navigation.PopModalAsync(true);
+            });
+            await MainMenu.Navigation.PushModalAsync(banner, true);
         }
 
         private static async void LoadSettings()
@@ -438,6 +463,12 @@ namespace TaxometrMauiMvvm.Data
 #else
             await Properties.SaveDebugMode(false);
 #endif
+        }
+
+        public static async Task<bool> CreateNewPrefab(IDevice device)
+        {
+            bool result = await MainMenu.CreateDevicePrefabMenu(device);
+            return result;
         }
 
         public static void ShowToast(string message)
@@ -466,12 +497,12 @@ namespace TaxometrMauiMvvm.Data
             }));
         }
 
-        public static async Task CheckBLE()
+        public static async Task CheckBLE(Page page)
         {
             if (!_settingsManager.BluetoothIsEnable())
             {
-                if (MainMenu == null) return;
-                if (await MainMenu.DisplayAlert("Параметры", "Необходимо включить блютуз", "Открыть параметры", "Нет"))
+                //if (MainMenu == null) return;
+                if (await page.DisplayAlert("Параметры", "Необходимо включить блютуз", "Открыть параметры", "Нет"))
                 {
                     _settingsManager.ShowBluetoothSettings();
                 }
@@ -488,12 +519,11 @@ namespace TaxometrMauiMvvm.Data
             }
         }
 
-        public static async Task CheckLockation()
+        public static async Task CheckLockation(Page page)
         {
             if (!_settingsManager.LockationIsEnable())
             {
-                if (MainMenu == null) return;
-                if (await MainMenu.DisplayAlert("Параметры", "Необходимо включить геолокацию", "Открыть параметры", "Нет"))
+                if (await page.DisplayAlert("Параметры", "Необходимо включить геолокацию", "Открыть параметры", "Нет"))
                 {
                     _settingsManager.ShowLocationSettings();
                 }
@@ -564,110 +594,110 @@ namespace TaxometrMauiMvvm.Data
 
             public static async Task<bool> SaveAutoconnect(bool value)
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(AutoconnectName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(AutoconnectName);
                 if (p == null)
                 {
-                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(AutoconnectName, value.ToString())) > 0) return true;
+                    if (await (await TaxometrDB()).Property.CreateAsync(new DataBase.Objects.PropertyModel(AutoconnectName, value.ToString())) > 0) return true;
                     else return false;
                 }
                 else
                 {
                     p.Value = value.ToString();
-                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    if (await (await TaxometrDB()).Property.UpdateAsync(p) > 0) return true;
                     else return false;
                 }
             }
             public static async Task<bool> GetAutoconnect()
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(AutoconnectName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(AutoconnectName);
                 if (p == null) return true;
                 return bool.Parse(p.Value);
             }
 
             public static async Task<bool> SaveSerialNumber(string value)
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(SerialNumberName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(SerialNumberName);
                 if (p == null)
                 {
-                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(SerialNumberName, value)) > 0) return true;
+                    if (await (await TaxometrDB()).Property.CreateAsync(new DataBase.Objects.PropertyModel(SerialNumberName, value)) > 0) return true;
                     else return false;
                 }
                 else
                 {
                     p.Value = value;
-                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    if (await (await TaxometrDB()).Property.UpdateAsync(p) > 0) return true;
                     else return false;
                 }
             }
             public static async Task<string> GetSerialNumber()
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(SerialNumberName);
-                if (p == null) return "00000616";
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(SerialNumberName);
+                if (p == null) return "00000000";
                 return p.Value;
             }
 
             public static async Task<bool> SaveBLEPassword(string value)
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(BLEPasswordName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(BLEPasswordName);
                 if (p == null)
                 {
-                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(BLEPasswordName, value)) > 0) return true;
+                    if (await (await TaxometrDB()).Property.CreateAsync(new DataBase.Objects.PropertyModel(BLEPasswordName, value)) > 0) return true;
                     else return false;
                 }
                 else
                 {
                     p.Value = value;
-                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    if (await (await TaxometrDB()).Property.UpdateAsync(p) > 0) return true;
                     else return false;
                 }
             }
             public static async Task<string> GetBLEPassword()
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(BLEPasswordName);
-                if (p == null) return "100000";
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(BLEPasswordName);
+                if (p == null) return "000000";
                 return p.Value;
             }
 
             public static async Task<bool> SaveAdminPassword(string value)
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(AdminPasswordName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(AdminPasswordName);
                 if (p == null)
                 {
-                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(AdminPasswordName, value)) > 0) return true;
+                    if (await (await TaxometrDB()).Property.CreateAsync(new DataBase.Objects.PropertyModel(AdminPasswordName, value)) > 0) return true;
                     else return false;
                 }
                 else
                 {
                     p.Value = value;
-                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    if (await (await TaxometrDB()).Property.UpdateAsync(p) > 0) return true;
                     else return false;
                 }
             }
             public static async Task<string> GetAdminPassword()
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(AdminPasswordName);
-                if (p == null) return "000001";
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(AdminPasswordName);
+                if (p == null) return "000000";
                 return p.Value;
             }
 
             public static async Task<bool> SaveLastCashSum(int value)
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(LastCashSum);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(LastCashSum);
                 if (p == null)
                 {
-                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(LastCashSum, value.ToString())) > 0) return true;
+                    if (await (await TaxometrDB()).Property.CreateAsync(new DataBase.Objects.PropertyModel(LastCashSum, value.ToString())) > 0) return true;
                     else return false;
                 }
                 else
                 {
                     p.Value = value.ToString();
-                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    if (await (await TaxometrDB()).Property.UpdateAsync(p) > 0) return true;
                     else return false;
                 }
             }
             public static async Task<int> GetLastCashSum()
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(LastCashSum);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(LastCashSum);
                 if (p == null) return 0;
                 if (int.TryParse(p.Value, out var value))
                 {
@@ -678,22 +708,22 @@ namespace TaxometrMauiMvvm.Data
 
             public static async Task<bool> SaveDebugMode(bool value)
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(DebugModeName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(DebugModeName);
                 if (p == null)
                 {
-                    if (await AppData.TaxometrDB.Property.CreateAsync(new DataBase.Objects.PropertyModel(DebugModeName, value.ToString())) > 0) return true;
+                    if (await (await TaxometrDB()).Property.CreateAsync(new DataBase.Objects.PropertyModel(DebugModeName, value.ToString())) > 0) return true;
                     else return false;
                 }
                 else
                 {
                     p.Value = value.ToString();
-                    if (await AppData.TaxometrDB.Property.UpdateAsync(p) > 0) return true;
+                    if (await (await TaxometrDB()).Property.UpdateAsync(p) > 0) return true;
                     else return false;
                 }
             }
             public static async Task<bool> GetDebugMode()
             {
-                var p = await AppData.TaxometrDB.Property.GetByNameAsync(DebugModeName);
+                var p = await (await TaxometrDB()).Property.GetByNameAsync(DebugModeName);
                 if (p == null) return false;
                 return bool.Parse(p.Value);
             }

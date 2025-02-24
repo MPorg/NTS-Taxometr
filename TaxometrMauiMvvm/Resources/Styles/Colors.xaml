@@ -98,5 +98,6 @@
     <x:String x:Key="IconHome">&#xf015;</x:String>
     <x:String x:Key="IconXCross">&#xf00d;</x:String>
     <x:String x:Key="IconSelectBox">&#xf14a;</x:String>
+    <x:String x:Key="IconMenuBars">&#xf0c9;</x:String>
 
 </ResourceDictionary>

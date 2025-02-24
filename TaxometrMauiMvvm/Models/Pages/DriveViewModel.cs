@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Data.DataBase.Objects;
+using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Services;
 
 namespace TaxometrMauiMvvm.Models.Pages;
@@ -18,10 +19,21 @@ public partial class DriveViewModel : ObservableObject
     private string _devicesBtnText;
     [ObservableProperty]
     private bool _checkIsOpened;
+    [ObservableProperty]
+    private bool _isLoaded;
+
+    private bool _isAppearing = false;
+    private bool _isWaitApearing = false;
+
+    private int _openedCheckStartSum = 0;
+    private int _openedCheckPreviousSum = 0;
+
+    public event Action<TabBarViewModel> TabBarInjection;
 
     public DriveViewModel()
     {
         _title = "Смена";
+        IsLoaded = false;
         GetBtnText();
         SwitchBan();
         AppData.ConnectionLost += SwitchBan;
@@ -29,7 +41,7 @@ public partial class DriveViewModel : ObservableObject
     }
     private async void GetBtnText()
     {
-        List<DevicePrefab> devices = await AppData.TaxometrDB.DevicePrefabs.GetPrefabsAsync();
+        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
         if (devices.Count > 0) DevicesBtnText = "Устройства";
         else DevicesBtnText = "Поиск";
     }
@@ -47,6 +59,10 @@ public partial class DriveViewModel : ObservableObject
         if (AppData.BLEAdapter != null && AppData.BLEAdapter.ConnectedDevices.Count > 0)
         {
             BlockBannerIsVisible = false;
+            if (_isWaitApearing && _isAppearing)
+            {
+                OnAppearing();
+            }
         }
         else
         {
@@ -75,30 +91,94 @@ public partial class DriveViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void OpenCheck()
+    private async Task OpenCheck()
     {
-        AppData.Provider.OpenCheck(200, 0);
-        await Task.Delay(5000);
+        await AppData.GetOpenCheckBanner();
+    }
+
+    bool _waitCloseCheck = false;
+    [RelayCommand]
+    private async Task CloseCheck()
+    {
+        AppData.CloseCheckBannerAnswer += AppData_CloseCheckBannerAnswer;
+        await AppData.GetCloseCheckBanner(_openedCheckStartSum.ToString(), _openedCheckPreviousSum.ToString());
+    }
+
+    private void AppData_CloseCheckBannerAnswer(bool result)
+    {
+        AppData.CloseCheckBannerAnswer -= AppData_CloseCheckBannerAnswer;
+        _waitCloseCheck = result;
+    }
+
+    [RelayCommand]
+    private async Task CancelCheck()
+    {
+        AppData.Provider.BreakCheck();
+        await Task.Delay(500);
         OnAppearing();
     }
 
+    private bool _isFirstInit = true;
     public void OnAppearing()
     {
-        AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
-        AppData.Provider.SentTaxState(true);
-    }
-
-    private void OnProvider_AnswerCompleate(byte cmd, Dictionary<string, string> answer)
-    {
-        switch (cmd)
+        _isAppearing = true;
+        if (_isFirstInit)
         {
-            case ProviderExtentions.TaxState: ReadTaxState(answer); break;
-            case ProviderExtentions.ShiftState: ReadShiftInfo(answer); break;
-            case ProviderExtentions.CheckState: ReadCheckState(answer); break;
+            _isFirstInit = false;
+            TabBarInjection?.Invoke(AppData.TabBarViewModel);
+            //AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Remote | TabBarViewModel.Transition.Print);
+            //AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Drive);
+        }
+        AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Drive);
+
+        if (BlockBannerIsVisible)
+        {
+            _isWaitApearing = true;
+            return;
+        }
+        _isWaitApearing = false;
+        AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+        IsLoaded = true;
+        if (_waitCloseCheck)
+        {
+            _waitCloseCheck = false;
+        }
+        else
+        {
+            AppData.Provider.SentTaxState(true);
         }
     }
 
-    private async void ReadTaxState(Dictionary<string, string> answer)
+    public void OnDisappearing()
+    {
+        _isAppearing = false;
+        AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Drive);
+        IsLoaded = false;
+    }
+
+    private async void OnProvider_AnswerCompleate(byte cmd, Dictionary<string, string> answer)
+    {
+        switch (cmd)
+        {
+            case ProviderExtentions.TaxState: await ReadTaxState(answer); break;
+            case ProviderExtentions.ShiftState: await ReadShiftInfo(answer); break;
+            case ProviderExtentions.CheckState: await ReadCheckState(answer); break;
+            case ProviderExtentions.CheckClose: await ReadCheckClose(answer); break;
+        }
+    }
+
+    private async Task ReadCheckClose(Dictionary<string, string> answer)
+    {
+        if (answer.TryGetValue("surrender", out string? surrender))
+        {
+            if (!string.IsNullOrEmpty(surrender))
+            {
+                await SurrenderMessage(surrender);
+            }
+        }
+    }
+
+    private async Task ReadTaxState(Dictionary<string, string> answer)
     {
         if (answer.TryGetValue("menuState", out string? menuState))
         {
@@ -108,6 +188,9 @@ public partial class DriveViewModel : ObservableObject
                 if (menuState == "1")
                 {
                     Debug.WriteLine("_________________________Drive mode is active_________________________");
+
+                    AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+                    AppData.Provider.SentCheckState(true);
                     //return;
                 }
                 else
@@ -115,48 +198,54 @@ public partial class DriveViewModel : ObservableObject
                     await AppData.PrintReceiptOrSwitchMode("D");
 
                     AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
-                    AppData.Provider.SentTaxState(true);
-
-                }
-            }
-        }
-        if (answer.TryGetValue("checkState", out string? checkState))
-        {
-            if (!string.IsNullOrEmpty(checkState))
-            {
-                if (checkState == "1")
-                {
-                    AppData.Provider.SentCheckState(true);
-                }
-                else
-                {
-                    CheckIsOpened = false;
                     AppData.Provider.SentShiftInfo(true);
                 }
             }
         }
     }
 
-    private void ReadCheckState(Dictionary<string, string> answer)
+    private async Task ReadCheckState(Dictionary<string, string> answer)
     {
         if (answer.TryGetValue("isOpen", out string? isOpen))
         {
             if (!string.IsNullOrEmpty(isOpen))
             {
+                Debug.WriteLine(isOpen);
+                IsLoaded = false;
                 AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
                 if (isOpen == "1")
                 {
                     CheckIsOpened = true;
                 }
-                else
+                else if (isOpen == "0")
                 {
                     CheckIsOpened = false;
+                    _openedCheckStartSum = 0;
+                    _openedCheckPreviousSum = 0;
                 }
+            }
+        }
+        if (answer.TryGetValue("initValue", out string? initValueStr))
+        {
+            if (!string.IsNullOrEmpty(initValueStr))
+            {
+                Debug.WriteLine(initValueStr);
+                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                _openedCheckStartSum = int.Parse(initValueStr);
+            }
+        }
+        if (answer.TryGetValue("preValue", out string? preValueStr))
+        {
+            if (!string.IsNullOrEmpty(preValueStr))
+            {
+                Debug.WriteLine(preValueStr);
+                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                _openedCheckPreviousSum = int.Parse(preValueStr);
             }
         }
     }
 
-    private void ReadShiftInfo(Dictionary<string, string> answer)
+    private async Task ReadShiftInfo(Dictionary<string, string> answer)
     {
         if (answer.TryGetValue("shiftState", out string? shiftState))
         {
@@ -165,30 +254,34 @@ public partial class DriveViewModel : ObservableObject
                 AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
                 if (shiftState == "1")
                 {
-                    return;
+                    AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+                    AppData.Provider.SentCheckState(true);
                 }
-                else
+                else if (shiftState == "0")
                 {
-                    OpenShiftMessage();
+                    await OpenShiftMessage();
                 }
             }
         }
     }
 
-    private async void OpenShiftMessage()
+    private async Task OpenShiftMessage()
     {
         string message = "Смена не открыта.\r\nОткрыть смену?\r\n[OK] - ДА [C] - НЕТ";
         Dictionary<ProviderBLE.ButtonKey, Action> onKeysPressed = new Dictionary<ProviderBLE.ButtonKey, Action>
         {
-            {ProviderBLE.ButtonKey.OK, new Action(()=>
+            {ProviderBLE.ButtonKey.OK, new Action(async ()=>
             {
-                CheckDataMessage();
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"IsLoaded", true }});
+                await Task.Delay(2500);
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
+                await CheckDataMessage();
                 //AppData.MainMenu.GoToAsync("//Drive", true);
             }) },
             {ProviderBLE.ButtonKey.C, new Action(async ()=>
             {
                 await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
-                await AppData.MainMenu.GoToAsync("//Drive", true);
+                await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
             }) }
         };
         ProviderBLE.ButtonKey enableButtons = ProviderBLE.ButtonKey.OK | ProviderBLE.ButtonKey.C;
@@ -201,11 +294,12 @@ public partial class DriveViewModel : ObservableObject
 
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
+            Debug.WriteLine($"\r\nMessage: {message}");
             await AppData.MainMenu.GoToAsync("//Remote", true, parameters);
         });
     }
 
-    private async void CheckDataMessage()
+    private async Task CheckDataMessage()
     {
         string message = "Подтвердите дату и время\r\n[OK] - Подтвердить [C] - Не открывать смену\r\n[2] - Синхронизировать из СКНО";
         Dictionary<ProviderBLE.ButtonKey, Action> onKeysPressed = new Dictionary<ProviderBLE.ButtonKey, Action>
@@ -213,17 +307,19 @@ public partial class DriveViewModel : ObservableObject
             {ProviderBLE.ButtonKey.OK, new Action(async ()=>
             {
                 await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
-                await AppData.MainMenu.GoToAsync("//Drive", true);
+                await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
+                AppData.Provider.SentCheckState(true);
             }) },
             {ProviderBLE.ButtonKey.C, new Action(async ()=>
             {
                 await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
-                await AppData.MainMenu.GoToAsync("//Drive", true);
+                await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
             }) },
             {ProviderBLE.ButtonKey.Num_2, new Action(async ()=>
             {
-                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
+                /*await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
                 await AppData.MainMenu.GoToAsync("//Drive", true);
+                AppData.Provider.SentCheckState();*/
             }) }
         };
         ProviderBLE.ButtonKey enableButtons = ProviderBLE.ButtonKey.OK | ProviderBLE.ButtonKey.C | ProviderBLE.ButtonKey.Num_2;
@@ -233,6 +329,55 @@ public partial class DriveViewModel : ObservableObject
             {nameof(onKeysPressed), onKeysPressed},
             {nameof(enableButtons), enableButtons}
         };
+        Debug.WriteLine($"\r\nMessage: {message}");
         await AppData.MainMenu.GoToAsync("//Remote", true, parameters);
+    }
+
+    private async Task SurrenderMessage(string surrender)
+    {
+        if (surrender == "0")
+        {
+            surrender = "0,00";
+        }
+        else if (surrender.Length == 1)
+        {
+            surrender = "0,0" + surrender;
+        }
+        else if (surrender.Length == 2)
+        {
+            surrender = "0," + surrender;
+        }
+        else
+        {
+            List<char> chars = new List<char>();
+            for (int i = 0; i < surrender.Length; i++)
+            {
+                chars.Add(surrender[i]);
+                if (i == surrender.Length - 3) chars.Add(',');
+            }
+            surrender = new string(chars.ToArray());
+        }
+
+        string message = $"Сдача: {surrender}";
+        Dictionary<ProviderBLE.ButtonKey, Action> onKeysPressed = new Dictionary<ProviderBLE.ButtonKey, Action>
+        {
+            {ProviderBLE.ButtonKey.OK, new Action(async ()=>
+            {
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
+                await AppData.MainMenu.GoToAsync("//Drive", true);
+            }) }
+        };
+        ProviderBLE.ButtonKey enableButtons = ProviderBLE.ButtonKey.OK;
+        ShellNavigationQueryParameters parameters = new ShellNavigationQueryParameters
+        {
+            {nameof(message), message},
+            {nameof(onKeysPressed), onKeysPressed},
+            {nameof(enableButtons), enableButtons}
+        };
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            Debug.WriteLine($"\r\nMessage: {message}");
+            await AppData.MainMenu.GoToAsync("//Remote", true, parameters);
+        });
     }
 }

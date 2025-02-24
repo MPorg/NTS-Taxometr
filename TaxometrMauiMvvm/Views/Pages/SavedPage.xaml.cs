@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Models.Pages;
 
@@ -16,9 +17,12 @@ public partial class SavedPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing();
-        await Task.Delay(100);
-        _viewModel?.GetDeviceList();
+        if (AppData.InitializationCompleate)
+        {
+            base.OnAppearing();
+            await Task.Delay(100);
+            _viewModel?.GetDeviceList();
+        }
     }
 
     private void SelectionChanged(object sender, SelectionChangedEventArgs e)

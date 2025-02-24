@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Configuration;
 using Plugin.BLE.Abstractions.Contracts;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
@@ -19,25 +20,32 @@ public partial class SearchedDeviceViewModel : ObservableObject
     [RelayCommand]
     private async Task Tapped()
     {
-        if (AppData.ConnectedDP != null)
+        try
         {
-            bool isThis = AppData.ConnectedDP.DeviceId == _device.Id;
-            await AppData.SpecialDisconnect();
-            if (isThis) return;
-        }
-
-        if (await AppData.ConnectToDevice(_device.Id))
-        {
-            if (!await CheckContainsInSaves())
+            if (AppData.ConnectedDP != null)
             {
-                CreateNew();
+                bool isThis = AppData.ConnectedDP.DeviceId == _device.Id;
+                await AppData.SpecialDisconnect();
+                if (isThis) return;
             }
+
+            if (await AppData.ConnectToDevice(_device.Id))
+            {
+                if (!await CheckContainsInSaves())
+                {
+                    CreateNew();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            AppData.ShowToast(ex.Message);
         }
     }
 
     private async void CreateNew()
     {
-       await AppData.MainMenu?.CreateDevicePrefabMenu(_device);
+       await AppData.CreateNewPrefab(_device);
     }
 
     private IDevice _device;
@@ -52,8 +60,8 @@ public partial class SearchedDeviceViewModel : ObservableObject
 
     private async Task<bool> CheckContainsInSaves()
     {
-        var prefabs = await AppData.TaxometrDB.DevicePrefabs.GetPrefabsAsync();
-        if (prefabs == null) return false;
+        var prefabs = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
+        if (prefabs == null || prefabs.Count == 0) return false;
         foreach (var prefab in prefabs)
         {
             if (prefab.DeviceId == _device?.Id) return true;

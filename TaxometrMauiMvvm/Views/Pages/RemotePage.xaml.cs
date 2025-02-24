@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Interfaces;
+using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Models.Pages;
 using TaxometrMauiMvvm.Services;
 
@@ -9,19 +10,30 @@ namespace TaxometrMauiMvvm.Views.Pages;
 public partial class RemotePage : ContentPage, IQueryAttributable
 {
     RemoteViewModel _viewModel;
-    public RemotePage(RemoteViewModel viewModel, IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard)
+    public RemotePage(RemoteViewModel viewModel, TabBarViewModel tabBarViewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
         _viewModel = viewModel;
-        AppData.SetDependencyServices(toastMaker, settingsManager, keyboard);
+        TabBar.Inject(tabBarViewModel);
+        AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Print);
+        AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Drive);
+        AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Remote);
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (!AppData.InitializationCompleate) return;
-        Debug.WriteLine("_____________________________Remote page onAppearing_____________________________");
+        if (AppData.InitializationCompleate)
+        {
+            Debug.WriteLine("_____________________________Remote page onAppearing_____________________________");
+            _viewModel.OnApearing();
+        }
+    }
+
+    protected override void OnDisappearing()
+    {
+        _viewModel.OnDisapearing();
     }
 
     private bool _backButtonToast = false;
@@ -66,11 +78,20 @@ public partial class RemotePage : ContentPage, IQueryAttributable
                 if (cleare is bool c)
                 {
                     cleare = c;
-                    if (cleare = true)
+                    if (cleare == true)
                     {
                         _viewModel.Clear();
                         return;
                     }
+                }
+            }
+
+            bool IsLoaded = false;
+            if (query.TryGetValue(nameof(IsLoaded), out var loaded))
+            {
+                if (loaded is bool load)
+                {
+                    _viewModel.IsLoaded = load;
                 }
             }
 
@@ -91,5 +112,10 @@ public partial class RemotePage : ContentPage, IQueryAttributable
         {
             Debug.WriteLine(ex.Message);
         }
+    }
+
+    private void FlayoutBtn_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.FlyoutIsPresented = true;
     }
 }

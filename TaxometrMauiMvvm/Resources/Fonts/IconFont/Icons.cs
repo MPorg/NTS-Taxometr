@@ -36,6 +36,7 @@
         public static string IconHome = "\uf015";
         public static string IconXCross = "\uf00d";
         public static string IconSelectBox = "\uf14a";
+        public static string IconMenuBars = "\uf14a";
 
     }
 }

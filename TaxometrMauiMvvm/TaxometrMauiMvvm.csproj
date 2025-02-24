@@ -40,6 +40,15 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android35.0|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android35.0|AnyCPU'">
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#142F5F" TintColor="#DB7C26" />
@@ -82,6 +91,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\drawable\taxi_1_crop.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Platforms\Android\Resources\drawable\splash_screen.xml" />
+	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-Black.ttf" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
@@ -120,6 +135,9 @@
 	  <Compile Update="MainMenu.xaml.cs">
 	    <DependentUpon>MainMenu.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Banners\OpenCheckBanner.xaml.cs">
+	    <DependentUpon>OpenCheckBanner.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Pages\RemotePage.xaml.cs">
 	    <DependentUpon>RemotePage.xaml</DependentUpon>
 	  </Compile>
@@ -129,13 +147,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Data\CustomElements\TabBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Banners\AutoconnectBanner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Banners\CloseCheckBanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Banners\CreateDeviceBanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Banners\DeposWithdrawCashBanner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Banners\OpenCheckBanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Cells\SavedDeviceViewCell.xaml">
@@ -151,6 +178,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Pages\SearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\SplashScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

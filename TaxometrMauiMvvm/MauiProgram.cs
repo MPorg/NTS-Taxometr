@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using System.Text;
 using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Models.Cells;
@@ -31,6 +32,20 @@ namespace TaxometrMauiMvvm
                     fonts.AddFont("Geologica-Italic.ttf", "Geologica-Medium");
                     fonts.AddFont("Geologica-BoldItalic.ttf", "Geologica-SemiBold");
                     fonts.AddFont("Geologica-Regular.ttf", "Geologica");
+                })
+                .ConfigureLifecycleEvents(events =>
+                {
+#if ANDROID
+                    events.AddAndroid(android => android.OnCreate((activity, bandle) => MakeSatusBarTranslucent(activity)));
+
+                    static void MakeSatusBarTranslucent(Android.App.Activity activity)
+                    {
+                        //activity.Window.SetFlags(Android.Views.WindowManagerFlags.Fullscreen, Android.Views.WindowManagerFlags.Fullscreen);
+                        activity.Window.SetFlags(Android.Views.WindowManagerFlags.LayoutNoLimits, Android.Views.WindowManagerFlags.LayoutNoLimits);    
+                        activity.Window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
+                        activity.Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+                    }
+#endif
                 });
 
             builder.Services.AddSingleton<RemotePage>();
@@ -51,6 +66,7 @@ namespace TaxometrMauiMvvm
             builder.Services.AddSingleton<SavedDeviceViewCell>();
             builder.Services.AddSingleton<SavedDeviceViewModel>();
 
+            builder.Services.AddSingleton<TabBarViewModel>();
 
             builder.Services.AddTransient<IToastMaker, ToastMaker>();
             builder.Services.AddTransient<ISettingsManager, SettingsManager>();

@@ -48,7 +48,7 @@ public partial class DeposWithdrawCashBanner : ContentPage
 
     private void OnCancelBtn_Clicked(object sender, EventArgs e)
     {
-        Navigation.PopModalAsync();
+        Navigation.PopModalAsync(true);
     }
 
     private void CashEntry_TextChanged(object sender, TextChangedEventArgs e)

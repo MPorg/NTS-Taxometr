@@ -17,86 +17,104 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TaxometrMauiMvvm
-build_property.ProjectDir = C:\VS\Git\TaxometrMauiMvvm\
+build_property.ProjectDir = C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/VS/Git/TaxometrMauiMvvm/App.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/MainMenu.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Data/CustomElements/TabBar.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Data.CustomElements.TabBar.xaml
+build_metadata.AdditionalFiles.TargetPath = Data\CustomElements\TabBar.xaml
+build_metadata.AdditionalFiles.RelativePath = Data\CustomElements\TabBar.xaml
+
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/MainMenu.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.MainMenu.xaml
 build_metadata.AdditionalFiles.TargetPath = MainMenu.xaml
 build_metadata.AdditionalFiles.RelativePath = MainMenu.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Resources/Styles/Colors.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Resources/Styles/Styles.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Banners/AutoconnectBanner.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/AutoconnectBanner.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.AutoconnectBanner.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Banners\AutoconnectBanner.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Banners\AutoconnectBanner.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Banners/CreateDeviceBanner.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/CreateDeviceBanner.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.CreateDeviceBanner.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Banners\CreateDeviceBanner.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Banners\CreateDeviceBanner.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Banners/CreateDevicePage.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/CreateDevicePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.CreateDevicePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Banners\CreateDevicePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Banners\CreateDevicePage.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Cells/SavedDeviceViewCell.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/DeposWithdrawCashBanner.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.DeposWithdrawCashBanner.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Banners\DeposWithdrawCashBanner.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Banners\DeposWithdrawCashBanner.xaml
+
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Cells/SavedDeviceViewCell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Cells.SavedDeviceViewCell.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Cells\SavedDeviceViewCell.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Cells\SavedDeviceViewCell.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Pages/DrivePage.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/DrivePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.DrivePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Pages\DrivePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Pages\DrivePage.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Pages/PrintPage.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/PrintPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.PrintPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Pages\PrintPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Pages\PrintPage.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Pages/RemotePage.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/RemotePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.RemotePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Pages\RemotePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Pages\RemotePage.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Pages/SavedPage.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/SavedPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.SavedPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Pages\SavedPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Pages\SavedPage.xaml
 
-[C:/VS/Git/TaxometrMauiMvvm/Views/Pages/SearchPage.xaml]
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/SearchPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.SearchPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Pages\SearchPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Pages\SearchPage.xaml
+
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/SplashScreen.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.SplashScreen.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Pages\SplashScreen.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Pages\SplashScreen.xaml

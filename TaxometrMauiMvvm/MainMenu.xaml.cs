@@ -6,8 +6,6 @@ namespace TaxometrMauiMvvm
 {
     public partial class MainMenu : Shell
     {
-
-
         public MainMenu()
         {
             Loaded += OnLoaded;
@@ -17,7 +15,6 @@ namespace TaxometrMauiMvvm
 
         private void Initialize()
         {
-            Items.Clear();
             InitializeComponent();
 
             var item = Items.FirstOrDefault(x => x.Title == _homeMenuItem.Text);
@@ -28,26 +25,14 @@ namespace TaxometrMauiMvvm
             }
         }
 
-        private void OnLoaded(object? sender, EventArgs e)
+        private async void OnLoaded(object? sender, EventArgs e)
         {
             Application.Current.RequestedThemeChanged += Current_RequestedThemeChanged;
-
-            InitAppData();
-        }
-        private async void InitAppData()
-        {
-            await Task.Delay(500);
-            await AppData.CheckBLEPermission();
-            await AppData.CheckLockationPermission();
-
-            await AppData.CheckBLE();
-            await AppData.CheckLockation();
-
-            await AppData.Initialize();
         }
 
         private void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
         {
+            Items.Clear();
             Initialize();
         }
 
@@ -57,19 +42,42 @@ namespace TaxometrMauiMvvm
             FlyoutIsPresented = false;
         }
 
+        public async void GoTo(string rote)
+        {
+            await GoToAsync(rote, true);
+        }
+
         public void Quit()
         {
             OnBackButtonPressed();
         }
 
-        public async Task CreateDevicePrefabMenu(IDevice device)
+        public async Task<bool> CreateDevicePrefabMenu(IDevice device)
         {
-            var page = new CreateDeviceBanner(new Models.Banners.CreateDeviceViewModel(device));
-            page.Disappearing += (async (sender, e) =>
+            try
             {
-                if (!page.Result) await AppData.SpecialDisconnect();
-            });
-            await Navigation.PushModalAsync(page);
+                bool result = false;
+                bool isCompleate = false;
+                var page = new CreateDeviceBanner(new Models.Banners.CreateDeviceViewModel(device));
+                page.Disappearing += (async (sender, e) =>
+                {
+                    isCompleate = true;
+                    if (!page.Result) await AppData.SpecialDisconnect();
+                    result = false;
+                });
+                await Navigation.PushModalAsync(page);
+                while (!isCompleate)
+                {
+                    await Task.Delay(100);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                AppData.ShowToast(ex.Message);
+            }
+            return false;
         }
+
     }
 }
