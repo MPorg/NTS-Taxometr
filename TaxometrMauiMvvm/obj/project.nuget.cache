@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U56LYtjn3gk=",
+  "dgSpecHash": "hpNt9kzvOko=",
   "success": true,
-  "projectFilePath": "C:\\VS\\Git\\TaxometrMauiMvvm\\TaxometrMauiMvvm.csproj",
+  "projectFilePath": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\TaxometrMauiMvvm.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\communitytoolkit.maui\\11.0.0\\communitytoolkit.maui.11.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\communitytoolkit.maui.core\\11.0.0\\communitytoolkit.maui.core.11.0.0.nupkg.sha512",

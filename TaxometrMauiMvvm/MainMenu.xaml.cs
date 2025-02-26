@@ -1,13 +1,16 @@
-﻿using Plugin.BLE.Abstractions.Contracts;
+﻿using Android.Content;
+using Android.Content.PM;
+using Java.Lang;
+using Plugin.BLE.Abstractions.Contracts;
+using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Views.Banners;
+using Exception = System.Exception;
 
 namespace TaxometrMauiMvvm
 {
     public partial class MainMenu : Shell
     {
-
-
         public MainMenu()
         {
             Loaded += OnLoaded;
@@ -17,7 +20,6 @@ namespace TaxometrMauiMvvm
 
         private void Initialize()
         {
-            Items.Clear();
             InitializeComponent();
 
             var item = Items.FirstOrDefault(x => x.Title == _homeMenuItem.Text);
@@ -28,27 +30,15 @@ namespace TaxometrMauiMvvm
             }
         }
 
-        private void OnLoaded(object? sender, EventArgs e)
+        private async void OnLoaded(object? sender, EventArgs e)
         {
             Application.Current.RequestedThemeChanged += Current_RequestedThemeChanged;
-
-            InitAppData();
-        }
-        private async void InitAppData()
-        {
-            await Task.Delay(500);
-            await AppData.CheckBLEPermission();
-            await AppData.CheckLockationPermission();
-
-            await AppData.CheckBLE();
-            await AppData.CheckLockation();
-
-            await AppData.Initialize();
         }
 
-        private void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
+        private async void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
         {
-            Initialize();
+            await DisplayAlert("Смена темы приложения", "Необходимо перезапустить приложение", "ОК");
+            Restart();
         }
 
         private async void HomeMIClicked(object sender, EventArgs e)
@@ -57,19 +47,56 @@ namespace TaxometrMauiMvvm
             FlyoutIsPresented = false;
         }
 
-        public void Quit()
+        public async void GoTo(string rote)
         {
-            OnBackButtonPressed();
+            await GoToAsync(rote, true);
         }
 
-        public async Task CreateDevicePrefabMenu(IDevice device)
+        public void Quit()
         {
-            var page = new CreateDeviceBanner(new Models.Banners.CreateDeviceViewModel(device));
-            page.Disappearing += (async (sender, e) =>
-            {
-                if (!page.Result) await AppData.SpecialDisconnect();
-            });
-            await Navigation.PushModalAsync(page);
+            Application.Current?.Quit();
         }
+
+        public void Restart()
+        {
+#if ANDROID
+            var context = Platform.AppContext;
+            PackageManager packageManager = context.PackageManager;
+            Intent intent = packageManager.GetLaunchIntentForPackage(context.PackageName);
+            ComponentName componentName = intent.Component;
+            Intent mainIntent = Intent.MakeRestartActivityTask(componentName);
+            mainIntent.SetPackage(context.PackageName);
+            context.StartActivity(mainIntent);
+            Runtime.GetRuntime().Exit(0);
+#endif
+        }
+
+        public async Task<bool> CreateDevicePrefabMenu(IDevice device)
+        {
+            try
+            {
+                bool result = false;
+                bool isCompleate = false;
+                var page = new CreateDeviceBanner(new Models.Banners.CreateDeviceViewModel(device));
+                page.Disappearing += (async (sender, e) =>
+                {
+                    isCompleate = true;
+                    if (!page.Result) await AppData.SpecialDisconnect();
+                    result = false;
+                });
+                await Navigation.PushModalAsync(page);
+                while (!isCompleate)
+                {
+                    await Task.Delay(100);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                AppData.ShowToast(ex.Message);
+            }
+            return false;
+        }
+
     }
 }

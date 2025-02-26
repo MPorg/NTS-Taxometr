@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
+using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Models.Pages;
 
 namespace TaxometrMauiMvvm.Views.Pages;
@@ -12,16 +13,33 @@ public partial class PrintPage : ContentPage
         InitializeComponent();
         BindingContext = printViewModel;
         _viewModel = printViewModel;
+        _viewModel.TabBarInjection += OnTabBarInjection;
+    }
+
+    private void OnTabBarInjection(TabBarViewModel tabBar)
+    {
+        TabBar.Inject(tabBar);
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (!AppData.InitializationCompleate) return;
-        Debug.WriteLine("_____________________________Print page onAppearing_____________________________");
-        _viewModel.OnAppearing();
+        if (AppData.InitializationCompleate)
+        {
+            Debug.WriteLine("_____________________________Print page onAppearing_____________________________");
+            _viewModel.OnAppearing();
+        }
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        if (AppData.InitializationCompleate)
+        {
+            Debug.WriteLine("_____________________________Print page onDisappearing_____________________________");
+            _viewModel.OnDisappearing();
+        }
+    }
 
     private bool _backButtonToast = false;
     protected override bool OnBackButtonPressed()
@@ -44,5 +62,9 @@ public partial class PrintPage : ContentPage
             }));
         }
         return true;
+    }
+    private void FlayoutBtn_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.FlyoutIsPresented = true;
     }
 }

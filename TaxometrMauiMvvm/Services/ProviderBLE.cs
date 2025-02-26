@@ -1,24 +1,17 @@
-﻿using Android.Hardware.Camera2;
+﻿using Android.Support.Customtabs.Trusted;
 using Plugin.BLE.Abstractions.Contracts;
-using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using TaxometrMauiMvvm.Collections;
 using TaxometrMauiMvvm.Data;
 using static TaxometrMauiMvvm.Services.ProviderExtentions;
 
 namespace TaxometrMauiMvvm.Services
 {
+
     public class ProviderBLE : IDisposable
     {
         #region Init
-
-        public event Action<byte, Dictionary<string, string>> AnswerCompleate;
-        private LimitedConcurrentQueue<Action> _cmdQueue = new LimitedConcurrentQueue<Action>(5);
-        private bool _next = true;
 
         public ProviderBLE()
         {
@@ -34,24 +27,97 @@ namespace TaxometrMauiMvvm.Services
             }
         }
 
+        private bool TrySetState(ProviderState newState)
+        {
+            Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => {newState}  ________________________________");
+            if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1) && newState == ProviderState.SentFLC_0)
+            {
+                _statesTimer.SetMaxMillis(500);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                return true;
+            }
+            else if (_state == ProviderState.SentFLC_0 && newState == ProviderState.SentData_0)
+            {
+                _statesTimer.SetMaxMillis(3000);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                return true;
+            }
+            else if ((_state == ProviderState.SentData_0 || _state == ProviderState.SentFR) && newState == ProviderState.ReciveFLC_0)
+            {
+                _statesTimer.SetMaxMillis(2500);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                return true;
+            }
+            else if ((_state == ProviderState.ReciveFLC_0 || _state == ProviderState.Idle) && newState == ProviderState.SentFLC_1)
+            {
+                _statesTimer.SetMaxMillis(500);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                return true;
+            }
+            else if (_state == ProviderState.SentFLC_1 && newState == ProviderState.SentFR)
+            {
+                _statesTimer.SetMaxMillis(3000);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                return true;
+            }
+            else if (_state == ProviderState.ReciveFLC_0 && newState == ProviderState.ReciveFLC_1)
+            {
+                _statesTimer.SetMaxMillis(500);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                return true;
+            }
+            else if ((_state == ProviderState.ReciveFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_2)
+            {
+                _statesTimer.Stop();
+                _state = ProviderState.Idle;
+                _extreamCleare = false;
+                return true;
+            }
+            else return false;
+        }
+
+        bool _extreamCleare = true;
         public async void Initialize()
         {
             _serialNumber = await AppData.Properties.GetSerialNumber();
             _key = await AppData.Properties.GetBLEPassword();
+            _statesTimer.OnTimeout += StatesTimer_OnTimeout;
             ReadFromBLE();
             AppData.Debug.WriteLine("ProviderBLE Initialization compleate");
             Application.Current?.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(250), new Func<bool>(() =>
             {
-                if (_next)
+                if (_next && _state == ProviderState.Idle)
                 {
                     if (_cmdQueue.TryDequeue(out Action result))
                     {
                         _next = false;
                         Application.Current?.Dispatcher.StartTimer(TimeSpan.FromSeconds(5), new Func<bool>(() =>
                         {
-                            _cmdQueue.Clear();
-                            _next = true;
-                            return false;
+                            bool res = !_extreamCleare;
+                            if (!res)
+                            { 
+                                Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
+                                _cmdQueue.Clear();
+                                _state = ProviderState.Idle;
+                                _next = true;
+                            }
+                            else
+                            {
+                                _extreamCleare = true;
+                            }
+                            return res;
                         }));
                         result?.Invoke();
                     }
@@ -60,11 +126,33 @@ namespace TaxometrMauiMvvm.Services
             }));
         }
 
+        private void StatesTimer_OnTimeout()
+        {
+            Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => Timeout  ________________________________");
+            var state = _state;
+            _state = ProviderState.Idle;
+            if (_retryStop)
+            {
+                _next = true;
+                return;
+            }
+            if (state == ProviderState.SentFR) ReadFR();
+            else RetryCMD();
+        }
+
         #endregion
 
         #region Params
-        private static int _logWidth = 60;
 
+        private event Action<ProviderState, ProviderState> StateChanged;
+
+        private ProviderState _state = ProviderState.Idle;
+
+        public event Action<byte, Dictionary<string, string>> AnswerCompleate;
+        private ConcurrentQueue<Action> _cmdQueue = new ConcurrentQueue<Action>();
+        private bool _next = true;
+
+        private static int _logWidth = 60;
 
         private ICharacteristic _charactR = null;
 
@@ -78,14 +166,15 @@ namespace TaxometrMauiMvvm.Services
         private string _serialNumber;
         private string _key;
 
+        private int _sentToBleRetry = 0;
+
+        private Timer _statesTimer = new Timer(0);
+
         #endregion
 
         #region BLE controll
 
-        private int _sentToBleRetry = 0;
-
-        
-        private async void SentToBLE(byte[] data, bool isFLC = false)
+        private async Task<bool> SentToBLE(byte[] data)
         {
             bool c = false;
             try
@@ -94,6 +183,7 @@ namespace TaxometrMauiMvvm.Services
                 var character = await s.GetCharacteristicAsync(BLUETOOTH_LE_INCOTEX_CHAR_W);
                 DebugByteStr(data, "Sent data: ");
                 await character.WriteAsync(data);
+                return true;
             }
             catch
             {
@@ -103,8 +193,12 @@ namespace TaxometrMauiMvvm.Services
             {
                 if (c)
                     _sentToBleRetry = 0;
+
             }
+            return false;
         }
+
+        private bool _retryStop = false;
 
         private async Task<bool> SentToBLERetry(byte[] data)
         {
@@ -114,12 +208,13 @@ namespace TaxometrMauiMvvm.Services
 
             if (_sentToBleRetry <= 10)
             {
-                SentToBLE(data);
+                await SentToBLE(data);
                 return false;
             }
             else
             {
                 bool c = true;
+                _retryStop = true;
                 if (await AppData.MainMenu.DisplayAlert("Не удалось отправить сообщение", "Возможно, потеряно подключение", "", "Ок"))
                 {
                     MainThread.BeginInvokeOnMainThread(async () =>
@@ -239,7 +334,7 @@ namespace TaxometrMauiMvvm.Services
             get => [PREFIX, STX, ADDR, 0, 0];
         }
 
-        public void SentFlc(FlcType type)
+        public async void SentFlc(FlcType type, bool fromFr = false, bool lastFLC = false)
         {
             DebugLine();
             AppData.Debug.WriteLine($"Отправка квитанции: {type}");
@@ -248,14 +343,19 @@ namespace TaxometrMauiMvvm.Services
 
             data[3] = CombineFlc((byte)type);
             data[4] = CRC7(_serialNumber, data[2], data[3]);
-            SentToBLE(data, true);
+            if (TrySetState(lastFLC ? ProviderState.SentFLC_2 : fromFr ? ProviderState.SentFLC_1 : ProviderState.SentFLC_0))
+            {
+                if (await SentToBLE(data))
+                {
+
+                }
+            }
         }
 
         private async void ReadFlc(byte[] data)
         {
             try
             {
-
                 DebugByteStr(data, "Recived data: ");
 
                 if (data.Length >= 5)
@@ -275,25 +375,36 @@ namespace TaxometrMauiMvvm.Services
                                 _lastAnswerFlc = flcType;
                                 if (flcCleare == (byte)FlcType.ACK)
                                 {
-                                    if (data.Length >= 10)
+                                    if (TrySetState(ProviderState.ReciveFLC_0))
                                     {
-                                        List<byte> dataCut = new List<byte>(data);
-                                        dataCut.RemoveRange(0, 5);
-                                        DebugLine();
-                                        ReadFlc(dataCut.ToArray());
-                                        return;
-                                    }
 
-                                    if (_readFR)
-                                    {
-                                        _readFR = false;
-                                        await Task.Delay(500);
-                                        ReadFR();
+                                        if (data.Length >= 10)
+                                        {
+                                            List<byte> dataCut = new List<byte>(data);
+                                            dataCut.RemoveRange(0, 5);
+                                            DebugLine();
+                                            ReadFlc(dataCut.ToArray());
+                                            return;
+                                        }
+
+                                        if (_readFR)
+                                        {
+                                            _readFR = false;
+                                            await Task.Delay(500);
+                                            ReadFR();
+                                        }
+                                        else
+                                        {
+                                            SentFlc(FlcType.ACK, false, true);
+                                        }
                                     }
                                 }
                                 else if (flcCleare == (byte)FlcType.DATA)
                                 {
-                                    ReadDataAsync(data);
+                                    if (TrySetState(ProviderState.ReciveFLC_1))
+                                    {
+                                        await ReadDataAsync(data);
+                                    }
                                 }
                                 if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
                                 {
@@ -336,7 +447,7 @@ namespace TaxometrMauiMvvm.Services
                     EmitButton(emitButtonKey, _maxRetrysCount, false);
                     break;
                 case ShiftOpen:
-                    OpenShift(_maxRetrysCount, false);
+                    OpenShift(_openShiftSilentMode, _maxRetrysCount, false);
                     break;
                 case CashDeposWithdraw:
                     DeposWithdrawCash(deposWithdrawCashMethod, deposWithdrawSum, _maxRetrysCount, false);
@@ -364,13 +475,12 @@ namespace TaxometrMauiMvvm.Services
             }
         }
 
-        private int _retrysCount = 0;
+        private float _retrysCount = 0;
         private int _maxRetrysCount = 15;
         private async Task ReadDataAsync(byte[] bufer)
         {
             try
             {
-
                 Dictionary<string, string> answer = new Dictionary<string, string>();
 
                 if (bufer.Length >= 5)
@@ -383,7 +493,7 @@ namespace TaxometrMauiMvvm.Services
                     encodedData.RemoveRange(0, 3);
                     DebugByteStr(encodedData.ToArray(), "Зашифровано: ");
                     encodedData = encodedData.RemoveDLEFlags();
-                    encodedData = encodedData.ToArray().RC4(_key, rnd).ToList();
+                    if (_key != "000000") encodedData = encodedData.ToArray().RC4(_key, rnd).ToList();
                     DebugByteStr(encodedData.ToArray(), "Расшифровано: ");
 
                     byte cmd = encodedData[0];
@@ -403,14 +513,7 @@ namespace TaxometrMauiMvvm.Services
                             answer = TaxStateAnsw(encodedData.ToArray());
                             break;
                         case CheckState:
-                            if (_readFR)
-                            {
-                                _readFR = false;
-                                await Task.Delay(500);
-                                ReadFR();
-                                return;
-                            }
-                            answer = CheckStateAnsw(encodedData.ToArray().RC4(_key, rnd));
+                            answer = CheckStateAnsw(encodedData.ToArray());
                             break;
                         case CheckClose:
                             answer = CloseCheckAnsw(encodedData.ToArray());
@@ -427,7 +530,7 @@ namespace TaxometrMauiMvvm.Services
                     }
                 }
 
-                SentFlc(FlcType.ACK);
+                SentFlc(FlcType.ACK, false, true);
 
                 if (answer.TryGetValue("errCode", out string value))
                 {
@@ -467,7 +570,7 @@ namespace TaxometrMauiMvvm.Services
                         byte cmd = _lastCmd;
                         int max = _maxRetrysCount;
                         EmitButton(ButtonKey.C, 1, true);
-                        await Task.Delay(1500);
+                        await Task.Delay(500);
                         if (max >=0 ) RetryCMD(cmd);
                     }
                 });
@@ -475,8 +578,9 @@ namespace TaxometrMauiMvvm.Services
             }
             else
             {
-                await Task.Delay(1000);
-                _retrysCount++;
+                float delay = .02f;
+                await Task.Delay((int)(delay * 1000));
+                _retrysCount+=delay;
                 //_readFR = true;
                 if(retCmd) 
                     RetryCMD();
@@ -489,9 +593,9 @@ namespace TaxometrMauiMvvm.Services
 
         #region CMD
 
-        public void ReadFR()
+        public async void ReadFR()
         {
-            SentFlc(FlcType.DATA);
+            SentFlc(FlcType.DATA, true);
 
             AppData.Debug.WriteLine($"Отправка команды \"Чтение ФР\"");
 
@@ -509,7 +613,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = FrRead;
                 byte[] crc = CRC16(_serialNumber, cmd);
@@ -522,7 +626,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.AddRange(crc);
 
                 //dataForEncode = dataForEncode.AddDLEFlags();
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
 
                 List<byte> result = new List<byte>();
                 result.AddRange(data);
@@ -531,17 +635,23 @@ namespace TaxometrMauiMvvm.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 //_lastCmd = cmd;
 
-                SentToBLE(CMD, true);
+                if (TrySetState(ProviderState.SentFR))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
         private bool sentScnoStateReadFR = false;
         public void SentScnoState(bool readFR = false, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { SentScnoState(readFR, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { SentScnoState(readFR, retrysCount, true); }));
         }
 
-        private void SentScnoState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
+        private async void SentScnoState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
 
@@ -564,7 +674,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ScnoState;
                 byte param = 0x01;
@@ -578,7 +688,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(param);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -590,16 +700,23 @@ namespace TaxometrMauiMvvm.Services
                 _lastFrCmd = cmd;
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
         private bool sentTaxInfoReadFR = false;
         public void SentTaxInfo(bool readFR = false, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { SentTaxInfo(readFR, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { SentTaxInfo(readFR, retrysCount, true); }));
         }
-        private void SentTaxInfo(bool readFR = false, int retrysCount = 3, bool firstTry = false)
+        private async void SentTaxInfo(bool readFR = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
 
@@ -622,7 +739,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = TaxInfo;
                 byte[] crc = CRC16(_serialNumber, cmd);
@@ -634,7 +751,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -646,16 +763,23 @@ namespace TaxometrMauiMvvm.Services
                 _lastFrCmd = cmd;
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
         bool sentTaxStateReadFR;
         public void SentTaxState(bool readFR = false, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { SentTaxState(readFR, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { SentTaxState(readFR, retrysCount, true); }));
         }
-        private void SentTaxState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
+        private async void SentTaxState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             sentTaxStateReadFR = readFR;
@@ -677,7 +801,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = TaxState;
                 byte[] crc = CRC16(_serialNumber, cmd);
@@ -689,7 +813,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -701,7 +825,14 @@ namespace TaxometrMauiMvvm.Services
                 _lastFrCmd = cmd;
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -716,10 +847,10 @@ namespace TaxometrMauiMvvm.Services
         private bool sentShiftInfoReadFR = false;
         public void SentShiftInfo(bool readFR = false, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { SentShiftInfo(readFR, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { SentShiftInfo(readFR, retrysCount, true); }));
             
         }
-        private void SentShiftInfo(bool readFR = false, int retrysCount = 3, bool firstTry = false)
+        private async void SentShiftInfo(bool readFR = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             sentShiftInfoReadFR = readFR;
@@ -741,7 +872,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ShiftState;
                 byte[] crc = CRC16(_serialNumber, cmd);
@@ -753,7 +884,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = [.. data, .. dataForEncode];
@@ -763,7 +894,14 @@ namespace TaxometrMauiMvvm.Services
                 _lastFrCmd = cmd;
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -780,10 +918,10 @@ namespace TaxometrMauiMvvm.Services
         private bool openMenuModeReadFR;
         public void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = true, int retrysCount = 5)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { OpenMenuOrPrintReceipt(menuMode, operatorPass, readFR, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { OpenMenuOrPrintReceipt(menuMode, operatorPass, readFR, retrysCount, true); }));
             
         }
-        private void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = true, int retrysCount = 5, bool firstTry = false)
+        private async void OpenMenuOrPrintReceipt(MenuMode menuMode, string operatorPass, bool readFR = true, int retrysCount = 5, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             openMenuModeMenuMode = menuMode;
@@ -810,7 +948,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = SwitchMode;
                 byte mode = (byte)menuMode;
@@ -831,7 +969,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.AddRange(blank);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -841,7 +979,14 @@ namespace TaxometrMauiMvvm.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -862,9 +1007,9 @@ namespace TaxometrMauiMvvm.Services
         private ButtonKey emitButtonKey;
         public void EmitButton(ButtonKey key, int retrysCount = 1)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { EmitButton(key, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { EmitButton(key, retrysCount, true); }));
         }
-        private void EmitButton(ButtonKey key, int retrysCount = 1, bool firstTry = false)
+        private async void EmitButton(ButtonKey key, int retrysCount = 1, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             emitButtonKey = key;
@@ -889,7 +1034,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = BtnEmit;
                 byte btn = (byte)key;
@@ -904,7 +1049,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(btn);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -914,19 +1059,28 @@ namespace TaxometrMauiMvvm.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
-        public void OpenShift(int retrysCount = 3)
+        private bool _openShiftSilentMode = false;
+
+        public void OpenShift(bool silentMode = false, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { OpenShift(retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { OpenShift(silentMode, retrysCount, true); }));
             
         }
-        private void OpenShift(int retrysCount = 3, bool firstTry = false)
+        private async void OpenShift(bool silentMode = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
-
+            _openShiftSilentMode = silentMode;
             _readFR = true;
             SentFlc(FlcType.DATA);
 
@@ -947,20 +1101,21 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ShiftOpen;
-
-                byte[] crc = CRC16(_serialNumber, cmd);
+                byte silent = silentMode == true ? (byte)0 : (byte)1;
+                byte[] crc = CRC16(_serialNumber, cmd, silent);
 
                 data.Add(id);
                 data.Add(flag);
                 data.Add(rnd);
 
                 dataForEncode.Add(cmd);
+                dataForEncode.Add(silent);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -970,7 +1125,14 @@ namespace TaxometrMauiMvvm.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -985,9 +1147,9 @@ namespace TaxometrMauiMvvm.Services
 
         public void DeposWithdrawCash(CashMethod method, ulong sum, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { DeposWithdrawCash(method, sum, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { DeposWithdrawCash(method, sum, retrysCount, true); }));
         }
-        private void DeposWithdrawCash(CashMethod method, ulong sum, int retrysCount = 3, bool firstTry = false)
+        private async void DeposWithdrawCash(CashMethod method, ulong sum, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             deposWithdrawCashMethod = method;
@@ -1024,7 +1186,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CashDeposWithdraw;
                 byte met = (byte)method;
@@ -1043,7 +1205,7 @@ namespace TaxometrMauiMvvm.Services
 
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -1053,17 +1215,24 @@ namespace TaxometrMauiMvvm.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
         private bool sentCheckStateReadFR = false;
         public void SentCheckState(bool readFR = false, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { SentCheckState(readFR, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { SentCheckState(readFR, retrysCount, true); }));
 
         }
-        private void SentCheckState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
+        private async void SentCheckState(bool readFR = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             sentCheckStateReadFR = readFR;
@@ -1085,27 +1254,38 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckState;
                 byte[] crc = CRC16(_serialNumber, cmd);
 
                 data.Add(id);
+                data.Add(flag);
                 data.Add(rnd);
 
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
-                List<byte> result = [.. data, .. dataForEncode];
+                List<byte> result = new List<byte>();
+                result.AddRange(data);
+                result.AddRange(dataForEncode);
 
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _readFR = readFR;
                 _lastFrCmd = cmd;
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -1113,9 +1293,9 @@ namespace TaxometrMauiMvvm.Services
         int openCheckEnterSum;
         public void OpenCheck(int startSum, int enterSum, int retrysCount = 3)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { OpenCheck(startSum, enterSum, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { OpenCheck(startSum, enterSum, retrysCount, true); }));
         }
-        private void OpenCheck(int startSum, int enterSum, int retrysCount = 3, bool firstTry = false)
+        private async void OpenCheck(int startSum, int enterSum, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             openCheckStartSum = startSum;
@@ -1141,7 +1321,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckOpen;
 
@@ -1161,7 +1341,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.AddRange(enterSumByte);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -1171,7 +1351,14 @@ namespace TaxometrMauiMvvm.Services
                 byte[] CMD = CombineData(result.ToArray(), _serialNumber);
                 _lastCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -1181,9 +1368,9 @@ namespace TaxometrMauiMvvm.Services
         int closeCheckTrueCashSum;
         public void CloseCheck(int cashSum, int cardSum = 0, int nomoneySum = 0, int trueCashSum = 0, int retrysCount = 10)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { CloseCheck(cashSum, cardSum, nomoneySum, trueCashSum, retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { CloseCheck(cashSum, cardSum, nomoneySum, trueCashSum, retrysCount, true); }));
         }
-        private void CloseCheck(int cashSum, int cardSum = 0, int nomoneySum = 0, int trueCashSum = 0, int retrysCount = 3, bool firstTry = false)
+        private async void CloseCheck(int cashSum, int cardSum = 0, int nomoneySum = 0, int trueCashSum = 0, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
             closeCheckCashSum = cashSum;
@@ -1213,7 +1400,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckClose;
 
@@ -1242,7 +1429,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.AddRange(sumByte);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -1253,14 +1440,21 @@ namespace TaxometrMauiMvvm.Services
                 _lastCmd = cmd;
                 _lastFrCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
         public void BreakCheck(int retrysCount = 10)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { BreakCheck(retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { BreakCheck(retrysCount, true); }));
         }
-        private void BreakCheck(int retrysCount = 3, bool firstTry = false)
+        private async void BreakCheck(int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
 
@@ -1284,7 +1478,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckBreak;
 
@@ -1297,7 +1491,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -1308,15 +1502,22 @@ namespace TaxometrMauiMvvm.Services
                 _lastCmd = cmd;
                 _lastFrCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
         public void CopyCheck(int retrysCount = 10)
         {
-            _cmdQueue.TryEnqueue(new Action(() => { CopyCheck(retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { CopyCheck(retrysCount, true); }));
         }
-        private void CopyCheck(int retrysCount = 3, bool firstTry = false)
+        private async void CopyCheck(int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
 
@@ -1340,7 +1541,7 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
-                byte flag = 1;
+                byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckDuplicate;
 
@@ -1353,7 +1554,7 @@ namespace TaxometrMauiMvvm.Services
                 dataForEncode.Add(cmd);
                 dataForEncode.AddRange(crc);
 
-                dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
+                if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
                 //dataForEncode = dataForEncode.AddDLEFlags();
 
                 List<byte> result = new List<byte>();
@@ -1364,7 +1565,14 @@ namespace TaxometrMauiMvvm.Services
                 _lastCmd = cmd;
                 _lastFrCmd = cmd;
                 _maxRetrysCount = retrysCount;
-                SentToBLE(CMD);
+
+                if (TrySetState(ProviderState.SentData_0))
+                {
+                    if (await SentToBLE(CMD))
+                    {
+
+                    }
+                }
             }
         }
 
@@ -1552,29 +1760,43 @@ namespace TaxometrMauiMvvm.Services
 
         private Dictionary<string, string> CheckStateAnsw(byte[] data)
         {
-            var result = new Dictionary<string, string>();
+            var result = BaseAnsw(data, false);
+
             try
             {
-                byte isOpen = data[0];
-                DebugByteStr(new byte[] { isOpen });
-                result.Add(nameof(isOpen), isOpen.ToString());
-                if (isOpen == 1)
+                if (result.TryGetValue("errCode", out string errCode))
                 {
-                    int initValue = BitConverter.ToInt32(data, 2);
-                    int preValue = BitConverter.ToInt32(data, 6);
-                    result.Add(nameof(initValue), initValue.ToString());
-                    result.Add(nameof(preValue), preValue.ToString());
+                    if (errCode != "00")
+                    {
+                        AnswerCompleate?.Invoke(CheckState, result);
+
+                        return result;
+                    }
+                    else
+                    {
+                        byte isOpen = data[2];
+                        result.Add(nameof(isOpen), isOpen.ToString());
+                        if (isOpen == 1)
+                        {
+                            int initValue = BitConverter.ToInt32(data, 3);
+                            int preValue = BitConverter.ToInt32(data, 7);
+                            result.Add(nameof(initValue), initValue.ToString());
+                            result.Add(nameof(preValue), preValue.ToString());
+                        }
+
+                        AnswerCompleate?.Invoke(CheckState, result);
+
+                        return result;
+                    }
                 }
-
-                AnswerCompleate?.Invoke(CheckState, result);
-
-                return result;
 
             }
             catch (Exception e)
             {
                 return new Dictionary<string, string> { { "Ошибка: ", e.Message } };
             }
+
+            return result;
         }
 
         private Dictionary<string, string> CloseCheckAnsw(byte[] data)

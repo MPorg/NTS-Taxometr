@@ -11025,11 +11025,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\VS\\Git\\TaxometrMauiMvvm\\TaxometrMauiMvvm.csproj",
+      "projectUniqueName": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\TaxometrMauiMvvm.csproj",
       "projectName": "TaxometrMauiMvvm",
-      "projectPath": "C:\\VS\\Git\\TaxometrMauiMvvm\\TaxometrMauiMvvm.csproj",
+      "projectPath": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\TaxometrMauiMvvm.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\VS\\Git\\TaxometrMauiMvvm\\obj\\",
+      "outputPath": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [

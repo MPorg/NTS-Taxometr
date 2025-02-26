@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Этот код был создан программным средством.
-    Он был создан на основе файла шаблона C:\VS\Git\TaxometrMauiMvvm\Platforms\Android\AndroidManifest.xml
+    Он был создан на основе файла шаблона C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\Platforms\Android\AndroidManifest.xml
     Изменения, внесенные в этот файл, могут привести к неправильному поведению и будут потеряны
     в случае повторного создания содержимого.
     -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nts.taxometr" android:versionCode="8" android:versionName="2.0.0.1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nts.taxometr" android:versionCode="12" android:versionName="2.2.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -17,9 +17,11 @@
   <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
   <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+  <uses-permission android:name="android.permission.FULL_SCREEN" />
   <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-  <application android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="Таксометр ГЕОМЕР-122 by NTS" android:name="crc641d3742157ba7c7b0.MainApplication" android:debuggable="true" android:extractNativeLibs="true">
-    <activity android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:launchMode="singleTop" android:theme="@style/Maui.SplashTheme" android:name="crc641d3742157ba7c7b0.MainActivity" android:exported="true">
+  <application android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="Таксометр ГЕОМЕР-122 by NTS" android:theme="@style/Theme.FullScreen" android:name="crc641d3742157ba7c7b0.MainApplication" android:debuggable="true" android:extractNativeLibs="true">
+    <activity android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:launchMode="singleTop" android:theme="@style/Theme.FullScreen" android:name="crc641d3742157ba7c7b0.MainActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

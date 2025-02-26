@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Data.DataBase.Objects;
+using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Services;
 
 namespace TaxometrMauiMvvm.Models.Pages;
@@ -14,9 +15,19 @@ public partial class RemoteViewModel : ObservableObject
     private string _devicesBtnText;
     [ObservableProperty]
     private string _message;
+    [ObservableProperty]
+    private bool _isLoaded;
+
     public RemoteViewModel()
     {
-        Clear();
+        //Clear();
+        BtnCIsEnabled = true;
+        BtnOkIsEnabled = true;
+        BtnUpIsEnabled = true;
+        BtnDownIsEnabled = true;
+        BtnNum_1IsEnabled = true;
+        BtnNum_2IsEnabled = true;
+
         GetBtnText();
         SwitchBan();
         AppData.ConnectionLost += SwitchBan;
@@ -24,7 +35,7 @@ public partial class RemoteViewModel : ObservableObject
     }
     private async void GetBtnText()
     {
-        List<DevicePrefab> devices = await AppData.TaxometrDB.DevicePrefabs.GetPrefabsAsync();
+        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
         if (devices.Count > 0) DevicesBtnText = "Устройства";
         else DevicesBtnText = "Поиск";
     }
@@ -96,7 +107,6 @@ public partial class RemoteViewModel : ObservableObject
         EnableButtons(ProviderBLE.ButtonKey.Any);
         Message = "";
         _lastKeysActions = new Dictionary<ProviderBLE.ButtonKey, Action>();
-
     }
 
     [ObservableProperty]
@@ -120,5 +130,17 @@ public partial class RemoteViewModel : ObservableObject
         BtnOkIsEnabled = enableButtons.HasFlag(ProviderBLE.ButtonKey.OK);
         BtnNum_1IsEnabled = enableButtons.HasFlag(ProviderBLE.ButtonKey.Num_1);
         BtnNum_2IsEnabled = enableButtons.HasFlag(ProviderBLE.ButtonKey.Num_2);
+    }
+
+    [RelayCommand]
+    public void OnApearing()
+    {
+        AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Remote);
+    }
+
+    [RelayCommand]
+    public void OnDisapearing()
+    {
+        AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Remote);
     }
 }

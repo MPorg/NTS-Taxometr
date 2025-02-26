@@ -1,4 +1,9 @@
-﻿obj\Debug\net9.0-android35.0\resizetizer\r\drawable-hdpi\dotnet_bot.png
+﻿obj\Debug\net9.0-android35.0\resizetizer\r\drawable\stock_driver.png
+obj\Debug\net9.0-android35.0\resizetizer\r\drawable\taxi_1.jpeg
+obj\Debug\net9.0-android35.0\resizetizer\r\drawable\taxi_2.jpeg
+obj\Debug\net9.0-android35.0\resizetizer\r\drawable\taxi_3.jpeg
+obj\Debug\net9.0-android35.0\resizetizer\r\drawable\taxi_4.jpeg
+obj\Debug\net9.0-android35.0\resizetizer\r\drawable-hdpi\dotnet_bot.png
 obj\Debug\net9.0-android35.0\resizetizer\r\drawable-mdpi\dotnet_bot.png
 obj\Debug\net9.0-android35.0\resizetizer\r\drawable-xhdpi\dotnet_bot.png
 obj\Debug\net9.0-android35.0\resizetizer\r\drawable-xxhdpi\dotnet_bot.png

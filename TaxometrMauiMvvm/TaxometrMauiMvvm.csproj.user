@@ -3,18 +3,28 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net9.0-android35.0</ActiveDebugFramework>
-    <ActiveDebugProfile>Pixel 7 Pro - API 34 (1) (Android 14.0 — API 34)</ActiveDebugProfile>
-    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
+    <ActiveDebugProfile>Xiaomi MI 8 Lite (Android 10.0 — API 29)</ActiveDebugProfile>
+    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <DefaultDevice>pixel_7_pro_-_api_34_1</DefaultDevice>
+    <AndroidDesignerPreferredTheme>Theme.FullScreen</AndroidDesignerPreferredTheme>
   </PropertyGroup>
   <ItemGroup>
+    <MauiXaml Update="Data\CustomElements\TabBar.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\Banners\AutoconnectBanner.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Banners\CloseCheckBanner.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Banners\CreateDeviceBanner.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Banners\DeposWithdrawCashBanner.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Banners\OpenCheckBanner.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Cells\SavedDeviceViewCell.xaml">
@@ -30,6 +40,9 @@
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Pages\SearchPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Pages\SplashScreen.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
   </ItemGroup>

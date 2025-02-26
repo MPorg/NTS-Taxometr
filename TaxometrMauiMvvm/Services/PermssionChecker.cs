@@ -1,8 +1,10 @@
-﻿namespace TaxometrMauiMvvm.Services
+﻿using System.Diagnostics;
+
+namespace TaxometrMauiMvvm.Services
 {
     public static class PermssionChecker
     {
-        public static async Task<bool> StoragePermissionRequest()
+        public static async Task<bool> StoragePermissionRequest(int tryCount = 0)
         {
             try
             {
@@ -11,16 +13,15 @@
                 {
                     status = await Permissions.RequestAsync<Permissions.StorageRead>();
                 }
-                var status1 = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-                if (status1 != PermissionStatus.Granted)
-                {
-                    status1 = await Permissions.RequestAsync<Permissions.StorageWrite>();
-                }
+
                 return status == PermissionStatus.Granted;
             }
-            catch
+            catch (Exception ex)
             {
-                return true;
+                Debug.Write(ex.Message);
+                if (tryCount > 5) 
+                    return false;
+                return await StoragePermissionRequest(tryCount + 1);
             }
         }
 

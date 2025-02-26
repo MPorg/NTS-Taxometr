@@ -2,8 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaxometrMauiMvvm.Views.Pages.PrintPage"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
              xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
-             x:DataType="{x:Type models:PrintViewModel}">
+             xmlns:custom="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
+             x:DataType="{x:Type models:PrintViewModel}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
     <Shell.TitleView>
         <StackLayout>
             <Label
@@ -15,6 +19,35 @@
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
+        <StackLayout
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="25"
+            WidthRequest="45"
+            HeightRequest="45"
+            ZIndex="50">
+            <Border
+                WidthRequest="50"
+                HeightRequest="50"
+                Padding="10"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                Stroke="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="50"/>
+                </Border.StrokeShape>
+
+                <ImageButton
+                    x:Name="FlayoutBtn"
+                    Clicked="FlayoutBtn_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="IconsSolid"
+                            Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                            Glyph="{StaticResource IconMenuBars}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Border>
+        </StackLayout>
         <StackLayout 
             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
             VerticalOptions="FillAndExpand"
@@ -38,6 +71,8 @@
             </StackLayout>
         </StackLayout>
         <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            Margin="0, 100, 0, 100"
             ZIndex="1"
             Padding="10"
             Spacing="10"
@@ -52,6 +87,21 @@
                 Text="Сменный &quot;X&quot; отчёт"
                 Command="{Binding PrintReceiptOrSwitchModeCommand}"
                 CommandParameter="X"/>
+        </StackLayout>
+        <custom:TabBar
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            x:Name="TabBar"
+            ZIndex="15"/>
+        <StackLayout
+            IsVisible="{Binding IsLoaded}"
+            BackgroundColor="#60000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="20">
+            <ActivityIndicator
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                IsRunning="True"/>
         </StackLayout>
     </Grid>
 </ContentPage>
