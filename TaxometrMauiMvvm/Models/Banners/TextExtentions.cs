@@ -5,19 +5,20 @@ internal static class TextExtentions
     public const char Comma = ',';
     public static string TextChanged(this string text, bool hasComma = true)
     {
-        if (!hasComma)
-        {
-            while (text.Contains(Comma))
-            {
-                text = text.Remove(text.IndexOf(Comma), text.Length - text.IndexOf(Comma));
-            }
-            return text;
-        }
-
         try
         {
             if (string.IsNullOrEmpty(text))
+                return "";
+
+            if (!hasComma)
+            {
+                while (text.Contains(Comma))
+                {
+                    text = text.Remove(text.IndexOf(Comma), text.Length - text.IndexOf(Comma));
+                }
                 return text;
+            }
+
             List<char> chars = new List<char>();
             foreach (char c in text)
             {
@@ -55,7 +56,7 @@ internal static class TextExtentions
         }
     }
 
-    public static string TextCompleate(this string text, bool hasComma = true)
+    public static string TextCompleate(this string text)
     {
         string result = "";
         if (text == null || string.IsNullOrEmpty(text)) result += "0";

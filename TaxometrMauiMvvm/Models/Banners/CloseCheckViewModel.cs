@@ -317,7 +317,7 @@ public partial class CloseCheckViewModel : ObservableObject
 
             if (CheckValues())
             {
-                DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
                 CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
                 return;
             }
@@ -333,7 +333,7 @@ public partial class CloseCheckViewModel : ObservableObject
 
             if (CheckValues())
             {
-                DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
                 CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
                 return;
             }
@@ -349,7 +349,7 @@ public partial class CloseCheckViewModel : ObservableObject
 
             if (CheckValues())
             {
-                DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
                 CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
                 return;
             }
@@ -364,7 +364,7 @@ public partial class CloseCheckViewModel : ObservableObject
         {
             if (CheckValues())
             {
-                DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
                 CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
                 return;
             }
@@ -381,7 +381,7 @@ public partial class CloseCheckViewModel : ObservableObject
             await Task.Delay(100);
             if (CheckValues())
             {
-                DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
                 CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
                 return;
             }
