@@ -9,6 +9,8 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.StartSumText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._startSumText"/>
@@ -19,6 +21,9 @@
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.TotalSumText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._totalSumText"/>
         </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.ExtraSumText">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._extraSumText"/>
+        </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CashPayText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._cashPayText"/>
         </member>
@@ -27,6 +32,24 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.NoncashPayText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._noncashPayText"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.Discallow">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._discallow"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.DiscallowStrValue">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._discallowStrValue"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.DiscallowsIsVisible">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._discallowsIsVisible"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.OkBtnIsEnabled">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._okBtnIsEnabled"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CardTextColor">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._cardTextColor"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.NoncashTextColor">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._noncashTextColor"/>
         </member>
         <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.cancelCommand">
             <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CancelCommand"/>.</summary>
@@ -39,6 +62,18 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.OkCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.Ok"/>.</summary>
+        </member>
+        <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.addDiscountAllowanceCommand">
+            <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.AddDiscountAllowanceCommand"/>.</summary>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.AddDiscountAllowanceCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.AddDiscountAllowance"/>.</summary>
+        </member>
+        <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.removeDiscountAllowanceCommand">
+            <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.RemoveDiscountAllowanceCommand"/>.</summary>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.RemoveDiscountAllowanceCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.RemoveDiscountAllowance"/>.</summary>
         </member>
         <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.completeTextCommand">
             <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CompleteTextCommand"/>.</summary>
@@ -123,6 +158,27 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.OpenCheckViewModel.CompleteTextCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Banners.OpenCheckViewModel.CompleteText(System.String)"/>.</summary>
+        </member>
+        <member name="T:TaxometrMauiMvvm.Models.Cells.DiscountAllowance">
+            <inheritdoc/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Cells.DiscountAllowance.Type">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Cells.DiscountAllowance._type"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Cells.DiscountAllowance.PaymentType">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Cells.DiscountAllowance._paymentType"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Cells.DiscountAllowance.TypeStr">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Cells.DiscountAllowance._typeStr"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Cells.DiscountAllowance.PayTypeStr">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Cells.DiscountAllowance._payTypeStr"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Cells.DiscountAllowance.ValueColor">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Cells.DiscountAllowance._valueColor"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Cells.DiscountAllowance.ValueStr">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Cells.DiscountAllowance._valueStr"/>
         </member>
         <member name="T:TaxometrMauiMvvm.Models.Cells.SavedDeviceViewModel">
             <inheritdoc/>
@@ -284,6 +340,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.Title">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel._title"/>
@@ -296,6 +353,9 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.CheckIsOpened">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel._checkIsOpened"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.ShiftIsOpened">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel._shiftIsOpened"/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.IsLoaded">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel._isLoaded"/>
@@ -317,6 +377,12 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.DeposWithdrawCashCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Pages.DriveViewModel.DeposWithdrawCash(System.String)"/>.</summary>
+        </member>
+        <member name="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel.openShiftCommand">
+            <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.OpenShiftCommand"/>.</summary>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.OpenShiftCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Pages.DriveViewModel.OpenShift"/>.</summary>
         </member>
         <member name="F:TaxometrMauiMvvm.Models.Pages.DriveViewModel.copyCheckCommand">
             <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Pages.DriveViewModel.CopyCheckCommand"/>.</summary>
@@ -353,6 +419,9 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Pages.PrintViewModel.DevicesBtnText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.PrintViewModel._devicesBtnText"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Pages.PrintViewModel.IsLoaded">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.PrintViewModel._isLoaded"/>
         </member>
         <member name="F:TaxometrMauiMvvm.Models.Pages.PrintViewModel.devicesBtnCommand">
             <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Pages.PrintViewModel.DevicesBtnCommand"/>.</summary>
@@ -654,6 +723,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalSumText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalSumText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ExtraSumText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ExtraSumText" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CashPayText" generated properties.</summary>
         </member>
@@ -662,6 +734,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NoncashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NoncashPayText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Discallow">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Discallow" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DiscallowStrValue">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DiscallowStrValue" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DiscallowsIsVisible">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DiscallowsIsVisible" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OkBtnIsEnabled">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OkBtnIsEnabled" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CardTextColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CardTextColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NoncashTextColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NoncashTextColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DeviceName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DeviceName" generated properties.</summary>
@@ -686,6 +776,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OkBtnIsActive">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OkBtnIsActive" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Type">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Type" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.PaymentType">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "PaymentType" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TypeStr">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TypeStr" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.PayTypeStr">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "PayTypeStr" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ValueColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ValueColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ValueStr">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ValueStr" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CustomName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CustomName" generated properties.</summary>
@@ -759,6 +867,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CheckIsOpened">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CheckIsOpened" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ShiftIsOpened">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ShiftIsOpened" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoaded">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoaded" generated properties.</summary>
         </member>
@@ -804,6 +915,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalSumText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalSumText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ExtraSumText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ExtraSumText" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CashPayText" generated properties.</summary>
         </member>
@@ -812,6 +926,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NoncashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NoncashPayText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Discallow">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Discallow" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DiscallowStrValue">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DiscallowStrValue" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DiscallowsIsVisible">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DiscallowsIsVisible" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OkBtnIsEnabled">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OkBtnIsEnabled" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CardTextColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CardTextColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NoncashTextColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NoncashTextColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DeviceName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DeviceName" generated properties.</summary>
@@ -836,6 +968,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OkBtnIsActive">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OkBtnIsActive" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Type">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Type" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.PaymentType">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "PaymentType" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TypeStr">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TypeStr" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.PayTypeStr">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "PayTypeStr" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ValueColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ValueColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ValueStr">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ValueStr" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CustomName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CustomName" generated properties.</summary>
@@ -908,6 +1058,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CheckIsOpened">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CheckIsOpened" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ShiftIsOpened">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ShiftIsOpened" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoaded">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoaded" generated properties.</summary>

@@ -20,6 +20,8 @@ public partial class DriveViewModel : ObservableObject
     [ObservableProperty]
     private bool _checkIsOpened;
     [ObservableProperty]
+    private bool _shiftIsOpened;
+    [ObservableProperty]
     private bool _isLoaded;
 
     private bool _isAppearing = false;
@@ -82,6 +84,14 @@ public partial class DriveViewModel : ObservableObject
 
         AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
         await AppData.GetDeposWithdrawBanner(cashMethod);
+    }
+
+    [RelayCommand]
+    private async void OpenShift()
+    {
+        AppData.Provider.OpenShift(true);
+        await Task.Delay(1000);
+        OnAppearing();
     }
 
     [RelayCommand]
@@ -178,6 +188,7 @@ public partial class DriveViewModel : ObservableObject
         }
     }
 
+    private bool _shiftOpenMessage = true;
     private async Task ReadTaxState(Dictionary<string, string> answer)
     {
         if (answer.TryGetValue("menuState", out string? menuState))
@@ -190,7 +201,8 @@ public partial class DriveViewModel : ObservableObject
                     Debug.WriteLine("_________________________Drive mode is active_________________________");
 
                     AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
-                    AppData.Provider.SentCheckState(true);
+                    _shiftOpenMessage = false;
+                    AppData.Provider.SentShiftInfo(true);
                     //return;
                 }
                 else
@@ -254,11 +266,19 @@ public partial class DriveViewModel : ObservableObject
                 AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
                 if (shiftState == "1")
                 {
+                    ShiftIsOpened = true;
                     AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
                     AppData.Provider.SentCheckState(true);
                 }
                 else if (shiftState == "0")
                 {
+                    ShiftIsOpened = false;
+                    if (!_shiftOpenMessage)
+                    {
+                        _shiftOpenMessage = true;
+                        IsLoaded = false;
+                        return;
+                    }
                     await OpenShiftMessage();
                 }
             }
@@ -280,7 +300,8 @@ public partial class DriveViewModel : ObservableObject
             }) },
             {ProviderBLE.ButtonKey.C, new Action(async ()=>
             {
-                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
+                Debug.WriteLine("C");
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
                 await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
             }) }
         };
@@ -306,20 +327,19 @@ public partial class DriveViewModel : ObservableObject
         {
             {ProviderBLE.ButtonKey.OK, new Action(async ()=>
             {
-                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
                 await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
                 AppData.Provider.SentCheckState(true);
             }) },
             {ProviderBLE.ButtonKey.C, new Action(async ()=>
             {
-                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
+                Debug.WriteLine("C");
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
                 await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
             }) },
-            {ProviderBLE.ButtonKey.Num_2, new Action(async ()=>
+            {ProviderBLE.ButtonKey.Num_2, new Action(() =>
             {
-                /*await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
-                await AppData.MainMenu.GoToAsync("//Drive", true);
-                AppData.Provider.SentCheckState();*/
+
             }) }
         };
         ProviderBLE.ButtonKey enableButtons = ProviderBLE.ButtonKey.OK | ProviderBLE.ButtonKey.C | ProviderBLE.ButtonKey.Num_2;
@@ -363,7 +383,7 @@ public partial class DriveViewModel : ObservableObject
         {
             {ProviderBLE.ButtonKey.OK, new Action(async ()=>
             {
-                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{"cleare", true }});
+                await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
                 await AppData.MainMenu.GoToAsync("//Drive", true);
             }) }
         };

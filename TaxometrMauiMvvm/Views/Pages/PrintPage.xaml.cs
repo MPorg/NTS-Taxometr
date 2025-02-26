@@ -16,7 +16,7 @@ public partial class PrintPage : ContentPage
         _viewModel.TabBarInjection += OnTabBarInjection;
     }
 
-    private void OnTabBarInjection(Models.Cells.TabBarViewModel tabBar)
+    private void OnTabBarInjection(TabBarViewModel tabBar)
     {
         TabBar.Inject(tabBar);
     }

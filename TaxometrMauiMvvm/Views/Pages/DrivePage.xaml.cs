@@ -17,7 +17,6 @@ public partial class DrivePage : ContentPage, IQueryAttributable
         _viewModel = driveViewModel;
         _viewModel.TabBarInjection += OnTabBarInjection;
     }
-
     private void OnTabBarInjection(TabBarViewModel tabBar)
     {
         TabBar.Inject(tabBar);

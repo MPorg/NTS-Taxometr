@@ -81,27 +81,55 @@
                 VerticalOptions="Start"
                 HorizontalOptions="FillAndExpand">
                 <Button
-                    Text="Открыть смену"/>
+                    Text="Открыть смену"
+                    Command="{Binding OpenShiftCommand}"
+                    IsEnabled="{Binding ShiftIsOpened, Converter={serv:InverseBoolConverter}}"/>
                 <Button
                     Text="Служебное внесение"
                     Command="{Binding DeposWithdrawCashCommand}"
-                    CommandParameter="D"/>
+                    CommandParameter="D">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                            <Binding Path="ShiftIsOpened"/>
+                            <Binding Path="CheckIsOpened" Converter="{serv:InverseBoolConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
                 <Button
                     Text="Служебное изъятие"
                     Command="{Binding DeposWithdrawCashCommand}"
-                    CommandParameter="W"/>
+                    CommandParameter="W">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                            <Binding Path="ShiftIsOpened"/>
+                            <Binding Path="CheckIsOpened" Converter="{serv:InverseBoolConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
                 <Button
                     Text="Копия чека"
-                    Command="{Binding CopyCheckCommand}"/>
+                    Command="{Binding CopyCheckCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                            <Binding Path="ShiftIsOpened"/>
+                            <Binding Path="CheckIsOpened" Converter="{serv:InverseBoolConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
             </StackLayout>
         </StackLayout>
         <StackLayout
-            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
             Margin="0, 0, 0, 120"
             ZIndex="3"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding CheckIsOpened, Converter={serv:InverseBoolConverter}}">
+            <StackLayout.IsEnabled>
+                <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                    <Binding Path="ShiftIsOpened"/>
+                    <Binding Path="IsLoaded" Converter="{serv:InverseBoolConverter}"/>
+                </MultiBinding>
+            </StackLayout.IsEnabled>
             <StackLayout
                 Padding="10"
                 VerticalOptions="EndAndExpand"
@@ -112,12 +140,17 @@
             </StackLayout>
         </StackLayout>
         <StackLayout
-            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
             Margin="0, 0, 0, 120"
             IsVisible="{Binding CheckIsOpened}"
             ZIndex="4"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand">
+            <StackLayout.IsEnabled>
+                <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                    <Binding Path="ShiftIsOpened"/>
+                    <Binding Path="IsLoaded" Converter="{serv:InverseBoolConverter}"/>
+                </MultiBinding>
+            </StackLayout.IsEnabled>
             <StackLayout
                 Padding="10"
                 Spacing="10"

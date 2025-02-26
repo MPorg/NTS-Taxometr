@@ -11759,10 +11759,13 @@ public final class R {
     public static final int splash=0x7f0700e3;
     public static final int splash_screen=0x7f0700e4;
     public static final int stock_driver=0x7f0700e5;
-    public static final int taxi_1_crop=0x7f0700e6;
-    public static final int test_level_drawable=0x7f0700e7;
-    public static final int tooltip_frame_dark=0x7f0700e8;
-    public static final int tooltip_frame_light=0x7f0700e9;
+    public static final int taxi_1=0x7f0700e6;
+    public static final int taxi_2=0x7f0700e7;
+    public static final int taxi_3=0x7f0700e8;
+    public static final int taxi_4=0x7f0700e9;
+    public static final int test_level_drawable=0x7f0700ea;
+    public static final int tooltip_frame_dark=0x7f0700eb;
+    public static final int tooltip_frame_light=0x7f0700ec;
   }
   public static final class id {
     public static final int ALT=0x7f080000;

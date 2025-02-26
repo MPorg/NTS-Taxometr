@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using AndroidX.Lifecycle;
+using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Models.Cells;
@@ -68,18 +69,19 @@ public partial class RemotePage : ContentPage, IQueryAttributable
     {
         try
         {
-            bool cleare = false;
+            bool clear = false;
             string message = "";
             Dictionary<ProviderBLE.ButtonKey, Action> onKeysPressed = new Dictionary<ProviderBLE.ButtonKey, Action>();
             ProviderBLE.ButtonKey enableButtons = ProviderBLE.ButtonKey.None;
 
-            if (query.TryGetValue(nameof(cleare), out var clr))
+            if (query.TryGetValue(nameof(clear), out var clr))
             {
-                if (cleare is bool c)
+                if (clr is bool c)
                 {
-                    cleare = c;
-                    if (cleare == true)
+                    clear = c;
+                    if (clear == true)
                     {
+                        Debug.WriteLine("Clear");
                         _viewModel.Clear();
                         return;
                     }
@@ -103,10 +105,10 @@ public partial class RemotePage : ContentPage, IQueryAttributable
                     message = m;
                     onKeysPressed = okp;
                     enableButtons = enbl;
+                    SetMessage(message, onKeysPressed, enableButtons);
                 }
             }
 
-            SetMessage(message, onKeysPressed, enableButtons);
         }
         catch (Exception ex)
         {

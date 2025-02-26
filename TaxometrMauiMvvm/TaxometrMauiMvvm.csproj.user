@@ -3,10 +3,10 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net9.0-android35.0</ActiveDebugFramework>
-    <ActiveDebugProfile>Xiaomi MI 8 Lite (Android 10.0 — API 29)</ActiveDebugProfile>
-    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
+    <ActiveDebugProfile>Pixel 7 Pro - API 34 (1) (Android 14.0 — API 34)</ActiveDebugProfile>
+    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
     <DefaultDevice>pixel_7_pro_-_api_34_1</DefaultDevice>
-    <AndroidDesignerPreferredTheme>Theme.AppCompat.NoActionBar</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredTheme>Theme.FullScreen</AndroidDesignerPreferredTheme>
   </PropertyGroup>
   <ItemGroup>
     <MauiXaml Update="Data\CustomElements\TabBar.xaml">

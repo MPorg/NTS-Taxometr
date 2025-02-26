@@ -6,12 +6,17 @@ namespace TaxometrMauiMvvm.Data.CustomElements;
 public partial class TabBar : Grid
 {
 	private TabBarViewModel _viewModel;
-	public TabBar()
-	{
-		InitializeComponent();
-	}
-    //private bool _isInjected = false;
-	public void Inject(TabBarViewModel viewModel)
+    public TabBar()
+    {
+        InitializeComponent();
+    }
+
+    public void Initialize()
+    {
+        InitializeComponent();
+    }
+
+    public void Inject(TabBarViewModel viewModel)
     {
         _viewModel = viewModel;
         BindingContext = _viewModel;

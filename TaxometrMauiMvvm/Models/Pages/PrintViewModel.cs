@@ -15,6 +15,8 @@ public partial class PrintViewModel : ObservableObject
     private bool _blockBannerIsVisible;
     [ObservableProperty]
     private string _devicesBtnText;
+    [ObservableProperty]
+    private bool _isLoaded;
 
     private bool _isAppearing = false;
     private bool _isWaitApearing = false;
@@ -61,6 +63,8 @@ public partial class PrintViewModel : ObservableObject
     [RelayCommand]
     private async void PrintReceiptOrSwitchMode(string key)
     {
+        AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+        IsLoaded = true;
         await AppData.PrintReceiptOrSwitchMode(key);
     }
 
@@ -85,6 +89,7 @@ public partial class PrintViewModel : ObservableObject
 
         _isWaitApearing = false;
         AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+        IsLoaded = true;
         AppData.Provider.SentTaxState(true);
     }
 
@@ -96,22 +101,36 @@ public partial class PrintViewModel : ObservableObject
 
     private async void OnProvider_AnswerCompleate(byte cmd, Dictionary<string, string> answer)
     {
-        if (cmd == ProviderExtentions.TaxState)
+        switch (cmd)
         {
-            if (answer.TryGetValue("menuState", out string? menuState))
+            case ProviderExtentions.TaxState: await ReadTaxState(answer); break;
+            case ProviderExtentions.SwitchMode: await ReadSwitchMode(answer); break;
+        }
+    }
+
+    private async Task ReadSwitchMode(Dictionary<string, string> answer)
+    {
+        IsLoaded = false;
+    }
+
+    private async Task ReadTaxState(Dictionary<string, string> answer)
+    {
+        if (answer.TryGetValue("menuState", out string? menuState))
+        {
+            if (!string.IsNullOrEmpty(menuState))
             {
-                if (!string.IsNullOrEmpty(menuState))
+                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                if (menuState == "0")
                 {
-                    AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
-                    if (menuState == "0")
-                    {
-                        Debug.WriteLine("_________________________Main menu mode is active_________________________");
-                        return;
-                    }
-                    else
-                    {
-                        await AppData.PrintReceiptOrSwitchMode("M");
-                    }
+                    Debug.WriteLine("_________________________Main menu mode is active_________________________");
+                    IsLoaded = false;
+                    return;
+                }
+                else
+                {
+                    AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+                    IsLoaded = true;
+                    await AppData.PrintReceiptOrSwitchMode("M");
                 }
             }
         }

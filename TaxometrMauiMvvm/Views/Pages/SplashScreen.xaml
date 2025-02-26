@@ -2,12 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaxometrMauiMvvm.Views.Pages.SplashScreen"
+             xmlns:local="clr-namespace:TaxometrMauiMvvm.Views.Pages"
+             x:DataType="{x:Type local:SplashScreen}"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout>
+    <StackLayout
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="EndAndExpand">
         <Image 
-            VerticalOptions="Center"
+            VerticalOptions="FillAndExpand"
             HorizontalOptions="Center"
-            Source="taxi_1_crop.jpg"
+            Source="{Binding Image}"
             Aspect="AspectFill"/>
     </StackLayout>
 </ContentPage>

@@ -32,6 +32,8 @@ namespace TaxometrMauiMvvm.Data
 
         private static bool _specialDisconnect = false;
 
+        public static bool RequestedQuit = true;
+
         private static ProviderBLE _provider;
         public static ProviderBLE Provider
         {
@@ -574,7 +576,7 @@ namespace TaxometrMauiMvvm.Data
                 "D" => MenuMode.Drive,
                 _ => throw new NotImplementedException(),
             };
-            Provider.OpenMenuOrPrintReceipt(mode, await Properties.GetAdminPassword(), true, 10);
+            Provider.OpenMenuOrPrintReceipt(mode, await Properties.GetAdminPassword(), true, mode == MenuMode.Z || mode == MenuMode.X ? 20 : 10);
         }
 
         public static void Dispose()

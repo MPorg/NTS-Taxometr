@@ -14,6 +14,21 @@ public partial class CloseCheckBanner : ContentPage
         _viewModel = new CloseCheckViewModel(startVal, preVal);
         BindingContext = _viewModel;
         _viewModel.Canceled += OnCanceled;
+        _viewModel.DiscountAllownceCreated += ((discalow) =>
+        {
+            MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                DiscountAllownaceGrid.BindingContext = discalow;
+            });
+        });
+
+        _viewModel.DiscountAllownceRemoved += (() =>
+        {
+            MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                DiscountAllownaceGrid.BindingContext = null;
+            });
+        });
         Loaded += OnLoaded;
     }
 

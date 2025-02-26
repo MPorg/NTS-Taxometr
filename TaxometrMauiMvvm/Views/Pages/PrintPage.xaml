@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaxometrMauiMvvm.Views.Pages.PrintPage"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
              xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
              xmlns:custom="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
              x:DataType="{x:Type models:PrintViewModel}"
@@ -70,6 +71,7 @@
             </StackLayout>
         </StackLayout>
         <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
             Margin="0, 100, 0, 100"
             ZIndex="1"
             Padding="10"
@@ -87,7 +89,19 @@
                 CommandParameter="X"/>
         </StackLayout>
         <custom:TabBar
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
             x:Name="TabBar"
             ZIndex="15"/>
+        <StackLayout
+            IsVisible="{Binding IsLoaded}"
+            BackgroundColor="#60000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="20">
+            <ActivityIndicator
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                IsRunning="True"/>
+        </StackLayout>
     </Grid>
 </ContentPage>

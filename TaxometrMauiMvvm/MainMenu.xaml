@@ -28,7 +28,7 @@
                     HeightRequest="220"
                     Padding="0, 20, 0, 0">
                     <Image
-                        Source="taxi_1_crop.jpg"
+                        Source="{AppThemeBinding Dark=taxi_2.jpg, Light=taxi_3.jpg}"
                         HeightRequest="200"
                         Opacity="1.0"
                         Aspect="AspectFill"

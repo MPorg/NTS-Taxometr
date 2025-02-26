@@ -20,7 +20,14 @@ public partial class RemoteViewModel : ObservableObject
 
     public RemoteViewModel()
     {
-        Clear();
+        //Clear();
+        BtnCIsEnabled = true;
+        BtnOkIsEnabled = true;
+        BtnUpIsEnabled = true;
+        BtnDownIsEnabled = true;
+        BtnNum_1IsEnabled = true;
+        BtnNum_2IsEnabled = true;
+
         GetBtnText();
         SwitchBan();
         AppData.ConnectionLost += SwitchBan;
@@ -100,7 +107,6 @@ public partial class RemoteViewModel : ObservableObject
         EnableButtons(ProviderBLE.ButtonKey.Any);
         Message = "";
         _lastKeysActions = new Dictionary<ProviderBLE.ButtonKey, Action>();
-
     }
 
     [ObservableProperty]

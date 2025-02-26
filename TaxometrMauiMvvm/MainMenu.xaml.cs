@@ -1,6 +1,11 @@
-﻿using Plugin.BLE.Abstractions.Contracts;
+﻿using Android.Content;
+using Android.Content.PM;
+using Java.Lang;
+using Plugin.BLE.Abstractions.Contracts;
+using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Views.Banners;
+using Exception = System.Exception;
 
 namespace TaxometrMauiMvvm
 {
@@ -30,10 +35,10 @@ namespace TaxometrMauiMvvm
             Application.Current.RequestedThemeChanged += Current_RequestedThemeChanged;
         }
 
-        private void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
+        private async void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
         {
-            Items.Clear();
-            Initialize();
+            await DisplayAlert("Смена темы приложения", "Необходимо перезапустить приложение", "ОК");
+            Restart();
         }
 
         private async void HomeMIClicked(object sender, EventArgs e)
@@ -49,7 +54,21 @@ namespace TaxometrMauiMvvm
 
         public void Quit()
         {
-            OnBackButtonPressed();
+            Application.Current?.Quit();
+        }
+
+        public void Restart()
+        {
+#if ANDROID
+            var context = Platform.AppContext;
+            PackageManager packageManager = context.PackageManager;
+            Intent intent = packageManager.GetLaunchIntentForPackage(context.PackageName);
+            ComponentName componentName = intent.Component;
+            Intent mainIntent = Intent.MakeRestartActivityTask(componentName);
+            mainIntent.SetPackage(context.PackageName);
+            context.StartActivity(mainIntent);
+            Runtime.GetRuntime().Exit(0);
+#endif
         }
 
         public async Task<bool> CreateDevicePrefabMenu(IDevice device)

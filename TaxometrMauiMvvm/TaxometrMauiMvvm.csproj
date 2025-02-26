@@ -185,4 +185,19 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Taxis\taxi_1.jpeg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiImage>
+	  <MauiImage Include="Resources\Images\Taxis\taxi_2.jpeg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiImage>
+	  <MauiImage Include="Resources\Images\Taxis\taxi_3.jpeg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiImage>
+	  <MauiImage Include="Resources\Images\Taxis\taxi_4.jpeg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiImage>
+	</ItemGroup>
+
 </Project>

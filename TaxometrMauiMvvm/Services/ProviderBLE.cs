@@ -447,7 +447,7 @@ namespace TaxometrMauiMvvm.Services
                     EmitButton(emitButtonKey, _maxRetrysCount, false);
                     break;
                 case ShiftOpen:
-                    OpenShift(_maxRetrysCount, false);
+                    OpenShift(_openShiftSilentMode, _maxRetrysCount, false);
                     break;
                 case CashDeposWithdraw:
                     DeposWithdrawCash(deposWithdrawCashMethod, deposWithdrawSum, _maxRetrysCount, false);
@@ -1070,15 +1070,17 @@ namespace TaxometrMauiMvvm.Services
             }
         }
 
-        public void OpenShift(int retrysCount = 3)
+        private bool _openShiftSilentMode = false;
+
+        public void OpenShift(bool silentMode = false, int retrysCount = 3)
         {
-            _cmdQueue.Enqueue(new Action(() => { OpenShift(retrysCount, true); }));
+            _cmdQueue.Enqueue(new Action(() => { OpenShift(silentMode, retrysCount, true); }));
             
         }
-        private async void OpenShift(int retrysCount = 3, bool firstTry = false)
+        private async void OpenShift(bool silentMode = false, int retrysCount = 3, bool firstTry = false)
         {
             if (firstTry) _retrysCount = 0;
-
+            _openShiftSilentMode = silentMode;
             _readFR = true;
             SentFlc(FlcType.DATA);
 
@@ -1102,14 +1104,15 @@ namespace TaxometrMauiMvvm.Services
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ShiftOpen;
-
-                byte[] crc = CRC16(_serialNumber, cmd);
+                byte silent = silentMode == true ? (byte)0 : (byte)1;
+                byte[] crc = CRC16(_serialNumber, cmd, silent);
 
                 data.Add(id);
                 data.Add(flag);
                 data.Add(rnd);
 
                 dataForEncode.Add(cmd);
+                dataForEncode.Add(silent);
                 dataForEncode.AddRange(crc);
 
                 if (_key != "000000") dataForEncode = dataForEncode.ToArray().RC4(_key, rnd).ToList();
