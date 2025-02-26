@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Pages.RemotePage"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
+             xmlns:custom="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
+             x:DataType="{x:Type models:RemoteViewModel}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+                x:Name="TitleTxt"
+                Style="{StaticResource TitleText}"
+                Text="Пульт"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <StackLayout
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="25"
+            WidthRequest="45"
+            HeightRequest="45"
+            ZIndex="50">
+            <Border
+                WidthRequest="50"
+                HeightRequest="50"
+                Padding="10"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                Stroke="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="50"/>
+                </Border.StrokeShape>
+                
+                <ImageButton
+                    x:Name="FlayoutBtn"
+                    Clicked="FlayoutBtn_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="IconsSolid"
+                            Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                            Glyph="{StaticResource IconMenuBars}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Border>
+        </StackLayout>
+        <StackLayout 
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="10"
+            IsVisible="{Binding BlockBannerIsVisible}"
+            IsEnabled="{Binding BlockBannerIsVisible}">
+            <StackLayout
+                Spacing="10"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center">
+                
+                <Label
+                    Text="Нет подключенного устройства"
+                    FontSize="Title"
+                    Style="{StaticResource TitleText}"/>
+                <Button
+                    HorizontalOptions="Center"
+                    Text="{Binding DevicesBtnText}"
+                    Command="{Binding DevicesBtnCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            IsVisible="{Binding BlockBannerIsVisible, Converter={serv:InverseBoolConverter}}"
+            Margin="0, 0, 0, 120"
+            ZIndex="-1">
+            <Label
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Text="{Binding Message}"
+                FontSize="Title"
+                Style="{StaticResource TitleText}"/>
+
+            <Grid
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand"
+                ColumnDefinitions=".25*, .25*, .25*, .25*"
+                RowDefinitions=".5*, .5*"
+                ColumnSpacing="5"
+                RowSpacing="5"
+                Padding="5">
+                <Button 
+                    Text="C"
+                    FontSize="40"
+                    IsEnabled="{Binding BtnCIsEnabled}"
+                    Command="{Binding EmmitBtnCommand}"
+                    CommandParameter="C"/>
+                <Button 
+                    Grid.Column="1"
+                    Text="▲"
+                    FontSize="40"
+                    IsEnabled="{Binding BtnUpIsEnabled}"
+                    Command="{Binding EmmitBtnCommand}"
+                    CommandParameter="Up"/>
+                <Button 
+                    Grid.Column="2"
+                    Text="▼"
+                    FontSize="40"
+                    IsEnabled="{Binding BtnDownIsEnabled}"
+                    Command="{Binding EmmitBtnCommand}"
+                    CommandParameter="Down"/>
+                <Button 
+                    Grid.Column="3"
+                    Text="OK"
+                    FontSize="40"
+                    IsEnabled="{Binding BtnOkIsEnabled}"
+                    Command="{Binding EmmitBtnCommand}"
+                    CommandParameter="OK"/>
+                <Button 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="1"
+                    FontSize="40"
+                    IsEnabled="{Binding BtnNum_1IsEnabled}"
+                    Command="{Binding EmmitBtnCommand}"
+                    CommandParameter="Num_1"/>
+                <Button 
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="2"
+                    FontSize="40"
+                    IsEnabled="{Binding BtnNum_2IsEnabled}"
+                    Command="{Binding EmmitBtnCommand}"
+                    CommandParameter="Num_2"/>
+            </Grid>
+        </StackLayout>
+        <custom:TabBar
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            x:Name="TabBar"
+            ZIndex="15"/>
+        <StackLayout
+            IsVisible="{Binding IsLoaded}"
+            BackgroundColor="#60000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="20">
+            <ActivityIndicator
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                IsRunning="True"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

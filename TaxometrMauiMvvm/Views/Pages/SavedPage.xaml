@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Pages.SavedPage"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
+             xmlns:cells="clr-namespace:TaxometrMauiMvvm.Models.Cells"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
+             xmlns:ce="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
+             xmlns:viewCells="clr-namespace:TaxometrMauiMvvm.Views.Cells"
+             x:DataType="models:SavedViewModel">
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+            Style="{StaticResource TitleText}"
+            Text="Сохранённые устройства"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            IsEnabled="{Binding SelectionMode}"
+            Command="{Binding SelectAllCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                    Size="80"
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconSelectBox}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem 
+            IsEnabled="{Binding SelectionMode}"
+            Command="{Binding DeleteCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                    Size="80"
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconTrash}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <StackLayout
+        Padding="10"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
+        <Border
+            Padding="5"
+            VerticalOptions="FillAndExpand"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="40"/>
+            </Border.StrokeShape>
+
+            <CollectionView
+                ItemsSource="{Binding Devices}"
+                BackgroundColor="Transparent"
+                SelectionChanged="SelectionChanged"
+                VerticalOptions="Start"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type cells:SavedDeviceViewModel}">
+                        <viewCells:SavedDeviceViewCell/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+    </StackLayout>
+</ContentPage>

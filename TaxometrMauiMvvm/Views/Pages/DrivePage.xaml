@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Pages.DrivePage"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
+             xmlns:custom="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
+             x:DataType="{x:Type models:DriveViewModel}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    
+    <Shell.TitleView>
+        <StackLayout>
+            <Label
+                x:Name="TitleTxt"
+                Style="{StaticResource TitleText}"
+                Text="Смена"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <StackLayout
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="25"
+            WidthRequest="45"
+            HeightRequest="45"
+            ZIndex="50">
+            <Border
+                WidthRequest="50"
+                HeightRequest="50"
+                Padding="10"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                Stroke="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="50"/>
+                </Border.StrokeShape>
+
+                <ImageButton
+                    x:Name="FlayoutBtn"
+                    Clicked="FlayoutBtn_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="IconsSolid"
+                            Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                            Glyph="{StaticResource IconMenuBars}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Border>
+        </StackLayout>
+        <StackLayout 
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="10"
+            IsVisible="{Binding BlockBannerIsVisible}"
+            IsEnabled="{Binding BlockBannerIsVisible}">
+            <StackLayout
+                Spacing="10"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center">
+
+                <Label
+                    Text="Нет подключенного устройства"
+                    FontSize="Title"
+                    Style="{StaticResource TitleText}"/>
+                <Button
+                    HorizontalOptions="Center"
+                    Text="{Binding DevicesBtnText}"
+                    Command="{Binding DevicesBtnCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            Margin="0, 80, 0, 100"
+            ZIndex="1">
+            <StackLayout
+                Padding="10"
+                Spacing="10"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand">
+                <Button
+                    Text="Открыть смену"
+                    Command="{Binding OpenShiftCommand}"
+                    IsEnabled="{Binding ShiftIsOpened, Converter={serv:InverseBoolConverter}}"/>
+                <Button
+                    Text="Служебное внесение"
+                    Command="{Binding DeposWithdrawCashCommand}"
+                    CommandParameter="D">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                            <Binding Path="ShiftIsOpened"/>
+                            <Binding Path="CheckIsOpened" Converter="{serv:InverseBoolConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button
+                    Text="Служебное изъятие"
+                    Command="{Binding DeposWithdrawCashCommand}"
+                    CommandParameter="W">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                            <Binding Path="ShiftIsOpened"/>
+                            <Binding Path="CheckIsOpened" Converter="{serv:InverseBoolConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button
+                    Text="Копия чека"
+                    Command="{Binding CopyCheckCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                            <Binding Path="ShiftIsOpened"/>
+                            <Binding Path="CheckIsOpened" Converter="{serv:InverseBoolConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            Margin="0, 0, 0, 120"
+            ZIndex="3"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding CheckIsOpened, Converter={serv:InverseBoolConverter}}">
+            <StackLayout.IsEnabled>
+                <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                    <Binding Path="ShiftIsOpened"/>
+                    <Binding Path="IsLoaded" Converter="{serv:InverseBoolConverter}"/>
+                </MultiBinding>
+            </StackLayout.IsEnabled>
+            <StackLayout
+                Padding="10"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <Button
+                    Text="Открыть чек"
+                    Command="{Binding OpenCheckCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            Margin="0, 0, 0, 120"
+            IsVisible="{Binding CheckIsOpened}"
+            ZIndex="4"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <StackLayout.IsEnabled>
+                <MultiBinding Converter="{serv:AllTrueMultiConverter}">
+                    <Binding Path="ShiftIsOpened"/>
+                    <Binding Path="IsLoaded" Converter="{serv:InverseBoolConverter}"/>
+                </MultiBinding>
+            </StackLayout.IsEnabled>
+            <StackLayout
+                Padding="10"
+                Spacing="10"
+                Orientation="Horizontal"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <Button
+                    HorizontalOptions="FillAndExpand"
+                    Text="Отменить чек"
+                    Command="{Binding CancelCheckCommand}"/>
+                <Button
+                    HorizontalOptions="FillAndExpand"
+                    Text="Закрыть чек"
+                    Command="{Binding CloseCheckCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <custom:TabBar
+            IsEnabled="{Binding IsLoaded, Converter={serv:InverseBoolConverter}}"
+            x:Name="TabBar"
+            ZIndex="15"/>
+        <StackLayout
+            IsVisible="{Binding IsLoaded}"
+            BackgroundColor="#60000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ZIndex="20">
+            <ActivityIndicator
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                IsRunning="True"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,1 @@
+<resources><style name="Theme.FullScreen" parent="Maui.SplashTheme"><item name="android:windowNoTitle">true</item><item name="android:windowFullscreen">true</item><item name="android:windowContentOverlay">@null</item><item name="android:windowActionBar">true</item></style></resources>

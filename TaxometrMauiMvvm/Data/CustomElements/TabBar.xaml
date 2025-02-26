@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TaxometrMauiMvvm.Data.CustomElements.TabBar"
+    xmlns:model="clr-namespace:TaxometrMauiMvvm.Models.Cells"
+    x:DataType="{x:Type model:TabBarViewModel}"
+    RowDefinitions="*, 70, 30">
+    <Grid
+        Grid.Row="1"
+        ColumnDefinitions="40, 30, *, 30, *, 30, 40"
+        RowDefinitions="30, *"
+        BackgroundColor="Transparent">
+        <!--
+        <ImageButton
+            x:Name="RemoteBtn"
+            TranslationY="20"
+            Command="{Binding OpenRemoteCommand}"
+            Grid.Column="1"
+            CornerRadius="100">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="IconsSolid"
+                    Color="{Binding RemoteBtnColor}"
+                    Size="100"
+                    Glyph="{StaticResource IconRemote}"/>
+            </ImageButton.Source>
+        </ImageButton>
+
+        <ImageButton
+            x:Name="DriveBtn"
+            TranslationY="20"
+            Command="{Binding OpenDriveCommand}"
+            Grid.Column="3"
+            CornerRadius="100">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="IconsSolid"
+                    Color="{Binding DriveBtnColor}"
+                    Size="100"
+                    Glyph="{StaticResource IconTaxi}"/>
+            </ImageButton.Source>
+        </ImageButton>
+        <ImageButton
+            x:Name="PrinteBtn"
+            TranslationY="20"
+            Grid.Column="5"
+            Command="{Binding OpenPrintCommand}"
+            CornerRadius="100">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="IconsSolid"
+                    Color="{Binding PrintBtnColor}"
+                    Size="100"
+                    Glyph="{StaticResource IconReceipt}"/>
+            </ImageButton.Source>
+        </ImageButton>
+        -->
+        <Border
+            Grid.Column="1"
+            x:Name="RemoteBtn"
+            TranslationY="20"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+            Margin="-10"
+            Padding="10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="100"/>
+            </Border.StrokeShape>
+
+            <ImageButton
+            Command="{Binding OpenRemoteCommand}"
+            CornerRadius="100">
+                <ImageButton.Source>
+                    <FontImageSource
+                    FontFamily="IconsSolid"
+                    Color="{Binding RemoteBtnColor}"
+                    Size="100"
+                    Glyph="{StaticResource IconRemote}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Border>
+        <Border
+            Grid.Column="3"
+            x:Name="DriveBtn"
+            TranslationY="20"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+            Margin="-10"
+            Padding="10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="100"/>
+            </Border.StrokeShape>
+
+            <ImageButton
+            Command="{Binding OpenDriveCommand}"
+            CornerRadius="100">
+                <ImageButton.Source>
+                    <FontImageSource
+                    FontFamily="IconsSolid"
+                    Color="{Binding DriveBtnColor}"
+                    Size="100"
+                    Glyph="{StaticResource IconTaxi}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Border>
+        <Border
+            Grid.Column="5"
+            x:Name="PrinteBtn"
+            TranslationY="20"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+            Margin="-10"
+            Padding="10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="100"/>
+            </Border.StrokeShape>
+
+            <ImageButton
+            Command="{Binding OpenPrintCommand}"
+            CornerRadius="100">
+                <ImageButton.Source>
+                    <FontImageSource
+                    FontFamily="IconsSolid"
+                    Color="{Binding PrintBtnColor}"
+                    Size="100"
+                    Glyph="{StaticResource IconReceipt}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Border>
+    </Grid>
+    <StackLayout
+        Grid.Row="2"
+        BackgroundColor="Transparent">
+        
+    </StackLayout>
+
+</Grid>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TaxometrMauiMvvm.MainMenu"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TaxometrMauiMvvm.Views.Pages"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarIsVisible="False">
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Border
+                BackgroundColor="Transparent"
+                Stroke="Transparent"
+                Padding="3">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Border
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent"
+                    Padding="8">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8"/>
+                    </Border.StrokeShape>
+                <Grid
+                    HeightRequest="220"
+                    Padding="0, 20, 0, 0">
+                    <Image
+                        Source="{AppThemeBinding Dark=taxi_2.jpg, Light=taxi_3.jpg}"
+                        HeightRequest="200"
+                        Opacity="1.0"
+                        Aspect="AspectFill"
+                        ZIndex="0"/>
+                    <StackLayout
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill"
+                        ZIndex="1">
+
+                        <StackLayout.Background>
+                            <LinearGradientBrush
+                                StartPoint="1, 0"
+                                EndPoint="0, 0">
+                                <GradientStop
+                                    Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                                    Offset="0.01"/>
+                                <GradientStop
+                                    Color="Transparent"
+                                    Offset="0.3"/>
+                                <GradientStop
+                                    Color="Transparent"
+                                    Offset="0.7"/>
+                                <GradientStop
+                                    Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                                    Offset="0.99"/>
+                            </LinearGradientBrush>
+                        </StackLayout.Background>
+                    </StackLayout>
+                        <StackLayout
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="Fill"
+                            Padding="3"
+                            ZIndex="2">
+
+                            <StackLayout.Background>
+                                <LinearGradientBrush
+                                    StartPoint="0, 1"
+                                    EndPoint="0, 0">
+                                    <GradientStop
+                                        Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                                        Offset="0.01"/>
+                                    <GradientStop
+                                        Color="Transparent"
+                                        Offset="0.1"/>
+                                    <GradientStop
+                                        Color="Transparent"
+                                        Offset="0.9"/>
+                                    <GradientStop
+                                        Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                                        Offset="0.99"/>
+                                </LinearGradientBrush>
+                            </StackLayout.Background>
+
+                            <ImageButton
+                                Margin="5"
+                                WidthRequest="80"
+                                HeightRequest="80"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Start"
+                                BackgroundColor="Transparent"
+                                Aspect="AspectFill"
+                                Source="stock_driver.png">
+                            </ImageButton>
+                            <Border
+                                BackgroundColor="Transparent"
+                                Stroke="Transparent"
+                                Padding="5">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="40"/>
+                                </Border.StrokeShape>
+
+                            </Border>
+                        </StackLayout>
+                    </Grid>
+                </Border>
+            </Border>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+    
+    <TabBar>
+        <Tab
+            x:Name="RemoteTab"
+            Title="Пульт"
+            Route="Remote">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconRemote}"/>
+            </Tab.Icon>
+            <ShellContent
+                Title="Home"
+                ContentTemplate="{DataTemplate views:RemotePage}"/>
+        </Tab>
+        <Tab
+            x:Name="Drive"
+            Title="Смена"
+            Route="Drive">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid" 
+                Glyph="{StaticResource IconTaxi}"/>
+            </Tab.Icon>
+            <ShellContent
+                Title="Home1"
+                ContentTemplate="{DataTemplate views:DrivePage}"/>
+        </Tab>
+        <Tab 
+            x:Name="PrintTab"
+            Title="Отчёты"
+            Route="Print">
+            <Tab.Icon>
+                <FontImageSource
+                FontFamily="IconsSolid" 
+                Glyph="{StaticResource IconReceipt}"/>
+            </Tab.Icon>
+            <ShellContent
+                ContentTemplate="{DataTemplate views:PrintPage}"/>
+        </Tab>
+    </TabBar>
+
+    <FlyoutItem
+        Route="Search"
+        Title="Поиск">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource
+                Size="500"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconSearch}"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent
+            ContentTemplate="{DataTemplate views:SearchPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem
+        Route="Favorites"
+        Title="Сохранённые">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource
+                Size="500"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconStar}"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent
+            ContentTemplate="{DataTemplate views:SavedPage}"/>
+    </FlyoutItem>
+
+    <MenuItem
+        Text="Главная"
+        x:Name="_homeMenuItem"
+        Clicked="HomeMIClicked">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                Size="500"
+                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                FontFamily="IconsSolid"
+                Glyph="{StaticResource IconHome}"/>
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+</Shell>

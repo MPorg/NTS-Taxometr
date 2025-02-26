@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Banners.DeposWithdrawCashBanner"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="Transparent">
+    <Grid
+        ColumnDefinitions="*, 3*, *"
+        RowDefinitions="*, 0.5*, *"
+        BackgroundColor="Transparent"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <Border
+            Grid.Column="1"
+            Grid.Row="1"
+            HorizontalOptions="FillAndExpand"
+            Padding="5"    
+            BackgroundColor="{StaticResource BackgroundDarked}"
+            Stroke="Transparent">
+            <Border.StrokeShape>
+                <RoundRectangle
+                    CornerRadius="35"/>
+            </Border.StrokeShape>
+            <Border
+                Padding="10"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}"
+                Stroke="Transparent"
+                HorizontalOptions="FillAndExpand">
+                <Border.StrokeShape>
+                    <RoundRectangle
+                        CornerRadius="30"/>
+                </Border.StrokeShape>
+                <StackLayout>
+
+                    <Label
+                        x:Name="Header"
+                        TextColor="{StaticResource TextDark}"
+                        FontSize="Large"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="FillAndExpand"/>
+                    <Entry
+                        x:Name="CashEntry"
+                        Keyboard="Numeric"
+                        TextColor="{StaticResource TextDark}"
+                        PlaceholderColor="{StaticResource TextColoredDark}"
+                        Placeholder="0,00"
+                        HorizontalOptions="Fill"
+                        TextChanged="CashEntry_TextChanged"
+                        Completed="CashEntry_Completed"
+                        Unfocused="CashEntry_Unfocused"
+                        FontSize="Large"/>
+
+                    <Grid
+                        VerticalOptions="EndAndExpand"
+                        ColumnDefinitions=".5*, .5*"
+                        ColumnSpacing="10">
+
+                        <Button
+                            x:Name="CancelBtn"
+                            Text="Отмена"
+                            Clicked="OnCancelBtn_Clicked"/>
+
+                        <Button
+                            Grid.Column="1"
+                            x:Name="EnterBtn"
+                            Text="ОК"
+                            Clicked="OnEnterBtnClicked"/>
+                    </Grid>
+                </StackLayout>
+            </Border>
+        </Border>
+    </Grid>
+</ContentPage>

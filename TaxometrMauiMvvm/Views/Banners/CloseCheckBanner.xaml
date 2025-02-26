@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Banners.CloseCheckBanner"
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundColor="Transparent"
+             xmlns:banners="clr-namespace:TaxometrMauiMvvm.Models.Banners"
+             xmlns:cells="clr-namespace:TaxometrMauiMvvm.Models.Cells"
+             xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
+             x:DataType="{x:Type banners:CloseCheckViewModel}">
+    <StackLayout
+        BackgroundColor="Transparent"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="CenterAndExpand"
+        WidthRequest="300">
+        <Border
+            HorizontalOptions="FillAndExpand"
+            Padding="20"
+            StrokeThickness="5"
+            Stroke="{StaticResource BackgroundDarked}"
+            Background="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="35"/>
+            </Border.StrokeShape>
+            <StackLayout
+                HorizontalOptions="FillAndExpand">
+                <Label
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource TextDark}"
+                    Text="Закрыть чек"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="Center"/>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextDark}"
+                        Text="Стоимость"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        TextColor="{StaticResource TextDark}"
+                        Text="{Binding StartSumText}"
+                        FontSize="Large"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextDark}"
+                        Text="Предоплата"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        TextColor="{StaticResource TextDark}"
+                        Text="{Binding PreviousSumText}"
+                        FontSize="Large"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextDark}"
+                        Text="Доплата"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        TextColor="{StaticResource TextDark}"
+                        Text="{Binding ExtraSumText}"
+                        FontSize="Large"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout
+                    Margin="0, 10, 0, 0"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding DiscallowsIsVisible}"
+                    IsEnabled="{Binding DiscallowsIsVisible}"
+                    Orientation="Horizontal"
+                    HeightRequest="100">
+
+                    <Grid
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="DiscountAllownaceGrid"
+                        x:DataType="{x:Type cells:DiscountAllowance}"
+                        ColumnDefinitions=".45*, .45*, .5*"
+                        ColumnSpacing="10"
+                        RowSpacing="5"
+                        RowDefinitions=".5*, .5*"
+                        Padding="10">
+                        <Border
+                            Grid.ColumnSpan="2"
+                            Grid.RowSpan="2"
+                            Margin="-10, -10, -5, -10"
+                            ZIndex="0"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource BackgroundDarked}"
+                            StrokeThickness="5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+
+                        </Border>
+                        <Picker
+                            ItemsSource="{Binding TypeStr}"
+                            ItemDisplayBinding="{Binding Converter={serv:EnumTranslateConverter}}"
+                            SelectedItem="{Binding Type}"/>
+                        <Picker
+                            Grid.Column="1"
+                            ItemsSource="{Binding PayTypeStr}"
+                            ItemDisplayBinding="{Binding Converter={serv:EnumTranslateConverter}}"
+                            SelectedItem="{Binding PaymentType}"/>
+                        <StackLayout 
+                            Orientation="Horizontal"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Spacing="5"
+                            Padding="0, 0, 5, 0">
+                            <Entry
+                                Placeholder="0,00"
+                                Keyboard="Numeric"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                HorizontalTextAlignment="End"
+                                TextColor="{Binding ValueColor}"
+                                Text="{Binding ValueStr}"/>
+                            <Label 
+                                HorizontalOptions="End"
+                                VerticalTextAlignment="Center"
+                                FontSize="Large"
+                                Text="{Binding PaymentType, Converter={serv:TypeToUnitConverter}}"/>
+                        </StackLayout>
+
+                        <Border
+                            Margin="-10, -10, -10, -10"
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            Padding="20"
+                            Stroke="{StaticResource BackgroundDarked}"
+                            StrokeThickness="5"
+                            BackgroundColor="{StaticResource TextRedLink}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+
+                            <ImageButton
+                                Padding="5"
+                                Command="{Binding Path=RemoveDiscountAllowanceCommand, Source={RelativeSource AncestorType={x:Type banners:CloseCheckViewModel}}}">
+                                <ImageButton.Source>
+                                    <FontImageSource
+                                        Size="100"
+                                        FontFamily="IconsSolid"
+                                        Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                                        Glyph="{StaticResource IconTrash}"/>
+                                </ImageButton.Source>
+                            </ImageButton>
+                        </Border>
+                    </Grid>
+                </StackLayout>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextDark}"
+                        Text="Скидка / Надбавка"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+                    <Grid
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center">
+
+                        <Label
+                            ZIndex="1"
+                            TextColor="{StaticResource TextDark}"
+                            Text="{Binding DiscallowStrValue}"
+                            FontSize="Large"
+                            HorizontalTextAlignment="End"
+                            IsVisible="{Binding DiscallowsIsVisible}"
+                            IsEnabled="{Binding DiscallowsIsVisible}"/>
+
+                        <Button
+                            Margin="0, 3, 0, 0"
+                            Text="+"
+                            FontSize="Small"
+                            MinimumHeightRequest="25"
+                            Padding="0"
+                            HeightRequest="5"
+                            CornerRadius="5"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Command="{Binding AddDiscountAllowanceCommand}"
+                            IsVisible="{Binding DiscallowsIsVisible, Converter={serv:InverseBoolConverter}}"
+                            IsEnabled="{Binding DiscallowsIsVisible, Converter={serv:InverseBoolConverter}}"
+                            ZIndex="1">
+                        </Button>
+                    </Grid>
+                </StackLayout>
+                
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextDark}"
+                        Text="Итого"
+                        FontSize="Title"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        TextColor="{StaticResource TextDark}"
+                        Text="{Binding TotalSumText}"
+                        FontSize="Title"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+                
+                
+                <Label
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource TextDark}"
+                    Padding="0, 10, 0, 0"
+                    Text="Виды оплаты"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="Center"/>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextDark}"
+                        Text="Наличными"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Entry
+                        x:Name="CashEntry"
+                        Keyboard="Numeric"
+                        TextColor="{StaticResource TextDark}"
+                        Placeholder="0,00"
+                        Text="{Binding CashPayText}"
+                        FontSize="Large"
+                        ReturnType="Next"
+                        ReturnCommand="{Binding CompleteTextCommand}"
+                        ReturnCommandParameter="Cash"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{Binding CardTextColor}"
+                        Text="Картой"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Entry
+                        x:Name="CardEntry"
+                        Keyboard="Numeric"
+                        TextColor="{Binding CardTextColor}"
+                        Placeholder="0,00"
+                        Text="{Binding CardPayText}"
+                        FontSize="Large"
+                        ReturnType="Next"
+                        ReturnCommand="{Binding CompleteTextCommand}"
+                        ReturnCommandParameter="Card"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="Transparent"
+                        TextColor="{Binding NoncashTextColor}"
+                        Text="Безналичными"
+                        FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Center"/>
+
+                    <Entry
+                        x:Name="NoncashEntry"
+                        Keyboard="Numeric"
+                        TextColor="{Binding NoncashTextColor}"
+                        Placeholder="0,00"
+                        Text="{Binding NoncashPayText}"
+                        FontSize="Large"
+                        ReturnType="Done"
+                        ReturnCommand="{Binding CompleteTextCommand}"
+                        ReturnCommandParameter="Noncash"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="10">
+                    <Button
+                        HorizontalOptions="FillAndExpand"
+                        CornerRadius="10"
+                        Text="Отмена"
+                        Command="{Binding CancelCommand}"/>
+                    <Button
+                        IsEnabled="{Binding OkBtnIsEnabled}"
+                        HorizontalOptions="FillAndExpand"
+                        CornerRadius="10"
+                        Text="ОК"
+                        Command="{Binding OkCommand}"/>
+                </StackLayout>
+
+            </StackLayout>
+        </Border>
+
+    </StackLayout>
+</ContentPage>

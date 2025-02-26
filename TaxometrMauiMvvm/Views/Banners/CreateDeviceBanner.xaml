@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Banners.CreateDeviceBanner"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Banners"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             Title="CreateDeviceBanner"
+             x:DataType="models:CreateDeviceViewModel"
+             BackgroundColor="Transparent">
+
+    <!--
+    <ContentPage.Resources>
+        
+        <Style TargetType="Label" BasedOn="{StaticResource BaseLightText}">
+            <Setter Property="TextColor" Value="{StaticResource TextDark}"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+            <Setter Property="TextColor" Value="{StaticResource TextDark}"/>
+            <Setter Property="PlaceholderColor" Value="{StaticResource TextColoredDark}"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="Keyboard" Value="Numeric"/>
+        </Style>
+
+    </ContentPage.Resources>
+    -->
+    
+    <ContentPage.Content>
+        <StackLayout
+            Grid.Column="1"
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            VerticalOptions="Center"
+            HorizontalOptions="CenterAndExpand">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Padding="5"    
+                BackgroundColor="{StaticResource BackgroundDarked}"
+                Stroke="Transparent">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="35"/>
+                </Border.StrokeShape>
+                <Border
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}"
+                    Stroke="Transparent"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand">
+
+                        <Label
+                            x:Name="Header"
+                            Text="Подключение"
+                            TextColor="{StaticResource TextDark}"
+                            FontSize="Large"
+                            HorizontalTextAlignment="Center"
+                            HorizontalOptions="FillAndExpand"/>
+
+                        <StackLayout
+                            HorizontalOptions="Fill"
+                            Orientation="Horizontal">
+
+                            <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Text="Имя устройства"/>
+
+                            <Entry
+                                x:Name="NameEntry"
+                                Keyboard="Text"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Text="{Binding DeviceName}"
+                                Completed="NameEntry_Completed"/>
+
+                        </StackLayout>
+
+                        <StackLayout
+                            HorizontalOptions="Fill"
+                            Orientation="Horizontal">
+
+                            <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Text="Заводской номер"/>
+
+                            <Entry
+                                x:Name="SerNumEntry"
+                                Placeholder="12345678"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
+                                Text="{Binding SerialNumber}"
+                                TextChanged="OnSerNumEntryTextChanged"
+                                Completed="SerNumEntry_Completed"
+                                Unfocused="SerNumEntry_Unfocused"/>
+
+                        </StackLayout>
+
+                        <StackLayout
+                            HorizontalOptions="Fill"
+                            Orientation="Horizontal">
+
+                            <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Text="Пароль связи"/>
+
+                            <Entry
+                                x:Name="BLEPassEntry"
+                                Placeholder="123456"
+                                IsPassword="{Binding IsPassword}"
+                                Text="{Binding BlePassword}"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
+                                TextChanged="OnBLEPassEntryTextChanged"
+                                Completed="BLEPassEntry_Completed"
+                                Unfocused="BLEPassEntry_Unfocused"/>
+
+                        </StackLayout>
+
+                        <StackLayout
+                            HorizontalOptions="Fill"
+                            Orientation="Horizontal">
+
+                            <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Text="Пароль оператора"/>
+
+                            <Entry
+                                x:Name="AdminPassEntry"
+                                Placeholder="123456"
+                                IsPassword="{Binding IsPassword}"
+                                Text="{Binding AdminPassword}"
+                                TextColor="{StaticResource TextDark}"
+                                PlaceholderColor="{StaticResource TextColoredDark}"
+                                FontSize="Large"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                HorizontalTextAlignment="End"
+                                Keyboard="Numeric"
+                                TextChanged="OnAdminPassEntryTextChanged"
+                                Completed="AdminPassEntry_Completed"
+                                Unfocused="AdminPassEntry_Unfocused"/>
+
+                        </StackLayout>
+
+                        <StackLayout
+                            HorizontalOptions="Fill"
+                            Orientation="Horizontal">
+
+                            <Label
+                                TextColor="{StaticResource TextDark}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Text="Автоподключение"/>
+
+                            <Switch
+                                x:Name="_autoConnectSwitch"
+                                IsToggled="{Binding Autoconnect}"
+                                Toggled="Switch_Toggled"/>
+
+                            <ImageButton
+                                BackgroundColor="Transparent"
+                                Padding="2"
+                                HeightRequest="20"
+                                WidthRequest="20"
+                                HorizontalOptions="EndAndExpand"
+                                Command="{Binding ShowHidePasswordCommand}">
+                                <ImageButton.Source>
+                                    <FontImageSource
+                                        Size="100"
+                                        Color="{StaticResource TextDark}"
+                                        FontFamily="IconsSolid"
+                                        Glyph="{Binding ShowHideGlyph}"/>
+                                </ImageButton.Source>
+                            </ImageButton>
+
+                        </StackLayout>
+
+                        <StackLayout
+                            Padding="10"
+                            Spacing="40"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            Orientation="Horizontal">
+
+                            <Button
+                                Text="Отмена"
+                                HorizontalOptions="Start"
+                                Command="{Binding CancelCommand}"/>
+
+                            <Button
+                                Text="Ок"
+                                HorizontalOptions="EndAndExpand"
+                                IsEnabled="{Binding OkBtnIsActive}"
+                                Command="{Binding CreateCommand}"/>
+
+                        </StackLayout>
+
+                    </StackLayout>
+                </Border>
+            </Border>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
