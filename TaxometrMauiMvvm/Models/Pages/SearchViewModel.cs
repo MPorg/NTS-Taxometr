@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Plugin.BLE.Abstractions.Contracts;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using TaxometrMauiMvvm.Models.Cells;
 
 namespace TaxometrMauiMvvm.Models.Pages;

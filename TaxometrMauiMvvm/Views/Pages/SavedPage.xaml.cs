@@ -25,6 +25,12 @@ public partial class SavedPage : ContentPage
         }
     }
 
+    protected override void OnDisappearing()
+    {
+        if (_viewModel.SelectionMode) _viewModel.SelectAllCommand.Execute(this);
+        base.OnDisappearing();
+    }
+
     private void SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         Debug.WriteLine("SelectionChanged 0");
@@ -49,5 +55,10 @@ public partial class SavedPage : ContentPage
         if (_viewModel.SelectionMode) _viewModel.EnterToBaseModeCommand.Execute(null);
         else Shell.Current.GoToAsync("//Remote");
         return true;
+    }
+
+    private void FlayoutBtn_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.FlyoutIsPresented = true;
     }
 }

@@ -80,9 +80,10 @@ namespace TaxometrMauiMvvm
                 var page = new CreateDeviceBanner(new Models.Banners.CreateDeviceViewModel(device));
                 page.Disappearing += (async (sender, e) =>
                 {
+                    result = page.Result;
+                    if (!result) await AppData.SpecialDisconnect();
+
                     isCompleate = true;
-                    if (!page.Result) await AppData.SpecialDisconnect();
-                    result = false;
                 });
                 await Navigation.PushModalAsync(page);
                 while (!isCompleate)

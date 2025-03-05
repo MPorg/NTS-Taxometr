@@ -162,8 +162,9 @@ namespace TaxometrMauiMvvm.Data.DataBase
                 if (await GetByIdAsync(device.DeviceId) == null)
                     return await _connection.InsertAsync(device);
 
-                DeviceChanged?.Invoke(device);
-                return await _connection.UpdateAsync(device);
+                int c = await _connection.UpdateAsync(device);
+                if (c > 0) DeviceChanged?.Invoke(device);
+                return c;
             }
 
             public async Task<int> DeleteAsync(DevicePrefab device)

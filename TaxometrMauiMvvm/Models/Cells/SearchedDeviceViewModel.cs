@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Configuration;
 using Plugin.BLE.Abstractions.Contracts;
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 using TaxometrMauiMvvm.Data;
 using static TaxometrMauiMvvm.Data.DataBase.TaxometrDB;
 
@@ -17,6 +15,8 @@ public partial class SearchedDeviceViewModel : ObservableObject
     [ObservableProperty]
     private string _connectionStateRU;
 
+    private bool _isConnection = false;
+
     [RelayCommand]
     private async Task Tapped()
     {
@@ -29,8 +29,9 @@ public partial class SearchedDeviceViewModel : ObservableObject
                 if (isThis) return;
             }
 
-            if (await AppData.ConnectToDevice(_device.Id))
+            if (await AppData.ConnectToDevice(_device))
             {
+                _isConnection = true;
                 if (!await CheckContainsInSaves())
                 {
                     CreateNew();
@@ -39,13 +40,20 @@ public partial class SearchedDeviceViewModel : ObservableObject
         }
         catch (Exception ex)
         {
+            _isConnection = false;
             AppData.ShowToast(ex.Message);
         }
     }
 
     private async void CreateNew()
     {
-       await AppData.CreateNewPrefab(_device);
+        bool result = await AppData.CreateNewPrefab(_device);
+        _isConnection = false;
+
+        if (result)
+        {
+            AppData.MainMenu.GoTo("//Remote");
+        }
     }
 
     private IDevice _device;
@@ -55,7 +63,28 @@ public partial class SearchedDeviceViewModel : ObservableObject
     {
         _device = device;
         CustomName = _device.Name;
-        ConnectionStateRU = DeviceViewModelExtentions.ConnectionStateRU[_device.State.ToString()];
+        StartUpdateState();
+    }
+
+    private void StartUpdateState()
+    {
+        CheckConnectionState();
+        Application.Current?.Dispatcher.StartTimer(TimeSpan.FromSeconds(0.5f), new Func<bool>(() =>
+        {
+            CheckConnectionState();
+            return true;
+        }));
+    }
+
+
+
+    private void CheckConnectionState()
+    {
+        if (_device != null)
+        {
+            if (_isConnection) ConnectionStateRU = "Подключение" + AppData.Dots;
+            else ConnectionStateRU = DeviceViewModelExtentions.ConnectionStateRU[_device.State.ToString()];
+        }
     }
 
     private async Task<bool> CheckContainsInSaves()

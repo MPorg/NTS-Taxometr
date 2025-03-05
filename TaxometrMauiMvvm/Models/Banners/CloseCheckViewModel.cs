@@ -157,7 +157,7 @@ public partial class CloseCheckViewModel : ObservableObject
         {
             cash = (initial + discallow) - (card + noncash);
         }
-        AppData.Provider.CloseCheck(cash, card, noncash, trueCash, initial + discallow);
+        (await AppData.Provider()).CloseCheck(cash, card, noncash, trueCash, initial + discallow);
 
         Canceled?.Invoke(true);
     }
@@ -178,6 +178,7 @@ public partial class CloseCheckViewModel : ObservableObject
         Discallow = null;
         DiscallowStrValue = "0,00";
         CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
+        CheckValues();
         DiscountAllownceRemoved?.Invoke();
     }
 

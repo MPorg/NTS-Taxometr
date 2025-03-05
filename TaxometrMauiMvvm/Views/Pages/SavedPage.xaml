@@ -8,14 +8,8 @@
              xmlns:serv="clr-namespace:TaxometrMauiMvvm.Services"
              xmlns:ce="clr-namespace:TaxometrMauiMvvm.Data.CustomElements"
              xmlns:viewCells="clr-namespace:TaxometrMauiMvvm.Views.Cells"
-             x:DataType="models:SavedViewModel">
-    <Shell.TitleView>
-        <StackLayout>
-            <Label
-            Style="{StaticResource TitleText}"
-            Text="Сохранённые устройства"/>
-        </StackLayout>
-    </Shell.TitleView>
+             x:DataType="models:SavedViewModel"
+             Shell.NavBarIsVisible="False">
     <ContentPage.ToolbarItems>
         <ToolbarItem 
             IsEnabled="{Binding SelectionMode}"
@@ -41,8 +35,99 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <StackLayout
-        Padding="10"
+        HorizontalOptions="Fill"
+        Padding="10, 25, 10, 10"
+        Spacing="25"
         BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
+        <StackLayout
+            Orientation="Horizontal"
+            VerticalOptions="Start"
+            HorizontalOptions="Fill"
+            Margin="14, 0, 14, 0">
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="Start"
+                Spacing="5">
+                <Border
+                    HorizontalOptions="Start"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="50"/>
+                    </Border.StrokeShape>
+
+                    <ImageButton
+                        x:Name="FlayoutBtn"
+                        Clicked="FlayoutBtn_Clicked">
+                        <ImageButton.Source>
+                            <FontImageSource
+                                FontFamily="IconsSolid"
+                                Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                                Glyph="{StaticResource IconMenuBars}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Border>
+
+                <Label
+                    Style="{StaticResource TitleText}"
+                    Text="Сохранённые устройства"/>
+            </StackLayout>
+
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="EndAndExpand"
+                Spacing="5">
+                
+                <Border
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="50"/>
+                    </Border.StrokeShape>
+
+                    <ImageButton
+                        Command="{Binding SelectAllCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource
+                                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                                Size="80"
+                                FontFamily="IconsSolid"
+                                Glyph="{StaticResource IconSelectBox}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Border>
+
+                <Border
+                    IsVisible="{Binding SelectionMode}"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="50"/>
+                    </Border.StrokeShape>
+
+                    <ImageButton
+                        IsEnabled="{Binding SelectionMode}"
+                        Command="{Binding DeleteCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource
+                                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                                Size="80"
+                                FontFamily="IconsSolid"
+                                Glyph="{StaticResource IconTrash}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Border>
+            </StackLayout>
+        </StackLayout>
         <Border
             Padding="5"
             VerticalOptions="FillAndExpand"

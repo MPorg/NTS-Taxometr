@@ -35,16 +35,14 @@ namespace TaxometrMauiMvvm.Data
         public static bool RequestedQuit = true;
 
         private static ProviderBLE _provider;
-        public static ProviderBLE Provider
+        public static async Task<ProviderBLE> Provider()
         {
-            get
+            if (_provider == null)
             {
-                if (_provider == null)
-                {
-                    _provider = new ProviderBLE();
-                }
-                return _provider;
+                _provider = new ProviderBLE();
+                await _provider.Initialize();
             }
+            return _provider;
         }
 
         public static TabBarViewModel TabBarViewModel { get; set; }
@@ -59,7 +57,7 @@ namespace TaxometrMauiMvvm.Data
 
         public static async Task<TaxometrDB> TaxometrDB()
         {
-            if (!await PermssionChecker.StoragePermissionRequest())
+            if (!await PermissionChecker.StoragePermissionRequest())
             {
                 //ShowToast("Необходимо разрешение на обработку данных");
                 return null;
@@ -101,13 +99,22 @@ namespace TaxometrMauiMvvm.Data
             }
         }
 
-        private static IDevice _device;
+        private static IDevice _autoconnectDevice;
         public static IDevice AutoConnectDevice
         {
-            get => _device;
+            get => _autoconnectDevice;
             set
             {
-                _device = value;
+                _autoconnectDevice = value;
+            }
+        }
+        private static IDevice _connectedDevice;
+        public static IDevice ConnectedDevice
+        {
+            get => _connectedDevice;
+            set
+            {
+                _connectedDevice = value;
             }
         }
 
@@ -127,12 +134,26 @@ namespace TaxometrMauiMvvm.Data
 
         private static async void DevicePrefabs_DeviceChanged(DevicePrefab prefab)
         {
-            if (prefab.DeviceId == ConnectedDP.DeviceId)
+            Debug.WriteLine($"{prefab.CustomName}, {AutoconnectDeviceID}");
+            if (prefab.DeviceId == AutoconnectDeviceID)
             {
-                var pref = (await TaxometrDB()).DevicePrefabs.GetByIdAsync(ConnectedDP.DeviceId);
-                _specialDisconnect = false;
-                await BLEAdapter.DisconnectDeviceAsync(BLEAdapter.ConnectedDevices[0]);
+                await Properties.SaveSerialNumber(prefab.SerialNumber);
+                await Properties.SaveBLEPassword(prefab.BLEPassword);
+                await Properties.SaveAdminPassword(prefab.UserPassword);
+                await ReloadProvider();
             }
+
+            if (prefab.DeviceId == ConnectedDP?.DeviceId)
+            {
+                ConnectedDP = await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(ConnectedDP.DeviceId);
+                await SetConnectedDevicePrefab(ConnectedDP);
+            }
+
+            /*}
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }*/
         }
 
         public static DevicePrefab LastDevicePrefab;
@@ -149,15 +170,19 @@ namespace TaxometrMauiMvvm.Data
         private static IToastMaker _toastMaker;
         private static ISettingsManager _settingsManager;
         private static IKeyboard _keyboard;
+        private static IBackgroundConnectionController _backgroundConnectionController;
+        private static INotificationService _notificationService;
 
         private static bool _initializationCompleate = false;
         public static bool InitializationCompleate => _initializationCompleate;
 
-        public static void SetDependencyServices(IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard)
+        public static void SetDependencyServices(IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService)
         {
-                _toastMaker = toastMaker;
-                _settingsManager = settingsManager;
-                _keyboard = keyboard;
+            _toastMaker = toastMaker;
+            _settingsManager = settingsManager;
+            _keyboard = keyboard;
+            _backgroundConnectionController = backgroundConnectionController;
+            _notificationService = notificationService;
         }
 
         public static async Task Initialize()
@@ -194,14 +219,17 @@ namespace TaxometrMauiMvvm.Data
             MainMenu.Quit();
         }
 
-        public static async Task<bool> ConnectToDevice(Guid id)
+        public static async Task<bool> ConnectToDevice(IDevice d)
         {
-            DevicePrefab device = await _taxometrDB.DevicePrefabs.GetByIdAsync(id);
+            Guid id = d.Id;
+            DevicePrefab device = await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(id);
             if (device == null)
             {
                 try
                 {
-                    await _adapter.ConnectToKnownDeviceAsync(id);
+                    await SetConnectedDevice(d);
+                    ConnectParameters parameters = new ConnectParameters(false, true);
+                    await _adapter.ConnectToKnownDeviceAsync(id, parameters);
                     return true;
                 }
                 catch
@@ -218,7 +246,8 @@ namespace TaxometrMauiMvvm.Data
             {
                 ConnectParameters parameters = new ConnectParameters(false, true);
                 var d = await _adapter.ConnectToKnownDeviceAsync(prefab.DeviceId, parameters);
-                SetConnectedDevice(prefab);
+                if (d != null) await SetConnectedDevice(d); 
+                await SetConnectedDevicePrefab(prefab);
                 ShowToast($"Подключено {prefab.CustomName}");
                 return true;
             }
@@ -253,8 +282,8 @@ namespace TaxometrMauiMvvm.Data
                             State = AppState.NormalConnected;
                             break;
                         case AppState.BackgroundDisconnected:
-                            DependencyService.Resolve<INotificationService>().CloseNotifications();
-                            DependencyService.Resolve<IBLEConnectionController>().Start();
+                            //DependencyService.Resolve<INotificationService>().CloseNotifications();
+                            //DependencyService.Resolve<IBLEConnectionController>().Start();
                             State = AppState.BackgroundConnected;
                             break;
                     }
@@ -287,8 +316,8 @@ namespace TaxometrMauiMvvm.Data
                     case AppState.BackgroundConnected:
                         State = AppState.BackgroundDisconnected;
                         Debug.WriteLine("____________________BackgraundDisconnected__________________");
-                        DependencyService.Resolve<IBLEConnectionController>().Stop();
-                        if (!_specialDisconnect) DependencyService.Resolve<INotificationService>().ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
+                        _backgroundConnectionController.Stop();
+                        if (!_specialDisconnect) _notificationService.ShowNotification("Подключение утеряно", $"Подключение с {LastDevicePrefab.CustomName} утеряно");
                         break;
                 }
 
@@ -301,9 +330,9 @@ namespace TaxometrMauiMvvm.Data
             });
         }
 
-        private static void ReloadProvider()
+        private static async Task ReloadProvider()
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
+            await MainThread.InvokeOnMainThreadAsync(async () =>
             {
                 Debug.WriteLine($"{await Properties.GetSerialNumber()}, {await Properties.GetBLEPassword()}, {await Properties.GetAdminPassword()}");
                 await Task.Delay(100);
@@ -312,7 +341,9 @@ namespace TaxometrMauiMvvm.Data
                     _provider.AnswerCompleate -= OnAnswerCompleate;
                     _provider.Dispose();
                 }
+
                 _provider = new ProviderBLE();
+                await _provider.Initialize();
                 _provider.AnswerCompleate += OnAnswerCompleate;
             });
         }
@@ -354,7 +385,7 @@ namespace TaxometrMauiMvvm.Data
                     {
                         if (deviceToConnect != null && e.Device.Id == deviceToConnect.DeviceId && e.Device.Id != Guid.Empty)
                         {
-                            _device = e.Device;
+                            _autoconnectDevice = e.Device;
                             if (cont)
                             {
                                 if (await Properties.GetAutoconnect() && !_specialDisconnect)
@@ -392,7 +423,7 @@ namespace TaxometrMauiMvvm.Data
             {
                 Debug.WriteLine("pop");
             }
-            if (await ConnectToDevice(prefab))
+            if (await ConnectToDevice(await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(prefab.DeviceId)))
             {
                 await banner.Navigation.PopModalAsync();
                 banner = null;
@@ -407,8 +438,12 @@ namespace TaxometrMauiMvvm.Data
             }
 
         }
+        public static async Task SetConnectedDevice(IDevice device)
+        {
+            ConnectedDevice = device;
+        }
 
-        public static async void SetConnectedDevice(DevicePrefab pref)
+        public static async Task SetConnectedDevicePrefab(DevicePrefab pref)
         {
             if (pref.AutoConnect) AutoconnectDeviceID = pref.DeviceId;
 
@@ -416,15 +451,14 @@ namespace TaxometrMauiMvvm.Data
             await Properties.SaveSerialNumber(pref.SerialNumber);
             await Properties.SaveBLEPassword(pref.BLEPassword);
             await Properties.SaveAdminPassword(pref.UserPassword);
-            await Task.Delay(1000);
 
             if (_adapter.ConnectedDevices.Count > 0)
             {
                 var d = _adapter.ConnectedDevices[0];
-                if (d.Id == AutoconnectDeviceID) _device = d;
+                if (d.Id == AutoconnectDeviceID) _autoconnectDevice = d;
             }
 
-            ReloadProvider();
+            await ReloadProvider();
         }
 
         public static async Task GetDeposWithdrawBanner(ProviderBLE.CashMethod method, string placeholder = "0")
@@ -513,11 +547,19 @@ namespace TaxometrMauiMvvm.Data
 
         public static async Task CheckBLEPermission()
         {
-            if (!await PermssionChecker.BluetoothPermissionRequest())
+            if (!await PermissionChecker.BluetoothPermissionRequest())
             {
                 ShowToast("Необходимо разрешение на работу с блютузом");
                 _settingsManager.ShowAppSettings();
-                await CheckBLEPermission();
+            }
+        }
+
+        public static async Task CheckNotificationPermission()
+        {
+            if (!await PermissionChecker.NotificationPermissionRequest())
+            {
+                ShowToast("Необходимо разрешение на работу с уведомлениями");
+                _settingsManager.ShowAppSettings();
             }
         }
 
@@ -534,11 +576,10 @@ namespace TaxometrMauiMvvm.Data
             
         public static async Task CheckLockationPermission(bool retry = false)
         {
-            if (!await PermssionChecker.LockationPermissionRequest())
+            if (!await PermissionChecker.LockationPermissionRequest())
             {
                 ShowToast("Необходимо разрешение на работу с блютузом");
                 _settingsManager.ShowAppSettings();
-                await CheckLockationPermission();
             }
         }
 
@@ -576,7 +617,7 @@ namespace TaxometrMauiMvvm.Data
                 "D" => MenuMode.Drive,
                 _ => throw new NotImplementedException(),
             };
-            Provider.OpenMenuOrPrintReceipt(mode, await Properties.GetAdminPassword(), true, mode == MenuMode.Z || mode == MenuMode.X ? 20 : 10);
+            (await Provider()).OpenMenuOrPrintReceipt(mode, await Properties.GetAdminPassword(), true, mode == MenuMode.Z || mode == MenuMode.X ? 20 : 10);
         }
 
         public static void Dispose()
@@ -584,6 +625,10 @@ namespace TaxometrMauiMvvm.Data
             Debug.SaveLog();
         }
 
+        internal static void StopBackground()
+        {
+            _backgroundConnectionController.Stop();
+        }
 
         public static class Properties
         {

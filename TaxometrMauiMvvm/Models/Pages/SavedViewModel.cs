@@ -33,11 +33,11 @@ public partial class SavedViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void EnterToEditMode(SavedDeviceViewModel firstSelectedItem)
+    private void EnterToEditMode(SavedDeviceViewModel? firstSelectedItem)
     {
+        SelectionMode = true;
         if (firstSelectedItem != null)
         {
-            SelectionMode = true;
             if (_selectedDevices.Count > 0 && _selectedDevices.Contains(firstSelectedItem)) return;
 
             firstSelectedItem.LongSelectionIsVisible = false;
@@ -195,9 +195,14 @@ public partial class SavedViewModel : ObservableObject
             return;
         }
 
+        if (!SelectionMode) 
+            EnterToEditMode(null);
         foreach (var d in _devices)
         {
-            if (!_selectedDevices.Contains(d)) _selectedDevices.Add(d);
+            if (!_selectedDevices.Contains(d))
+            {
+                _selectedDevices.Add(d);
+            }
         }
     }
 

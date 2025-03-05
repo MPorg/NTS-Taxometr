@@ -32,7 +32,7 @@ public partial class OpenCheckViewModel : ObservableObject
     private async Task Ok()
     {
         GetValues(out int startVal, out int preVal);
-        AppData.Provider.OpenCheck(startVal, preVal);
+        (await AppData.Provider()).OpenCheck(startVal, preVal);
         Canceled?.Invoke(true);
     }
 

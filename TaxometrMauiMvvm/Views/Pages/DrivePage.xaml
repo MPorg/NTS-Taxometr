@@ -107,7 +107,7 @@
                     </Button.IsEnabled>
                 </Button>
                 <Button
-                    Text="Копия чека"
+                    Text="Копия документа"
                     Command="{Binding CopyCheckCommand}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{serv:AllTrueMultiConverter}">

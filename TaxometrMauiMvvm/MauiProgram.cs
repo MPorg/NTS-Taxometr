@@ -6,6 +6,7 @@ using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Models.Pages;
 using TaxometrMauiMvvm.Platforms.Android.Services;
+using TaxometrMauiMvvm.Services.Background;
 using TaxometrMauiMvvm.Views.Cells;
 using TaxometrMauiMvvm.Views.Pages;
 
@@ -71,6 +72,8 @@ namespace TaxometrMauiMvvm
             builder.Services.AddTransient<IToastMaker, ToastMaker>();
             builder.Services.AddTransient<ISettingsManager, SettingsManager>();
             builder.Services.AddTransient<IKeyboard, Platforms.Android.Services.Keyboard>();
+            builder.Services.AddTransient<IBackgroundConnectionController, BackgroundConnectionController>();
+            builder.Services.AddTransient<INotificationService, NotificationService>();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 #if DEBUG

@@ -44,14 +44,14 @@ public partial class PrintViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SwitchBan()
+    private async void SwitchBan()
     {
         if (AppData.BLEAdapter != null && AppData.BLEAdapter.ConnectedDevices.Count > 0)
         {
             BlockBannerIsVisible = false;
             if (_isWaitApearing && _isAppearing)
             {
-                OnAppearing();
+                await OnAppearing();
             }
         }
         else
@@ -61,15 +61,15 @@ public partial class PrintViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void PrintReceiptOrSwitchMode(string key)
+    private async Task PrintReceiptOrSwitchMode(string key)
     {
-        AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+        (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
         IsLoaded = true;
         await AppData.PrintReceiptOrSwitchMode(key);
     }
 
     private bool _isFirstInit = true;
-    public void OnAppearing()
+    public async Task OnAppearing()
     {
         _isAppearing = true;
         if (_isFirstInit)
@@ -88,9 +88,9 @@ public partial class PrintViewModel : ObservableObject
         }
 
         _isWaitApearing = false;
-        AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+        (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
         IsLoaded = true;
-        AppData.Provider.SentTaxState(true);
+        (await AppData.Provider()).SentTaxState(true);
     }
 
     public void OnDisappearing()
@@ -119,7 +119,7 @@ public partial class PrintViewModel : ObservableObject
         {
             if (!string.IsNullOrEmpty(menuState))
             {
-                AppData.Provider.AnswerCompleate -= OnProvider_AnswerCompleate;
+                (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
                 if (menuState == "0")
                 {
                     Debug.WriteLine("_________________________Main menu mode is active_________________________");
@@ -128,7 +128,7 @@ public partial class PrintViewModel : ObservableObject
                 }
                 else
                 {
-                    AppData.Provider.AnswerCompleate += OnProvider_AnswerCompleate;
+                    (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
                     IsLoaded = true;
                     await AppData.PrintReceiptOrSwitchMode("M");
                 }
