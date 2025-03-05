@@ -62,33 +62,33 @@ public partial class RemoteViewModel : ObservableObject
 
     private Dictionary<ProviderBLE.ButtonKey, Action> _lastKeysActions = new Dictionary<ProviderBLE.ButtonKey, Action>();
     [RelayCommand]
-    private void EmmitBtn(string key)
+    private async Task EmmitBtn(string key)
     {
         Action action = null;
         switch (key)
         {
             case "C":
-                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.C);
+                (await AppData.Provider()).EmitButton(ProviderBLE.ButtonKey.C);
                 _lastKeysActions.TryGetValue(ProviderBLE.ButtonKey.C, out action);
                 break;
             case "OK":
-                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.OK);
+                (await AppData.Provider()).EmitButton(ProviderBLE.ButtonKey.OK);
                 _lastKeysActions.TryGetValue(ProviderBLE.ButtonKey.OK, out action);
                 break;
             case "Up":
-                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Up);
+                (await AppData.Provider()).EmitButton(ProviderBLE.ButtonKey.Up);
                 _lastKeysActions.TryGetValue(ProviderBLE.ButtonKey.Up, out action);
                 break;
             case "Down":
-                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Down);
+                (await AppData.Provider()).EmitButton(ProviderBLE.ButtonKey.Down);
                 _lastKeysActions.TryGetValue(ProviderBLE.ButtonKey.Down, out action);
                 break;
             case "Num_1":
-                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Num_1);
+                (await AppData.Provider()).EmitButton(ProviderBLE.ButtonKey.Num_1);
                 _lastKeysActions.TryGetValue(ProviderBLE.ButtonKey.Num_1, out action);
                 break;
             case "Num_2":
-                AppData.Provider.EmitButton(ProviderBLE.ButtonKey.Num_2);
+                (await AppData.Provider()).EmitButton(ProviderBLE.ButtonKey.Num_2);
                 _lastKeysActions.TryGetValue(ProviderBLE.ButtonKey.Num_2, out action);
                 break;
             default:

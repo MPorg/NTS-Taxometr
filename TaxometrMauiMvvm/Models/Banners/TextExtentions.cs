@@ -3,6 +3,8 @@
 internal static class TextExtentions
 {
     public const char Comma = ',';
+    private const char Minus = '-';
+
     public static string TextChanged(this string text, bool hasComma = true)
     {
         try
@@ -17,6 +19,11 @@ internal static class TextExtentions
                     text = text.Remove(text.IndexOf(Comma), text.Length - text.IndexOf(Comma));
                 }
                 return text;
+            }
+
+            while (text.Contains(Minus))
+            {
+                text = text.Remove(text.IndexOf(Minus), 1);
             }
 
             List<char> chars = new List<char>();

@@ -5,6 +5,7 @@ using TaxometrMauiMvvm.Fonts.IconFont;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Data.DataBase.Objects;
 using TaxometrMauiMvvm.Models.Pages;
+using System.Diagnostics;
 
 namespace TaxometrMauiMvvm.Models.Cells;
 
@@ -73,10 +74,12 @@ public partial class SavedDeviceViewModel : ObservableObject
     [ObservableProperty]
     private int bgIndex = -10;
 
+    private bool _isChanged = false;
 
     [RelayCommand]
     private void Select()
     {
+        IsSelectionMode = true;
         LongSelectionIsVisible = false;
         BgColor = _selectedColors[0];
         BgShadowColor = _selectedColors[1];
@@ -127,18 +130,21 @@ public partial class SavedDeviceViewModel : ObservableObject
     private string _switchButtonGlyph;
 
     [RelayCommand]
-    private void TryOpenClose(bool currentState)
+    private async Task TryOpenClose(bool isEdited)
     {
-        if (currentState)
-            Close();
+        if (isEdited)
+            await Close(_isChanged);
         else 
             Open();
     }
 
     [RelayCommand]
-    private void BreakEdit()
+    private async void BreakEdit()
     {
-        Close(false);
+        if (!_isChanged || AppData.MainMenu != null && await AppData.MainMenu.DisplayAlert("Выйти без сохранения?", "Это действие отменит последние изменения", "Да", "Продолжить редактирование"))
+        {
+            await Close(false);
+        }
     }
 
     private void Open()
@@ -154,7 +160,7 @@ public partial class SavedDeviceViewModel : ObservableObject
         }
     }
 
-    private void Close(bool save = true)
+    private async Task Close(bool save = true)
     {
         if (IsOpen)
         {
@@ -162,13 +168,14 @@ public partial class SavedDeviceViewModel : ObservableObject
             CellHeight = _cellBaseHeight + 80;
             SeckondRowHeight = 0;
             SwitchIndex();
-            if (save) SavePrefab();
-            else LoadPrefab();
+            if (save) await SavePrefab();
+            await LoadPrefab();
             SwitchButtonGlyph = IsOpen ? Icons.IconCheck : Icons.IconGear;
         }
+        _isChanged = false;
     }
 
-    private async void LoadPrefab()
+    private async Task LoadPrefab()
     {
         if (_devicePrefab == null) return;
         await (await AppData.TaxometrDB()).DevicePrefabs.GetByIdAsync(_devicePrefab.DeviceId);
@@ -179,7 +186,7 @@ public partial class SavedDeviceViewModel : ObservableObject
         Autoconnect = _devicePrefab.AutoConnect;
     }
 
-    private async void SavePrefab()
+    private async Task SavePrefab()
     {
         if (_devicePrefab == null) return;
         _devicePrefab.CustomName = CustomName;
@@ -188,7 +195,6 @@ public partial class SavedDeviceViewModel : ObservableObject
         _devicePrefab.UserPassword = AdminPass;
         _devicePrefab.AutoConnect = Autoconnect;
         await (await AppData.TaxometrDB()).DevicePrefabs.UpdateAsync(_devicePrefab);
-        LoadPrefab();
     }
 
     private void SwitchIndex()
@@ -219,7 +225,23 @@ public partial class SavedDeviceViewModel : ObservableObject
         BgLightColor = _unselectedColors[2];
         _savedViewModel = savedViewModel;
         PropertyChanged += SavedDeviceViewModel_PropertyChanged;
+        AppData.BLEAdapter.DeviceDiscovered += BLEAdapter_DeviceDiscovered;
+        AppData.ConnectionLost += AppData_ConnectionLost;
         Start();
+    }
+
+    private void AppData_ConnectionLost()
+    {
+        _device = null;
+        UpdateState();
+    }
+
+    private void BLEAdapter_DeviceDiscovered(object? sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
+    {
+        if (e.Device != null && e.Device.Id != Guid.Empty && Device != null && e.Device.Id == Device.DeviceId)
+        {
+            _device = e.Device;
+        }
     }
 
     private void GetColors()
@@ -269,7 +291,7 @@ public partial class SavedDeviceViewModel : ObservableObject
                 if (linkColor is Color c) _selectedColors[0] = c;
             }
             //Shadow
-            if (Application.Current.Resources.TryGetValue("BackgroundLight", out var colorSh))
+            if (Application.Current.Resources.TryGetValue("Background", out var colorSh))
             {
                 if (colorSh is Color c) _unselectedColors[1] = c;
             }
@@ -279,7 +301,7 @@ public partial class SavedDeviceViewModel : ObservableObject
                 if (linkColorSh is Color c) _selectedColors[1] = c;
             }
             //Light
-            if (Application.Current.Resources.TryGetValue("BackgroundLighted", out var colorLi))
+            if (Application.Current.Resources.TryGetValue("BackgroundLight", out var colorLi))
             {
                 if (colorLi is Color c) _unselectedColors[2] = c;
             }
@@ -295,6 +317,18 @@ public partial class SavedDeviceViewModel : ObservableObject
     {
         if (e.PropertyName == nameof(IsOpen)) OnPropertyChanged(nameof(LongSelectionIsVisible));
         if (e.PropertyName == nameof(IsSelectionMode)) OnPropertyChanged(nameof(ConnectBtnEnabled));
+
+        if
+        (
+            e.PropertyName == nameof(CustomName) ||
+            e.PropertyName == nameof(SerialNumber) ||
+            e.PropertyName == nameof(BlePass) ||
+            e.PropertyName == nameof(AdminPass) ||
+            e.PropertyName == nameof(Autoconnect)
+        )
+        {
+            _isChanged = true;
+        }
     }
 
     internal SavedDeviceViewModel(SavedViewModel savedViewModel) : this(savedViewModel, "Default name", DeviceViewModelExtentions.ConnectionStateRU["Disconnected"]) { }
@@ -362,7 +396,9 @@ public partial class SavedDeviceViewModel : ObservableObject
                 if (isThis) return;
             }
 
-            await AppData.ConnectToDevice(_device.Id);
+            bool result = await AppData.ConnectToDevice(Device);
+
+            Debug.WriteLine(result);
         }
     }
 }

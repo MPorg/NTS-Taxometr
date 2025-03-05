@@ -151,7 +151,7 @@
 
     <FlyoutItem
         Route="Search"
-        Title="Поиск">
+        Title="Поиск устройств">
         <FlyoutItem.FlyoutIcon>
             <FontImageSource
                 Size="500"
@@ -165,7 +165,7 @@
 
     <FlyoutItem
         Route="Favorites"
-        Title="Сохранённые">
+        Title="Сохранённые устройства">
         <FlyoutItem.FlyoutIcon>
             <FontImageSource
                 Size="500"

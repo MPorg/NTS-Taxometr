@@ -78,6 +78,11 @@ namespace TaxometrMauiMvvm.Services
 
         #endregion
 
+        public static byte[] FlcFooter
+        {
+            get => [PREFIX, STX, ADDR, 0, 0];
+        }
+
         internal static byte CRC7(string serialNumber, params byte[] data)
         {
             byte[] dataArr = data.ToArray();

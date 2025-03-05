@@ -14,6 +14,9 @@ public partial class SplashScreen : ContentPage
     App _app;
 
     private ImageSource _image;
+    private INotificationService _notificationService;
+    private IBackgroundConnectionController _backgroundConnectionController;
+
     public ImageSource Image
     {
         get => _image;
@@ -24,8 +27,10 @@ public partial class SplashScreen : ContentPage
         }
     }
 
-	public SplashScreen(App currentApp)
+	public SplashScreen(App currentApp, INotificationService notificationService, IBackgroundConnectionController backgroundConnectionController)
 	{
+        _notificationService = notificationService;
+        _backgroundConnectionController = backgroundConnectionController;
         _app = currentApp;
         BindingContext = this;
         GetRandomImage();
@@ -66,6 +71,22 @@ public partial class SplashScreen : ContentPage
         }
         else
         {
+            if (AppData.MainMenu != null)
+            {
+                _notificationService.CloseNotifications();
+                switch (AppData.State)
+                {
+                    case AppData.AppState.BackgroundConnected:
+                        AppData.State = AppData.AppState.NormalConnected;
+                        _backgroundConnectionController.Stop();
+                        break;
+                    case AppData.AppState.BackgroundDisconnected:
+                        AppData.State = AppData.AppState.NormalDisconnected;
+                        break;
+                }
+                
+            }
+
             MainMenu menu = new MainMenu();
             AppData.MainMenu = menu;
             await Task.Delay(3000);
@@ -77,6 +98,7 @@ public partial class SplashScreen : ContentPage
     {
         await AppData.CheckBLEPermission();
         await AppData.CheckLockationPermission();
+        await AppData.CheckNotificationPermission();
 
         await AppData.CheckBLE(this);
         await AppData.CheckLockation(this);

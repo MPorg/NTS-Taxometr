@@ -143,7 +143,7 @@ public partial class DeposWithdrawCashBanner : ContentPage
 
         try
         {
-            AppData.Provider.DeposWithdrawCash(_cashMethod, (ulong)initValue);
+            (await AppData.Provider()).DeposWithdrawCash(_cashMethod, (ulong)initValue);
             await Navigation.PopModalAsync();
         }
         catch

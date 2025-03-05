@@ -35,4 +35,9 @@ public partial class SearchPage : ContentPage
         Shell.Current.GoToAsync("//Remote");
         return true;
     }
+
+    private void FlayoutBtn_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.FlyoutIsPresented = true;
+    }
 }

@@ -4,17 +4,49 @@
              x:Class="TaxometrMauiMvvm.Views.Pages.SearchPage"
              xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages"
              xmlns:cells="clr-namespace:TaxometrMauiMvvm.Models.Cells"
-             x:DataType="models:SearchViewModel">
-    <Shell.TitleView>
-        <StackLayout>
-            <Label
-            Style="{StaticResource TitleText}"
-            Text="Поиск устройств"/>
-        </StackLayout>
-    </Shell.TitleView>
+             x:DataType="models:SearchViewModel"
+             Shell.NavBarIsVisible="False">
     <StackLayout
-        Padding="10"
+        Padding="10, 25, 10, 10"
+        Spacing="25"
         BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
+        <StackLayout
+            Orientation="Horizontal"
+            VerticalOptions="Start"
+            HorizontalOptions="Fill"
+            Margin="14, 0, 14, 0">
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="Start"
+                Spacing="5">
+                <Border
+                    HorizontalOptions="Start"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
+                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="50"/>
+                    </Border.StrokeShape>
+
+                    <ImageButton
+                        x:Name="FlayoutBtn"
+                        Clicked="FlayoutBtn_Clicked">
+                        <ImageButton.Source>
+                            <FontImageSource
+                                FontFamily="IconsSolid"
+                                Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                                Glyph="{StaticResource IconMenuBars}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Border>
+
+                <Label
+                Style="{StaticResource TitleText}"
+                Text="Поиск устройств"/>
+            </StackLayout>
+        </StackLayout>
         <Border
             Padding="5"
             VerticalOptions="FillAndExpand"
