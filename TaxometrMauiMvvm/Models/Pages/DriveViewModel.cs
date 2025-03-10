@@ -1,6 +1,6 @@
-﻿using Android.Health.Connect.DataTypes.Units;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Org.Apache.Http.Impl;
 using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Data.DataBase.Objects;
@@ -30,6 +30,9 @@ public partial class DriveViewModel : ObservableObject
     private int _openedCheckStartSum = 0;
     private int _openedCheckPreviousSum = 0;
 
+    private bool _doNotApearing = false;
+    private bool _waitLoadOnApearing = false;
+
     public event Action<TabBarViewModel> TabBarInjection;
 
     public DriveViewModel()
@@ -43,7 +46,7 @@ public partial class DriveViewModel : ObservableObject
     }
     private async void GetBtnText()
     {
-        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
+        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).Device.GetPrefabsAsync();
         if (devices.Count > 0) DevicesBtnText = "Устройства";
         else DevicesBtnText = "Поиск";
     }
@@ -56,19 +59,20 @@ public partial class DriveViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SwitchBan()
+    private async void SwitchBan()
     {
         if (AppData.BLEAdapter != null && AppData.BLEAdapter.ConnectedDevices.Count > 0)
         {
             BlockBannerIsVisible = false;
             if (_isWaitApearing && _isAppearing)
             {
-                OnAppearing();
+                await OnAppearing();
             }
         }
         else
         {
             BlockBannerIsVisible = true;
+            IsLoaded = false;
         }
     }
 
@@ -82,14 +86,16 @@ public partial class DriveViewModel : ObservableObject
             _ => throw new NotImplementedException(),
         };
 
-        (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
-        await AppData.GetDeposWithdrawBanner(cashMethod);
+        _doNotApearing = true;
+        bool result = await AppData.GetDeposWithdrawBanner(cashMethod);
+        _waitLoadOnApearing = result;
     }
 
     [RelayCommand]
     private async Task OpenShift()
     {
         (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
+        _doNotApearing = true;
         (await AppData.Provider()).OpenShift();
     }
 
@@ -103,28 +109,35 @@ public partial class DriveViewModel : ObservableObject
     private async Task OpenCheck()
     {
         await AppData.GetOpenCheckBanner();
+        _doNotApearing = true;
+        _waitLoadOnApearing = true;
     }
 
     bool _waitCloseCheck = false;
     [RelayCommand]
     private async Task CloseCheck()
     {
-        AppData.CloseCheckBannerAnswer += AppData_CloseCheckBannerAnswer;
-        await AppData.GetCloseCheckBanner(_openedCheckStartSum.ToString(), _openedCheckPreviousSum.ToString());
+        (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
+        (await AppData.Provider()).SentCheckState(true);
+        IsLoaded = true;
+        _waitCloseCheck = true;
     }
 
     private void AppData_CloseCheckBannerAnswer(bool result)
     {
         AppData.CloseCheckBannerAnswer -= AppData_CloseCheckBannerAnswer;
-        _waitCloseCheck = result;
+        _waitCloseCheck = false;
+        _doNotApearing = true;
+        _waitLoadOnApearing = result;
+
     }
 
     [RelayCommand]
     private async Task CancelCheck()
     {
+        (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
+        IsLoaded = true;
         (await AppData.Provider()).BreakCheck();
-        await Task.Delay(500);
-        await OnAppearing();
     }
 
     private bool _isFirstInit = true;
@@ -135,6 +148,10 @@ public partial class DriveViewModel : ObservableObject
         {
             _isFirstInit = false;
             TabBarInjection?.Invoke(AppData.TabBarViewModel);
+            (await AppData.Provider()).ErrMessageReaded += ((cmd, answer) =>
+            {
+                IsLoaded = false;
+            });
             //AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Remote | TabBarViewModel.Transition.Print);
             //AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Drive);
         }
@@ -146,20 +163,27 @@ public partial class DriveViewModel : ObservableObject
             return;
         }
         _isWaitApearing = false;
-        (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
-        IsLoaded = true;
-        if (_waitCloseCheck)
+
+        if (!_doNotApearing)
         {
-            _waitCloseCheck = false;
-        }
-        else
-        {
+            IsLoaded = true;
+            (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
             (await AppData.Provider()).SentTaxState(true);
         }
+
+        if (_waitLoadOnApearing)
+        {
+            IsLoaded = true;
+            _waitLoadOnApearing = false;
+            (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
+        }
+
+        _doNotApearing = false;
     }
 
-    public void OnDisappearing()
+    public async Task OnDisappearing()
     {
+        (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
         _isAppearing = false;
         AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Drive);
         IsLoaded = false;
@@ -173,8 +197,55 @@ public partial class DriveViewModel : ObservableObject
             case ProviderExtentions.ShiftState: await ReadShiftInfo(answer); break;
             case ProviderExtentions.CheckState: await ReadCheckState(answer); break;
             case ProviderExtentions.CheckClose: await ReadCheckClose(answer); break;
+            case ProviderExtentions.CheckBreak: await ReadCheckBreak(answer); break;
+            case ProviderExtentions.CheckOpen: await ReadCheckOpen(answer); break;
             case ProviderExtentions.ShiftOpen: await ReadOpenShift(answer); break;
+            case ProviderExtentions.SwitchMode: await ReadSwitchMode(answer); break;
+            case ProviderExtentions.CashDeposWithdraw: await ReadCashDeposWithdraw(answer); break;
         }
+    }
+
+    private async Task ReadCheckBreak(Dictionary<string, string> answer)
+    {
+        if (answer.TryGetValue("errCode", out string? errCode))
+        {
+            if (!string.IsNullOrEmpty(errCode) && errCode == "00")
+            {
+                (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
+                CheckIsOpened = false;
+                IsLoaded = false;
+            }
+        }
+    }
+
+    private async Task ReadCheckOpen(Dictionary<string, string> answer)
+    {
+        if (answer.TryGetValue("errCode", out string? errCode))
+        {
+            if (!string.IsNullOrEmpty(errCode) && errCode == "00")
+            {
+                (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
+                CheckIsOpened = true;
+                IsLoaded = false;
+            }
+        }
+    }
+
+    private async Task ReadCashDeposWithdraw(Dictionary<string, string> answer)
+    {
+        if (answer.TryGetValue("errCode", out string? errCode))
+        {
+            if (!string.IsNullOrEmpty(errCode) && errCode == "00")
+            {
+                (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
+                IsLoaded = false;
+            }
+        }
+    }
+
+    private async Task ReadSwitchMode(Dictionary<string, string> answer)
+    {
+        (await AppData.Provider()).SentShiftInfo(true);
     }
 
     private async Task ReadOpenShift(Dictionary<string, string> answer)
@@ -199,6 +270,9 @@ public partial class DriveViewModel : ObservableObject
             if (!string.IsNullOrEmpty(surrender))
             {
                 await SurrenderMessage(surrender);
+                CheckIsOpened = false;
+                _doNotApearing = true;
+                IsLoaded = false;
             }
         }
     }
@@ -206,6 +280,17 @@ public partial class DriveViewModel : ObservableObject
     private bool _shiftOpenMessage = true;
     private async Task ReadTaxState(Dictionary<string, string> answer)
     {
+        if (answer.TryGetValue("blockMessage", out string? blockMessage))
+        {
+            if (!string.IsNullOrEmpty(blockMessage) && blockMessage.Contains("ДИАЛОГ ДАТА/ВРЕМЯ"))
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await CheckDataMessage();
+                });
+                return;
+            }
+        }
         if (answer.TryGetValue("menuState", out string? menuState))
         {
             if (!string.IsNullOrEmpty(menuState))
@@ -222,10 +307,10 @@ public partial class DriveViewModel : ObservableObject
                 }
                 else
                 {
+                    _shiftOpenMessage = true;
+                    (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
                     await AppData.PrintReceiptOrSwitchMode("D");
 
-                    (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
-                    (await AppData.Provider()).SentShiftInfo(true);
                 }
             }
         }
@@ -270,7 +355,20 @@ public partial class DriveViewModel : ObservableObject
                 _openedCheckPreviousSum = int.Parse(preValueStr);
             }
         }
+
+        if (CheckIsOpened && _waitCloseCheck)
+        {
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                IsLoaded = false;
+                AppData.CloseCheckBannerAnswer += AppData_CloseCheckBannerAnswer;
+                await AppData.GetCloseCheckBanner(_openedCheckStartSum.ToString(), _openedCheckPreviousSum.ToString());
+            });
+        }
+
     }
+
+    bool _waitCheckInfo = true;
 
     private async Task ReadShiftInfo(Dictionary<string, string> answer)
     {
@@ -282,6 +380,12 @@ public partial class DriveViewModel : ObservableObject
                 if (shiftState == "1")
                 {
                     ShiftIsOpened = true;
+                    if (!_waitCheckInfo)
+                    {
+                        _waitCheckInfo = true;
+                        IsLoaded = false;
+                        return;
+                    }
                     (await AppData.Provider()).AnswerCompleate += OnProvider_AnswerCompleate;
                     (await AppData.Provider()).SentCheckState(true);
                 }
@@ -317,6 +421,13 @@ public partial class DriveViewModel : ObservableObject
             {
                 Debug.WriteLine("C");
                 await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
+                
+                _doNotApearing = true;
+                _waitLoadOnApearing = false;
+                ShiftIsOpened = false;
+                CheckIsOpened = false;
+                IsLoaded = false;
+
                 await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
             }) }
         };
@@ -343,14 +454,27 @@ public partial class DriveViewModel : ObservableObject
             {ProviderBLE.ButtonKey.OK, new Action(async ()=>
             {
                 await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
+
+                _doNotApearing = true;
+                _waitLoadOnApearing = false;
+                ShiftIsOpened = true;
+                CheckIsOpened = false;
+                IsLoaded = false;
+                _waitCheckInfo = false;
+
                 await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
-                (await AppData.Provider()).SentCheckState(true);
             }) },
             {ProviderBLE.ButtonKey.C, new Action(async ()=>
             {
                 Debug.WriteLine("C");
                 await AppData.MainMenu.GoToAsync("//Remote", true, new ShellNavigationQueryParameters{{ "clear", true }});
                 await AppData.MainMenu.GoToAsync("//Drive", true, new ShellNavigationQueryParameters{{"IsLoaded", false}});
+                _doNotApearing = true;
+                _waitLoadOnApearing = false;
+                ShiftIsOpened = false;
+                CheckIsOpened = false;
+                IsLoaded = false;
+                _waitCheckInfo = false;
             }) },
             {ProviderBLE.ButtonKey.Num_2, new Action(() =>
             {

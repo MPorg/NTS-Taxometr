@@ -24,6 +24,9 @@
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.ExtraSumText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._extraSumText"/>
         </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.ExtraText">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._extraText"/>
+        </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CashPayText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._cashPayText"/>
         </member>
@@ -32,6 +35,9 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.NoncashPayText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._noncashPayText"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.ErrorMessage">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._errorMessage"/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.Discallow">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._discallow"/>
@@ -45,11 +51,17 @@
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.OkBtnIsEnabled">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._okBtnIsEnabled"/>
         </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.HasError">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._hasError"/>
+        </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CardTextColor">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._cardTextColor"/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.NoncashTextColor">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._noncashTextColor"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.ErrorColor">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._errorColor"/>
         </member>
         <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.cancelCommand">
             <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CancelCommand"/>.</summary>
@@ -726,6 +738,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ExtraSumText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ExtraSumText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ExtraText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ExtraText" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CashPayText" generated properties.</summary>
         </member>
@@ -734,6 +749,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NoncashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NoncashPayText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ErrorMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ErrorMessage" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Discallow">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Discallow" generated properties.</summary>
@@ -747,11 +765,17 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OkBtnIsEnabled">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OkBtnIsEnabled" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasError">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasError" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CardTextColor">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CardTextColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NoncashTextColor">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NoncashTextColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ErrorColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ErrorColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DeviceName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DeviceName" generated properties.</summary>
@@ -918,6 +942,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ExtraSumText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ExtraSumText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ExtraText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ExtraText" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CashPayText" generated properties.</summary>
         </member>
@@ -926,6 +953,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NoncashPayText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NoncashPayText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ErrorMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ErrorMessage" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Discallow">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Discallow" generated properties.</summary>
@@ -939,11 +969,17 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OkBtnIsEnabled">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OkBtnIsEnabled" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasError">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasError" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CardTextColor">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CardTextColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NoncashTextColor">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NoncashTextColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ErrorColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ErrorColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DeviceName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DeviceName" generated properties.</summary>

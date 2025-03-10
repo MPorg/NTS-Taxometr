@@ -25,6 +25,8 @@ public partial class DrivePage : ContentPage, IQueryAttributable
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        NavigationPage.SetHasNavigationBar(this, false);
+        Shell.SetNavBarIsVisible(this, false);
         if (AppData.InitializationCompleate)
         {
 

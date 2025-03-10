@@ -145,7 +145,7 @@ namespace TaxometrMauiMvvm.Data
 
             if (prefab.DeviceId == ConnectedDP?.DeviceId)
             {
-                ConnectedDP = await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(ConnectedDP.DeviceId);
+                ConnectedDP = await (await TaxometrDB()).Device.GetByIdAsync(ConnectedDP.DeviceId);
                 await SetConnectedDevicePrefab(ConnectedDP);
             }
 
@@ -195,11 +195,11 @@ namespace TaxometrMauiMvvm.Data
                 _firstInit = false;
                 BLEAdapter.DeviceConnected -= OnDeviceConnected;
                 BLEAdapter.DeviceDisconnected -= OnDeviceDisconnected;
-                (await TaxometrDB()).DevicePrefabs.DeviceChanged -= DevicePrefabs_DeviceChanged;
+                (await TaxometrDB()).Device.DeviceChanged -= DevicePrefabs_DeviceChanged;
 
                 BLEAdapter.DeviceConnected += OnDeviceConnected;
                 BLEAdapter.DeviceDisconnected += OnDeviceDisconnected;
-                (await TaxometrDB()).DevicePrefabs.DeviceChanged += DevicePrefabs_DeviceChanged;
+                (await TaxometrDB()).Device.DeviceChanged += DevicePrefabs_DeviceChanged;
 
                 DotsTimer();
                 LoadAutoconnectDevice();
@@ -222,7 +222,7 @@ namespace TaxometrMauiMvvm.Data
         public static async Task<bool> ConnectToDevice(IDevice d)
         {
             Guid id = d.Id;
-            DevicePrefab device = await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(id);
+            DevicePrefab device = await (await TaxometrDB()).Device.GetByIdAsync(id);
             if (device == null)
             {
                 try
@@ -268,7 +268,7 @@ namespace TaxometrMauiMvvm.Data
         {
             while (true)
             {
-                var devicePref = await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(e.Device.Id);
+                var devicePref = await (await TaxometrDB()).Device.GetByIdAsync(e.Device.Id);
 
                 if (devicePref != null)
                 {
@@ -355,6 +355,7 @@ namespace TaxometrMauiMvvm.Data
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     if (MainMenu == null) return;
+                    (await Provider()).GetErr(cmd, answer);
                     await MainMenu.DisplayAlert("Ошибка", answ, "OK");
                 });
             }
@@ -364,7 +365,7 @@ namespace TaxometrMauiMvvm.Data
         {
             //Debug.WriteLine("_____________________Autoconnection_____________________");
             //bool hasAutoConnect = await Properties.GetAutoconnect();
-            var prefs = await (await TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
+            var prefs = await (await TaxometrDB()).Device.GetPrefabsAsync();
             DevicePrefab deviceToConnect = null;
 
             if (prefs != null)
@@ -423,7 +424,7 @@ namespace TaxometrMauiMvvm.Data
             {
                 Debug.WriteLine("pop");
             }
-            if (await ConnectToDevice(await (await TaxometrDB()).DevicePrefabs.GetByIdAsync(prefab.DeviceId)))
+            if (await ConnectToDevice(await (await TaxometrDB()).Device.GetByIdAsync(prefab.DeviceId)))
             {
                 await banner.Navigation.PopModalAsync();
                 banner = null;
@@ -461,11 +462,22 @@ namespace TaxometrMauiMvvm.Data
             await ReloadProvider();
         }
 
-        public static async Task GetDeposWithdrawBanner(ProviderBLE.CashMethod method, string placeholder = "0")
+        public static async Task<bool> GetDeposWithdrawBanner(ProviderBLE.CashMethod method, string placeholder = "0")
         {
+            bool answerCompleate = false;
+            bool result = false;
             DeposWithdrawCashBanner banner = new DeposWithdrawCashBanner(method, placeholder);
-
+            banner.OnCompleate += ((Result) =>
+            {
+                result = Result;
+                answerCompleate = true;
+            });
             await MainMenu.Navigation.PushModalAsync(banner, true);
+            while (!answerCompleate)
+            {
+                await Task.Delay(100);
+            }
+            return result;
         }
 
         public static async Task GetOpenCheckBanner()

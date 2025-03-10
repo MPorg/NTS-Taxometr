@@ -1,6 +1,7 @@
 ﻿using SQLitePCL;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Interfaces;
+using TaxometrMauiMvvm.Models.Pages.SignIn;
 using TaxometrMauiMvvm.Platforms.Android.Services;
 using TaxometrMauiMvvm.Views.Pages;
 
@@ -12,27 +13,29 @@ namespace TaxometrMauiMvvm
         INotificationService _notificationService;
         IBackgroundConnectionController _backgroundConnectionController;
         SplashScreen _splashScreen;
+        SignInViewModel _signInViewModel;
 
-        public App(IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService)
+        public App(SignInViewModel signIn, IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService)
         {
             InitializeComponent();
             _tMaker = toastMaker;
             _notificationService = notificationService;
             _backgroundConnectionController = backgroundConnectionController;
+            _signInViewModel = signIn;
             AppData.SetDependencyServices(toastMaker, settingsManager, keyboard, backgroundConnectionController, notificationService);
             //Start();
         }
 
         private async Task Start()
         {
-            await _splashScreen.GetDB(_tMaker);
+            await _splashScreen.GetDB(_signInViewModel, _tMaker);
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
             _splashScreen = new SplashScreen(this, _notificationService, _backgroundConnectionController);
             Start();
-            return new Window(_splashScreen);
+            return new Window(new NavigationPage(_splashScreen));
         }
 
         protected override void OnSleep()

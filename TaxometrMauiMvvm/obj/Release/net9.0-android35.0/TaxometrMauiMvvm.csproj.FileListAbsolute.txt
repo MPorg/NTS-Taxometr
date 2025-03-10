@@ -48,11 +48,11 @@ C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\r
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\f\Geologica-ThinItalic.ttf
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\f\OpenSans-Regular.ttf
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\f\OpenSans-Semibold.ttf
-C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_4.jpeg
-C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_1.jpeg
+C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_2.jpeg
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\stock_driver.png
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_3.jpeg
-C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_2.jpeg
+C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_1.jpeg
+C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\taxi_4.jpeg
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable-xxxhdpi\dotnet_bot.png
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable-xxhdpi\dotnet_bot.png
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable-xhdpi\dotnet_bot.png
@@ -326,6 +326,7 @@ C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\a
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc64338477404e88479c\PointerGestureHandler.java
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc64338477404e88479c\TapAndPanGestureDetector.java
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc64338477404e88479c\ToolbarExtensions_ToolbarTitleIconImageView.java
+C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc64396a3fe5f8138e3f\KeepAliveService.java
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc643f2b18b2570eaa5a\PlatformGraphicsView.java
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc6452ffdc5b34af3a0f\AccessibilityDelegateCompatWrapper.java
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\crc6452ffdc5b34af3a0f\BorderDrawable.java

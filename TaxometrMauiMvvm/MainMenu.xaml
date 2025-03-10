@@ -7,7 +7,7 @@
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
     Shell.FlyoutBehavior="Flyout"
     Shell.TabBarIsVisible="False">
-
+    <!--  -->
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
             <Border
@@ -107,7 +107,19 @@
             </Border>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
-    
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <Border
+                Padding="10">
+                
+                <Button
+                    Clicked="Link_Clicked"
+                    Style="{StaticResource LinkButton}"
+                    HorizontalOptions="Start"
+                    Text="Посетить наш сайт"/>
+            </Border>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
     <TabBar>
         <Tab
             x:Name="RemoteTab"

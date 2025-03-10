@@ -17,6 +17,13 @@ public partial class SearchPage : ContentPage
         AppData.BLEAdapter.DeviceDiscovered += OnDeviceDiscovered;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        NavigationPage.SetHasNavigationBar(this, false);
+        Shell.SetNavBarIsVisible(this, false);
+    }
+
     private void OnDeviceDiscovered(object? sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
     {
         if (e.Device is IDevice device)

@@ -30,7 +30,7 @@ public static class Notification
         var notifBuilder = new NotificationCompat.Builder(context, foregroundChannelId)
             .SetContentTitle(title)
             .SetContentText(text)
-            .SetSmallIcon(Resource.Mipmap.appiconfg)
+            .SetSmallIcon(Resource.Mipmap.appicon_round)
             .SetContentIntent(pendingIntent);
 
         if (hasBtn)

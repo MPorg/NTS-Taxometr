@@ -24,6 +24,8 @@ public partial class PrintPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        NavigationPage.SetHasNavigationBar(this, false);
+        Shell.SetNavBarIsVisible(this, false);
         if (AppData.InitializationCompleate)
         {
             Debug.WriteLine("_____________________________Print page onAppearing_____________________________");

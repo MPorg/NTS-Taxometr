@@ -99,5 +99,17 @@ namespace TaxometrMauiMvvm
             return false;
         }
 
+        private async void Link_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                Uri uri = new Uri("https://nts-shop.by/contacts/kontakty-gomel/");
+                await Browser.Default.OpenAsync(uri, new BrowserLaunchOptions { Flags = BrowserLaunchFlags.None, LaunchMode = BrowserLaunchMode.SystemPreferred, TitleMode = BrowserTitleMode.Default});
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occurred. No browser may be installed on the device.
+            }
+        }
     }
 }

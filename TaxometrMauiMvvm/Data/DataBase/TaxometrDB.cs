@@ -9,8 +9,8 @@ namespace TaxometrMauiMvvm.Data.DataBase
     public class TaxometrDB
     {
         private Properties _properties;
-        private BLEDevices _devices;
         private Prefabs _prefabs;
+        private Users _users;
 
         public Properties Property
         { 
@@ -19,26 +19,26 @@ namespace TaxometrMauiMvvm.Data.DataBase
                 return _properties;
             }
         }
-        public BLEDevices Devices
-        {
-            get
-            {
-                return _devices;
-            }
-        }
-        public Prefabs DevicePrefabs
+        public Prefabs Device
         {
             get
             {
                 return _prefabs;
             }
         }
+        public Users User
+        {
+            get
+            {
+                return _users;
+            }
+        }
 
         public TaxometrDB(string connectionString)
         {
             _properties = new Properties(connectionString);
-            _devices = new BLEDevices(connectionString);
             _prefabs = new Prefabs(connectionString);
+            _users = new Users(connectionString);
         }
 
         public class Properties
@@ -175,6 +175,47 @@ namespace TaxometrMauiMvvm.Data.DataBase
                 int result = await _connection.DeleteAsync(device);
                 if (totalCount - result == 0) Initialize();
                 return result;
+            }
+        }
+
+        public class Users
+        {
+            public Users(string connectionStr)
+            {
+                _connection = new SQLiteAsyncConnection(connectionStr);
+                Initialize();
+            }
+
+            private async void Initialize()
+            {
+                await _connection.CreateTableAsync<UserModel>();
+            }
+
+            private readonly SQLiteAsyncConnection _connection;
+
+            public async Task<List<UserModel>> GetUsersAsync()
+            {
+                return await _connection.Table<UserModel>().ToListAsync();
+            }
+
+            public async Task<UserModel> GetByNameAsync(string name)
+            {
+                return await _connection.Table<UserModel>().Where(x => x.Name == name).FirstOrDefaultAsync();
+            }
+            public async Task<int> CreateAsync(UserModel user)
+            {
+                return await _connection.InsertAsync(user);
+            }
+
+            public async Task<int> UpdateAsync(UserModel user)
+            {
+                if (await GetByNameAsync(user.Name) == null) await CreateAsync(user);
+                return await _connection.UpdateAsync(user);
+            }
+
+            public async Task<int> DeleteAsync(UserModel user)
+            {
+                return await _connection.DeleteAsync(user);
             }
         }
     }

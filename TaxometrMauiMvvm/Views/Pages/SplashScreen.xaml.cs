@@ -6,6 +6,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using TaxometrMauiMvvm.Services;
 using System.Diagnostics;
 using System.Reflection;
+using TaxometrMauiMvvm.Data.DataBase.Objects;
+using TaxometrMauiMvvm.Views.Pages.SignIn;
+using TaxometrMauiMvvm.Models.Pages.SignIn;
 
 namespace TaxometrMauiMvvm.Views.Pages;
 
@@ -61,7 +64,7 @@ public partial class SplashScreen : ContentPage
         return imageList;
     }
 
-    public async Task GetDB(IToastMaker toastMaker)
+    public async Task GetDB(SignInViewModel signIn, IToastMaker toastMaker)
     {
         TaxometrDB dB = await AppData.TaxometrDB();
         if (dB == null)
@@ -87,11 +90,17 @@ public partial class SplashScreen : ContentPage
                 
             }
 
+            /*var db = await AppData.TaxometrDB();
+            var user = new UserModel();*/
+
             MainMenu menu = new MainMenu();
             AppData.MainMenu = menu;
             await Task.Delay(3000);
             await InitAppData();
-            _app.Windows[0].Page = menu;
+
+            await Navigation.PushAsync(new SignInPage(signIn, _app, menu));
+
+            //_app.Windows[0].Page = menu;
         }
     }
     private async Task InitAppData()
@@ -104,5 +113,13 @@ public partial class SplashScreen : ContentPage
         await AppData.CheckLockation(this);
 
         await AppData.Initialize();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        NavigationPage.SetHasNavigationBar(this, false);
+        Shell.SetNavBarIsVisible(this, false);
     }
 }

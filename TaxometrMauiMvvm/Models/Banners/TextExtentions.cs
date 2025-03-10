@@ -82,7 +82,9 @@ internal static class TextExtentions
                 {
                     if (chars[i] == Comma)
                     {
+                        result += Comma;
                         result += "00";
+                        continue;
                     }
                     else if (chars[i - 1] == Comma)
                     {

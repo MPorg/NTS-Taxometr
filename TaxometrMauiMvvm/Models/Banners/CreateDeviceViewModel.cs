@@ -52,8 +52,8 @@ public partial class CreateDeviceViewModel : ObservableObject
     private async Task Create()
     {
         Debug.WriteLine($"Save {_device.Id},{SerialNumber}, {BlePassword}, {AdminPassword}, {DeviceName}, {Autoconnect}");
-        await (await AppData.TaxometrDB()).DevicePrefabs.CreateAsync(new Data.DataBase.Objects.DevicePrefab(_device.Id, SerialNumber, BlePassword, AdminPassword, DeviceName, Autoconnect));
-        await AppData.SetConnectedDevicePrefab(await (await AppData.TaxometrDB()).DevicePrefabs.GetByIdAsync(_device.Id));
+        await (await AppData.TaxometrDB()).Device.CreateAsync(new Data.DataBase.Objects.DevicePrefab(_device.Id, SerialNumber, BlePassword, AdminPassword, DeviceName, Autoconnect));
+        await AppData.SetConnectedDevicePrefab(await (await AppData.TaxometrDB()).Device.GetByIdAsync(_device.Id));
         Result?.Invoke(true);
     }
 

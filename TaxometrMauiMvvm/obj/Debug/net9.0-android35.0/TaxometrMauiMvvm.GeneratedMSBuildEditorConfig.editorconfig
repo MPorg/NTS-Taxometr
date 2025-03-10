@@ -125,6 +125,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pag
 build_metadata.AdditionalFiles.TargetPath = Views\Pages\SearchPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Pages\SearchPage.xaml
 
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/SignIn/SignInPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.SignIn.SignInPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Pages\SignIn\SignInPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Pages\SignIn\SignInPage.xaml
+
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/SignIn/SignUpPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.SignIn.SignUpPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Pages\SignIn\SignUpPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Pages\SignIn\SignUpPage.xaml
+
 [C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Pages/SplashScreen.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Pages.SplashScreen.xaml
