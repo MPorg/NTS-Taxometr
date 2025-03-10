@@ -89,7 +89,7 @@ public partial class SearchedDeviceViewModel : ObservableObject
 
     private async Task<bool> CheckContainsInSaves()
     {
-        var prefabs = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
+        var prefabs = await (await AppData.TaxometrDB()).Device.GetPrefabsAsync();
         if (prefabs == null || prefabs.Count == 0) return false;
         foreach (var prefab in prefabs)
         {

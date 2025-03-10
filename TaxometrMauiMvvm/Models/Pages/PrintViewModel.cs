@@ -31,7 +31,7 @@ public partial class PrintViewModel : ObservableObject
     }
     private async void GetBtnText()
     {
-        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
+        List<DevicePrefab> devices = await (await AppData.TaxometrDB()).Device.GetPrefabsAsync();
         if (devices.Count > 0) DevicesBtnText = "Устройства";
         else DevicesBtnText = "Поиск";
     }
@@ -57,6 +57,7 @@ public partial class PrintViewModel : ObservableObject
         else
         {
             BlockBannerIsVisible = true;
+            IsLoaded = false;
         }
     }
 
@@ -76,6 +77,10 @@ public partial class PrintViewModel : ObservableObject
         {
             _isFirstInit = false;
             TabBarInjection?.Invoke(AppData.TabBarViewModel);
+            (await AppData.Provider()).ErrMessageReaded += ((cmd, answer) =>
+            {
+                IsLoaded = false;
+            });
             //AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Remote | TabBarViewModel.Transition.Drive);
             //AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Print);
         }
@@ -93,9 +98,11 @@ public partial class PrintViewModel : ObservableObject
         (await AppData.Provider()).SentTaxState(true);
     }
 
-    public void OnDisappearing()
+    public async Task OnDisappearing()
     {
+        IsLoaded = false;
         _isAppearing = false;
+        (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
         AppData.TabBarViewModel.Transit(from: TabBarViewModel.Transition.Print);
     }
 
@@ -110,6 +117,7 @@ public partial class PrintViewModel : ObservableObject
 
     private async Task ReadSwitchMode(Dictionary<string, string> answer)
     {
+        (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
         IsLoaded = false;
     }
 

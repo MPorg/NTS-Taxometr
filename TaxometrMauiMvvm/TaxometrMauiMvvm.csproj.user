@@ -3,9 +3,9 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net9.0-android35.0</ActiveDebugFramework>
-    <ActiveDebugProfile>Pixel 7 Pro - API 34 (1) (Android 14.0 — API 34)</ActiveDebugProfile>
+    <ActiveDebugProfile>Pixel 7 Pro - API 34 (2) (Android 14.0 — API 34)</ActiveDebugProfile>
     <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
-    <DefaultDevice>pixel_7_pro_-_api_34_1</DefaultDevice>
+    <DefaultDevice>pixel_7_pro_-_api_34_2</DefaultDevice>
     <AndroidDesignerPreferredTheme>Theme.FullScreen</AndroidDesignerPreferredTheme>
   </PropertyGroup>
   <ItemGroup>
@@ -40,6 +40,12 @@
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Pages\SearchPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Pages\SignIn\SignInPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Pages\SignIn\SignUpPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Pages\SplashScreen.xaml">

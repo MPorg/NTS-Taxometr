@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Pages.SignIn.SignInPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+    
+    <StackLayout
+    Padding="10, 100, 10, 80"
+    Spacing="20"
+    VerticalOptions="FillAndExpand"
+    HorizontalOptions="Fill">
+
+        <Image
+        BackgroundColor="Transparent"
+        Source="splash_image.png"
+        Aspect="AspectFit"
+        WidthRequest="100"
+        HeightRequest="100">
+        </Image>
+
+
+        <Border
+        WidthRequest="350"
+        Padding="10, 5, 5, 5"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <StackLayout
+            Orientation="Horizontal"
+            Spacing="10">
+
+                <Label 
+                FontSize="Large"
+                Text="Логин"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Start"/>
+                <Border
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+                    <Entry
+                    FontSize="Large"
+                    HorizontalTextAlignment="Start"
+                    ReturnType="Next"/>
+                </Border>
+
+            </StackLayout>
+        </Border>
+        <Border
+        WidthRequest="350"
+        Padding="10, 5, 5, 5"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <StackLayout
+            Orientation="Horizontal"
+            Spacing="10">
+
+                <Label 
+                FontSize="Large"
+                Text="Пароль"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Start"/>
+                <Border
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+                    <Entry
+                    IsPassword="True"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Start"/>
+                </Border>
+
+            </StackLayout>
+        </Border>
+        <Border
+        WidthRequest="350"
+        Padding="10, 5, 5, 5"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <StackLayout
+            Orientation="Horizontal"
+            Spacing="10">
+
+                <Label 
+                FontSize="Large"
+                Text="Повторите пароль"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Start"
+                WidthRequest="90"/>
+                <Border
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+                    <Entry
+                    IsPassword="True"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Start"/>
+                </Border>
+
+            </StackLayout>
+        </Border>
+
+        <Button
+        WidthRequest="350"
+        HorizontalOptions="Center"
+        Text="Регистрация"
+        Clicked="Button_Clicked">
+        </Button>
+    </StackLayout>
+</ContentPage>

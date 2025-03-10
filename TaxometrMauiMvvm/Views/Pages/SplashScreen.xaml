@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaxometrMauiMvvm.Views.Pages.SplashScreen"
              xmlns:local="clr-namespace:TaxometrMauiMvvm.Views.Pages"
-             x:DataType="{x:Type local:SplashScreen}"
-             NavigationPage.HasNavigationBar="False">
+             x:DataType="{x:Type local:SplashScreen}">
     <StackLayout
         HorizontalOptions="FillAndExpand"
         VerticalOptions="EndAndExpand">

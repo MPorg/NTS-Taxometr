@@ -158,7 +158,7 @@ public partial class SavedViewModel : ObservableObject
 
     public async void GetDeviceList()
     {
-        var devices = await (await AppData.TaxometrDB()).DevicePrefabs.GetPrefabsAsync();
+        var devices = await (await AppData.TaxometrDB()).Device.GetPrefabsAsync();
         if (devices.Count > 0)
         {
             foreach (var d in devices)
@@ -226,7 +226,7 @@ public partial class SavedViewModel : ObservableObject
             {
                 if (_devices.Contains(device)) _devices.Remove(device);
                 if (AppData.ConnectedDP.DeviceId == device.Device.DeviceId) await AppData.SpecialDisconnect();
-                await (await AppData.TaxometrDB()).DevicePrefabs.DeleteAsync(device.Device);
+                await (await AppData.TaxometrDB()).Device.DeleteAsync(device.Device);
             }
         }
         EnterToBaseMode();

@@ -17,9 +17,12 @@ public partial class SavedPage : ContentPage
 
     protected override async void OnAppearing()
     {
+        base.OnAppearing();
+        NavigationPage.SetHasNavigationBar(this, false);
+        Shell.SetNavBarIsVisible(this, false);
+
         if (AppData.InitializationCompleate)
         {
-            base.OnAppearing();
             await Task.Delay(100);
             _viewModel?.GetDeviceList();
         }

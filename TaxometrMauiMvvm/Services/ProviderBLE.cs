@@ -124,6 +124,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _state = newState;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -133,6 +134,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _state = newState;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -142,6 +144,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _state = newState;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -151,6 +154,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _state = newState;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -160,6 +164,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _state = newState;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -169,6 +174,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _state = newState;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -177,6 +183,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Stop();
                 _state = ProviderState.Idle;
                 _extreamCleare = false;
+                _retryStop = false;
                 action?.Invoke();
                 return true;
             }
@@ -202,11 +209,8 @@ namespace TaxometrMauiMvvm.Services
                         {
                             bool res = !_extreamCleare;
                             if (!res)
-                            { 
-                                Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
-                                _cmdQueue.Clear();
-                                //_state = ProviderState.Idle;
-                                _next = true;
+                            {
+                                _retryStop = true;
                             }
                             else
                             {
@@ -228,7 +232,16 @@ namespace TaxometrMauiMvvm.Services
             _state = ProviderState.Idle;
             if (_retryStop)
             {
-                _next = true;
+                if (state == ProviderState.SentFR || state == ProviderState.ReciveFLC_1)
+                {
+                    await ReadFR();
+                }
+                else
+                {
+                    Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
+                    _cmdQueue.Clear();
+                    _next = true;
+                }
                 return;
             }
             if (state == ProviderState.SentFR || state == ProviderState.ReciveFLC_1) await ReadFR();
@@ -239,7 +252,11 @@ namespace TaxometrMauiMvvm.Services
 
         #region Params
 
-        private event Action<ProviderState, ProviderState>? StateChanged;
+        public void GetErr(byte cmd, Dictionary<string, string> answer)
+        {
+            ErrMessageReaded?.Invoke(cmd, answer);
+        }
+        public event Action<byte, Dictionary<string, string>>? ErrMessageReaded;
 
         private ProviderState _state = ProviderState.Idle;
 
@@ -484,7 +501,18 @@ namespace TaxometrMauiMvvm.Services
                 DebugLine();
             }
             catch (Exception ex)
-            { Debug.WriteLine($"______________{ex.Message}________________"); }
+            {
+                Debug.WriteLine($"______________Ошибка: {ex.Message}________________"); 
+                if ((int)_state >= (int)ProviderState.SentFR || (int)_state == (int)ProviderState.ReciveFLC_0)
+                {
+                    _state = ProviderState.ReciveFLC_0;
+                    _statesTimer.SetMaxMillis(500);
+                    _statesTimer.Restart();
+                    _extreamCleare = false;
+                    _retryStop = false;
+                    await ReadFR();
+                }
+            }
         }
 
         private async void RecivedAck(byte[] data)
@@ -615,12 +643,29 @@ namespace TaxometrMauiMvvm.Services
                     }
                     else if (value == ENET_WAIT_OPERATOR.ToString("x2"))
                     {
-                        _cmdQueue.Enqueue(() => 
+                        _cmdQueue.Enqueue(async () => 
                         {
                             _maxRetrysCount = -1;
-                            if (_lastCmd != ShiftOpen) Retry();
-                            AnswerCompleate?.Invoke(_lastCmd, answer);
-
+                            if (_lastCmd != ShiftOpen)
+                            {
+                                MainThread.BeginInvokeOnMainThread(async () =>
+                                {
+                                    if (AppData.MainMenu != null && await AppData.MainMenu.DisplayAlert
+                                    ("Не удалось выполнить комаанду", "Пожалуйста, убедитесь, что на экране таксометра не открыто окно ввода", "<C>", "Понятно                  "))
+                                    {
+                                        byte cmd = _lastCmd;
+                                        int max = _maxRetrysCount;
+                                        await EmitButton(ButtonKey.C, 1, true);
+                                        await Task.Delay(500);
+                                        if (max >= 0) RetryCMD(cmd);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                _next = true;
+                                AnswerCompleate?.Invoke(_lastCmd, answer);
+                            }
                         });
                     }
                     else
@@ -631,7 +676,20 @@ namespace TaxometrMauiMvvm.Services
                 return true;
             }
             catch (Exception ex)
-            { Debug.WriteLine($"______________{ex.Message.ToString()}________________"); return false; }  
+            {
+                Debug.WriteLine($"______________Ошибка: {ex.Message}________________");
+                if ((int)_state >= (int)ProviderState.SentFR || (int)_state == (int)ProviderState.ReciveFLC_0)
+                {
+                    _state = ProviderState.ReciveFLC_0;
+                    _statesTimer.SetMaxMillis(500);
+                    _statesTimer.Restart();
+                    _extreamCleare = false;
+                    _retryStop = false;
+                    await ReadFR();
+                    return true;
+                }
+                return false;
+            }  
             finally
             {
                 _next = true;

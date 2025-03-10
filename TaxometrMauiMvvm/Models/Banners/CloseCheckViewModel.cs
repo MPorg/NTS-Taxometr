@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Android.Health.Connect.DataTypes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Data;
 using System.Diagnostics;
@@ -25,11 +26,16 @@ public partial class CloseCheckViewModel : ObservableObject
     [ObservableProperty]
     private string _extraSumText;
     [ObservableProperty]
-    string _cashPayText;
+    private string _extraText;
     [ObservableProperty]
-    string _cardPayText;
+    private string _cashPayText;
     [ObservableProperty]
-    string _noncashPayText;
+    private string _cardPayText;
+    [ObservableProperty]
+    private string _noncashPayText;
+
+    [ObservableProperty]
+    private string _errorMessage;
 
     [ObservableProperty]
     private DiscountAllowance? _discallow;
@@ -41,16 +47,20 @@ public partial class CloseCheckViewModel : ObservableObject
     private bool _discallowsIsVisible;
     [ObservableProperty]
     private bool _okBtnIsEnabled;
+    [ObservableProperty]
+    private bool _hasError;
+
+    private bool _extraIsNegative;
 
     [ObservableProperty]
     private Color _cardTextColor;
     [ObservableProperty]
     private Color _noncashTextColor;
-
+    [ObservableProperty]
+    private Color _errorColor;
     private Color _normalColorDark;
     private Color _normalColorLight;
 
-    private Color _errorColor;
 
     public CloseCheckViewModel(string startVal, string preVal)
     {
@@ -58,6 +68,8 @@ public partial class CloseCheckViewModel : ObservableObject
         CashPayText = "";
         CardPayText = "";
         NoncashPayText = "";
+        ExtraText = "Требуется доплата";
+        ErrorMessage = "";
 
         CalculateValues(startVal, preVal, DiscallowStrValue);
 
@@ -68,6 +80,7 @@ public partial class CloseCheckViewModel : ObservableObject
         {
             Debug.WriteLine($"__________________ {parameter}: {message} _____________________");
 
+            ErrorMessage = message;
             switch (parameter)
             {
                 case "discallow":
@@ -81,6 +94,10 @@ public partial class CloseCheckViewModel : ObservableObject
                     break;
                 case "card&noncash":
                     SetColors(cardErr: true, noncashErr: true);
+                    break;
+                case "null":
+                    ClearColors();
+                    ErrorMessage = "";
                     break;
             }
         });
@@ -109,15 +126,15 @@ public partial class CloseCheckViewModel : ObservableObject
     {
         if (cardErr)
         {
-            CardTextColor = _errorColor;
+            CardTextColor = ErrorColor;
         }
         if (noncashErr)
         {
-            NoncashTextColor = _errorColor;
+            NoncashTextColor = ErrorColor;
         }
         if (discallowErr)
         {
-            if (Discallow != null) Discallow.ValueColor = _errorColor;
+            if (Discallow != null) Discallow.ValueColor = ErrorColor;
         }
     }
 
@@ -137,7 +154,7 @@ public partial class CloseCheckViewModel : ObservableObject
                 _normalColorLight = color;
             }
         }
-        _errorColor = new Color(255, 5, 5);
+        ErrorColor = new Color(255, 5, 5);
     }
 
     [RelayCommand]
@@ -169,6 +186,7 @@ public partial class CloseCheckViewModel : ObservableObject
         DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
         Discallow.PropertyChanged += OnPropertyChanged;
         DiscountAllownceCreated?.Invoke(Discallow);
+        CheckValues();
     }
 
     [RelayCommand]
@@ -177,19 +195,78 @@ public partial class CloseCheckViewModel : ObservableObject
         Discallow.PropertyChanged -= OnPropertyChanged;
         Discallow = null;
         DiscallowStrValue = "0,00";
-        CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
         CheckValues();
         DiscountAllownceRemoved?.Invoke();
+    }
+
+    public void ClickOnEntry(Entry entry, int index)
+    {
+        CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
+        GetValues(out int cash, out int card, out int noncash, out int initial, out int extra, out int discallow, out int total, out int previous);
+
+        switch (index)
+        {
+            case 0:
+                if (string.IsNullOrEmpty(CashPayText))
+                {
+                    if (!_extraIsNegative)
+                    {
+                        CashPayText = ((decimal)extra / 100).ToString().TextCompleate();
+                        Focus(entry);
+                    }
+                }
+                break;
+            case 1:
+                if (string.IsNullOrEmpty(CardPayText))
+                {
+                    if (!_extraIsNegative)
+                    {
+                        CardPayText = ((decimal)extra / 100).ToString().TextCompleate();
+                        Focus(entry);
+                    }
+                }
+                break;
+            case 2:
+                if (string.IsNullOrEmpty(NoncashPayText))
+                {
+                    if (!_extraIsNegative)
+                    {
+                        NoncashPayText = ((decimal)extra / 100).ToString().TextCompleate();
+                        Focus(entry);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void Focus(Entry entry)
+    {
+        entry.CursorPosition = 0;
+        if (entry.Text.Length > 0)
+        {
+            entry.SelectionLength = entry.Text.Length;
+        }
     }
 
     private bool CheckValues()
     {
         ClearColors();
+        if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+        CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
         GetValues(out int cash, out int card, out int noncash, out int initial, out int extra, out int discallow, out int total, out int previous);
+        
+        if (_discallow?.Type == AdditionType.None || _discallow?.PaymentType == PaymentType.None)
+        {
+            ValueNotAvailable?.Invoke(nameof(discallow), "Необходимо выбрать тип коррекции");
+            OkBtnIsEnabled = false;
+            HasError = true;
+            return false;
+        }
         if (discallow < 0 && Math.Abs(discallow) >= initial)
         {
             ValueNotAvailable?.Invoke(nameof(discallow), "Скидка не может быть больше либо равна итогу");
             OkBtnIsEnabled = false;
+            HasError = true;
             return false;
         }
         
@@ -206,12 +283,22 @@ public partial class CloseCheckViewModel : ObservableObject
                     ValueNotAvailable?.Invoke(nameof(noncash), "Значение оплаты безналичными превышает итог");
             }
 
+            HasError = true;
             OkBtnIsEnabled = false;
             return false;
         }
 
 
-        OkBtnIsEnabled = true;
+        ValueNotAvailable?.Invoke("null", "ok");
+        if (!_extraIsNegative && extra > 0)
+        {
+            OkBtnIsEnabled = false;
+        }
+        else
+        {
+            OkBtnIsEnabled = true;
+        }
+        HasError = false;
         return true;
     }
 
@@ -316,12 +403,9 @@ public partial class CloseCheckViewModel : ObservableObject
                 CashPayText = newValue;
             }
 
-            if (CheckValues())
-            {
-                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
-                CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
-                return;
-            }
+            CheckValues();
+            if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
+
         }
         if (e.PropertyName == nameof(CardPayText))
         {
@@ -331,13 +415,8 @@ public partial class CloseCheckViewModel : ObservableObject
                 await Task.Delay(50);
                 CardPayText = newValue;
             }
-
-            if (CheckValues())
-            {
-                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
-                CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
-                return;
-            }
+            CheckValues();
+            if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
         }
         if (e.PropertyName == nameof(NoncashPayText))
         {
@@ -347,13 +426,8 @@ public partial class CloseCheckViewModel : ObservableObject
                 await Task.Delay(50);
                 NoncashPayText = newValue;
             }
-
-            if (CheckValues())
-            {
-                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
-                CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
-                return;
-            }
+            CheckValues();
+            if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
         }
         if (e.PropertyName == nameof(Discallow))
         {
@@ -363,12 +437,8 @@ public partial class CloseCheckViewModel : ObservableObject
 
         if (e.PropertyName == nameof(Discallow.Type) || e.PropertyName == nameof(Discallow.PaymentType))
         {
-            if (CheckValues())
-            {
-                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
-                CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
-                return;
-            }
+            CheckValues();
+            if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
         }
 
         if (e.PropertyName == nameof(Discallow.ValueStr))
@@ -380,17 +450,21 @@ public partial class CloseCheckViewModel : ObservableObject
                 Discallow.ValueStr = newValue;
             }
             await Task.Delay(100);
-            if (CheckValues())
-            {
-                if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
-                CalculateValues(StartSumText, PreviousSumText, DiscallowStrValue);
-                return;
-            }
+            CheckValues();
+            if (Discallow != null) DiscallowStrValue = Discallow.GetTrueValueStr(_startSumText);
         }
     }
 
     private void CalculateValues(string startVal, string preVal, string discallowVal)
     {
+        string cashVal = string.IsNullOrEmpty(CashPayText) ? "0,00" : CashPayText;
+        string cardVal = string.IsNullOrEmpty(CardPayText) ? "0,00" : CardPayText;
+        string noncashVal = string.IsNullOrEmpty(NoncashPayText) ? "0,00" : NoncashPayText;
+
+        cashVal = cashVal.TextCompleate();
+        cardVal = cardVal.TextCompleate();
+        noncashVal = noncashVal.TextCompleate();
+
         if (!startVal.Contains(Comma))
         {
             if (startVal == "0")
@@ -445,12 +519,31 @@ public partial class CloseCheckViewModel : ObservableObject
 
         StartSumText = startVal;
         PreviousSumText = preVal;
-        
+
+
+
         decimal start = decimal.Parse(startVal);
         decimal preval = decimal.Parse(preVal);
-        decimal extra = Math.Round(start - preval, 2);
         decimal discallow = decimal.Parse(discallowVal);
-        decimal total = Math.Round(start + discallow - preval, 2);
+        decimal cash = decimal.Parse(cashVal);
+        decimal card = decimal.Parse(cardVal);
+        decimal noncash = decimal.Parse(noncashVal);
+        decimal total = Math.Round(start + discallow, 2);
+        decimal extra = Math.Round(total - preval - cash - card - noncash, 2);
+
+        if (extra >= 0)
+        {
+            ExtraText = "Требуется доплата";
+            _extraIsNegative = false;
+        }
+        else
+        {
+            ExtraText = "Будет выдана сдача";
+            extra *= -1;
+            if (extra > preval + cash) extra = preval + cash;
+            _extraIsNegative = true;
+        }
+
         string extraVal = extra.ToString();
         string totalVal = total.ToString();
 

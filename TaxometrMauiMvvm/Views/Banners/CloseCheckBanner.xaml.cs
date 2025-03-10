@@ -32,13 +32,48 @@ public partial class CloseCheckBanner : ContentPage
         Loaded += OnLoaded;
     }
 
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        CashEntry.Focused += (async (_, __) =>
+        {
+            await Task.Delay(50);
+            _viewModel?.ClickOnEntry(CashEntry, 0);
+        });
+
+        CardEntry.Focused += (async (_, __) =>
+        {
+            await Task.Delay(50);
+            _viewModel?.ClickOnEntry(CardEntry, 1);
+        });
+
+        NoncashEntry.Focused += (async (_, __) =>
+        {
+            await Task.Delay(50);
+            _viewModel?.ClickOnEntry(NoncashEntry, 2);
+        });
+
+
+        CashEntry.Unfocused += (async (_, __) =>
+        {
+            await Task.Delay(50);
+            if (!string.IsNullOrEmpty(_viewModel?.CashPayText)) _viewModel.CashPayText = _viewModel.CashPayText.TextCompleate();
+        });
+
+        CardEntry.Unfocused += (async (_, __) =>
+        {
+            await Task.Delay(50);
+            if (!string.IsNullOrEmpty(_viewModel?.CardPayText)) _viewModel.CardPayText = _viewModel.CardPayText.TextCompleate(); 
+        });
+
+        NoncashEntry.Unfocused += (async (_, __) =>
+        {
+            await Task.Delay(50);
+            if (!string.IsNullOrEmpty(_viewModel?.NoncashPayText)) _viewModel.NoncashPayText = _viewModel.NoncashPayText.TextCompleate();
+        });
+    }
+
     private void OnCanceled(bool result)
     {
         Canceled?.Invoke(result);
-    }
-
-    private void OnLoaded(object? sender, EventArgs e)
-    {
-        CashEntry.Focus();
     }
 }

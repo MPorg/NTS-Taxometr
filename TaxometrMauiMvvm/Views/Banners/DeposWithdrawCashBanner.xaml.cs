@@ -17,6 +17,9 @@ internal class OnCompleateEventArgs : EventArgs
 public partial class DeposWithdrawCashBanner : ContentPage
 {
     private ProviderBLE.CashMethod _cashMethod;
+
+    public event Action<bool> OnCompleate;
+
     public DeposWithdrawCashBanner(ProviderBLE.CashMethod method, string placeholder)
     {
         InitializeComponent();
@@ -48,6 +51,7 @@ public partial class DeposWithdrawCashBanner : ContentPage
 
     private void OnCancelBtn_Clicked(object sender, EventArgs e)
     {
+        OnCompleate?.Invoke(false);
         Navigation.PopModalAsync(true);
     }
 
@@ -144,6 +148,7 @@ public partial class DeposWithdrawCashBanner : ContentPage
         try
         {
             (await AppData.Provider()).DeposWithdrawCash(_cashMethod, (ulong)initValue);
+            OnCompleate?.Invoke(true);
             await Navigation.PopModalAsync();
         }
         catch

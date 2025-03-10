@@ -178,7 +178,7 @@ public partial class SavedDeviceViewModel : ObservableObject
     private async Task LoadPrefab()
     {
         if (_devicePrefab == null) return;
-        await (await AppData.TaxometrDB()).DevicePrefabs.GetByIdAsync(_devicePrefab.DeviceId);
+        await (await AppData.TaxometrDB()).Device.GetByIdAsync(_devicePrefab.DeviceId);
         CustomName = _devicePrefab.CustomName;
         SerialNumber = _devicePrefab.SerialNumber;
         BlePass = _devicePrefab.BLEPassword;
@@ -194,7 +194,7 @@ public partial class SavedDeviceViewModel : ObservableObject
         _devicePrefab.BLEPassword = BlePass;
         _devicePrefab.UserPassword = AdminPass;
         _devicePrefab.AutoConnect = Autoconnect;
-        await (await AppData.TaxometrDB()).DevicePrefabs.UpdateAsync(_devicePrefab);
+        await (await AppData.TaxometrDB()).Device.UpdateAsync(_devicePrefab);
     }
 
     private void SwitchIndex()

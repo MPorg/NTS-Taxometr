@@ -1,7 +1,44 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\signin\\signuppage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\signin\\signuppage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\signin\\signinpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\signin\\signinpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\models\\pages\\signin\\signinviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:models\\pages\\signin\\signinviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\signin\\signinpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\signin\\signinpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\signin\\signuppage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\signin\\signuppage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\splashscreen.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\splashscreen.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\models\\pages\\signin\\signupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:models\\pages\\signin\\signupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 258,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -32,8 +69,121 @@
               "Name": "ST:0:0:{7d1a5679-04f2-3f4a-851f-855baa54731c}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{936b24b7-e640-3186-98a7-24307bb298e0}"
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAgwFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T07:35:12.654Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SignUpViewModel.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Pages\\SignIn\\SignUpViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\Pages\\SignIn\\SignUpViewModel.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Pages\\SignIn\\SignUpViewModel.cs",
+              "RelativeToolTip": "Models\\Pages\\SignIn\\SignUpViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T07:34:03.749Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SignInViewModel.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Pages\\SignIn\\SignInViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\Pages\\SignIn\\SignInViewModel.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Pages\\SignIn\\SignInViewModel.cs",
+              "RelativeToolTip": "Models\\Pages\\SignIn\\SignInViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T07:33:51.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SignInPage.xaml.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignInPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\Pages\\SignIn\\SignInPage.xaml.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignInPage.xaml.cs",
+              "RelativeToolTip": "Views\\Pages\\SignIn\\SignInPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T07:23:51.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SignInPage.xaml",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignInPage.xaml",
+              "RelativeDocumentMoniker": "Views\\Pages\\SignIn\\SignInPage.xaml",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignInPage.xaml",
+              "RelativeToolTip": "Views\\Pages\\SignIn\\SignInPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-10T07:23:23.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SignUpPage.xaml.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignUpPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\Pages\\SignIn\\SignUpPage.xaml.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignUpPage.xaml.cs",
+              "RelativeToolTip": "Views\\Pages\\SignIn\\SignUpPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T07:22:51.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SignUpPage.xaml",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignUpPage.xaml",
+              "RelativeDocumentMoniker": "Views\\Pages\\SignIn\\SignUpPage.xaml",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SignIn\\SignUpPage.xaml",
+              "RelativeToolTip": "Views\\Pages\\SignIn\\SignUpPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-06T09:34:17.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SplashScreen.xaml.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SplashScreen.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\Pages\\SplashScreen.xaml.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SplashScreen.xaml.cs",
+              "RelativeToolTip": "Views\\Pages\\SplashScreen.xaml.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAIAwwGQAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T09:31:40.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAApwB4AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T09:29:58.811Z",
+              "EditorCaption": ""
             }
           ]
         }

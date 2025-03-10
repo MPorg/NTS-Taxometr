@@ -10766,6 +10766,7 @@ public final class R {
     public static final int switch_thumb_normal_material_light=0x7f050309;
     public static final int tooltip_background_dark=0x7f05030a;
     public static final int tooltip_background_light=0x7f05030b;
+    public static final int translucent=0x7f05030c;
   }
   public static final class dimen {
     public static final int abc_action_bar_content_inset_material=0x7f060000;

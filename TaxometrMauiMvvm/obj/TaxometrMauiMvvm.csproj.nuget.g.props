@@ -14,12 +14,12 @@
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(TargetFramework)' == 'net9.0-android35.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.net.illink.tasks\9.0.1\build\Microsoft.NET.ILLink.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.illink.tasks\9.0.1\build\Microsoft.NET.ILLink.Tasks.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.net.illink.tasks\9.0.2\build\Microsoft.NET.ILLink.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.illink.tasks\9.0.2\build\Microsoft.NET.ILLink.Tasks.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.maui.resizetizer\9.0.30\buildTransitive\Microsoft.Maui.Resizetizer.props" Condition="Exists('$(NuGetPackageRoot)microsoft.maui.resizetizer\9.0.30\buildTransitive\Microsoft.Maui.Resizetizer.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.maui.core\9.0.30\buildTransitive\Microsoft.Maui.Core.props" Condition="Exists('$(NuGetPackageRoot)microsoft.maui.core\9.0.30\buildTransitive\Microsoft.Maui.Core.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.maui.controls.build.tasks\9.0.30\buildTransitive\netstandard2.0\Microsoft.Maui.Controls.Build.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.maui.controls.build.tasks\9.0.30\buildTransitive\netstandard2.0\Microsoft.Maui.Controls.Build.Tasks.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net9.0-android35.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">C:\Users\user\.nuget\packages\microsoft.net.illink.tasks\9.0.1</PkgMicrosoft_NET_ILLink_Tasks>
+    <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">C:\Users\user\.nuget\packages\microsoft.net.illink.tasks\9.0.2</PkgMicrosoft_NET_ILLink_Tasks>
   </PropertyGroup>
 </Project>

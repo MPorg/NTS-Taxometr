@@ -1,14 +1,17 @@
-﻿using CommunityToolkit.Maui;
+﻿using Android.Views;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using System.Text;
 using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Models.Cells;
 using TaxometrMauiMvvm.Models.Pages;
+using TaxometrMauiMvvm.Models.Pages.SignIn;
 using TaxometrMauiMvvm.Platforms.Android.Services;
 using TaxometrMauiMvvm.Services.Background;
 using TaxometrMauiMvvm.Views.Cells;
 using TaxometrMauiMvvm.Views.Pages;
+using TaxometrMauiMvvm.Views.Pages.SignIn;
 
 namespace TaxometrMauiMvvm
 {
@@ -42,9 +45,19 @@ namespace TaxometrMauiMvvm
                     static void MakeSatusBarTranslucent(Android.App.Activity activity)
                     {
                         //activity.Window.SetFlags(Android.Views.WindowManagerFlags.Fullscreen, Android.Views.WindowManagerFlags.Fullscreen);
-                        activity.Window.SetFlags(Android.Views.WindowManagerFlags.LayoutNoLimits, Android.Views.WindowManagerFlags.LayoutNoLimits);    
-                        activity.Window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
-                        activity.Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+                        /*activity.Window?.SetFlags(Android.Views.WindowManagerFlags.LayoutInScreen | Android.Views.WindowManagerFlags.KeepScreenOn);
+                        activity.Window?.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
+                        activity.Window?.SetStatusBarColor(Android.Graphics.Color.Transparent);
+                        activity.Window?.SetNavigationBarColor(Android.Graphics.Color.Transparent);*/
+                        //activity.Window?.SetFormat(Android.Graphics.Format.Transparent);
+
+                        activity.Window?.AddFlags(WindowManagerFlags.LayoutNoLimits);
+                        activity.Window?.ClearFlags(WindowManagerFlags.TranslucentStatus);
+                        activity.Window?.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+                        activity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)(SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky);
+
+                        activity.Window?.SetStatusBarColor(activity.Resources.GetColor(Resource.Color.translucent));
+
                     }
 #endif
                 });
@@ -63,6 +76,12 @@ namespace TaxometrMauiMvvm
 
             builder.Services.AddSingleton<SavedPage>();
             builder.Services.AddSingleton<SavedViewModel>();
+
+            builder.Services.AddSingleton<SignInPage>();
+            builder.Services.AddSingleton<SignInViewModel>();
+
+            builder.Services.AddSingleton<SignUpPage>();
+            builder.Services.AddSingleton<SignUpViewModel>();
 
             builder.Services.AddSingleton<SavedDeviceViewCell>();
             builder.Services.AddSingleton<SavedDeviceViewModel>();
