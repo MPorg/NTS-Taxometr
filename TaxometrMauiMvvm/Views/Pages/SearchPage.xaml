@@ -7,52 +7,56 @@
              x:DataType="models:SearchViewModel"
              Shell.NavBarIsVisible="False">
     <StackLayout
-        Padding="10, 25, 10, 10"
+        Padding="0, 25, 0, -10"
         Spacing="25"
-        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
-        <StackLayout
-            Orientation="Horizontal"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+        <Grid
             VerticalOptions="Start"
             HorizontalOptions="Fill"
+            ColumnDefinitions="2*, 4*, 2*"
+            ColumnSpacing="5"
             Margin="14, 0, 14, 0">
-            <StackLayout
-                Orientation="Horizontal"
+            <Border
                 HorizontalOptions="Start"
-                Spacing="5">
-                <Border
-                    HorizontalOptions="Start"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    Padding="10"
-                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
-                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="50"/>
-                    </Border.StrokeShape>
+                WidthRequest="50"
+                HeightRequest="50"
+                Padding="10"
+                StrokeThickness="2"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                Stroke="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="50"/>
+                </Border.StrokeShape>
 
-                    <ImageButton
-                        x:Name="FlayoutBtn"
-                        Clicked="FlayoutBtn_Clicked">
-                        <ImageButton.Source>
-                            <FontImageSource
-                                FontFamily="IconsSolid"
-                                Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
-                                Glyph="{StaticResource IconMenuBars}"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Border>
+                <ImageButton
+                    x:Name="FlayoutBtn"
+                    Clicked="FlayoutBtn_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="IconsSolid"
+                            Color="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"
+                            Glyph="{StaticResource IconMenuBars}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Border>
 
-                <Label
+            <Label
+                Grid.Column="1"
                 Style="{StaticResource TitleText}"
                 Text="Поиск устройств"/>
+
+            <StackLayout
+                Grid.Column="2"
+                HorizontalOptions="Fill">
+
             </StackLayout>
-        </StackLayout>
+        </Grid>
         <Border
             Padding="5"
             VerticalOptions="FillAndExpand"
             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
             <Border.StrokeShape>
-                <RoundRectangle CornerRadius="40"/>
+                <RoundRectangle CornerRadius="15"/>
             </Border.StrokeShape>
 
             <ListView
@@ -75,7 +79,7 @@
                                         Margin="-5, 3.5, 5, -3.5"
                                         VerticalOptions="FillAndExpand"
                                         ZIndex="-2"
-                                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLight}}">
+                                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="20"/>
                                         </Border.StrokeShape>
@@ -84,7 +88,7 @@
                                     <Border
                                         VerticalOptions="FillAndExpand"
                                         ZIndex="-1"
-                                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLighted}}">
+                                        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="20"/>
                                         </Border.StrokeShape>
@@ -95,11 +99,12 @@
                                             <Label
                                                 FontSize="Large"
                                                 VerticalTextAlignment="End"
-                                                Text="{Binding CustomName}"/>
+                                                Text="{Binding CustomName}"
+                                                TextColor="{StaticResource TextDark}"/>
                                             <Label
                                                 Grid.Row="1"
                                                 FontSize="Micro"
-                                                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"
+                                                TextColor="{StaticResource TextDark}"
                                                 Text="{Binding ConnectionStateRU}"/>
                                         </Grid>
                                     </Border>

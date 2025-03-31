@@ -22,12 +22,12 @@ namespace TaxometrMauiMvvm
         {
             InitializeComponent();
 
-            var item = Items.FirstOrDefault(x => x.Title == _homeMenuItem.Text);
+            /*var item = Items.FirstOrDefault(x => x.Title == _homeMenuItem.Text);
             if (item != null)
             {
                 Items.Remove(item);
                 Items.Insert(0, item);
-            }
+            }*/
         }
 
         private async void OnLoaded(object? sender, EventArgs e)
@@ -37,8 +37,8 @@ namespace TaxometrMauiMvvm
 
         private async void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
         {
-            await DisplayAlert("Смена темы приложения", "Необходимо перезапустить приложение", "ОК");
-            Restart();
+            //await DisplayAlert("Смена темы приложения", "Необходимо перезапустить приложение", "ОК");
+            //Restart();
         }
 
         private async void HomeMIClicked(object sender, EventArgs e)

@@ -4,6 +4,7 @@ using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Models.Pages.SignIn;
 using TaxometrMauiMvvm.Platforms.Android.Services;
 using TaxometrMauiMvvm.Views.Pages;
+using TaxometrMauiMvvm.Views.Pages.SignIn;
 
 namespace TaxometrMauiMvvm
 {

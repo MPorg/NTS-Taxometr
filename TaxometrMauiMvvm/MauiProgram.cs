@@ -36,6 +36,11 @@ namespace TaxometrMauiMvvm
                     fonts.AddFont("Geologica-Italic.ttf", "Geologica-Medium");
                     fonts.AddFont("Geologica-BoldItalic.ttf", "Geologica-SemiBold");
                     fonts.AddFont("Geologica-Regular.ttf", "Geologica");
+
+                    fonts.AddFont("helvetica_bold.otf", "Helvetica-Bold");
+                    fonts.AddFont("helvetica_oblique.otf", "Helvetica-Italic");
+                    fonts.AddFont("helvetica_boldoblique.otf", "Helvetica-BoldItalic");
+                    fonts.AddFont("helvetica_regular.otf", "Helvetica");
                 })
                 .ConfigureLifecycleEvents(events =>
                 {

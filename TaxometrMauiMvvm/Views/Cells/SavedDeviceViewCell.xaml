@@ -24,7 +24,7 @@
         ZIndex="-2"
         BackgroundColor="{Binding BgShadowColor}">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="20"/>
+            <RoundRectangle CornerRadius="10"/>
         </Border.StrokeShape>
     </Border>
     <Border
@@ -35,7 +35,7 @@
         ZIndex="-1"
         BackgroundColor="{Binding BgLightColor}">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="20"/>
+            <RoundRectangle CornerRadius="10"/>
         </Border.StrokeShape>
         <Grid
             RowDefinitions="*, *, *, *">
@@ -45,11 +45,13 @@
                     VerticalTextAlignment="Start"
                     Padding="0, 10"
                     FontSize="Large"
-                    Text="Зав. номер"/>
+                    Text="Зав. номер"
+                    TextColor="{StaticResource TextDark}"/>
                 <Entry
                     Grid.Column="1"
                     FontSize="Large"
                     HorizontalTextAlignment="End"
+                    TextColor="{StaticResource TextDark}"
                     Text="{Binding SerialNumber}"/>
             </Grid>
 
@@ -60,11 +62,13 @@
                     VerticalTextAlignment="Start"
                     Padding="0, 10"
                     FontSize="Large"
-                    Text="Пароль связи"/>
+                    Text="Пароль связи"
+                    TextColor="{StaticResource TextDark}"/>
                 <Entry
                     Grid.Column="1"
                     FontSize="Large"
                     HorizontalTextAlignment="End"
+                    TextColor="{StaticResource TextDark}"
                     Text="{Binding BlePass}"/>
             </Grid>
 
@@ -75,11 +79,13 @@
                     VerticalTextAlignment="Start"
                     Padding="0, 10"
                     FontSize="Large"
+                    TextColor="{StaticResource TextDark}"
                     Text="Пароль оператора"/>
                 <Entry
                     Grid.Column="1"
                     FontSize="Large"
                     HorizontalTextAlignment="End"
+                    TextColor="{StaticResource TextDark}"
                     Text="{Binding AdminPass}"/>
             </Grid>
 
@@ -90,6 +96,7 @@
                     VerticalTextAlignment="Start"
                     Padding="0, 10"
                     FontSize="Large"
+                    TextColor="{StaticResource TextDark}"
                     Text="Автоподключение"/>
                         
                 <ce:CustomSwitch
@@ -105,11 +112,11 @@
         ZIndex="1"
         BackgroundColor="{Binding BgColor}">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="20"/>
+            <RoundRectangle CornerRadius="10"/>
         </Border.StrokeShape>
         <Grid
             Padding="5"
-            RowDefinitions=".5*, .5*"
+            RowDefinitions=".6*, .4*"
             ColumnDefinitions=".2*, .6*, .2*"
             RowSpacing="5">
 
@@ -145,6 +152,7 @@
                 VerticalTextAlignment="End"
                 Text="{Binding CustomName}"
                 ZIndex="{Binding FgIndex}"
+                TextColor="{StaticResource TextDark}"
                 IsVisible="{Binding IsOpen, Converter={serv:InverseBoolConverter}}">
             </Label>
             <Entry
@@ -152,6 +160,7 @@
                 FontSize="Large"
                 VerticalTextAlignment="End"
                 HorizontalTextAlignment="Center"
+                TextColor="{StaticResource TextDark}"
                 Text="{Binding CustomName}"
                 ZIndex="{Binding BgIndex}"
                 IsVisible="{Binding IsOpen}"
@@ -160,7 +169,7 @@
                 Grid.ColumnSpan="2"
                 Grid.Row="1"
                 FontSize="Micro"
-                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"
+                TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                 Text="{Binding ConnectionStateRU}"
                 IsVisible="{Binding IsOpen, Converter={serv:InverseBoolConverter}}">
             </Label>
@@ -169,7 +178,7 @@
                 Grid.Row="1"
                 FontSize="Micro"
                 HorizontalTextAlignment="Center"
-                TextColor="{AppThemeBinding Dark={StaticResource TextColoredDark}, Light={StaticResource TextColoredLight}}"
+                TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                 Text="{Binding ConnectionStateRU}"
                 IsVisible="{Binding IsOpen}"/>
 
@@ -183,7 +192,7 @@
                     <FontImageSource
                         FontFamily="IconsSolid"
                         Size="80"
-                        Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                        Color="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"
                         Glyph="{Binding SwitchButtonGlyph}"/>
                 </ImageButton.Source>
             </ImageButton>
@@ -195,7 +204,7 @@
         Grid.ColumnSpan="2"
         ZIndex="1">
         <Button
-            TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+            Style="{StaticResource InverceButton}"
             Text="{Binding ConnectBtnText}"
             IsEnabled="{Binding ConnectBtnEnabled}"
             Command="{Binding ConnectDisconnectCommand}"/>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
+using TaxometrMauiMvvm.Data.DataBase.Objects;
 using TaxometrMauiMvvm.Models.Cells;
 
 namespace TaxometrMauiMvvm.Models.Pages;
@@ -73,6 +74,7 @@ public partial class SavedViewModel : ObservableObject
     public SavedViewModel()
     {
         _devices = new ObservableCollection<SavedDeviceViewModel>();
+        //Devices.Add(new SavedDeviceViewModel(new DevicePrefab(Guid.NewGuid(), "00000000", "000000", "000000", "Device", true), this));
         GetDeviceList();
         _selectedDevices.CollectionChanged += OnSelectedDevicesChanged;
     }

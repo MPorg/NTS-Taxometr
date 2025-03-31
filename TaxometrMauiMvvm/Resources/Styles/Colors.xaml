@@ -27,12 +27,14 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
-    
-    <Color x:Key="BackgroundDarked">#142F5F</Color>
-    <Color x:Key="BackgroundDark">#264F7C</Color>
-    <Color x:Key="Background">#376F99</Color>
-    <Color x:Key="BackgroundLight">#498EB5</Color>
-    <Color x:Key="BackgroundLighted">#5AAED2</Color>
+
+    <Color x:Key="My_Blue">#00235f</Color>
+
+    <Color x:Key="BackgroundDarked">#00235f</Color>
+    <Color x:Key="BackgroundDark">#13396E</Color>
+    <Color x:Key="Background">#264F7C</Color>
+    <Color x:Key="BackgroundLight">#13396E</Color>
+    <Color x:Key="BackgroundLighted">#00235f</Color>
 
     <Color x:Key="BackgroundLightGray">#CDCDCD</Color>
     <Color x:Key="BackgroundDarkGray">#212121</Color>
@@ -45,8 +47,8 @@
     <Color x:Key="TextColoredMiddle">#376F99</Color>
     <Color x:Key="TextColoredDark">#5AAED2</Color>
 
-    <Color x:Key="TextLink">#E95D2C</Color>
-    <Color x:Key="TextLightLink">#DB957D</Color>
+    <Color x:Key="TextLink">#f9ba00</Color>
+    <Color x:Key="TextLightLink">#f9ba00</Color>
     <Color x:Key="TextRedLink">#A72525</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>

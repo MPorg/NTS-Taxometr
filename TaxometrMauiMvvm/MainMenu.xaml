@@ -10,108 +10,159 @@
     <!--  -->
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Border
-                BackgroundColor="Transparent"
-                Stroke="Transparent"
-                Padding="3">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10"/>
-                </Border.StrokeShape>
+            <StackLayout>
                 <Border
                     BackgroundColor="Transparent"
                     Stroke="Transparent"
-                    Padding="8">
+                    Padding="3">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8"/>
+                        <RoundRectangle CornerRadius="10"/>
                     </Border.StrokeShape>
-                <Grid
-                    HeightRequest="220"
-                    Padding="0, 20, 0, 0">
-                    <Image
-                        Source="{AppThemeBinding Dark=taxi_2.jpg, Light=taxi_3.jpg}"
-                        HeightRequest="200"
-                        Opacity="1.0"
-                        Aspect="AspectFill"
-                        ZIndex="0"/>
-                    <StackLayout
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill"
-                        ZIndex="1">
-
-                        <StackLayout.Background>
-                            <LinearGradientBrush
-                                StartPoint="1, 0"
-                                EndPoint="0, 0">
-                                <GradientStop
-                                    Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
-                                    Offset="0.01"/>
-                                <GradientStop
-                                    Color="Transparent"
-                                    Offset="0.3"/>
-                                <GradientStop
-                                    Color="Transparent"
-                                    Offset="0.7"/>
-                                <GradientStop
-                                    Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
-                                    Offset="0.99"/>
-                            </LinearGradientBrush>
-                        </StackLayout.Background>
-                    </StackLayout>
+                    <Border
+                        BackgroundColor="Transparent"
+                        Stroke="Transparent"
+                        Padding="8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                    <Grid
+                        HeightRequest="220"
+                        Padding="0, 20, 0, 0">
+                        <Image
+                            Source="{AppThemeBinding Dark=taxi_2.jpg, Light=taxi_3.jpg}"
+                            HeightRequest="200"
+                            Opacity="1.0"
+                            Aspect="AspectFill"
+                            ZIndex="0"/>
                         <StackLayout
-                            VerticalOptions="FillAndExpand"
+                            VerticalOptions="Fill"
                             HorizontalOptions="Fill"
-                            Padding="3"
-                            ZIndex="2">
+                            ZIndex="1">
 
                             <StackLayout.Background>
                                 <LinearGradientBrush
-                                    StartPoint="0, 1"
+                                    StartPoint="1, 0"
                                     EndPoint="0, 0">
                                     <GradientStop
                                         Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
                                         Offset="0.01"/>
                                     <GradientStop
                                         Color="Transparent"
-                                        Offset="0.1"/>
+                                        Offset="0.3"/>
                                     <GradientStop
                                         Color="Transparent"
-                                        Offset="0.9"/>
+                                        Offset="0.7"/>
                                     <GradientStop
                                         Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
                                         Offset="0.99"/>
                                 </LinearGradientBrush>
                             </StackLayout.Background>
-
-                            <ImageButton
-                                Margin="5"
-                                WidthRequest="80"
-                                HeightRequest="80"
-                                VerticalOptions="Start"
-                                HorizontalOptions="Start"
-                                BackgroundColor="Transparent"
-                                Aspect="AspectFill"
-                                Source="stock_driver.png">
-                            </ImageButton>
-                            <Border
-                                BackgroundColor="Transparent"
-                                Stroke="Transparent"
-                                Padding="5">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="40"/>
-                                </Border.StrokeShape>
-
-                            </Border>
                         </StackLayout>
-                    </Grid>
+                            <StackLayout
+                                VerticalOptions="FillAndExpand"
+                                HorizontalOptions="Fill"
+                                Padding="3"
+                                ZIndex="2">
+
+                                <StackLayout.Background>
+                                    <LinearGradientBrush
+                                        StartPoint="0, 1"
+                                        EndPoint="0, 0">
+                                        <GradientStop
+                                            Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                                            Offset="0.01"/>
+                                        <GradientStop
+                                            Color="Transparent"
+                                            Offset="0.1"/>
+                                        <GradientStop
+                                            Color="Transparent"
+                                            Offset="0.9"/>
+                                        <GradientStop
+                                            Color="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"
+                                            Offset="0.99"/>
+                                    </LinearGradientBrush>
+                                </StackLayout.Background>
+
+                                <ImageButton
+                                    Margin="5"
+                                    WidthRequest="80"
+                                    HeightRequest="80"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="Transparent"
+                                    Aspect="AspectFill"
+                                    Source="stock_driver.png">
+                                </ImageButton>
+                                <Border
+                                    BackgroundColor="Transparent"
+                                    Stroke="Transparent"
+                                    Padding="5">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="40"/>
+                                    </Border.StrokeShape>
+
+                                </Border>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
                 </Border>
-            </Border>
+                <Grid
+                    Padding="0">
+                    <Button
+                        Margin="0, 0, 0, 15"
+                        Clicked="HomeMIClicked"
+                        BackgroundColor="Transparent"
+                        IsEnabled="True"
+                        ZIndex="3"/>
+                    <Border
+                        Margin="0, 0, 0, 15"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush
+                                    StartPoint="1, 0"
+                                    EndPoint="0, 0">
+                                <GradientStop
+                                    Color="Transparent"
+                                    Offset="0"/>
+                                <GradientStop
+                                    Color="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                                    Offset="0.8"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <StackLayout 
+                            Orientation="Horizontal"
+                            Spacing="35"
+                            Padding="15">
+                            <Image
+                                Aspect="AspectFill"
+                                WidthRequest="20"
+                                HeightRequest="20">
+                                <Image.Source>
+                                    <FontImageSource
+                                        Size="500"
+                                        Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
+                                        FontFamily="IconsSolid"
+                                        Glyph="{StaticResource IconHome}"/>
+                                </Image.Source>
+                            </Image>
+                            <Label
+                                Text="Главная"
+                                FontSize="Medium"
+                                TextColor="{StaticResource TextDark}"/>
+                        </StackLayout>
+                    </Border>
+                </Grid>
+            </StackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Border
                 Padding="10">
-                
+
                 <Button
                     Clicked="Link_Clicked"
                     Style="{StaticResource LinkButton}"
@@ -120,6 +171,43 @@
             </Border>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Border
+                Margin="0, 1"
+                StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+                <Border.Background>
+                    <LinearGradientBrush
+                        StartPoint="1, 0"
+                        EndPoint="0, 0">
+                        <GradientStop
+                            Color="Transparent"
+                            Offset="0"/>
+                        <GradientStop
+                            Color="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                            Offset="0.8"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackLayout 
+                    Orientation="Horizontal"
+                    Spacing="35"
+                    Padding="15">
+                    <Image
+                        Source="{Binding FlyoutIcon}"
+                        Aspect="AspectFill"
+                        WidthRequest="20"
+                        HeightRequest="20"/>
+                    <Label
+                        Text="{Binding Title}"
+                        FontSize="Medium"
+                        TextColor="{StaticResource TextDark}"/>
+                </StackLayout>
+            </Border>
+        </DataTemplate>
+    </Shell.ItemTemplate>
     <TabBar>
         <Tab
             x:Name="RemoteTab"
@@ -160,35 +248,36 @@
                 ContentTemplate="{DataTemplate views:PrintPage}"/>
         </Tab>
     </TabBar>
-
-    <FlyoutItem
-        Route="Search"
-        Title="Поиск устройств">
-        <FlyoutItem.FlyoutIcon>
-            <FontImageSource
-                Size="500"
-                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
-                FontFamily="IconsSolid"
-                Glyph="{StaticResource IconSearch}"/>
-        </FlyoutItem.FlyoutIcon>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="ParentRoute">
         <ShellContent
-            ContentTemplate="{DataTemplate views:SearchPage}"/>
+            Route="Search"
+            ContentTemplate="{DataTemplate views:SearchPage}"
+            Title="Поиск устройств">
+            <ShellContent.FlyoutIcon>
+                <FontImageSource
+                    Size="500"
+                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconSearch}"/>
+            </ShellContent.FlyoutIcon>
+        </ShellContent>
+        
+        <ShellContent
+            Route="Favorites"
+            ContentTemplate="{DataTemplate views:SavedPage}"
+            Title="Сохранённые устройства">
+            <ShellContent.FlyoutIcon>
+                <FontImageSource
+                    Size="500"
+                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
+                    FontFamily="IconsSolid"
+                    Glyph="{StaticResource IconStar}"/>
+            </ShellContent.FlyoutIcon>
+            
+        </ShellContent>
     </FlyoutItem>
 
-    <FlyoutItem
-        Route="Favorites"
-        Title="Сохранённые устройства">
-        <FlyoutItem.FlyoutIcon>
-            <FontImageSource
-                Size="500"
-                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
-                FontFamily="IconsSolid"
-                Glyph="{StaticResource IconStar}"/>
-        </FlyoutItem.FlyoutIcon>
-        <ShellContent
-            ContentTemplate="{DataTemplate views:SavedPage}"/>
-    </FlyoutItem>
-
+    <!--
     <MenuItem
         Text="Главная"
         x:Name="_homeMenuItem"
@@ -196,10 +285,11 @@
         <MenuItem.IconImageSource>
             <FontImageSource
                 Size="500"
-                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                Color="{AppThemeBinding Dark={StaticResource TextLight}, Light={StaticResource TextDark}}"
                 FontFamily="IconsSolid"
                 Glyph="{StaticResource IconHome}"/>
         </MenuItem.IconImageSource>
     </MenuItem>
+    -->
 
 </Shell>

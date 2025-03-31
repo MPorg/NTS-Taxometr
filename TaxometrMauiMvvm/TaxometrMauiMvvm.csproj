@@ -51,11 +51,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#142F5F" TintColor="#DB7C26" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00235F" TintColor="#F9BA00" />
 		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
     
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#142F5F" BaseSize="512,512" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#00235F" BaseSize="512,512" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -85,6 +85,14 @@
     <MauiFont Include="Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf" />
     <MauiFont Include="Resources\Fonts\Basic\Geologica-Thin.ttf" />
     <MauiFont Include="Resources\Fonts\Basic\Geologica-ThinItalic.ttf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_bold.otf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_boldoblique.otf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_cyr_boldoblique.ttf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_cyr_oblique.ttf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_light.otf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_lightoblique.otf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_oblique.otf" />
+    <MauiFont Include="Resources\Fonts\Helvetica\helvetica_regular.otf" />
     <MauiFont Include="Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf" />
     <MauiFont Include="Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf" />
     <MauiFont Include="Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf" />
@@ -102,6 +110,7 @@
 	  <None Remove="Platforms\Android\Resources\drawable\splash_screen.xml" />
 	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
+	  <None Remove="Resources\AppIcon\notif_icon.png" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-Black.ttf" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-Bold.ttf" />
@@ -120,6 +129,14 @@
 	  <None Remove="Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-Thin.ttf" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-ThinItalic.ttf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_bold.otf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_boldoblique.otf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_cyr_boldoblique.ttf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_cyr_oblique.ttf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_light.otf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_lightoblique.otf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_oblique.otf" />
+	  <None Remove="Resources\Fonts\Helvetica\helvetica_regular.otf" />
 	  <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf" />
 	  <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf" />
 	  <None Remove="Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf" />
@@ -199,6 +216,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiIcon Include="Resources\AppIcon\splash_image_notif.png" />
+	  <MauiImage Include="Resources\AppIcon\notif_icon.png" />
 	  <MauiImage Include="Resources\Images\Taxis\taxi_1.jpeg">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </MauiImage>

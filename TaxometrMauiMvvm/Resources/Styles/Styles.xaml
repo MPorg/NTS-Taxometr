@@ -25,9 +25,9 @@
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource BackgroundLightGray}, Dark={StaticResource BackgroundDarkGray}}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource TextLink}" />
-        <Setter Property="FontFamily" Value="Geologica-Bold"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource BackgroundLightGray}, Dark={StaticResource BackgroundLightGray}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}" />
+        <Setter Property="FontFamily" Value="Helvetica-Bold"/>
         <Setter Property="FontSize" Value="Large"/>
         <Setter Property="BorderWidth" Value="0"/>
         <Setter Property="CornerRadius" Value="8"/>
@@ -49,11 +49,37 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+    
+    <Style x:Key="InverceButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLight}}" />
+        <Setter Property="FontFamily" Value="Helvetica-Bold"/>
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="MinimumHeightRequest" Value="44"/>
+        <Setter Property="MinimumWidthRequest" Value="44"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource Gray500}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver" />
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
     <Style x:Key="LinkButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="Transparent"/>
         <Setter Property="TextColor" Value="{StaticResource TextLink}"/>
-        <Setter Property="Button.FontFamily" Value="Geologica-BoldItalic"/>
+        <Setter Property="Button.FontFamily" Value="Helvetica-BoldItalic"/>
         <Setter Property="Button.FontSize" Value="Caption"/>
     </Style>
 
@@ -99,7 +125,7 @@
     <Style TargetType="Editor">
         <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Geologica-Italic"/>
+        <Setter Property="FontFamily" Value="Helvetica-Italic"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Dark={StaticResource Background}, Light={StaticResource BackgroundDark}}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -121,7 +147,7 @@
     <Style TargetType="Entry">
         <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Geologica-Italic"/>
+        <Setter Property="FontFamily" Value="Helvetica-Italic"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Dark={StaticResource Background}, Light={StaticResource BackgroundDark}}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -207,13 +233,13 @@
     </Style>
     
     <Style x:Key="TitleText" TargetType="Label">
-        <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
         <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
         <Setter Property="HorizontalOptions" Value="Start"/>
-        <Setter Property="FontSize" Value="Large"/>
-        <Setter Property="FontFamily" Value="Geologica-BoldItalic"/>
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="FontFamily" Value="Helvetica-Bold"/>
     </Style>
 
     <Style TargetType="ListView">
@@ -474,15 +500,15 @@
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}" />
-        <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}" />
-        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}" />
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}" />
         <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
         <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}" />
         <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource TextLink}" />
         <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource TextLink}" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}" />
         <Setter Property="Shell.FlyoutBackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"/>
         <Setter Property="FlyoutBackground" Value="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}"/>
     </Style>

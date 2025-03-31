@@ -282,7 +282,7 @@ public partial class SavedDeviceViewModel : ObservableObject
         else if (Application.Current.PlatformAppTheme == AppTheme.Light)
         {
             //BG
-            if (Application.Current.Resources.TryGetValue("BackgroundLighted", out var color))
+            if (Application.Current.Resources.TryGetValue("BackgroundLight", out var color))
             {
                 if (color is Color c) _unselectedColors[0] = c;
             }
@@ -291,7 +291,7 @@ public partial class SavedDeviceViewModel : ObservableObject
                 if (linkColor is Color c) _selectedColors[0] = c;
             }
             //Shadow
-            if (Application.Current.Resources.TryGetValue("Background", out var colorSh))
+            if (Application.Current.Resources.TryGetValue("BackgroundLighted", out var colorSh))
             {
                 if (colorSh is Color c) _unselectedColors[1] = c;
             }
@@ -301,7 +301,7 @@ public partial class SavedDeviceViewModel : ObservableObject
                 if (linkColorSh is Color c) _selectedColors[1] = c;
             }
             //Light
-            if (Application.Current.Resources.TryGetValue("BackgroundLight", out var colorLi))
+            if (Application.Current.Resources.TryGetValue("Background", out var colorLi))
             {
                 if (colorLi is Color c) _unselectedColors[2] = c;
             }

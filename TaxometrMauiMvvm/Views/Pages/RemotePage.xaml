@@ -19,19 +19,30 @@
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
+        <Border
+            VerticalOptions="Start"
+            Margin="-1.5, -10, -1.5, -1.5"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+            HeightRequest="100"
+            ZIndex="14">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+        </Border>
         <StackLayout
             VerticalOptions="Start"
             HorizontalOptions="Start"
             Margin="25"
             WidthRequest="45"
             HeightRequest="45"
-            ZIndex="50">
+            ZIndex="15">
             <Border
                 WidthRequest="50"
                 HeightRequest="50"
                 Padding="10"
+                StrokeThickness="2"
                 BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
-                Stroke="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+                Stroke="{StaticResource BackgroundLightGray}">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="50"/>
                 </Border.StrokeShape>
@@ -42,7 +53,7 @@
                     <ImageButton.Source>
                         <FontImageSource
                             FontFamily="IconsSolid"
-                            Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                            Color="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"
                             Glyph="{StaticResource IconMenuBars}"/>
                     </ImageButton.Source>
                 </ImageButton>
@@ -63,7 +74,8 @@
                 <Label
                     Text="Нет подключенного устройства"
                     FontSize="Title"
-                    Style="{StaticResource TitleText}"/>
+                    Style="{StaticResource TitleText}"
+                    TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"/>
                 <Button
                     HorizontalOptions="Center"
                     Text="{Binding DevicesBtnText}"
@@ -80,7 +92,8 @@
                 HorizontalOptions="Center"
                 Text="{Binding Message}"
                 FontSize="Title"
-                Style="{StaticResource TitleText}"/>
+                Style="{StaticResource TitleText}"
+                TextColor="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"/>
 
             <Grid
                 VerticalOptions="EndAndExpand"

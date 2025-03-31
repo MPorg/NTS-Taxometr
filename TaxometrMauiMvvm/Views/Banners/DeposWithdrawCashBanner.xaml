@@ -8,7 +8,7 @@
              BackgroundColor="Transparent">
     <Grid
         ColumnDefinitions="*, 3*, *"
-        RowDefinitions="*, 0.5*, *"
+        RowDefinitions="1*, Auto, 5*"
         BackgroundColor="Transparent"
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
@@ -16,60 +16,56 @@
             Grid.Column="1"
             Grid.Row="1"
             HorizontalOptions="FillAndExpand"
-            Padding="5"    
-            BackgroundColor="{StaticResource BackgroundDarked}"
-            Stroke="Transparent">
+            Padding="10"    
+            StrokeThickness="5"
+            Stroke="{StaticResource BackgroundDarked}"
+            Background="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}">
             <Border.StrokeShape>
                 <RoundRectangle
-                    CornerRadius="35"/>
+                    CornerRadius="20"/>
             </Border.StrokeShape>
-            <Border
-                Padding="10"
-                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}"
-                Stroke="Transparent"
-                HorizontalOptions="FillAndExpand">
-                <Border.StrokeShape>
-                    <RoundRectangle
-                        CornerRadius="30"/>
-                </Border.StrokeShape>
-                <StackLayout>
+            <StackLayout>
 
-                    <Label
-                        x:Name="Header"
-                        TextColor="{StaticResource TextDark}"
-                        FontSize="Large"
-                        HorizontalTextAlignment="Center"
-                        HorizontalOptions="FillAndExpand"/>
-                    <Entry
-                        x:Name="CashEntry"
-                        Keyboard="Numeric"
-                        TextColor="{StaticResource TextDark}"
-                        PlaceholderColor="{StaticResource TextColoredDark}"
-                        Placeholder="0,00"
-                        HorizontalOptions="Fill"
-                        TextChanged="CashEntry_TextChanged"
-                        Completed="CashEntry_Completed"
-                        Unfocused="CashEntry_Unfocused"
-                        FontSize="Large"/>
+                <Label
+                    x:Name="Header"
+                    TextColor="{StaticResource TextDark}"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="FillAndExpand"/>
+                <Entry
+                    x:Name="CashEntry"
+                    Keyboard="Numeric"
+                    TextColor="{StaticResource TextDark}"
+                    PlaceholderColor="{StaticResource TextColoredDark}"
+                    Placeholder="0,00"
+                    HorizontalOptions="Fill"
+                    TextChanged="CashEntry_TextChanged"
+                    Completed="CashEntry_Completed"
+                    Unfocused="CashEntry_Unfocused"
+                    FontSize="Large"/>
 
-                    <Grid
-                        VerticalOptions="EndAndExpand"
-                        ColumnDefinitions=".5*, .5*"
-                        ColumnSpacing="10">
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="End"
+                    Spacing="10">
 
-                        <Button
-                            x:Name="CancelBtn"
-                            Text="Отмена"
-                            Clicked="OnCancelBtn_Clicked"/>
+                    <Button
+                        x:Name="CancelBtn"
+                        Text="Отмена"
+                        VerticalOptions="FillAndExpand"
+                        Style="{StaticResource InverceButton}"
+                        Clicked="OnCancelBtn_Clicked"/>
 
-                        <Button
-                            Grid.Column="1"
-                            x:Name="EnterBtn"
-                            Text="ОК"
-                            Clicked="OnEnterBtnClicked"/>
-                    </Grid>
+                    <Button
+                        Grid.Column="1"
+                        x:Name="EnterBtn"
+                        Text="ОК"
+                        VerticalOptions="FillAndExpand"
+                        Style="{StaticResource InverceButton}"
+                        HorizontalOptions="EndAndExpand"
+                        Clicked="OnEnterBtnClicked"/>
                 </StackLayout>
-            </Border>
+            </StackLayout>
         </Border>
     </Grid>
 </ContentPage>

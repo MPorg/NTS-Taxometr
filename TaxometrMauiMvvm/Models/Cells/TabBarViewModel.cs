@@ -45,7 +45,7 @@ public partial class TabBarViewModel : ObservableObject
         }
         else
         {
-            if (Application.Current.Resources.TryGetValue("TextLight", out var color1))
+            if (Application.Current.Resources.TryGetValue("TextDark", out var color1))
             {
                 if (color1 is Color c) _deselectedColor = c;
             }

@@ -14,6 +14,7 @@ public partial class SignInPage : ContentPage
         _app = currentApp;
         _page = page;
         _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
     private void Button_Clicked(object sender, EventArgs e)
