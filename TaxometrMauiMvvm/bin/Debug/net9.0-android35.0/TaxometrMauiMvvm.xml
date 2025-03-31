@@ -585,6 +585,12 @@
         <member name="P:TaxometrMauiMvvm.Models.Pages.SearchViewModel.AddCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Pages.SearchViewModel.Add(Plugin.BLE.Abstractions.Contracts.IDevice)"/>.</summary>
         </member>
+        <member name="T:TaxometrMauiMvvm.Models.Pages.SignIn.SignInViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Pages.SignIn.SignInViewModel.LoginBtnIsEnuble">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Pages.SignIn.SignInViewModel._loginBtnIsEnuble"/>
+        </member>
         <member name="M:TaxometrMauiMvvm.Services.ProviderExtentions.RC4(System.Byte[],System.String,System.Int32)">
             <summary>
             returns encoded data
@@ -924,6 +930,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Devices">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Devices" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LoginBtnIsEnuble">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LoginBtnIsEnuble" generated properties.</summary>
+        </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
             <summary>
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
@@ -1127,6 +1136,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Devices">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Devices" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LoginBtnIsEnuble">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LoginBtnIsEnuble" generated properties.</summary>
         </member>
     </members>
 </doc>

@@ -76,6 +76,18 @@ public partial class DriveViewModel : ObservableObject
         }
     }
 
+    private void SwitchBan(bool isBan)
+    {
+        if (isBan)
+        {
+            BlockBannerIsVisible = false;
+        }
+        else
+        {
+            BlockBannerIsVisible = true;
+        }
+    }
+
     [RelayCommand]
     private async void DeposWithdrawCash(string key)
     {
@@ -108,7 +120,11 @@ public partial class DriveViewModel : ObservableObject
     [RelayCommand]
     private async Task OpenCheck()
     {
-        await AppData.GetOpenCheckBanner();
+        if (!await AppData.GetOpenCheckBanner())
+        {
+            await Task.Delay(100);
+            IsLoaded = false;
+        }
         _doNotApearing = true;
         _waitLoadOnApearing = true;
     }
@@ -143,6 +159,7 @@ public partial class DriveViewModel : ObservableObject
     private bool _isFirstInit = true;
     public async Task OnAppearing()
     {
+        //SwitchBan(true);
         _isAppearing = true;
         if (_isFirstInit)
         {

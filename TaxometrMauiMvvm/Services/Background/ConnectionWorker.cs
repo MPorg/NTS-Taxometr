@@ -7,7 +7,7 @@ using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace TaxometrMauiMvvm.Services.Background;
 
-[Service (Name = "com.nts.taxometr.ConnectionWorker", ForegroundServiceType = Android.Content.PM.ForegroundService.TypeManifest, Exported = true, Enabled = true)]
+[Service (Name = "com.nts.taxometr.ConnectionWorker", ForegroundServiceType = Android.Content.PM.ForegroundService.TypeSpecialUse, Exported = true, Enabled = true)]
 public class ConnectionWorker : Service
 {
     public override IBinder OnBind(Intent intent)

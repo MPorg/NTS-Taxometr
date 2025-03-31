@@ -60,6 +60,17 @@ public partial class PrintViewModel : ObservableObject
             IsLoaded = false;
         }
     }
+    private void SwitchBan(bool isBan)
+    {
+        if (isBan)
+        {
+            BlockBannerIsVisible = false;
+        }
+        else
+        {
+            BlockBannerIsVisible = true;
+        }
+    }
 
     [RelayCommand]
     private async Task PrintReceiptOrSwitchMode(string key)
@@ -72,6 +83,7 @@ public partial class PrintViewModel : ObservableObject
     private bool _isFirstInit = true;
     public async Task OnAppearing()
     {
+        //SwitchBan(true);
         _isAppearing = true;
         if (_isFirstInit)
         {

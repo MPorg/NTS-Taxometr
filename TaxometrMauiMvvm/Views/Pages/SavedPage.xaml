@@ -27,7 +27,7 @@
             Command="{Binding DeleteCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
-                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                    Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                     Size="80"
                     FontFamily="IconsSolid"
                     Glyph="{StaticResource IconTrash}"/>
@@ -36,66 +36,66 @@
     </ContentPage.ToolbarItems>
     <StackLayout
         HorizontalOptions="Fill"
-        Padding="10, 25, 10, 10"
+        Padding="0, 25, 0, -10"
         Spacing="25"
-        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
-        <StackLayout
-            Orientation="Horizontal"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+        <Grid
             VerticalOptions="Start"
             HorizontalOptions="Fill"
+            ColumnDefinitions="2*, 4*, 2*"
+            ColumnSpacing="5"
             Margin="14, 0, 14, 0">
-            <StackLayout
-                Orientation="Horizontal"
+            <Border
                 HorizontalOptions="Start"
-                Spacing="5">
-                <Border
-                    HorizontalOptions="Start"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    Padding="10"
-                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
-                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="50"/>
-                    </Border.StrokeShape>
+                WidthRequest="50"
+                HeightRequest="50"
+                Padding="10"
+                StrokeThickness="2"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                Stroke="{AppThemeBinding Dark={StaticResource BackgroundLightGray}, Light={StaticResource BackgroundLightGray}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="100"/>
+                </Border.StrokeShape>
 
-                    <ImageButton
-                        x:Name="FlayoutBtn"
-                        Clicked="FlayoutBtn_Clicked">
-                        <ImageButton.Source>
-                            <FontImageSource
-                                FontFamily="IconsSolid"
-                                Color="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
-                                Glyph="{StaticResource IconMenuBars}"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Border>
+                <ImageButton
+                    x:Name="FlayoutBtn"
+                    Clicked="FlayoutBtn_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="IconsSolid"
+                            Color="{AppThemeBinding Light={StaticResource TextDark}, Dark={StaticResource TextDark}}"
+                            Glyph="{StaticResource IconMenuBars}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Border>
 
-                <Label
-                    Style="{StaticResource TitleText}"
-                    Text="Сохранённые устройства"/>
-            </StackLayout>
+            <Label
+                Grid.Column="1"
+                Style="{StaticResource TitleText}"
+                Text="Сохранённые устройства"/>
 
             <StackLayout
+                Grid.Column="2"
                 Orientation="Horizontal"
-                HorizontalOptions="EndAndExpand"
-                Spacing="5">
-                
+                Spacing="5"
+                ZIndex="10">
                 <Border
+                    HorizontalOptions="EndAndExpand"
                     WidthRequest="50"
                     HeightRequest="50"
                     Padding="10"
-                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
-                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundLightGray}, Light={StaticResource BackgroundLightGray}}">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="50"/>
+                        <RoundRectangle CornerRadius="100"/>
                     </Border.StrokeShape>
 
                     <ImageButton
                         Command="{Binding SelectAllCommand}">
                         <ImageButton.Source>
                             <FontImageSource
-                                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
+                                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
                                 Size="80"
                                 FontFamily="IconsSolid"
                                 Glyph="{StaticResource IconSelectBox}"/>
@@ -108,8 +108,9 @@
                     WidthRequest="50"
                     HeightRequest="50"
                     Padding="10"
-                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}"
-                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}"
+                    Stroke="{AppThemeBinding Dark={StaticResource BackgroundLightGray}, Light={StaticResource BackgroundLightGray}}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="50"/>
                     </Border.StrokeShape>
@@ -119,21 +120,21 @@
                         Command="{Binding DeleteCommand}">
                         <ImageButton.Source>
                             <FontImageSource
-                                Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
-                                Size="80"
-                                FontFamily="IconsSolid"
-                                Glyph="{StaticResource IconTrash}"/>
+                            Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextDark}}"
+                            Size="80"
+                            FontFamily="IconsSolid"
+                            Glyph="{StaticResource IconTrash}"/>
                         </ImageButton.Source>
                     </ImageButton>
                 </Border>
             </StackLayout>
-        </StackLayout>
+        </Grid>
         <Border
             Padding="5"
             VerticalOptions="FillAndExpand"
             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarkGray}, Light={StaticResource BackgroundLightGray}}">
             <Border.StrokeShape>
-                <RoundRectangle CornerRadius="40"/>
+                <RoundRectangle CornerRadius="15"/>
             </Border.StrokeShape>
 
             <CollectionView

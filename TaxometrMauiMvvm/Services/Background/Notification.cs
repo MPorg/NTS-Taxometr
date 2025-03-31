@@ -5,6 +5,7 @@ using Android.Content;
 using Android.OS;
 using AndroidX.Core.App;
 using Resource = Microsoft.Maui.Resource;
+using MAUIApp = Microsoft.Maui.Controls.Application;
 
 namespace TaxometrMauiMvvm.Services.Background;
 
@@ -26,11 +27,24 @@ public static class Notification
         var pendingActivityIntent = PendingIntent.GetBroadcast(context, 0, intent, pendingIntentFlags);
         var pendingIntent = PendingIntent.GetActivity(context, 0, intent, pendingIntentFlags);
 
+        int color = 0;
+
+        if (MAUIApp.Current.Resources.TryGetValue("BackgroundDarked", out var colorStr))
+        {
+            if (colorStr is Color color1)
+            {
+                color = color1.ToInt();
+            }
+        }
 
         var notifBuilder = new NotificationCompat.Builder(context, foregroundChannelId)
             .SetContentTitle(title)
             .SetContentText(text)
-            .SetSmallIcon(Resource.Mipmap.appicon_round)
+            .SetColor(color)
+            .SetColorized(true)
+            .SetSmallIcon(Resource.Drawable.notif_icon)
+            .SetStyle(new NotificationCompat.DecoratedCustomViewStyle())
+            .SetAutoCancel(false)
             .SetContentIntent(pendingIntent);
 
         if (hasBtn)

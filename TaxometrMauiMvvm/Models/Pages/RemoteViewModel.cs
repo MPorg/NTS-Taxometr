@@ -59,6 +59,17 @@ public partial class RemoteViewModel : ObservableObject
             BlockBannerIsVisible = true;
         }
     }
+    private void SwitchBan(bool isBan)
+    {
+        if (isBan)
+        {
+            BlockBannerIsVisible = false;
+        }
+        else
+        {
+            BlockBannerIsVisible = true;
+        }
+    }
 
     private Dictionary<ProviderBLE.ButtonKey, Action> _lastKeysActions = new Dictionary<ProviderBLE.ButtonKey, Action>();
     [RelayCommand]
@@ -136,6 +147,8 @@ public partial class RemoteViewModel : ObservableObject
     public void OnApearing()
     {
         AppData.TabBarViewModel.Transit(to: TabBarViewModel.Transition.Remote);
+
+        //SwitchBan(true);
     }
 
     [RelayCommand]

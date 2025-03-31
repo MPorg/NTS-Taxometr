@@ -480,14 +480,23 @@ namespace TaxometrMauiMvvm.Data
             return result;
         }
 
-        public static async Task GetOpenCheckBanner()
+        public static async Task<bool> GetOpenCheckBanner()
         {
+            bool result = false;
+            bool hasResult = false;
             OpenCheckBanner banner = new OpenCheckBanner();
-            banner.Canceled += ((result) =>
+            banner.Canceled += ((answer) =>
             {
+                result = answer;
+                hasResult = true;
                 MainMenu.Navigation.PopModalAsync(true);
             });
             await MainMenu.Navigation.PushModalAsync(banner, true);
+            while (!hasResult)
+            {
+                await Task.Delay(100);
+            }
+            return result;
         }
 
         public static event Action<bool> CloseCheckBannerAnswer;
@@ -803,10 +812,10 @@ namespace TaxometrMauiMvvm.Data
 
             public static async void SaveLog()
             {
-                if (await Properties.GetDebugMode())
+                /*if (await Properties.GetDebugMode())
                 {
                     Logger.SaveLog();
-                }
+                }*/
             }
         }
     }

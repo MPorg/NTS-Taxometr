@@ -20,7 +20,7 @@
             Stroke="{StaticResource BackgroundDarked}"
             Background="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}">
             <Border.StrokeShape>
-                <RoundRectangle CornerRadius="35"/>
+                <RoundRectangle CornerRadius="20"/>
             </Border.StrokeShape>
             <StackLayout
                 Padding="20"
@@ -46,7 +46,7 @@
                     <Label
                         TextColor="{StaticResource TextDark}"
                         Text="{Binding StartSumText}"
-                        FontSize="Large"
+                        FontSize="Small"
                         HorizontalTextAlignment="End"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"/>
@@ -70,13 +70,13 @@
                             ZIndex="1"
                             TextColor="{StaticResource TextDark}"
                             Text="{Binding DiscallowStrValue}"
-                            FontSize="Large"
+                            FontSize="Small"
                             HorizontalTextAlignment="End"
                             IsVisible="{Binding DiscallowsIsVisible}"
                             IsEnabled="{Binding DiscallowsIsVisible}"/>
 
                         <Button
-                            Margin="0, 3, 0, 0"
+                            Margin="0, 3, -5, 0"
                             Text="+"
                             FontSize="Small"
                             MinimumHeightRequest="25"
@@ -85,6 +85,7 @@
                             CornerRadius="5"
                             HorizontalOptions="End"
                             VerticalOptions="Center"
+                            Style="{StaticResource InverceButton}"
                             Command="{Binding AddDiscountAllowanceCommand}"
                             IsVisible="{Binding DiscallowsIsVisible, Converter={serv:InverseBoolConverter}}"
                             IsEnabled="{Binding DiscallowsIsVisible, Converter={serv:InverseBoolConverter}}"
@@ -107,44 +108,47 @@
                         HorizontalOptions="FillAndExpand"
                         x:Name="DiscountAllownaceGrid"
                         x:DataType="{x:Type cells:DiscountAllowance}"
-                        ColumnDefinitions=".45*, .45*, .5*"
+                        ColumnDefinitions="45*, 45*, 15*"
                         ColumnSpacing="10"
                         RowSpacing="5"
-                        RowDefinitions=".5*, .5*"
-                        Padding="10">
+                        RowDefinitions=".5*, .5*">
                         <Border
-                            Grid.ColumnSpan="2"
+                            Grid.ColumnSpan="3"
                             Grid.RowSpan="2"
-                            Margin="-10, -10, -5, -10"
+                            Margin="-22, -10, -22, -10"
+                            Padding="22, 5, 17, 5"
                             ZIndex="0"
                             VerticalOptions="FillAndExpand"
                             HorizontalOptions="FillAndExpand"
-                            Stroke="{StaticResource BackgroundDarked}"
-                            StrokeThickness="5">
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="10"/>
                             </Border.StrokeShape>
 
                         </Border>
                         <Picker
+                            FontSize="Micro"
                             ItemsSource="{Binding TypeStr}"
                             ItemDisplayBinding="{Binding Converter={serv:EnumTranslateConverter}}"
-                            SelectedItem="{Binding Type}"/>
+                            SelectedItem="{Binding Type}"
+                            TextColor="{StaticResource TextDark}"/>
                         <Picker
+                            FontSize="Micro"
                             Grid.Column="1"
                             ItemsSource="{Binding PayTypeStr}"
                             ItemDisplayBinding="{Binding Converter={serv:EnumTranslateConverter}}"
-                            SelectedItem="{Binding PaymentType}"/>
+                            SelectedItem="{Binding PaymentType}"
+                            TextColor="{StaticResource TextDark}"/>
                         <StackLayout 
                             Orientation="Horizontal"
                             Grid.Row="1"
-                            Grid.ColumnSpan="2"
+                            Grid.ColumnSpan="3"
                             Spacing="5"
                             Padding="0, 0, 5, 0">
                             <Entry
                                 Placeholder="0,00"
                                 Keyboard="Numeric"
-                                FontSize="Large"
+                                FontSize="Small"
                                 HorizontalOptions="FillAndExpand"
                                 HorizontalTextAlignment="End"
                                 TextColor="{Binding ValueColor}"
@@ -152,51 +156,39 @@
                             <Label 
                                 HorizontalOptions="End"
                                 VerticalTextAlignment="Center"
-                                FontSize="Large"
-                                Text="{Binding PaymentType, Converter={serv:TypeToUnitConverter}}"/>
+                                FontSize="Small"
+                                Text="{Binding PaymentType, Converter={serv:TypeToUnitConverter}}"
+                                TextColor="{StaticResource TextDark}"/>
                         </StackLayout>
 
-                        <Border
-                            Margin="-10, -10, -10, -10"
-                            Grid.RowSpan="2"
+                        <Button
+                            Margin="8, -5, -15, 13"
+                            Grid.Row="0"
                             Grid.Column="2"
-                            Padding="20"
-                            Stroke="{StaticResource BackgroundDarked}"
-                            StrokeThickness="5"
-                            BackgroundColor="{StaticResource TextRedLink}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10"/>
-                            </Border.StrokeShape>
-
-                            <ImageButton
-                                Padding="5"
-                                Command="{Binding Path=RemoveDiscountAllowanceCommand, Source={RelativeSource AncestorType={x:Type banners:CloseCheckViewModel}}}">
-                                <ImageButton.Source>
-                                    <FontImageSource
-                                        Size="100"
-                                        FontFamily="IconsSolid"
-                                        Color="{AppThemeBinding Dark={StaticResource TextDark}, Light={StaticResource TextLight}}"
-                                        Glyph="{StaticResource IconTrash}"/>
-                                </ImageButton.Source>
-                            </ImageButton>
-                        </Border>
+                            Padding="0"
+                            FontSize="Small"
+                            Text="x"
+                            BackgroundColor="{StaticResource TextRedLink}"
+                            Command="{Binding Path=RemoveDiscountAllowanceCommand, Source={RelativeSource AncestorType={x:Type banners:CloseCheckViewModel}}}">
+                        </Button>
                     </Grid>
                 </StackLayout>
 
                 <StackLayout
+                    Padding="0, 10, 0, 0"
                     Orientation="Horizontal">
                     <Label
                         BackgroundColor="Transparent"
                         TextColor="{StaticResource TextDark}"
                         Text="Итого"
-                        FontSize="Title"
+                        FontSize="Large"
                         HorizontalTextAlignment="Center"
                         VerticalOptions="Center"/>
 
                     <Label
                         TextColor="{StaticResource TextDark}"
                         Text="{Binding TotalSumText}"
-                        FontSize="Title"
+                        FontSize="Large"
                         HorizontalTextAlignment="End"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"/>
@@ -225,18 +217,18 @@
                     <Label
                         TextColor="{StaticResource TextDark}"
                         Text="{Binding PreviousSumText}"
-                        FontSize="Large"
+                        FontSize="Small"
                         HorizontalTextAlignment="End"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"/>
                 </StackLayout>
 
                 <Border
-                    Margin="-15, 0"
-                    Padding="10, 5"
+                    Margin="-22, 0"
+                    Padding="22, 5, 17, 5"
                     BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDarked}, Light={StaticResource BackgroundLighted}}">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="30"/>
+                        <RoundRectangle CornerRadius="10"/>
                     </Border.StrokeShape>
                     <StackLayout>
                         <StackLayout
@@ -255,7 +247,7 @@
                                 TextColor="{StaticResource TextDark}"
                                 Placeholder="0,00"
                                 Text="{Binding CashPayText}"
-                                FontSize="Large"
+                                FontSize="Small"
                                 ReturnType="Next"
                                 ReturnCommand="{Binding CompleteTextCommand}"
                                 ReturnCommandParameter="Cash"
@@ -280,7 +272,7 @@
                                 TextColor="{Binding CardTextColor}"
                                 Placeholder="0,00"
                                 Text="{Binding CardPayText}"
-                                FontSize="Large"
+                                FontSize="Small"
                                 ReturnType="Next"
                                 ReturnCommand="{Binding CompleteTextCommand}"
                                 ReturnCommandParameter="Card"
@@ -305,7 +297,7 @@
                                 TextColor="{Binding NoncashTextColor}"
                                 Placeholder="0,00"
                                 Text="{Binding NoncashPayText}"
-                                FontSize="Large"
+                                FontSize="Small"
                                 ReturnType="Done"
                                 ReturnCommand="{Binding CompleteTextCommand}"
                                 ReturnCommandParameter="Noncash"
@@ -330,7 +322,7 @@
                     <Label
                         TextColor="{StaticResource TextDark}"
                         Text="{Binding ExtraSumText}"
-                        FontSize="Large"
+                        FontSize="Small"
                         HorizontalTextAlignment="End"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"/>
@@ -343,10 +335,10 @@
                     Orientation="Horizontal">
                     <Label
                         BackgroundColor="Transparent"
-                        FontFamily="Geologica-Bold"
+                        FontFamily="Helvetica-Bold"
                         TextColor="{Binding ErrorColor}"
                         Text="{Binding ErrorMessage}"
-                        FontSize="Large"
+                        FontSize="Micro"
                         HorizontalTextAlignment="Start"
                         MaximumWidthRequest="260"
                         HorizontalOptions="Start"
@@ -361,13 +353,15 @@
                         HorizontalOptions="FillAndExpand"
                         CornerRadius="10"
                         Text="Отмена"
-                        Command="{Binding CancelCommand}"/>
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource InverceButton}"/>
                     <Button
                         IsEnabled="{Binding OkBtnIsEnabled}"
                         HorizontalOptions="FillAndExpand"
                         CornerRadius="10"
                         Text="ОК"
-                        Command="{Binding OkCommand}"/>
+                        Command="{Binding OkCommand}"
+                        Style="{StaticResource InverceButton}"/>
                 </StackLayout>
 
             </StackLayout>

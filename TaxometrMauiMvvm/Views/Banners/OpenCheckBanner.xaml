@@ -6,94 +6,103 @@
              BackgroundColor="Transparent"
              xmlns:banners="clr-namespace:TaxometrMauiMvvm.Models.Banners"
              x:DataType="{x:Type banners:OpenCheckViewModel}">
-    <StackLayout
-        BackgroundColor="Transparent"
-        VerticalOptions="Center"
-        HorizontalOptions="Center">
-        <Border
-            HorizontalOptions="FillAndExpand"
-            Padding="20"
-            StrokeThickness="5"
-            Stroke="{StaticResource BackgroundDarked}"
-            Background="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="35"/>
-            </Border.StrokeShape>
-            <StackLayout
-                HorizontalOptions="FillAndExpand">
-                <Label
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource TextDark}"
-                    Text="Открыть чек"
-                    FontSize="Large"
-                    HorizontalTextAlignment="Center"
-                    VerticalOptions="Center"/>
-
+    <Grid
+        ColumnDefinitions="*, Auto, *"
+        RowDefinitions="1*, Auto, 5*">
+        
+        <StackLayout
+            Grid.Column="1"
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Padding="10"
+                StrokeThickness="5"
+                Stroke="{StaticResource BackgroundDarked}"
+                Background="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource Background}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
                 <StackLayout
-                    Orientation="Horizontal">
+                    HorizontalOptions="FillAndExpand">
                     <Label
                         BackgroundColor="Transparent"
                         TextColor="{StaticResource TextDark}"
-                        Text="Стоимость"
-                        FontSize="Small"
+                        Text="Открыть чек"
+                        FontSize="Large"
                         HorizontalTextAlignment="Center"
                         VerticalOptions="Center"/>
 
-                    <Entry
-                        x:Name="StartSumEntry"
-                        Keyboard="Numeric"
-                        TextColor="{StaticResource TextDark}"
-                        Placeholder="0,00"
-                        Text="{Binding StartSumText}"
-                        FontSize="Large"
-                        ReturnType="Next"
-                        ReturnCommand="{Binding CompleteTextCommand}"
-                        ReturnCommandParameter="S"
-                        HorizontalTextAlignment="End"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="Center"/>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource TextDark}"
+                            Text="Стоимость"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center"/>
+
+                        <Entry
+                            x:Name="StartSumEntry"
+                            Keyboard="Numeric"
+                            TextColor="{StaticResource TextDark}"
+                            Placeholder="0,00"
+                            Text="{Binding StartSumText}"
+                            FontSize="Large"
+                            ReturnType="Next"
+                            ReturnCommand="{Binding CompleteTextCommand}"
+                            ReturnCommandParameter="S"
+                            HorizontalTextAlignment="End"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource TextDark}"
+                            Text="Предоплата"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center"/>
+
+                        <Entry
+                            x:Name="PreSumEntry"
+                            Keyboard="Numeric"
+                            TextColor="{StaticResource TextDark}"
+                            Placeholder="0,00"
+                            Text="{Binding PreviousSumText}"
+                            FontSize="Large"
+                            ReturnType="Done"
+                            ReturnCommand="{Binding CompleteTextCommand}"
+                            ReturnCommandParameter="P"
+                            HorizontalTextAlignment="End"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            CornerRadius="10"
+                            Text="Отмена"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource InverceButton}"/>
+                        <Button
+                            CornerRadius="10"
+                            Text="ОК"
+                            Command="{Binding OkCommand}"
+                            Style="{StaticResource InverceButton}"/>
+                    </StackLayout>
+
                 </StackLayout>
-
-                <StackLayout
-                    Orientation="Horizontal">
-                    <Label
-                        BackgroundColor="Transparent"
-                        TextColor="{StaticResource TextDark}"
-                        Text="Предоплата"
-                        FontSize="Small"
-                        HorizontalTextAlignment="Center"
-                        VerticalOptions="Center"/>
-
-                    <Entry
-                        x:Name="PreSumEntry"
-                        Keyboard="Numeric"
-                        TextColor="{StaticResource TextDark}"
-                        Placeholder="0,00"
-                        Text="{Binding PreviousSumText}"
-                        FontSize="Large"
-                        ReturnType="Done"
-                        ReturnCommand="{Binding CompleteTextCommand}"
-                        ReturnCommandParameter="P"
-                        HorizontalTextAlignment="End"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="Center"/>
-                </StackLayout>
-
-                <StackLayout
-                    Orientation="Horizontal"
-                    Spacing="10">
-                    <Button
-                        CornerRadius="10"
-                        Text="Отмена"
-                        Command="{Binding CancelCommand}"/>
-                    <Button
-                        CornerRadius="10"
-                        Text="ОК"
-                        Command="{Binding OkCommand}"/>
-                </StackLayout>
-
-            </StackLayout>
-        </Border>
+            </Border>
             
-    </StackLayout>
+        </StackLayout>
+    </Grid>
 </ContentPage>

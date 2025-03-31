@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Pages.SignIn"
              x:Class="TaxometrMauiMvvm.Views.Pages.SignIn.SignUpPage"
              NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             x:DataType="{x:Type models:SignUpViewModel}">
     <StackLayout
         Padding="10, 100, 10, 80"
         Spacing="20"
