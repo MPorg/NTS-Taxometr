@@ -10,6 +10,44 @@ namespace TaxometrMauiMvvm.Services
 
     public class ProviderBLE : IDisposable
     {
+
+        #region Params
+
+        public void GetErr(byte cmd, Dictionary<string, string> answer)
+        {
+            ErrMessageReaded?.Invoke(cmd, answer);
+        }
+
+        public event Action<byte, Dictionary<string, string>>? ErrMessageReaded;
+
+        private ProviderState _state = ProviderState.Idle;
+
+        public event Action<byte, Dictionary<string, string>>? AnswerCompleate;
+        private readonly ConcurrentQueue<Action> _cmdQueue = new ConcurrentQueue<Action>();
+        private bool _next = true;
+
+        private readonly static int _logWidth = 60;
+
+        private ICharacteristic? _charactR = null;
+
+        private readonly List<byte> _answerBufer = [];
+
+        private FlcType _lastAnswerFlc = FlcType.NAK;
+        private byte _lastCmd = 0x00;
+        private bool _readFR = false;
+
+        private byte _lastCmdId = 0x00;
+        private byte _currentCmdId = 0x00;
+
+        private string? _serialNumber;
+        private string? _key;
+
+        private int _sentToBleRetry = 0;
+
+        private readonly Timer _statesTimer = new Timer(0);
+
+        #endregion
+
         #region Init
 
         public ProviderBLE()
@@ -230,7 +268,7 @@ namespace TaxometrMauiMvvm.Services
             Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => Timeout  ________________________________");
             var state = _state;
             _state = ProviderState.Idle;
-            if (_retryStop)
+            /*if (_retryStop)
             {
                 if (state == ProviderState.SentFR || state == ProviderState.ReciveFLC_1)
                 {
@@ -238,48 +276,14 @@ namespace TaxometrMauiMvvm.Services
                 }
                 else
                 {
-                    Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
+                    *//*Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
                     _cmdQueue.Clear();
-                    _next = true;
+                    _next = true;*//*
                 }
                 return;
-            }
-            if (state == ProviderState.SentFR || state == ProviderState.ReciveFLC_1) await ReadFR();
-            else if (state == ProviderState.SentData_0) RetryCMD();
+            }*/
+            await ReadFR();
         }
-
-        #endregion
-
-        #region Params
-
-        public void GetErr(byte cmd, Dictionary<string, string> answer)
-        {
-            ErrMessageReaded?.Invoke(cmd, answer);
-        }
-        public event Action<byte, Dictionary<string, string>>? ErrMessageReaded;
-
-        private ProviderState _state = ProviderState.Idle;
-
-        public event Action<byte, Dictionary<string, string>>? AnswerCompleate;
-        private readonly ConcurrentQueue<Action> _cmdQueue = new ConcurrentQueue<Action>();
-        private bool _next = true;
-
-        private readonly static int _logWidth = 60;
-
-        private ICharacteristic? _charactR = null;
-
-        private readonly List<byte> _answerBufer = [];
-
-        private FlcType _lastAnswerFlc = FlcType.NAK;
-        private byte _lastCmd = 0x00;
-        private bool _readFR = false;
-
-        private string? _serialNumber;
-        private string? _key;
-
-        private int _sentToBleRetry = 0;
-
-        private readonly Timer _statesTimer = new Timer(0);
 
         #endregion
 
@@ -491,8 +495,7 @@ namespace TaxometrMauiMvvm.Services
                                 }
                                 if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
                                 {
-                                    if (_state == ProviderState.SentFR) await ReadFR();
-                                    else Retry(true);
+                                    await ReadFR();
                                 }
                             }
                         }
@@ -597,6 +600,7 @@ namespace TaxometrMauiMvvm.Services
 
         private float _retrysCount = 0;
         private int _maxRetrysCount = 15;
+
         private async Task<bool> ReadDataAsync(byte[] bufer)
         {
             try
@@ -607,6 +611,10 @@ namespace TaxometrMauiMvvm.Services
                 {
                     List<byte> data = new List<byte>(bufer);
                     data.RemoveRange(0, 6);
+                    _currentCmdId = data[0];
+
+                    DebugByteStr(new byte[2] {_lastCmdId,  _currentCmdId}, placeholder: "____________________________________Отправлен пакет | получен пакет:");
+
                     byte rnd = data[2];
 
                     List<byte> dataForEncode = new List<byte>(data);
@@ -635,6 +643,15 @@ namespace TaxometrMauiMvvm.Services
                     }
                 }
 
+                if (answer.TryGetValue("err", out string? errVal))
+                {
+                    if (errVal == "cmdId")
+                    {
+                        return true;
+                    }
+                }
+
+
                 if (answer.TryGetValue("errCode", out string? value))
                 {
                     if (value == ENET_FR_IN_PROGRESS.ToString("x2"))
@@ -657,7 +674,7 @@ namespace TaxometrMauiMvvm.Services
                                         int max = _maxRetrysCount;
                                         await EmitButton(ButtonKey.C, 1, true);
                                         await Task.Delay(500);
-                                        if (max >= 0) RetryCMD(cmd);
+                                        //if (max >= 0) RetryCMD(cmd);
                                     }
                                 });
                             }
@@ -696,38 +713,6 @@ namespace TaxometrMauiMvvm.Services
             }
         }
 
-        public async void Retry(bool retCmd = false)
-        {
-            if (_retrysCount >= _maxRetrysCount)
-            {
-                _retrysCount = 0;
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    if (AppData.MainMenu != null && await AppData.MainMenu.DisplayAlert
-                    ("Не удалось выполнить комаанду", "Пожалуйста, убедитесь, что на экране таксометра не открыто окно ввода", "<C>", "Понятно                  "))
-                    {
-                        byte cmd = _lastCmd;
-                        int max = _maxRetrysCount;
-                        await EmitButton(ButtonKey.C, 1, true);
-                        await Task.Delay(500);
-                        if (max >=0 ) RetryCMD(cmd);
-                    }
-                });
-                return;
-            }
-            else
-            {
-                float delay = .02f;
-                await Task.Delay((int)(delay * 1000));
-                _retrysCount+=delay;
-                //_readFR = true;
-                if(retCmd) 
-                    RetryCMD();
-                else
-                    await ReadFR();
-            }
-        }
-
         #endregion
 
         #region CMD
@@ -752,7 +737,8 @@ namespace TaxometrMauiMvvm.Services
                 _answerBufer.Clear();
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
-                byte id = (byte)new Random().Next(0, 256);
+                byte id = _lastCmdId;
+                //_lastCmdId = id; DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = FrRead;
@@ -810,6 +796,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ScnoState;
@@ -870,6 +858,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = TaxInfo;
@@ -927,6 +917,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = TaxState;
@@ -992,7 +984,10 @@ namespace TaxometrMauiMvvm.Services
                 _answerBufer.Clear();
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
-                byte id = (byte)new Random().Next(0, 256);
+                //byte id = (byte)new Random().Next(0, 256);
+                byte id = 0x00;
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ShiftState;
@@ -1064,6 +1059,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = SwitchMode;
@@ -1146,6 +1143,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = BtnEmit;
@@ -1208,6 +1207,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = ShiftOpen;
@@ -1289,6 +1290,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id;
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CashDeposWithdraw;
@@ -1352,6 +1355,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckState;
@@ -1414,6 +1419,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckOpen;
@@ -1489,6 +1496,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckClose;
@@ -1562,6 +1571,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id;
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckBreak;
@@ -1619,6 +1630,8 @@ namespace TaxometrMauiMvvm.Services
                 List<byte> data = new List<byte>();
                 List<byte> dataForEncode = new List<byte>();
                 byte id = (byte)new Random().Next(0, 256);
+                _lastCmdId = id; 
+                DebugByteStr(new byte[1]{id}, "______________________________________________________ID: ");
                 byte flag = _key == "000000" ? (byte)0 : (byte)1;
                 byte rnd = (byte)new Random().Next(0, 256);
                 byte cmd = CheckDuplicate;
@@ -1657,6 +1670,14 @@ namespace TaxometrMauiMvvm.Services
         {
             var result = BaseAnsw(data, false);
 
+            if (result.TryGetValue("err", out string? value))
+            {
+                if (value == "cmdId")
+                {
+                    return result;
+                }
+            }
+
             try
             {
                 if (result.TryGetValue("errCode", out string? errCode))
@@ -1692,6 +1713,14 @@ namespace TaxometrMauiMvvm.Services
         private Dictionary<string, string> TaxsInfoAnsw(byte[] data)
         {
             var result = BaseAnsw(data, false);
+
+            if (result.TryGetValue("err", out string? value))
+            {
+                if (value == "cmdId")
+                {
+                    return result;
+                }
+            }
 
             try
             {
@@ -1736,6 +1765,14 @@ namespace TaxometrMauiMvvm.Services
         {
             var result = BaseAnsw(data, false);
 
+            if (result.TryGetValue("err", out string? value))
+            {
+                if (value == "cmdId")
+                {
+                    return result;
+                }
+            }
+
             try
             {
                 if (result.TryGetValue("errCode", out string? errCode))
@@ -1778,6 +1815,14 @@ namespace TaxometrMauiMvvm.Services
         private Dictionary<string, string> TaxStateAnsw(byte[] data)
         {
             var result = BaseAnsw(data, false);
+
+            if (result.TryGetValue("err", out string? value))
+            {
+                if (value == "cmdId")
+                {
+                    return result;
+                }
+            }
 
             try
             {
@@ -1828,6 +1873,14 @@ namespace TaxometrMauiMvvm.Services
         {
             var result = BaseAnsw(data, false);
 
+            if (result.TryGetValue("err", out string? value))
+            {
+                if (value == "cmdId")
+                {
+                    return result;
+                }
+            }
+
             try
             {
                 if (result.TryGetValue("errCode", out string? errCode))
@@ -1869,6 +1922,14 @@ namespace TaxometrMauiMvvm.Services
         {
             var result = BaseAnsw(data, false);
 
+            if (result.TryGetValue("err", out string? value))
+            {
+                if (value == "cmdId")
+                {
+                    return result;
+                }
+            }
+
             try
             {
                 if (result.TryGetValue("errCode", out string? errCode))
@@ -1904,46 +1965,54 @@ namespace TaxometrMauiMvvm.Services
         {
             try
             {
-                byte cmd = data[0];
-                byte errCode = data[1];
-                if (errCode != ENET_OK)
+                if (_lastCmdId != _currentCmdId)
                 {
-                    var result = new Dictionary<string, string>
-                    {
-                        { nameof(errCode), errCode.ToString("x2") },
-                        { "Ошибка: ", ErrCodes[errCode] },
-                        { "cmd", cmd.ToString("x2")}
-                    };
-
-                    if (errCode == ENET_SYS_ERROR)
-                    {
-                        ushort wideErrCode = BitConverter.ToUInt16(data, 2);
-                        byte msgFlag = data[4];
-                        result.Add(nameof(wideErrCode), wideErrCode.ToString("x2"));
-                        if(msgFlag == 1)
-                        {
-                            string answ = Encoding.GetEncoding(1251).GetString(data, 5, 65);
-                            result.Add(nameof(answ), answ);
-                        }
-
-                    }
-
-
-                    if (invoke) AnswerCompleate?.Invoke(cmd, result);
-
-                    return result;
+                    RetryCMD();
+                    return new Dictionary<string, string>{ {"err" , "cmdId"} };
                 }
                 else
                 {
-                    var result = new Dictionary<string, string>
+                    byte cmd = data[0];
+                    byte errCode = data[1];
+                    if (errCode != ENET_OK)
                     {
-                        { nameof(errCode), errCode.ToString("x2") },
-                        { "Ответ: ", ErrCodes[errCode] },
-                        { "cmd", cmd.ToString("x2")}
-                    };
-                    if (invoke) AnswerCompleate?.Invoke(cmd, result);
+                        var result = new Dictionary<string, string>
+                        {
+                            { nameof(errCode), errCode.ToString("x2") },
+                            { "Ошибка: ", ErrCodes[errCode] },
+                            { "cmd", cmd.ToString("x2")}
+                        };
 
-                    return result;
+                        if (errCode == ENET_SYS_ERROR)
+                        {
+                            ushort wideErrCode = BitConverter.ToUInt16(data, 2);
+                            byte msgFlag = data[4];
+                            result.Add(nameof(wideErrCode), wideErrCode.ToString("x2"));
+                            if(msgFlag == 1)
+                            {
+                                string answ = Encoding.GetEncoding(1251).GetString(data, 5, 65);
+                                result.Add(nameof(answ), answ);
+                            }
+
+                        }
+
+
+                        if (invoke) AnswerCompleate?.Invoke(cmd, result);
+
+                        return result;
+                    }
+                    else
+                    {
+                        var result = new Dictionary<string, string>
+                        {
+                            { nameof(errCode), errCode.ToString("x2") },
+                            { "Ответ: ", ErrCodes[errCode] },
+                            { "cmd", cmd.ToString("x2")}
+                        };
+                        if (invoke) AnswerCompleate?.Invoke(cmd, result);
+
+                        return result;
+                    }
                 }
             }
             catch (Exception e)
