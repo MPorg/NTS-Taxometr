@@ -19,6 +19,14 @@ File=Resources\Fonts\Basic\Geologica-SemiBold.ttf;Link=;Alias=
 File=Resources\Fonts\Basic\Geologica-SemiBoldItalic.ttf;Link=;Alias=
 File=Resources\Fonts\Basic\Geologica-Thin.ttf;Link=;Alias=
 File=Resources\Fonts\Basic\Geologica-ThinItalic.ttf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_bold.otf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_boldoblique.otf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_cyr_boldoblique.ttf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_cyr_oblique.ttf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_light.otf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_lightoblique.otf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_oblique.otf;Link=;Alias=
+File=Resources\Fonts\Helvetica\helvetica_regular.otf;Link=;Alias=
 File=Resources\Fonts\IconFont\Font Awesome 6 Brands-Regular-400.otf;Link=;Alias=
 File=Resources\Fonts\IconFont\Font Awesome 6 Free-Regular-400.otf;Link=;Alias=
 File=Resources\Fonts\IconFont\Font Awesome 6 Free-Solid-900.otf;Link=;Alias=

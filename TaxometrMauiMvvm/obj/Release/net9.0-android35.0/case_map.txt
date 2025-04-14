@@ -10,6 +10,8 @@ animation\nav_modal_default_enter_anim;animation\nav_modal_default_enter_anim
 animation\nav_modal_default_exit_anim;animation\nav_modal_default_exit_anim
 drawable\maui_splash;drawable\maui_splash
 drawable\maui_splash_image;drawable\maui_splash_image
+drawable\splash_image;drawable\splash_image
+drawable\splash_image_notif;drawable\splash_image_notif
 drawable\splash_screen;drawable\splash_screen
 layout\drawer_layout;layout\drawer_layout
 layout\flyoutcontent;compatibility\Android\Resources\layout\flyoutcontent
