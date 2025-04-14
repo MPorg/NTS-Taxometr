@@ -5,9 +5,9 @@
     Изменения, внесенные в этот файл, могут привести к неправильному поведению и будут потеряны
     в случае повторного создания содержимого.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.nts.taxometr" android:versionCode="17" android:versionName="2.2.3.2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.nts.taxometr" android:versionCode="18" android:versionName="2.3.0.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MANIFEST" android:minSdkVersion="34" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" android:minSdkVersion="34" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
@@ -30,6 +30,7 @@
   <uses-permission android:name="android.permission.FULL_SCREEN" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
   <queries>
     <intent>
@@ -60,7 +61,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <service android:name="com.nts.taxometr.ConnectionWorker" android:enabled="true" android:exported="true" android:foregroundServiceType="connectedDevice|dataSync|location|mediaPlayback|mediaProjection|phoneCall|camera|microphone|health|remoteMessaging|systemExempted|shortService|specialUse" />
+    <service android:name="com.nts.taxometr.ConnectionWorker" android:enabled="true" android:exported="true" android:foregroundServiceType="specialUse" />
     <provider android:name="mono.MonoRuntimeProvider" android:authorities="com.nts.taxometr.mono.MonoRuntimeProvider.__mono_init__" android:exported="false" android:initOrder="1999999999" />
     <provider android:name="androidx.startup.InitializationProvider" android:authorities="com.nts.taxometr.androidx-startup" android:exported="false" tools:node="merge">
       <meta-data android:name="androidx.profileinstaller.ProfileInstallerInitializer" android:value="androidx.startup" />

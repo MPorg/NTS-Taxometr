@@ -98,9 +98,9 @@ public partial class SplashScreen : ContentPage
             await Task.Delay(3000);
             await InitAppData();
 
-            await Navigation.PushAsync(new SignInPage(signIn, _app, menu));
+            //await Navigation.PushAsync(new SignInPage(signIn, _app, menu));
 
-            //_app.Windows[0].Page = menu;
+            _app.Windows[0].Page = menu;
         }
     }
     private async Task InitAppData()

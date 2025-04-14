@@ -5,9 +5,9 @@
     Изменения, внесенные в этот файл, могут привести к неправильному поведению и будут потеряны
     в случае повторного создания содержимого.
     -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nts.taxometr" android:versionCode="17" android:versionName="2.2.3.2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nts.taxometr" android:versionCode="18" android:versionName="2.3.0.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MANIFEST" android:minSdkVersion="34" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" android:minSdkVersion="34" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
@@ -30,8 +30,9 @@
   <uses-permission android:name="android.permission.FULL_SCREEN" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-  <application android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="Таксометр ГЕОМЕР-122 by NTS" android:requestLegacyExternalStorage="true" android:theme="@style/Theme.FullScreen" android:name="crc641d3742157ba7c7b0.MainApplication" android:extractNativeLibs="true">
+  <application android:allowBackup="true" android:supportsRtl="true" android:label="Таксометр ГЕОМЕР-122 by NTS" android:requestLegacyExternalStorage="true" android:theme="@style/Theme.FullScreen" android:icon="@mipmap/appicon" android:name="crc641d3742157ba7c7b0.MainApplication" android:extractNativeLibs="true">
     <receiver android:name="com.nts.taxometr.notif_btn_res" />
     <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="crc6468b6408a11370c2f.WebAuthenticatorIntermediateActivity" />
     <provider android:authorities="com.nts.taxometr.fileProvider" android:exported="false" android:grantUriPermissions="true" android:name="microsoft.maui.essentials.fileProvider">
@@ -48,7 +49,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <service android:enabled="true" android:exported="true" android:foregroundServiceType="connectedDevice|dataSync|location|mediaPlayback|mediaProjection|phoneCall|camera|microphone|health|remoteMessaging|systemExempted|shortService|specialUse" android:name="com.nts.taxometr.ConnectionWorker" />
+    <service android:enabled="true" android:exported="true" android:foregroundServiceType="specialUse" android:name="com.nts.taxometr.ConnectionWorker" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="1999999999" android:authorities="com.nts.taxometr.mono.MonoRuntimeProvider.__mono_init__" />
   </application>
   <queries>

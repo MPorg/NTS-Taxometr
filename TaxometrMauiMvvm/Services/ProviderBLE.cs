@@ -66,7 +66,36 @@ namespace TaxometrMauiMvvm.Services
         private async Task<bool> TrySetStateAndDo(ProviderState newState, Task<bool> delegateBool)
         {
             Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => {newState}  ________________________________");
-            if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_0)
+
+            if (newState == ProviderState.SentFLC_2)
+            {
+                if (await delegateBool)
+                {
+                    Debug.WriteLine("-----------------Timer stop, next = true----------------");
+                    _statesTimer.Stop();
+                    _state = ProviderState.Idle;
+                    _extreamCleare = false;
+                    _next = true;
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                if (await delegateBool)
+                {
+                    Debug.WriteLine("-----------------Timer restert 3000ms----------------");
+                    _statesTimer.SetMaxMillis(1500);
+                    _statesTimer.Restart();
+                    _state = newState;
+                    _extreamCleare = false;
+                    return true;
+                }
+                return false;
+            }
+
+
+            /*if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_0)
             {
                 if (await delegateBool)
                 {
@@ -150,7 +179,7 @@ namespace TaxometrMauiMvvm.Services
                 }
                 return false;
             }
-            return false;
+            return false;*/
         }
 
         private bool TrySetStateAndDo(ProviderState newState, Action? action)
