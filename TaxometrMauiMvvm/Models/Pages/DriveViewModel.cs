@@ -120,13 +120,13 @@ public partial class DriveViewModel : ObservableObject
     [RelayCommand]
     private async Task OpenCheck()
     {
+        _doNotApearing = true;
+        _waitLoadOnApearing = true;
         if (!await AppData.GetOpenCheckBanner())
         {
             await Task.Delay(100);
             IsLoaded = false;
         }
-        _doNotApearing = true;
-        _waitLoadOnApearing = true;
     }
 
     bool _waitCloseCheck = false;
