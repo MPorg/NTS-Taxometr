@@ -63,39 +63,43 @@ namespace TaxometrMauiMvvm.Services
             }
         }
 
-        private async Task<bool> TrySetStateAndDo(ProviderState newState, Task<bool> delegateBool)
+        private async Task<bool> TrySetStateAndDo(ProviderState newState, Task<bool> delegateBool, bool isForReadFR = false)
         {
             Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => {newState}  ________________________________");
 
-            if (newState == ProviderState.SentFLC_2)
+            if (isForReadFR)
             {
-                if (await delegateBool)
+                if (newState == ProviderState.SentFLC_2)
                 {
-                    Debug.WriteLine("-----------------Timer stop, next = true----------------");
-                    _statesTimer.Stop();
-                    _state = ProviderState.Idle;
-                    _extreamCleare = false;
-                    _next = true;
-                    return true;
+                    if (await delegateBool)
+                    {
+                        Debug.WriteLine("-----------------Timer stop, next = true----------------");
+                        _statesTimer.Stop();
+                        _state = ProviderState.Idle;
+                        _extreamCleare = false;
+                        _retryStop = false;
+                        _next = true;
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-            else
-            {
-                if (await delegateBool)
+                else
                 {
-                    Debug.WriteLine("-----------------Timer restert 3000ms----------------");
-                    _statesTimer.SetMaxMillis(1500);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    return true;
+                    if (await delegateBool)
+                    {
+                        Debug.WriteLine("-----------------Timer restert 3000ms----------------");
+                        _statesTimer.SetMaxMillis(1500);
+                        _statesTimer.Restart();
+                        _state = newState;
+                        _retryStop = false;
+                        _extreamCleare = false;
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
             }
 
-
-            /*if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_0)
+            if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_0)
             {
                 if (await delegateBool)
                 {
@@ -103,6 +107,7 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Restart();
                     _state = newState;
                     _extreamCleare = false;
+                    _retryStop = false;
                     return true;
                 }
                 return false;
@@ -115,6 +120,7 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Restart();
                     _state = newState;
                     _extreamCleare = false;
+                    _retryStop = false;
                     return true;
                 }
                 return false;
@@ -127,6 +133,7 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Restart();
                     _state = newState;
                     _extreamCleare = false;
+                    _retryStop = false;
                     return true;
                 }
                 return false;
@@ -139,6 +146,7 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Restart();
                     _state = newState;
                     _extreamCleare = false;
+                    _retryStop = false;
                     return true;
                 }
                 return false;
@@ -151,6 +159,7 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Restart();
                     _state = newState;
                     _extreamCleare = false;
+                    _retryStop = false;
                     return true;
                 }
                 return false;
@@ -163,6 +172,7 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Restart();
                     _state = newState;
                     _extreamCleare = false;
+                    _retryStop = false;
                     return true;
                 }
                 return false;
@@ -174,17 +184,42 @@ namespace TaxometrMauiMvvm.Services
                     _statesTimer.Stop();
                     _state = ProviderState.Idle;
                     _extreamCleare = false;
+                    _retryStop = false;
                     _next = true;
                     return true;
                 }
                 return false;
             }
-            return false;*/
+            return false;
         }
 
         private bool TrySetStateAndDo(ProviderState newState, Action? action)
         {
             Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => {newState}  ________________________________");
+
+            /*if (newState == ProviderState.SentFLC_2)
+            {
+                Debug.WriteLine("-----------------Timer stop, next = true----------------");
+                _statesTimer.Stop();
+                _state = ProviderState.Idle;
+                _extreamCleare = false;
+                action?.Invoke();
+                _retryStop = false;
+                _next = true;
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("-----------------Timer restert 3000ms----------------");
+                _statesTimer.SetMaxMillis(1500);
+                _statesTimer.Restart();
+                _state = newState;
+                _extreamCleare = false;
+                _retryStop = false;
+                action?.Invoke();
+                return true;
+            }*/
+
             if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_0)
             {
                 _statesTimer.SetMaxMillis(500);
@@ -277,7 +312,7 @@ namespace TaxometrMauiMvvm.Services
                             bool res = !_extreamCleare;
                             if (!res)
                             {
-                                _retryStop = true;
+                                //_retryStop = true;
                             }
                             else
                             {
@@ -297,6 +332,7 @@ namespace TaxometrMauiMvvm.Services
             Debug.WriteLine($"_________________________ {_statesTimer.CurrentTime} - {_state} => Timeout  ________________________________");
             var state = _state;
             _state = ProviderState.Idle;
+            if (_retryStop) return;
             /*if (_retryStop)
             {
                 if (state == ProviderState.SentFR || state == ProviderState.ReciveFLC_1)
@@ -305,9 +341,9 @@ namespace TaxometrMauiMvvm.Services
                 }
                 else
                 {
-                    *//*Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
+                    Debug.WriteLine($"Extreem Clear {_cmdQueue.Count}");
                     _cmdQueue.Clear();
-                    _next = true;*//*
+                    _next = true;
                 }
                 return;
             }*/
@@ -350,7 +386,7 @@ namespace TaxometrMauiMvvm.Services
             await Task.Delay(100);
             _sentToBleRetry++;
 
-            if (_sentToBleRetry <= 10)
+            if (_sentToBleRetry <= 50)
             {
                 await SentToBLE(data);
                 return false;
@@ -359,20 +395,12 @@ namespace TaxometrMauiMvvm.Services
             {
                 bool c = true;
                 _retryStop = true;
-                if (AppData.MainMenu != null && await AppData.MainMenu.DisplayAlert("Не удалось отправить сообщение", "Возможно, потеряно подключение", "", "Ок"))
+                MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
-                        await AppData.SpecialDisconnect();
-                    });
-                }
-                else
-                {
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
-                        await AppData.SpecialDisconnect();
-                    });
-                }
+                    await AppData.SpecialDisconnect();
+                });
+                await AppData.MainMenu.DisplayAlert("Не удалось отправить сообщение", "Возможно, потеряно подключение", "Ок");
+                
                 _sentToBleRetry = 0;
                 return c;
             }
@@ -473,7 +501,7 @@ namespace TaxometrMauiMvvm.Services
             NAK = 0xE0
         }
 
-        public async Task SentFlc(FlcType type, bool fromFr = false, bool lastFLC = false)
+        public async Task SentFlc(FlcType type, bool fromFr = false, bool lastFLC = false, bool isForReadFR = false)
         {
             DebugLine();
             AppData.Debug.WriteLine($"Отправка квитанции: {type}");
@@ -485,7 +513,7 @@ namespace TaxometrMauiMvvm.Services
             if (_serialNumber == null) return;
             data[4] = CRC7(_serialNumber, data[2], data[3]);
 
-            await TrySetStateAndDo(lastFLC ? ProviderState.SentFLC_2 : fromFr ? ProviderState.SentFLC_1 : ProviderState.SentFLC_0, SentToBLE(data));
+            await TrySetStateAndDo(lastFLC ? ProviderState.SentFLC_2 : fromFr ? ProviderState.SentFLC_1 : ProviderState.SentFLC_0, SentToBLE(data), isForReadFR);
         }
 
         private async Task ReadFlc(byte[] data)
@@ -534,16 +562,13 @@ namespace TaxometrMauiMvvm.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"______________Ошибка: {ex.Message}________________"); 
-                if ((int)_state >= (int)ProviderState.SentFR || (int)_state == (int)ProviderState.ReciveFLC_0)
-                {
-                    _state = ProviderState.ReciveFLC_0;
-                    _statesTimer.SetMaxMillis(500);
-                    _statesTimer.Restart();
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    await ReadFR();
-                }
+                Debug.WriteLine($"______________Ошибка: {ex.Message}________________");
+                _state = ProviderState.ReciveFLC_0;
+                _statesTimer.SetMaxMillis(500);
+                _statesTimer.Restart();
+                _extreamCleare = false;
+                _retryStop = false;
+                await ReadFR();
             }
         }
 
@@ -724,17 +749,13 @@ namespace TaxometrMauiMvvm.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"______________Ошибка: {ex.Message}________________");
-                if ((int)_state >= (int)ProviderState.SentFR || (int)_state == (int)ProviderState.ReciveFLC_0)
-                {
-                    _state = ProviderState.ReciveFLC_0;
-                    _statesTimer.SetMaxMillis(500);
-                    _statesTimer.Restart();
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    await ReadFR();
-                    return true;
-                }
-                return false;
+                _state = ProviderState.ReciveFLC_0;
+                _statesTimer.SetMaxMillis(500);
+                _statesTimer.Restart();
+                _extreamCleare = false;
+                _retryStop = false;
+                await ReadFR();
+                return true;
             }  
             finally
             {
@@ -748,8 +769,9 @@ namespace TaxometrMauiMvvm.Services
 
         public async Task ReadFR()
         {
-            await SentFlc(FlcType.ACK);
-            await SentFlc(FlcType.DATA, true);
+            await Task.Delay(500);
+            await SentFlc(FlcType.ACK, isForReadFR: true);
+            await SentFlc(FlcType.DATA, true, isForReadFR: true);
 
             AppData.Debug.WriteLine($"Отправка команды \"Чтение ФР\"");
 

@@ -803,11 +803,10 @@ namespace TaxometrMauiMvvm.Data
             {
                 if (await Properties.GetDebugMode())
                 {
-                    System.Diagnostics.Debug.WriteLine(v);
+                    //System.Diagnostics.Debug.WriteLine(v);
                     //if (specialDbg) Logger.LogSpecial($"[{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}] {v}");
                     //else Logger.Log($"[{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}] {v}");
                 }
-
             }
 
             public static async void SaveLog()
