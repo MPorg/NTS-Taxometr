@@ -1,7 +1,9 @@
-﻿using Plugin.BLE.Abstractions.Contracts;
+﻿using Java.Nio.FileNio;
+using Plugin.BLE.Abstractions.Contracts;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using TaxometrMauiMvvm.Data;
 using static TaxometrMauiMvvm.Services.ProviderExtentions;
 
@@ -71,124 +73,59 @@ namespace TaxometrMauiMvvm.Services
             {
                 if (newState == ProviderState.SentFLC_2)
                 {
-                    if (await delegateBool)
-                    {
-                        Debug.WriteLine("-----------------Timer stop, next = true----------------");
-                        _statesTimer.Stop();
-                        _state = ProviderState.Idle;
-                        _extreamCleare = false;
-                        _retryStop = false;
-                        _next = true;
-                        return true;
-                    }
-                    return false;
+                    return await SetStateAnswer(500, ProviderState.Idle, delegateBool, true);
                 }
                 else
                 {
-                    if (await delegateBool)
-                    {
-                        Debug.WriteLine("-----------------Timer restert 3000ms----------------");
-                        _statesTimer.SetMaxMillis(1500);
-                        _statesTimer.Restart();
-                        _state = newState;
-                        _retryStop = false;
-                        _extreamCleare = false;
-                        return true;
-                    }
-                    return false;
+                    return await SetStateAnswer(1500, newState, delegateBool);
                 }
             }
 
             if ((_state == ProviderState.Idle || _state == ProviderState.SentFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_0)
             {
-                if (await delegateBool)
-                {
-                    _statesTimer.SetMaxMillis(500);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    return true;
-                }
-                return false;
+                return await SetStateAnswer(500, newState, delegateBool);
             }
             else if (_state == ProviderState.SentFLC_0 && newState == ProviderState.SentData_0)
             {
-                if (await delegateBool)
-                {
-                    _statesTimer.SetMaxMillis(3000);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    return true;
-                }
-                return false;
+                return await SetStateAnswer(3000, newState, delegateBool);
             }
             else if ((_state == ProviderState.SentData_0 || _state == ProviderState.SentFR) && newState == ProviderState.ReciveFLC_0)
             {
-                if (await delegateBool)
-                {
-                    _statesTimer.SetMaxMillis(3000);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    return true;
-                }
-                return false;
+                return await SetStateAnswer(3000, newState, delegateBool);
             }
             else if ((_state == ProviderState.ReciveFLC_0 || _state == ProviderState.Idle || _state == ProviderState.SentFLC_0) && newState == ProviderState.SentFLC_1)
             {
-                if (await delegateBool)
-                {
-                    _statesTimer.SetMaxMillis(500);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    return true;
-                }
-                return false;
+                return await SetStateAnswer(500, newState, delegateBool);
             }
             else if (_state == ProviderState.SentFLC_1 && newState == ProviderState.SentFR)
             {
-                if (await delegateBool)
-                {
-                    _statesTimer.SetMaxMillis(3000);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    return true;
-                }
-                return false;
+                return await SetStateAnswer(3000, newState, delegateBool);
             }
             else if (_state == ProviderState.ReciveFLC_0 && newState == ProviderState.ReciveFLC_1)
             {
-                if (await delegateBool)
-                {
-                    _statesTimer.SetMaxMillis(500);
-                    _statesTimer.Restart();
-                    _state = newState;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    return true;
-                }
-                return false;
+                return await SetStateAnswer(500, newState, delegateBool);
             }
             else if ((_state == ProviderState.ReciveFLC_1 || _state == ProviderState.ReciveFLC_0) && newState == ProviderState.SentFLC_2)
             {
-                if (await delegateBool)
+                return await SetStateAnswer(500, ProviderState.Idle, delegateBool, true);
+            }
+            return false;
+        }
+
+        private async Task<bool> SetStateAnswer(int timerTime, ProviderState newState, Task<bool> action, bool stop = false)
+        {
+            if (await action)
+            {
+                if (stop) _statesTimer.Stop();
+                else
                 {
-                    _statesTimer.Stop();
-                    _state = ProviderState.Idle;
-                    _extreamCleare = false;
-                    _retryStop = false;
-                    _next = true;
-                    return true;
+                    _statesTimer.SetMaxMillis(timerTime);
+                    _statesTimer.Restart();
                 }
-                return false;
+                _state = newState;
+                _extreamCleare = false;
+                _retryStop = false;
+                return true;
             }
             return false;
         }
@@ -347,7 +284,11 @@ namespace TaxometrMauiMvvm.Services
                 }
                 return;
             }*/
-            await ReadFR();
+            if (state != ProviderState.Idle)
+            {
+                await Task.Delay(100);
+                await ReadFR();
+            }
         }
 
         #endregion
@@ -549,10 +490,26 @@ namespace TaxometrMauiMvvm.Services
                                     {
                                         await SentFlc(FlcType.ACK, false, true);
                                     }
+                                    else
+                                    {
+                                        _state = ProviderState.ReciveFLC_0;
+                                        _statesTimer.SetMaxMillis(500);
+                                        _statesTimer.Restart();
+                                        _extreamCleare = false;
+                                        _retryStop = false;
+                                        await Task.Delay(100);
+                                        await ReadFR();
+                                    }
                                 }
-                                if (flcCleare == (byte)FlcType.NAK || flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
+                                if (flcCleare == (byte)FlcType.BUSY || flcCleare == (byte)FlcType.RST)
                                 {
+                                    Debug.WriteLine("Have RST");
+                                    await Task.Delay(100);
                                     await ReadFR();
+                                }
+                                else if (flcCleare == (byte)FlcType.NAK)
+                                {
+                                    await SentFlc(FlcType.ACK, false, true);
                                 }
                             }
                         }
@@ -568,6 +525,7 @@ namespace TaxometrMauiMvvm.Services
                 _statesTimer.Restart();
                 _extreamCleare = false;
                 _retryStop = false;
+                await Task.Delay(100);
                 await ReadFR();
             }
         }
@@ -727,9 +685,15 @@ namespace TaxometrMauiMvvm.Services
                                         byte cmd = _lastCmd;
                                         int max = _maxRetrysCount;
                                         await EmitButton(ButtonKey.C, 1, true);
+                                        _extreamCleare = true;
                                         await Task.Delay(500);
-                                        //if (max >= 0) RetryCMD(cmd);
+                                        if (max >= 0) RetryCMD(cmd);
                                     }
+                                    else
+                                    {
+                                        _extreamCleare = true;
+                                    }
+
                                 });
                             }
                             else
@@ -749,13 +713,7 @@ namespace TaxometrMauiMvvm.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"______________Ошибка: {ex.Message}________________");
-                _state = ProviderState.ReciveFLC_0;
-                _statesTimer.SetMaxMillis(500);
-                _statesTimer.Restart();
-                _extreamCleare = false;
-                _retryStop = false;
-                await ReadFR();
-                return true;
+                return false;
             }  
             finally
             {

@@ -111,7 +111,7 @@ public partial class SplashScreen : ContentPage
 
         await AppData.CheckBLE(this);
         await AppData.CheckLockation(this);
-
+        //AppData.ResetAutoConnect();
         await AppData.Initialize();
     }
 

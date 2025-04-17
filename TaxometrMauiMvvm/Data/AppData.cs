@@ -49,6 +49,11 @@ namespace TaxometrMauiMvvm.Data
 
         private static bool cont = false;
 
+        public static void ResetAutoConnect()
+        {
+            _isFirstConnection = true;
+        }
+
         private static bool _isFirstConnection = true;
 
         public static MainMenu? MainMenu { get; set; } = null;
@@ -803,7 +808,7 @@ namespace TaxometrMauiMvvm.Data
             {
                 if (await Properties.GetDebugMode())
                 {
-                    //System.Diagnostics.Debug.WriteLine(v);
+                    System.Diagnostics.Debug.WriteLine(v);
                     //if (specialDbg) Logger.LogSpecial($"[{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}] {v}");
                     //else Logger.Log($"[{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}] {v}");
                 }

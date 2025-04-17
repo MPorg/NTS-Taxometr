@@ -1,7 +1,4 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using TaxometrMauiMvvm.Data.DataBase.Objects;
 
 namespace TaxometrMauiMvvm.Data.DataBase

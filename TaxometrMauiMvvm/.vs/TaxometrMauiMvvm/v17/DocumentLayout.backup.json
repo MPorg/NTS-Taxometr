@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\platforms\\android\\androidmanifest.xml||{4E01A4BC-CFCF-452C-8C08-51352512D197}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:platforms\\android\\androidmanifest.xml||{4E01A4BC-CFCF-452C-8C08-51352512D197}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\services\\providerble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:services\\providerble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\services\\background\\buttonextras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:services\\background\\buttonextras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\services\\background\\notificationbuttonreciver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:services\\background\\notificationbuttonreciver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\models\\pages\\driveviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:models\\pages\\driveviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\splashscreen.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\splashscreen.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\mainmenu.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|c:\\vs\\git\\tax-3.0\\nts-taxometr\\taxometrmauimvvm\\views\\pages\\splashscreen.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{647974D6-9422-44B5-BD5D-B06346FC4FDC}|TaxometrMauiMvvm.csproj|solutionrelative:views\\pages\\splashscreen.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 258,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -61,21 +73,62 @@
               "Name": "ST:0:0:{7d1a5679-04f2-3f4a-851f-855baa54731c}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{13b29bd0-3807-335c-9cad-ba55364c29cb}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AndroidManifest.xml",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Platforms\\Android\\AndroidManifest.xml",
+              "RelativeDocumentMoniker": "Platforms\\Android\\AndroidManifest.xml",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Platforms\\Android\\AndroidManifest.xml",
+              "RelativeToolTip": "Platforms\\Android\\AndroidManifest.xml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2025-04-16T11:58:56.835Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NotificationButtonReciver.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Services\\Background\\NotificationButtonReciver.cs",
+              "RelativeDocumentMoniker": "Services\\Background\\NotificationButtonReciver.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Services\\Background\\NotificationButtonReciver.cs",
+              "RelativeToolTip": "Services\\Background\\NotificationButtonReciver.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T11:32:27.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ButtonExtras.cs",
+              "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Services\\Background\\ButtonExtras.cs",
+              "RelativeDocumentMoniker": "Services\\Background\\ButtonExtras.cs",
+              "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Services\\Background\\ButtonExtras.cs",
+              "RelativeToolTip": "Services\\Background\\ButtonExtras.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T11:32:04.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "AppData.cs",
               "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Data\\AppData.cs",
               "RelativeDocumentMoniker": "Data\\AppData.cs",
               "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Data\\AppData.cs",
               "RelativeToolTip": "Data\\AppData.cs",
-              "ViewState": "AgIAABgDAAAAAAAAAAAQwCUDAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAMwDUAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-14T13:49:43.667Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "MainMenu.xaml.cs",
               "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\MainMenu.xaml.cs",
               "RelativeDocumentMoniker": "MainMenu.xaml.cs",
@@ -83,25 +136,24 @@
               "RelativeToolTip": "MainMenu.xaml.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T09:23:10.878Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T09:23:10.878Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "SplashScreen.xaml.cs",
               "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SplashScreen.xaml.cs",
               "RelativeDocumentMoniker": "Views\\Pages\\SplashScreen.xaml.cs",
               "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Views\\Pages\\SplashScreen.xaml.cs",
               "RelativeToolTip": "Views\\Pages\\SplashScreen.xaml.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAuwGAAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAFgAAAAAAAAAAADwv3EAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-14T07:18:42.143Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
@@ -109,25 +161,24 @@
               "RelativeToolTip": "App.xaml.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T07:18:18.213Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T07:18:18.213Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "DriveViewModel.cs",
               "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Pages\\DriveViewModel.cs",
               "RelativeDocumentMoniker": "Models\\Pages\\DriveViewModel.cs",
               "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Pages\\DriveViewModel.cs",
               "RelativeToolTip": "Models\\Pages\\DriveViewModel.cs",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAnwIwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAO8AAAAAAAAAAAAkwLsAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-14T06:43:30.758Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "OpenCheckViewModel.cs",
               "DocumentMoniker": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Models\\Banners\\OpenCheckViewModel.cs",
               "RelativeDocumentMoniker": "Models\\Banners\\OpenCheckViewModel.cs",
@@ -135,8 +186,7 @@
               "RelativeToolTip": "Models\\Banners\\OpenCheckViewModel.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAewCIAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T06:31:01.269Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T06:31:01.269Z"
             },
             {
               "$type": "Document",
@@ -146,7 +196,7 @@
               "RelativeDocumentMoniker": "Services\\ProviderBLE.cs",
               "ToolTip": "C:\\VS\\Git\\TAX-3.0\\NTS-Taxometr\\TaxometrMauiMvvm\\Services\\ProviderBLE.cs",
               "RelativeToolTip": "Services\\ProviderBLE.cs",
-              "ViewState": "AgIAAC8FAAAAAAAAAAAowC4FAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAJsCAAAAAAAAAAAUwLUCAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-31T08:03:45.618Z",
               "EditorCaption": ""
