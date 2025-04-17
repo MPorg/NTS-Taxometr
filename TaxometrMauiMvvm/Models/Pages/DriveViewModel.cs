@@ -145,7 +145,7 @@ public partial class DriveViewModel : ObservableObject
         _waitCloseCheck = false;
         _doNotApearing = true;
         _waitLoadOnApearing = result;
-
+        IsLoaded = true;
     }
 
     [RelayCommand]
@@ -286,10 +286,10 @@ public partial class DriveViewModel : ObservableObject
             (await AppData.Provider()).AnswerCompleate -= OnProvider_AnswerCompleate;
             if (!string.IsNullOrEmpty(surrender))
             {
-                await SurrenderMessage(surrender);
                 CheckIsOpened = false;
                 _doNotApearing = true;
                 IsLoaded = false;
+                await SurrenderMessage(surrender);
             }
         }
     }
