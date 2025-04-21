@@ -3,6 +3,7 @@ using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Models.Pages.SignIn;
 using TaxometrMauiMvvm.Platforms.Android.Services;
+using TaxometrMauiMvvm.Services.Background;
 using TaxometrMauiMvvm.Views.Pages;
 using TaxometrMauiMvvm.Views.Pages.SignIn;
 
@@ -16,14 +17,14 @@ namespace TaxometrMauiMvvm
         SplashScreen _splashScreen;
         SignInViewModel _signInViewModel;
 
-        public App(SignInViewModel signIn, IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService)
+        public App(SignInViewModel signIn, IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService, DownloadReceiver downloadReceiver)
         {
             InitializeComponent();
             _tMaker = toastMaker;
             _notificationService = notificationService;
             _backgroundConnectionController = backgroundConnectionController;
             _signInViewModel = signIn;
-            AppData.SetDependencyServices(toastMaker, settingsManager, keyboard, backgroundConnectionController, notificationService);
+            AppData.Inject(toastMaker, settingsManager, keyboard, backgroundConnectionController, notificationService, downloadReceiver);
             //Start();
         }
 

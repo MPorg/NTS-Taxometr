@@ -59,6 +59,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Ban
 build_metadata.AdditionalFiles.TargetPath = Views\Banners\AutoconnectBanner.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Banners\AutoconnectBanner.xaml
 
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/AutoUpdateBanner.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.AutoUpdateBanner.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Banners\AutoUpdateBanner.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Banners\AutoUpdateBanner.xaml
+
 [C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/CloseCheckBanner.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.CloseCheckBanner.xaml
@@ -88,6 +94,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.OpenCheckBanner.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Banners\OpenCheckBanner.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Banners\OpenCheckBanner.xaml
+
+[C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Banners/UpdateCompleateBanner.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TaxometrMauiMvvm.Views.Banners.UpdateCompleateBanner.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Banners\UpdateCompleateBanner.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Banners\UpdateCompleateBanner.xaml
 
 [C:/VS/Git/TAX-3.0/NTS-Taxometr/TaxometrMauiMvvm/Views/Cells/SavedDeviceViewCell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
