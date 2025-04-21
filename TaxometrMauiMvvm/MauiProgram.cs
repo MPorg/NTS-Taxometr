@@ -93,11 +93,13 @@ namespace TaxometrMauiMvvm
 
             builder.Services.AddSingleton<TabBarViewModel>();
 
+
             builder.Services.AddTransient<IToastMaker, ToastMaker>();
             builder.Services.AddTransient<ISettingsManager, SettingsManager>();
             builder.Services.AddTransient<IKeyboard, Platforms.Android.Services.Keyboard>();
             builder.Services.AddTransient<IBackgroundConnectionController, BackgroundConnectionController>();
             builder.Services.AddTransient<INotificationService, NotificationService>();
+            builder.Services.AddSingleton<DownloadReceiver>();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 #if DEBUG

@@ -1039,6 +1039,9 @@ taxometrmauimvvm.MainApplication;crc641d3742157ba7c7b0.MainApplication
 TaxometrMauiMvvm.Services.Background.ConnectionWorker, TaxometrMauiMvvm;com.nts.taxometr.ConnectionWorker
 TaxometrMauiMvvm.Services.Background.ConnectionWorker;com.nts.taxometr.ConnectionWorker
 com.nts.taxometr.ConnectionWorker;com.nts.taxometr.ConnectionWorker
+TaxometrMauiMvvm.Services.Background.DownloadReceiver, TaxometrMauiMvvm;com.nts.taxometr.download_res
+TaxometrMauiMvvm.Services.Background.DownloadReceiver;com.nts.taxometr.download_res
+com.nts.taxometr.download_res;com.nts.taxometr.download_res
 TaxometrMauiMvvm.Services.Background.NotificationButtonReciver, TaxometrMauiMvvm;com.nts.taxometr.notif_btn_res
 TaxometrMauiMvvm.Services.Background.NotificationButtonReciver;com.nts.taxometr.notif_btn_res
 com.nts.taxometr.notif_btn_res;com.nts.taxometr.notif_btn_res

@@ -2529,3 +2529,5 @@ C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Debug\net9.0-android35.0\res
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Debug\net9.0-android35.0\resizetizer\r\mipmap-xxxhdpi\splash_image_notif_round.png
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Debug\net9.0-android35.0\res\drawable\splash_image_notif.png
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Debug\net9.0-android35.0\resizetizer\r\drawable\notif_icon.png
+C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Debug\net9.0-android35.0\res\xml\file_paths.xml
+C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Debug\net9.0-android35.0\android\src\com\nts\taxometr\download_res.java
