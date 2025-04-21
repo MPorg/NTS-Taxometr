@@ -74,6 +74,9 @@ public partial class SplashScreen : ContentPage
         }
         else
         {
+            await AppData.TcpRequester.CheckForUpdates(this);
+
+
             if (AppData.MainMenu != null)
             {
                 _notificationService.CloseNotifications();

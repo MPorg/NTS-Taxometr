@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaxometrMauiMvvm.Views.Banners.UpdateCompleateBanner"
+             xmlns:models="clr-namespace:TaxometrMauiMvvm.Models.Banners"
+             Title="UpdateCompleateBanner"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="Transparent"
+             x:DataType="{x:Type models:UpdateCompleateViewModel}">
+    <StackLayout
+        VerticalOptions="Center"
+        Padding="20"
+        Spacing="10">
+        <Border
+            HeightRequest="300"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <StackLayout
+                Padding="15"
+                Spacing="10">
+                <Label 
+                    FontFamily="Helvetica-Bold"
+                    FontSize="Large"
+                    Text="Что нового?"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+                <Label
+                    HorizontalOptions="Center"
+                    FontSize="Small"
+                    Text="{Binding Version}"/>
+                <ScrollView
+                    HeightRequest="240"
+                    x:Name="CheckList">
+                    <StackLayout>
+                        <Label
+                            Text="{Binding CheckList}"/>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </Border>
+        <Button
+            x:Name="OkBtn"
+            Text="ОК"
+            Clicked="OkBtn_Clicked"/>
+    </StackLayout>
+</ContentPage>

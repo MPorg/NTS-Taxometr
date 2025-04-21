@@ -5,7 +5,7 @@
     Изменения, внесенные в этот файл, могут привести к неправильному поведению и будут потеряны
     в случае повторного создания содержимого.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.nts.taxometr" android:versionCode="18" android:versionName="2.3.0.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.nts.taxometr" android:versionCode="19" android:versionName="2.3.1.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" android:minSdkVersion="34" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -32,6 +32,7 @@
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW" />
@@ -46,6 +47,10 @@
   <uses-permission android:name="com.nts.taxometr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
   <application android:name="crc641d3742157ba7c7b0.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/appicon" android:label="Таксометр ГЕОМЕР-122 by NTS" android:requestLegacyExternalStorage="true" android:supportsRtl="true" android:theme="@style/Theme.FullScreen">
     <receiver android:name="com.nts.taxometr.notif_btn_res" />
+    <receiver android:name="com.nts.taxometr.download_res" android:enabled="false" android:exported="false" />
+    <provider android:name="androidx.core.content.FileProvider" android:authorities="com.nts.taxometr.fileprovider" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+    </provider>
     <activity android:name="crc641d3742157ba7c7b0.MainActivity" android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:exported="true" android:launchMode="singleTop" android:theme="@style/Theme.FullScreen">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

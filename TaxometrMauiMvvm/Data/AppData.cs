@@ -9,6 +9,7 @@ using TaxometrMauiMvvm.Interfaces;
 using TaxometrMauiMvvm.Views.Banners;
 using static TaxometrMauiMvvm.Services.ProviderBLE;
 using TaxometrMauiMvvm.Models.Cells;
+using TaxometrMauiMvvm.Services.Background;
 
 namespace TaxometrMauiMvvm.Data
 {
@@ -43,6 +44,16 @@ namespace TaxometrMauiMvvm.Data
                 await _provider.Initialize();
             }
             return _provider;
+        }
+
+        private static TcpRequester _tcpRequester;
+        public static TcpRequester TcpRequester
+        {
+            get
+            {
+                if (_tcpRequester == null) _tcpRequester = new TcpRequester();
+                return _tcpRequester;
+            }
         }
 
         public static TabBarViewModel TabBarViewModel { get; set; }
@@ -177,17 +188,21 @@ namespace TaxometrMauiMvvm.Data
         private static IKeyboard _keyboard;
         private static IBackgroundConnectionController _backgroundConnectionController;
         private static INotificationService _notificationService;
+        private static DownloadReceiver _downloadReceiver;
 
         private static bool _initializationCompleate = false;
         public static bool InitializationCompleate => _initializationCompleate;
 
-        public static void SetDependencyServices(IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService)
+        public static void Inject(IToastMaker toastMaker, ISettingsManager settingsManager, IKeyboard keyboard, IBackgroundConnectionController backgroundConnectionController, INotificationService notificationService, DownloadReceiver downloadReceiver)
         {
             _toastMaker = toastMaker;
             _settingsManager = settingsManager;
             _keyboard = keyboard;
             _backgroundConnectionController = backgroundConnectionController;
             _notificationService = notificationService;
+            _downloadReceiver = downloadReceiver;
+
+            TcpRequester.Inject(_downloadReceiver);
         }
 
         public static async Task Initialize()
