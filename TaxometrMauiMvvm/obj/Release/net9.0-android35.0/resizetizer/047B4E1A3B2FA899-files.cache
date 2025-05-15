@@ -1,4 +1,6 @@
-﻿obj\Release\net9.0-android35.0\resizetizer\r\drawable\icon.png
+﻿obj\Release\net9.0-android35.0\resizetizer\r\drawable\fg_icon.png
+obj\Release\net9.0-android35.0\resizetizer\r\drawable\fg_icon_round.png
+obj\Release\net9.0-android35.0\resizetizer\r\drawable\icon.png
 obj\Release\net9.0-android35.0\resizetizer\r\drawable\notif_icon.png
 obj\Release\net9.0-android35.0\resizetizer\r\drawable\splash_image.png
 obj\Release\net9.0-android35.0\resizetizer\r\drawable\stock_driver.png

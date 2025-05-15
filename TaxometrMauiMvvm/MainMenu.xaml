@@ -29,7 +29,7 @@
                         HeightRequest="220"
                         Padding="0, 20, 0, 0">
                         <Image
-                            Source="{AppThemeBinding Dark=taxi_2.jpg, Light=taxi_3.jpg}"
+                            Source="taxi_2.jpg"
                             HeightRequest="200"
                             Opacity="1.0"
                             Aspect="AspectFill"
@@ -82,7 +82,8 @@
                                             Offset="0.99"/>
                                     </LinearGradientBrush>
                                 </StackLayout.Background>
-
+                                
+                                <!--
                                 <ImageButton
                                     Margin="5"
                                     WidthRequest="80"
@@ -93,6 +94,8 @@
                                     Aspect="AspectFill"
                                     Source="stock_driver.png">
                                 </ImageButton>
+                                -->
+                                
                                 <Border
                                     BackgroundColor="Transparent"
                                     Stroke="Transparent"

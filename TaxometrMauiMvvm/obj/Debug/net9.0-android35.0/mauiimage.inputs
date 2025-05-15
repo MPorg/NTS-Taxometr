@@ -4,11 +4,12 @@ File=Resources\Images\icon.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIc
 File=Resources\Images\splash_image.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\splash_image_svg.svg;Link=;BaseSize=512,512;Resize=;TintColor=;Color=#142F5F;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\stock_driver.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
+File=Resources\AppIcon\fg_icon.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\AppIcon\notif_icon.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\Taxis\taxi_1.jpeg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\Taxis\taxi_2.jpeg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\Taxis\taxi_3.jpeg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\Taxis\taxi_4.jpeg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
-File=Resources\AppIcon\appicon.svg;Link=;BaseSize=;Resize=;TintColor=#F9BA00;Color=#00235F;IsAppIcon=True;ForegroundScale=;ForegroundFile=Resources\AppIcon\appiconfg.svg
+File=Resources\AppIcon\appicon.svg;Link=;BaseSize=;Resize=;TintColor=#F9BA00;Color=;IsAppIcon=True;ForegroundScale=;ForegroundFile=Resources\AppIcon\appiconfg.svg
 File=Resources\AppIcon\appiconfg.svg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=True;ForegroundScale=;ForegroundFile=
 File=Resources\AppIcon\splash_image_notif.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=True;ForegroundScale=;ForegroundFile=
