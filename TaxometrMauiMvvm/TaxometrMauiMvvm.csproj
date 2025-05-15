@@ -32,12 +32,7 @@
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android35.0|AnyCPU'">
@@ -51,7 +46,8 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00235F" TintColor="#F9BA00" />
+    <!--<MauiIcon Include="Resources\AppIcon\appiconfg.svg" Color="#00FFFFFF" TintColor="#F9BA00" />-->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" TintColor="#F9BA00" />
 		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
     
 		<!-- Splash Screen -->
@@ -110,6 +106,8 @@
 	  <None Remove="Platforms\Android\Resources\drawable\splash_screen.xml" />
 	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
+	  <None Remove="Resources\AppIcon\fg_icon.png" />
+	  <None Remove="Resources\AppIcon\icon.xml" />
 	  <None Remove="Resources\AppIcon\notif_icon.png" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-Black.ttf" />
 	  <None Remove="Resources\Fonts\Basic\Geologica-BlackItalic.ttf" />
@@ -223,6 +221,7 @@
 
 	<ItemGroup>
 	  <MauiIcon Include="Resources\AppIcon\splash_image_notif.png" />
+	  <MauiImage Include="Resources\AppIcon\fg_icon.png" />
 	  <MauiImage Include="Resources\AppIcon\notif_icon.png" />
 	  <MauiImage Include="Resources\Images\Taxis\taxi_1.jpeg">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>

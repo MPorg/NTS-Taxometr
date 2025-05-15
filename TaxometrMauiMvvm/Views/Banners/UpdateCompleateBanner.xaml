@@ -9,42 +9,59 @@
              Shell.TabBarIsVisible="False"
              BackgroundColor="Transparent"
              x:DataType="{x:Type models:UpdateCompleateViewModel}">
-    <StackLayout
-        VerticalOptions="Center"
+    <Grid
+        VerticalOptions="Fill"
         Padding="20"
-        Spacing="10">
+        RowSpacing="20"
+        RowDefinitions="*, Auto, *, 60">
+        <Button 
+            Grid.RowSpan="4"
+            ZIndex="-1"
+            BackgroundColor="Transparent"
+            Clicked="OkBtn_Clicked"
+            Margin="-100"/>
         <Border
-            HeightRequest="300"
+            Grid.Row="1"
+            MinimumHeightRequest="130"
+            MaximumHeightRequest="400"
             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundDark}, Light={StaticResource BackgroundLight}}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10"/>
             </Border.StrokeShape>
-            <StackLayout
+            <Grid
+                RowDefinitions="60, Auto, 30"
                 Padding="15"
-                Spacing="10">
+                RowSpacing="10">
+
                 <Label 
+                    TextColor="{StaticResource TextDark}"
                     FontFamily="Helvetica-Bold"
                     FontSize="Large"
                     Text="Что нового?"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />
-                <Label
-                    HorizontalOptions="Center"
-                    FontSize="Small"
-                    Text="{Binding Version}"/>
                 <ScrollView
-                    HeightRequest="240"
+                    MaximumHeightRequest="170"
+                    Grid.Row="1"
                     x:Name="CheckList">
                     <StackLayout>
                         <Label
+                            TextColor="{StaticResource TextDark}"
                             Text="{Binding CheckList}"/>
                     </StackLayout>
                 </ScrollView>
-            </StackLayout>
+                <Label
+                    Grid.Row="2"
+                    TextColor="{StaticResource TextDark}"
+                    HorizontalOptions="Center"
+                    FontSize="Micro"
+                    Text="{Binding Version}"/>
+            </Grid>
         </Border>
         <Button
+            Grid.Row="3"
             x:Name="OkBtn"
             Text="ОК"
             Clicked="OkBtn_Clicked"/>
-    </StackLayout>
+    </Grid>
 </ContentPage>

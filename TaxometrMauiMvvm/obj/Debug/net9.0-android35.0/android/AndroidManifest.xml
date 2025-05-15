@@ -5,8 +5,8 @@
     Изменения, внесенные в этот файл, могут привести к неправильному поведению и будут потеряны
     в случае повторного создания содержимого.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.nts.taxometr" android:versionCode="19" android:versionName="2.3.1.0">
-  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.nts.taxometr" android:versionCode="22" android:versionName="2.3.1.3">
+  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" android:minSdkVersion="34" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -45,7 +45,7 @@
   </queries>
   <permission android:name="com.nts.taxometr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature" />
   <uses-permission android:name="com.nts.taxometr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-  <application android:name="crc641d3742157ba7c7b0.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/appicon" android:label="Таксометр ГЕОМЕР-122 by NTS" android:requestLegacyExternalStorage="true" android:supportsRtl="true" android:theme="@style/Theme.FullScreen">
+  <application android:name="crc641d3742157ba7c7b0.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@drawable/fg_icon" android:label="NTS TAX" android:requestLegacyExternalStorage="true" android:supportsRtl="true" android:theme="@style/Theme.FullScreen">
     <receiver android:name="com.nts.taxometr.notif_btn_res" />
     <receiver android:name="com.nts.taxometr.download_res" android:enabled="false" android:exported="false" />
     <provider android:name="androidx.core.content.FileProvider" android:authorities="com.nts.taxometr.fileprovider" android:exported="false" android:grantUriPermissions="true">
