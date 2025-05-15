@@ -16,13 +16,13 @@ namespace TaxometrMauiMvvm.Models.Banners
 
         public UpdateCompleateViewModel()
         {
-            _version = AppInfo.VersionString;
+            _version = "Версия: " + AppInfo.VersionString;
             FillCheckList();
         }
 
         private void FillCheckList()
         {
-            CheckList = "Добавлена автоматическая проверка обновлений";
+            CheckList = "Обновлена иконка и название приложения";
         }
     }
 }
