@@ -130,12 +130,18 @@ namespace TaxometrMauiMvvm.Services
             int lenth = await ns.ReadAsync(bufer, cancellationToken);
             string answer = Encoding.ASCII.GetString(bufer, 0, lenth);
             Debug.WriteLine(answer);
+
+            data = Encoding.ASCII.GetBytes("OK");
+            ns.Write(data, 0, data.Length);
+            ns.Flush();
+
             if (lenth == 0)
             {
                 return;
             }
 
             _connectionCompleated = true;
+
             try
             {
 
@@ -177,11 +183,6 @@ namespace TaxometrMauiMvvm.Services
                         }
                     }
                 }
-
-
-                data = Encoding.ASCII.GetBytes("OK");
-                ns.Write(data, 0, data.Length);
-                ns.Flush();
             }
             catch (Exception e)
             {
