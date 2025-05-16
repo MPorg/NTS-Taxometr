@@ -597,4 +597,3 @@ C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\s
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\res\xml\file_paths.xml
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\android\src\com\nts\taxometr\download_res.java
 C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\fg_icon.png
-C:\VS\Git\TAX-3.0\NTS-Taxometr\TaxometrMauiMvvm\obj\Release\net9.0-android35.0\resizetizer\r\drawable\fg_icon_round.png

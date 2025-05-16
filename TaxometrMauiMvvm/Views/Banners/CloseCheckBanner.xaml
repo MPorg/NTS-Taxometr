@@ -257,8 +257,10 @@
                         </StackLayout>
 
                         <StackLayout
+                            IsEnabled="{Binding CardSumBtnIsEnabled}"
                             Orientation="Horizontal">
                             <Label
+                            IsEnabled="{Binding CardSumBtnIsEnabled}"
                                 BackgroundColor="Transparent"
                                 TextColor="{Binding CardTextColor}"
                                 Text="Картой"
@@ -267,6 +269,7 @@
                                 VerticalOptions="Center"/>
 
                             <Entry
+                            IsEnabled="{Binding CardSumBtnIsEnabled}"
                                 x:Name="CardEntry"
                                 Keyboard="Numeric"
                                 TextColor="{Binding CardTextColor}"
@@ -350,6 +353,7 @@
                     HorizontalOptions="FillAndExpand"
                     Spacing="10">
                     <Button
+                        IsEnabled="{Binding CancelBtnIsEnabled}"
                         HorizontalOptions="FillAndExpand"
                         CornerRadius="10"
                         Text="Отмена"

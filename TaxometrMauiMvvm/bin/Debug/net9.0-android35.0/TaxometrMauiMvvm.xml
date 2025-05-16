@@ -11,6 +11,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.StartSumText">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._startSumText"/>
@@ -51,6 +52,12 @@
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.OkBtnIsEnabled">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._okBtnIsEnabled"/>
         </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CancelBtnIsEnabled">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._cancelBtnIsEnabled"/>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.CardSumBtnIsEnabled">
+            <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._cardSumBtnIsEnabled"/>
+        </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.HasError">
             <inheritdoc cref="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel._hasError"/>
         </member>
@@ -74,6 +81,12 @@
         </member>
         <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.OkCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.Ok"/>.</summary>
+        </member>
+        <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.payAproveCommand">
+            <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.PayAproveCommand"/>.</summary>
+        </member>
+        <member name="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.PayAproveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.PayAprove"/>.</summary>
         </member>
         <member name="F:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.addDiscountAllowanceCommand">
             <summary>The backing field for <see cref="P:TaxometrMauiMvvm.Models.Banners.CloseCheckViewModel.AddDiscountAllowanceCommand"/>.</summary>
@@ -780,6 +793,12 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OkBtnIsEnabled">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OkBtnIsEnabled" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CancelBtnIsEnabled">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CancelBtnIsEnabled" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CardSumBtnIsEnabled">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CardSumBtnIsEnabled" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasError">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasError" generated properties.</summary>
         </member>
@@ -992,6 +1011,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OkBtnIsEnabled">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OkBtnIsEnabled" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CancelBtnIsEnabled">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CancelBtnIsEnabled" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CardSumBtnIsEnabled">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CardSumBtnIsEnabled" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasError">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasError" generated properties.</summary>
