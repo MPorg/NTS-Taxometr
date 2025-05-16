@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaxometrMauiMvvm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+8aed808ddec90eab1e89d128d391d3940651c416")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+24017e6a7876cfeb2182cfee604b035d1476e420")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaxometrMauiMvvm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaxometrMauiMvvm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

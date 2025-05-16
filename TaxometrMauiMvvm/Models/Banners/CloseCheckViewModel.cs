@@ -1,7 +1,5 @@
-﻿using Android.Health.Connect.DataTypes;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Data;
 using System.Diagnostics;
 using TaxometrMauiMvvm.Data;
 using TaxometrMauiMvvm.Models.Cells;
@@ -12,6 +10,7 @@ namespace TaxometrMauiMvvm.Models.Banners;
 public partial class CloseCheckViewModel : ObservableObject
 {
     public event Action<bool> Canceled;
+    public event Action<int> Payed;
     public event Action<DiscountAllowance> DiscountAllownceCreated;
     public event Action DiscountAllownceRemoved;
 
@@ -48,6 +47,10 @@ public partial class CloseCheckViewModel : ObservableObject
     [ObservableProperty]
     private bool _okBtnIsEnabled;
     [ObservableProperty]
+    private bool _cancelBtnIsEnabled;
+    [ObservableProperty]
+    private bool _cardSumBtnIsEnabled;
+    [ObservableProperty]
     private bool _hasError;
 
     private bool _extraIsNegative;
@@ -70,7 +73,8 @@ public partial class CloseCheckViewModel : ObservableObject
         NoncashPayText = "";
         ExtraText = "Требуется доплата";
         ErrorMessage = "";
-
+        CardSumBtnIsEnabled = true;
+        CancelBtnIsEnabled = true;
         CalculateValues(startVal, preVal, DiscallowStrValue);
 
 
@@ -166,16 +170,41 @@ public partial class CloseCheckViewModel : ObservableObject
     [RelayCommand]
     private async Task Ok()
     {
-        GetValues(out int cash, out int card, out int noncash, out int initial, out int extra, out int discallow, out int total, out int previous);
+        GetValues(out int cash, out int card, out int nonCash, out int initial, out int extra, out int discallow, out int total, out int previous);
         cash += previous;
-        int sum = cash + card + noncash;
+        int sum = cash + card + nonCash;
         int trueCash = cash - previous;
         if (sum > initial + discallow)
         {
-            cash = (initial + discallow) - (card + noncash);
+            cash = (initial + discallow) - (card + nonCash);
         }
-        (await AppData.Provider()).CloseCheck(cash, card, noncash, trueCash, initial + discallow);
 
+        if (card > 0)
+        {
+            Payed?.Invoke(card);
+            _cash = cash;
+            _card = card;
+            _nonCash = nonCash;
+            _trueCash = trueCash;
+            return;
+        }
+
+        (await AppData.Provider()).CloseCheck(cash, card, nonCash, trueCash);
+        Canceled?.Invoke(true);
+    }
+
+    int _cash;
+    int _card;
+    int _nonCash;
+    int _trueCash;
+
+
+    [RelayCommand]
+    private async Task PayAprove()
+    {
+        CardSumBtnIsEnabled = false;
+        CancelBtnIsEnabled = false;
+        (await AppData.Provider()).CloseCheck(_cash, _card, _nonCash, _trueCash);
         Canceled?.Invoke(true);
     }
 

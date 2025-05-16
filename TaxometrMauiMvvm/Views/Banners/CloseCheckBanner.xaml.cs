@@ -7,6 +7,7 @@ public partial class CloseCheckBanner : ContentPage
     private CloseCheckViewModel _viewModel;
 
     public event Action<bool> Canceled;
+    public event Action<int> Payed;
 
     public CloseCheckBanner(string startVal, string preVal)
 	{
@@ -14,6 +15,7 @@ public partial class CloseCheckBanner : ContentPage
         _viewModel = new CloseCheckViewModel(startVal, preVal);
         BindingContext = _viewModel;
         _viewModel.Canceled += OnCanceled;
+        _viewModel.Payed += OnPayed;
         _viewModel.DiscountAllownceCreated += ((discalow) =>
         {
             MainThread.InvokeOnMainThreadAsync(() =>
@@ -75,5 +77,15 @@ public partial class CloseCheckBanner : ContentPage
     private void OnCanceled(bool result)
     {
         Canceled?.Invoke(result);
+    }
+
+    private void OnPayed(int sum)
+    {
+        Payed?.Invoke(sum);
+    }
+
+    public void Aproove()
+    {
+        _viewModel.PayAproveCommand.Execute(this);
     }
 }

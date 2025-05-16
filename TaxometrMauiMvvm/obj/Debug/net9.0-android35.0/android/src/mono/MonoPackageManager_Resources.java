@@ -22,6 +22,7 @@ public class MonoPackageManager_Resources {
 		"Microsoft.Maui.dll",
 		"Microsoft.Maui.Essentials.dll",
 		"Microsoft.Maui.Graphics.dll",
+		"Newtonsoft.Json.dll",
 		"Plugin.BLE.dll",
 		"SQLite-net.dll",
 		"SQLitePCLRaw.batteries_v2.dll",

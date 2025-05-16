@@ -78,6 +78,10 @@
               "version": "[9.0.5, )",
               "autoReferenced": true
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Plugin.BLE": {
               "target": "Package",
               "version": "[3.1.0, )"

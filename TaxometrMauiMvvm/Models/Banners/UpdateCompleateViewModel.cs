@@ -1,9 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaxometrMauiMvvm.Models.Banners
 {
@@ -22,7 +17,7 @@ namespace TaxometrMauiMvvm.Models.Banners
 
         private void FillCheckList()
         {
-            CheckList = "Обновлена иконка и название приложения";
+            CheckList = "Добавлена возможность оплаты картой по NFC-модулю через приложение BPC NFC-POS";
         }
     }
 }

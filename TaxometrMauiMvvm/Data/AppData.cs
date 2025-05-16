@@ -524,11 +524,30 @@ namespace TaxometrMauiMvvm.Data
         public static async Task GetCloseCheckBanner(string startVal, string preVal)
         {
             CloseCheckBanner banner = new CloseCheckBanner(startVal, preVal);
+
+
             banner.Canceled += ((result) =>
             {
                 CloseCheckBannerAnswer?.Invoke(result);
                 MainMenu.Navigation.PopModalAsync(true);
             });
+
+            banner.Payed += (async (sum) =>
+            {
+                /*
+                CloseCheckBannerAnswer?.Invoke(result);
+                MainMenu.Navigation.PopModalAsync(true);*/
+
+                bool paymentAproove = await BPCProvider.Pay(sum, banner);
+
+                if (paymentAproove)
+                {
+                    Debug.WriteLine("Aproove");
+                    banner.Aproove();
+                }
+
+            });
+
             await MainMenu.Navigation.PushModalAsync(banner, true);
         }
 

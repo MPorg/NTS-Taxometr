@@ -5,7 +5,6 @@ File=Resources\Images\splash_image.png;Link=;BaseSize=;Resize=;TintColor=;Color=
 File=Resources\Images\splash_image_svg.svg;Link=;BaseSize=512,512;Resize=;TintColor=;Color=#142F5F;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\stock_driver.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\AppIcon\fg_icon.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
-File=Resources\AppIcon\fg_icon_round.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\AppIcon\notif_icon.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\Taxis\taxi_1.jpeg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources\Images\Taxis\taxi_2.jpeg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
